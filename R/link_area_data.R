@@ -2,7 +2,7 @@
 #   CMS facility counts on the date of dialysis start (usRds), ACS ZIP code
 #   data, HSA, HSA population and benchmarks, RUCA type, cause of kidney
 #   failure; and compute HSA facility density. No one is excluded here.
-# Needs: medevid_forms (prepare_patients.R); acs_zcta, hsa_crosswalk,
+# Needs: medevid_forms (prepare_patients.R); zcta_crosswalk, acs_zcta, hsa_crosswalk,
 #   hsa_population, ruca_zip, hsa_benchmarks (download_public_data.R);
 #   esrd_cause_mapping_file (setup.R).
 # Produces: linked_forms (medevid_forms with area variables and
@@ -48,7 +48,8 @@ first_forms <- medevid_forms |>
 # the original code (open decision #D3).
 linked_forms <- medevid_forms |>
   left_join(first_forms, by = "USRDS_ID", relationship = "many-to-one") |>
-  left_join(acs_zcta, by = join_by(zip, year), relationship = "many-to-one") |>
+  left_join(zcta_crosswalk, by = join_by(zip, year), relationship = "many-to-one") |>
+  left_join(acs_zcta, by = join_by(zcta, year), relationship = "many-to-one") |>
   left_join(select(hsa_crosswalk, zip, year, hsanum),
             by = join_by(zip, year), relationship = "many-to-one") |>
   left_join(hsa_population, by = join_by(year, hsanum), relationship = "many-to-one") |>
@@ -69,6 +70,7 @@ linked_forms <- linked_forms |>
   mutate(
     hsa_center_density = centers_area / hsa_population * density_per_population,
     hsa_station_density = stations_area / hsa_population * density_per_population,
+    has_zcta = !is.na(zcta),
     has_acs = !is.na(zip_population),
     has_facility_snapshot = !is.na(facility_snapshot_date),
     has_hsa = !is.na(hsanum) & !is.na(hsa_center_density) & is.finite(hsa_center_density),
@@ -84,6 +86,7 @@ linked_forms <- linked_forms |>
     stations_area = "Dialysis stations in the HSA on the date of dialysis start",
     profit_centers_area = "For-profit dialysis facilities in the HSA on the date of dialysis start",
     nonprofit_centers_area = "Non-profit dialysis facilities in the HSA on the date of dialysis start",
+    zcta = "ZCTA of the residential ZIP code (UDS Mapper crosswalk, form year)",
     hsanum = "Dartmouth Atlas HSA (crosswalk for the form year)",
     hsa_population = "HSA population (sum of ACS ZCTA populations, form year)",
     hsa_center_density = "HSA dialysis facilities per 100,000 residents",

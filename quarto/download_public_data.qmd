@@ -43,9 +43,18 @@ One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are publ
 #| eval: false
 ```
 
+## ZIP code to ZCTA
+
+ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. About a fifth of ZIP codes, mostly PO box and large-volume ZIP codes, have no ZCTA of their own and belong to a surrounding ZCTA with a different number. The UDS Mapper crosswalk for each year, bundled in `zippeR` [@zipper_pkg; @uds_crosswalk], maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.
+
+```{r}
+#| label: read-zcta-crosswalk
+#| eval: false
+```
+
 ## American Community Survey
 
-ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. As in the original code, the ZCTA code is used as the ZIP code; the original's separate ZIP-to-ZCTA crosswalk was counted in its CONSORT table but never used to filter, so it is dropped here.
+ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.
 
 ```{r}
 #| label: download-acs
@@ -54,7 +63,7 @@ ZCTA estimates from the 5-year subject table S0601 for each study year. Every ye
 
 ## HSA population
 
-The denominator of the exposure: the sum of ZCTA populations over the ZIP codes in each HSA that year.
+The denominator of the exposure: the population of the ZCTAs of the ZIP codes in each HSA that year. Because several ZIP codes can share a ZCTA, each ZCTA is counted once per HSA (`hsa_population_from_zcta()`); summing over ZIP codes would count a shared ZCTA's population several times.
 
 ```{r}
 #| label: compute-hsa-population

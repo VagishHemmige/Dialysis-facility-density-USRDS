@@ -214,3 +214,17 @@ ensemble_agreement <- function(votes, codes) {
     right_join(codes, by = "code") |>
     relocate(code, description)
 }
+
+## ---- fn-hsa-population
+# HSA population from ZCTA populations. Several ZIP codes can share one ZCTA,
+# so each ZCTA is counted once per HSA and year; summing over ZIP codes would
+# count a shared ZCTA's population more than once. ZCTAs without ACS data
+# contribute nothing.
+hsa_population_from_zcta <- function(hsa_crosswalk, zcta_crosswalk, zcta_population) {
+  hsa_crosswalk |>
+    select(zip, year, hsanum) |>
+    inner_join(zcta_crosswalk, by = join_by(zip, year), relationship = "one-to-one") |>
+    distinct(year, hsanum, zcta) |>
+    left_join(zcta_population, by = join_by(zcta, year), relationship = "many-to-one") |>
+    summarize(hsa_population = sum(zip_population, na.rm = TRUE), .by = c(year, hsanum))
+}

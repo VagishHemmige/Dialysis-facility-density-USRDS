@@ -27,7 +27,9 @@ cohort_fc <- linked_forms |>
   fc_filter(!is.na(egfr) & (if (egfr_maximum_inclusive) egfr <= egfr_maximum else egfr < egfr_maximum),
             label = egfr_label, show_exc = TRUE) |>
   fc_filter(has_residence, label = "Residential ZIP code on the dialysis start date", show_exc = TRUE) |>
-  fc_filter(has_acs, label = "ACS data for the ZIP code and year", show_exc = TRUE) |>
+  fc_filter(has_zcta, label = "ZIP code has a ZCTA (UDS Mapper crosswalk for the year)",
+            show_exc = TRUE) |>
+  fc_filter(has_acs, label = "ACS data for the ZCTA and year", show_exc = TRUE) |>
   fc_filter(has_facility_snapshot & year == dialysis_year,
             label = "Facility data for the dialysis start date, same year as the form",
             show_exc = TRUE) |>

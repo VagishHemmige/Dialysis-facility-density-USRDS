@@ -32,6 +32,7 @@ Each source this project uses is listed below with the package that accesses it.
 | USRDS Medical Evidence (MEDEVID) and Residence (RESIDENC) files | usRds (`set_USRDS_wd()`, `load_usrds_file()`) | https://vagishhemmige.github.io/usRds/ | This team | Restricted (USRDS data use agreement) | None: code, documentation and synthetic data only |
 | USRDS Researcher's Guide, Appendices B and C (variable formats, including `$PD96DET`) | usRds (internal metadata used by `load_usrds_file()`; Appendix C workbook in usRds `data-raw/`) | https://vagishhemmige.github.io/usRds/ | This team | Public | No restriction (public data) |
 | CMS Dialysis Facility Compare archives | usRds (`dialysis_facility_snapshots`, `add_dialysis_facility_counts()`) | https://vagishhemmige.github.io/usRds/ | This team | Public | No restriction (public data) |
+| UDS Mapper ZIP-to-ZCTA crosswalks, 2011–2019 | zippeR (`zi_load_crosswalk(zip_source = "UDS")`) | https://github.com/pfizer-opensource/zippeR | External | Public | No restriction (public data) |
 | American Community Survey 5-year, table S0601 | tidycensus (`get_acs()`) | https://walker-data.com/tidycensus/ | External | Public, Census API key | No restriction (public data) |
 | Dartmouth Atlas ZIP-to-HSA crosswalks, HSA boundaries, primary care measures, hospital resources | `R/download_public_data.R` | https://data.dartmouthatlas.org/supplemental/ | No package | Public | No restriction (public data) |
 | USDA ERS Rural-Urban Commuting Area codes, 2010 ZIP code file | `R/download_public_data.R` | https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes | No package | Public | No restriction (public data) |
@@ -145,7 +146,7 @@ Project-specific checks:
 
 - **Replication:** does every difference from the original code appear in the plan's section 12 and on the differences page, and is each one either a correction of an error or linked to a decision issue?
 - **Geography and dates:** are ACS, crosswalk and population matched to the year the plan specifies, and facility counts to the date of dialysis start? Are ZIP codes 5-character strings with leading zeros kept?
-- **Denominators:** is HSA population summed over the same ZIP codes the crosswalk assigns to the HSA for that year, and are HSAs with no facilities kept as zero, not missing?
+- **Denominators:** is HSA population summed over the ZCTAs of the ZIP codes the crosswalk assigns to the HSA for that year, each ZCTA once, and are HSAs with no facilities kept as zero, not missing?
 - **Area codes:** are Dartmouth -88888 and -99999 codes missing, and are ACS variable labels checked for every year used?
 
 ## Working with agents

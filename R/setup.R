@@ -9,6 +9,7 @@ library(labelled)
 library(usRds)        # USRDS files, value labels, CMS facility snapshots
 library(flowchart)    # cohort flow: every exclusion is an fc_filter() step
 library(tidycensus)   # American Community Survey (needs a Census API key)
+library(zippeR)       # ZIP code to ZCTA crosswalks by year (UDS Mapper)
 library(readxl)
 library(sf)
 library(lme4)

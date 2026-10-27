@@ -158,3 +158,12 @@ One row per code with each model's category; a code is accepted only when all th
 #| label: fn-ensemble-agreement
 #| eval: false
 ```
+
+## HSA population
+
+Builds the exposure's denominator from ZCTA populations, counting each ZCTA once per HSA and year even when several of the HSA's ZIP codes share it.
+
+```{r}
+#| label: fn-hsa-population
+#| eval: false
+```

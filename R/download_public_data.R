@@ -1,7 +1,7 @@
 # Purpose: download and prepare every public area-level source.
 # Needs: setup.R constants; functions.R helpers; a Census API key
 #   (tidycensus::census_api_key(..., install = TRUE)).
-# Produces: acs_zcta, hsa_crosswalk, hsa_population, ruca_zip,
+# Produces: zcta_crosswalk, acs_zcta, hsa_crosswalk, hsa_population, ruca_zip,
 #   hsa_benchmarks, hsa_boundaries. Downloads are cached in data-raw/
 #   (gitignored); delete a file there to download it again.
 # Uses no USRDS data.
@@ -49,10 +49,24 @@ hsa_crosswalk <- imap(crosswalk_files, read_crosswalk) |>
 
 stopifnot(!anyDuplicated(hsa_crosswalk[c("zip", "year")]))
 
+## ---- read-zcta-crosswalk
+# ZIP code to ZCTA, by year, from the UDS Mapper crosswalks bundled in zippeR.
+# About a fifth of ZIP codes (mostly PO box and large-volume ZIP codes) belong
+# to a ZCTA with a different number. The original code intended this step but
+# never applied it, matching ZIP codes to ZCTAs directly.
+zcta_crosswalk <- map(study_years, function(y) {
+  zi_load_crosswalk(zip_source = "UDS", year = y) |>
+    rename_with(toupper) |>
+    transmute(zip = standardize_zip(ZIP), year = as.integer(y), zcta = standardize_zip(ZCTA))
+}) |>
+  list_rbind() |>
+  filter(!is.na(zip), !is.na(zcta))
+
+stopifnot(!anyDuplicated(zcta_crosswalk[c("zip", "year")]))
+
 ## ---- download-acs
 # ZCTA estimates from ACS 5-year table S0601 for each study year. The ZCTA
-# code is read from the NAME field ("ZCTA5 12345"), as in the original code,
-# and used as the ZIP code.
+# code is read from the NAME field ("ZCTA5 12345"), as in the original code.
 acs_labels <- map(study_years, function(y) {
   load_variables(y, "acs5/subject", cache = TRUE) |>
     filter(name %in% acs_variables$variable) |>
@@ -70,21 +84,19 @@ acs_zcta <- map(study_years, function(y) {
     survey = "acs5",
     cache_table = TRUE
   ) |>
-    transmute(zip = str_extract(NAME, "\\d{5}$"), year = y, variable, estimate)
+    transmute(zcta = str_extract(NAME, "\\d{5}$"), year = y, variable, estimate)
 }) |>
   list_rbind() |>
   pivot_wider(names_from = variable, values_from = estimate)
 
-stopifnot(!anyDuplicated(acs_zcta[c("zip", "year")]))
+stopifnot(!anyDuplicated(acs_zcta[c("zcta", "year")]))
 
 ## ---- compute-hsa-population
-# HSA population: sum of ZCTA population over the ZIP codes the crosswalk
-# assigns to the HSA that year. ZIP codes without an ACS ZCTA add nothing.
-hsa_population <- hsa_crosswalk |>
-  left_join(select(acs_zcta, zip, year, zip_population),
-            by = join_by(zip, year), relationship = "one-to-one") |>
-  group_by(year, hsanum) |>
-  summarize(hsa_population = sum(zip_population, na.rm = TRUE), .groups = "drop")
+# HSA population: the population of the ZCTAs of the ZIP codes the Dartmouth
+# crosswalk assigns to the HSA that year, each ZCTA counted once.
+hsa_population <- hsa_population_from_zcta(
+  hsa_crosswalk, zcta_crosswalk, select(acs_zcta, zcta, year, zip_population)
+)
 
 ## ---- read-ruca
 # Primary RUCA code of each ZIP code (2010 file), grouped into four types.

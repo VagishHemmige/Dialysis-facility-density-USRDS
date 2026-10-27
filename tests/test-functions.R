@@ -137,3 +137,20 @@ test_that("ensemble_agreement accepts only unanimous codes", {
   expect_equal(out$unanimous, c(TRUE, FALSE, FALSE))
   expect_equal(out$model_category, c("Diabetes", NA, NA))
 })
+
+test_that("HSA population counts a shared ZCTA once", {
+  hsa <- tibble(zip = c("00501", "00544", "11742", "10467"), year = 2015L,
+                hsanum = c(1L, 1L, 1L, 2L))
+  zcta <- tibble(zip = c("00501", "00544", "11742", "10467"), year = 2015L,
+                 zcta = c("11742", "11742", "11742", "10467"))
+  pop <- tibble(zcta = c("11742", "10467"), year = 2015L, zip_population = c(1000, 500))
+  out <- hsa_population_from_zcta(hsa, zcta, pop) |> arrange(hsanum)
+  expect_equal(out$hsa_population, c(1000, 500))
+})
+
+test_that("ZIP codes missing from the ZCTA crosswalk add nothing", {
+  hsa <- tibble(zip = c("10467", "99999"), year = 2015L, hsanum = 2L)
+  zcta <- tibble(zip = "10467", year = 2015L, zcta = "10467")
+  pop <- tibble(zcta = "10467", year = 2015L, zip_population = 500)
+  expect_equal(hsa_population_from_zcta(hsa, zcta, pop)$hsa_population, 500)
+})

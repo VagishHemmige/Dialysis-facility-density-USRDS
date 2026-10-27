@@ -27,7 +27,7 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Loading the Medical Evidence file
 
-`usRds` finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how the replication found that `DIALSET` code 1 means home dialysis ([#D1]). The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
+`usRds` finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how the replication found that the coding of `DIALSET` has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
 
 ```{r}
 #| label: load-medevid

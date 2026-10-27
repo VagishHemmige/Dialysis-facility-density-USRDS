@@ -53,7 +53,7 @@ Cross-sectional study of incident hemodialysis patients linked to area-level dat
 2. Dialysis started (`DIALDAT`) 2011 to 2019, as the paper states. The paper starts in 2011 because of the IDEAL trial [@cooper2010ideal]. The original code used the year of the form (`MEFDATE`), applying the lower bound explicitly and the upper bound only implicitly, through the ACS linkage (decided by Vagish Hemmige, 27 October 2026).
 3. Age 18 or older at incidence (`INC_AGE`).
 4. Hemodialysis as the primary type of dialysis (`DIALTYP` = hemodialysis).
-5. Dialysis setting. The paper excludes patients who began home dialysis. In the 2024 Researcher's Guide, format `$MESET`, `DIALSET` code 1 is "Home" and code 2 is "Dialysis facility/center"; the original code kept codes 1 and 2, so it removed skilled nursing and unknown settings but kept home hemodialysis. The published Figure 1 labels the patients it removed (14,380) "receiving home hemodialysis", so the coding may have differed in the release used. **Open:** [#D1] keep codes 1 and 2 (the original code) or code 2 only (the paper).
+5. In-center dialysis: `DIALSET` "Dialysis facility/center". The paper excludes patients who began home dialysis. The original code kept codes 1 and 2, which excluded home dialysis in the coding of the time (Appendix C format `$MESET_CUR`: 1 hospital inpatient, 2 dialysis facility/center, 3 home; 14,380 patients excluded in the published Figure 1). The current coding (format `$MESET`, 2024 Researcher's Guide) has 1 = home and 2 = dialysis facility/center, so the replication keeps code 2 only, the same intent in the current coding (decided by Vagish Hemmige, 27 October 2026).
 6. Insurance status recorded (at least one coverage field marked yes).
 7. Vascular access type at first outpatient dialysis recorded (`ACCESSTYPE` not unknown).
 8. Sex recorded.
@@ -167,7 +167,7 @@ Each is applied in the replication and its effect is reported (section 9). Decis
 | A ZIP code with any facility of unknown ownership or stations had all its for-profit, non-profit or station counts set to 0 | Counts ignore only the record with the missing value |
 | Facility files expanded to one row per ZIP code per day | Interval join on each release's validity period |
 | Dartmouth suppression codes made positive | Set to missing |
-| Home hemodialysis kept despite the stated exclusion | ([#D1]) |
+| `DIALSET` codes 1 and 2 kept to exclude home dialysis, correct for the earlier coding (`$MESET_CUR`) but not the current one (`$MESET`, where 1 = home) | Keep "Dialysis facility/center" only, named rather than numbered |
 | Area data matched to the form year and facility counts to the dialysis start year; patients whose years differed were silently dropped | All area data matched to the year dialysis started; no one dropped for a year mismatch |
 | Study period and the year covariate defined by the form date (`MEFDATE`); the paper defines both by the start of hemodialysis | Both use the year dialysis started (`DIALDAT`) |
 | ACS subject-table variable codes assumed to be the same every year | Each year's variable labels are checked against the expected text before use |

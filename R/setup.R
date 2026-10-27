@@ -23,10 +23,15 @@ library(mice)
 study_years <- 2011:2019
 minimum_age <- 18
 
-# Dialysis setting codes kept (format $MESET: 1 = HOME, 2 = DIALYSIS FACILITY/CENTER).
-# The original code kept both; the paper says home dialysis was excluded.
-# Open decision #D1; default reproduces the original code.
-dialysis_settings_kept <- c("HOME", "DIALYSIS FACILITY/CENTER")
+# Dialysis setting kept: in-center dialysis only, as the paper says (home
+# dialysis excluded). The coding of DIALSET has changed. The original code kept
+# codes 1 and 2 to exclude home dialysis, which was correct for the earlier
+# coding (Appendix C format $MESET_CUR: 1 = hospital inpatient, 2 = dialysis
+# facility/center, 3 = home). In the current coding ($MESET, 2024 Researcher's
+# Guide) 1 = home and 2 = dialysis facility/center, so the same intent now
+# keeps code 2 only. usRds labels the codes, so the setting is named here.
+# (Decided by Vagish Hemmige, 27 October 2026.)
+dialysis_settings_kept <- "DIALYSIS FACILITY/CENTER"
 
 # eGFR restriction (mL/min/1.73 m2): 20 or below, as in the original code
 # (the paper says "less than 20"; decided 27 October 2026)

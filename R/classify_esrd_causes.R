@@ -5,8 +5,9 @@
 #   providers in .Renviron (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY).
 # Produces: one file of checked answers per provider in esrd_votes_dir
 #   (data-raw/, gitignored); references/esrd-cause-categories.csv, with each model's category
-#   and reason, whether they agree, and final_category (filled for unanimous
-#   codes; the deciders fill the rest and their initials in reviewed_by).
+#   and reason, whether they agree, and final_category (filled when at least
+#   esrd_classifier_min_agreement models agree; the deciders fill the rest and
+#   their initials in reviewed_by).
 # Run once, by hand, outside main.R: it makes paid API calls.
 # Only the public code list from the USRDS Researcher's Guide is sent. No
 #   patient data are sent, and the code list is not filtered by patient data.
@@ -127,10 +128,14 @@ votes <- providers |>
   list_rbind()
 
 ## ---- measure-agreement
-mapping <- ensemble_agreement(votes, cause_codes) |>
+mapping <- ensemble_agreement(votes, cause_codes, min_agreement = esrd_classifier_min_agreement) |>
   mutate(
     final_category = model_category,
-    reviewed_by = if_else(unanimous, "unanimous", NA_character_),
+    reviewed_by = case_when(
+      unanimous ~ "unanimous",
+      !is.na(model_category) ~ str_glue("{n_agreeing} of 3 models"),
+      .default = NA_character_
+    ),
     classified_on = as.character(Sys.Date()),
     models = str_flatten(unlist(esrd_classifier_models), "; ")
   )
@@ -140,7 +145,9 @@ agreement <- mapping |>
   irr::kappam.fleiss()
 
 message(str_glue(
-  "{sum(mapping$unanimous)} of {nrow(mapping)} codes unanimous; ",
+  "{sum(mapping$unanimous)} of {nrow(mapping)} codes unanimous, ",
+  "{sum(!is.na(mapping$model_category))} accepted by at least ",
+  "{esrd_classifier_min_agreement} models; ",
   "Fleiss' kappa {round(agreement$value, 3)}. Review the others before running main.R."
 ))
 

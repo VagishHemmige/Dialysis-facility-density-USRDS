@@ -113,7 +113,7 @@ Each provider runs and is checked on its own: every code answered exactly once, 
 
 ## Agreement
 
-A code is accepted when all three models agree. The rest are left for the deciders, who fill `final_category` and their initials. Agreement is summarized with Fleiss' kappa.
+A code is accepted when at least two of the three models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 27 October 2026); `reviewed_by` records whether the agreement was unanimous or two of three. Codes with no majority are left for the deciders, who fill `final_category` and their initials. Agreement is summarized with Fleiss' kappa.
 
 ```{r}
 #| label: measure-agreement

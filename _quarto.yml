@@ -65,6 +65,11 @@ website:
           - href: quarto/figures.qmd
             text: Figures
 
+      - section: Published results
+        contents:
+          - href: quarto/supplement.qmd
+            text: Published supplement
+
       - section: Cause of kidney failure
         contents:
           - href: quarto/classify_esrd_causes.qmd

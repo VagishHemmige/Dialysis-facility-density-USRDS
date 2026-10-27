@@ -91,7 +91,7 @@ A sensitivity analysis from the original code, restricted to eGFR above 5 and be
 
 ## Multiple imputation
 
-Ten imputations of albumin and hemoglobin by chained equations, pooled. The paper does not give its imputation model, so this one is provisional ([#D7]).
+The original R code has no imputation: the paper's multiple imputation sensitivity analysis (eTable 2) was done in Stata, and the paper gives only "chained equations, 10 imputations". This rebuilds it with `mice` to show how the analysis is replicated; it is provisional and not expected to match exactly ([#D7]).
 
 ```{r}
 #| label: fit-imputation-models

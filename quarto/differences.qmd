@@ -60,7 +60,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
 | The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt, open decision [#D6] | Rebuilt from the paper's text and Table 2 footnotes, with `lme4::glmer` and the Laplace approximation. | Table 2, slightly, through estimation differences |
-| The multiple imputation model is not described beyond "chained equations, 10 imputations". | Rebuilt, open decision [#D7] | A provisional imputation model. | The imputation sensitivity analysis |
+| Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as chained equations with 10 imputations. | Rebuilt, open decision [#D7] | A provisional imputation model with `mice`, kept to show how the sensitivity analysis is replicated; it is not expected to match exactly. | The imputation sensitivity analysis (eTable 2) |
 
 ## Outputs
 

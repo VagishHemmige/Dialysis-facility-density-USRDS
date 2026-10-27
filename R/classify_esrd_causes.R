@@ -36,12 +36,25 @@ cause_codes <- usRds:::metadata_c[["PD96DET"]] |>
 
 ## ---- define-classification-prompt
 # The prompt is the text file esrd_classifier_prompt_file (prompts/), shown in
-# full on the website. {{category_list}} and {{code_list}} are filled in for
-# each batch.
+# full on the website. It defines each category in words; {{code_list}} is
+# filled in for each batch.
+prompt_text <- read_lines(esrd_classifier_prompt_file)
+
+# The structured output can only return names from esrd_cause_categories, so
+# the prompt must define each of them under exactly that name
+undefined_categories <- esrd_cause_categories |>
+  discard(\(category) any(str_starts(prompt_text, str_glue("- {category}:"))))
+
+if (length(undefined_categories) > 0) {
+  stop(str_glue(
+    "{esrd_classifier_prompt_file} has no definition line ",
+    "(\"- <category>: ...\") for: {str_flatten_comma(undefined_categories)}."
+  ), call. = FALSE)
+}
+
 classification_prompt <- function(batch) {
   ellmer::interpolate_file(
     esrd_classifier_prompt_file,
-    category_list = str_flatten(str_c("- ", esrd_cause_categories), "\n"),
     code_list = str_flatten(str_c(batch$code, ": ", batch$description), "\n")
   )
 }
@@ -49,8 +62,7 @@ classification_prompt <- function(batch) {
 # A short fingerprint of the prompt text, ignoring Windows line endings. It is
 # part of each saved answer file's name, so editing the prompt asks every
 # provider again instead of reusing answers to the old prompt.
-prompt_version <- esrd_classifier_prompt_file |>
-  read_lines() |>
+prompt_version <- prompt_text |>
   str_remove_all("\r") |>
   rlang::hash() |>
   str_sub(1, 8)

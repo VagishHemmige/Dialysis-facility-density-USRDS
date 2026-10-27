@@ -8,7 +8,7 @@
 ## ---- draw-cohort-flowchart
 dir.create(figures_dir, showWarnings = FALSE)
 cohort_fc |>
-  fc_draw() |>
+  fc_draw(big.mark = ",") |>
   fc_export(
     file.path(figures_dir, "figure_1_cohort_flow.png"),
     width = 3000, height = 4200, res = 300

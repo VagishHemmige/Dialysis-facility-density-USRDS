@@ -50,14 +50,31 @@ first_forms <- medevid_forms |>
   select(-DIALDAT, -zip)
 
 ## ---- attach-area-data
-# ACS, crosswalk and HSA population are matched to the year of the form, as in
-# the original code (open decision #D3).
+# All area data are matched to the year dialysis started, the same year as the
+# facility counts. The original code used the year of the form for these and
+# kept only patients whose two years matched (decided 27 October 2026).
 linked_forms <- medevid_forms |>
   left_join(first_forms, by = "USRDS_ID", relationship = "many-to-one") |>
-  left_join(zcta_crosswalk, by = join_by(zip, year), relationship = "many-to-one") |>
-  left_join(acs_zcta, by = join_by(zcta, year), relationship = "many-to-one") |>
-  left_join(facility_crosswalk, by = join_by(zip, year), relationship = "many-to-one") |>
-  left_join(hsa_population, by = join_by(year, hsanum), relationship = "many-to-one") |>
+  left_join(
+    zcta_crosswalk,
+    by = join_by(zip, dialysis_year == year),
+    relationship = "many-to-one"
+  ) |>
+  left_join(
+    acs_zcta,
+    by = join_by(zcta, dialysis_year == year),
+    relationship = "many-to-one"
+  ) |>
+  left_join(
+    facility_crosswalk,
+    by = join_by(zip, dialysis_year == year),
+    relationship = "many-to-one"
+  ) |>
+  left_join(
+    hsa_population,
+    by = join_by(dialysis_year == year, hsanum),
+    relationship = "many-to-one"
+  ) |>
   left_join(hsa_benchmarks, by = "hsanum", relationship = "many-to-one") |>
   left_join(select(ruca_zip, zip, ruca1, rural_urban), by = "zip", relationship = "many-to-one") |>
   left_join(esrd_cause_mapping, by = "PDIS", relationship = "many-to-one") |>
@@ -92,9 +109,9 @@ linked_forms <- linked_forms |>
     stations_area = "Dialysis stations in the HSA on the date of dialysis start",
     profit_centers_area = "For-profit dialysis facilities in the HSA on the date of dialysis start",
     nonprofit_centers_area = "Non-profit dialysis facilities in the HSA on the date of dialysis start",
-    zcta = "ZCTA of the residential ZIP code (UDS Mapper crosswalk, form year)",
-    hsanum = "Dartmouth Atlas HSA (crosswalk for the form year)",
-    hsa_population = "HSA population (sum of ACS ZCTA populations, form year)",
+    zcta = "ZCTA of the residential ZIP code (UDS Mapper crosswalk, dialysis start year)",
+    hsanum = "Dartmouth Atlas HSA (crosswalk for the dialysis start year)",
+    hsa_population = "HSA population (sum of ACS ZCTA populations, dialysis start year)",
     hsa_center_density = "HSA dialysis facilities per 100,000 residents",
     hsa_station_density = "HSA dialysis stations per 100,000 residents",
     rural_urban = "Rural-urban type (primary RUCA code, 2010)",

@@ -30,8 +30,8 @@ Cross-sectional study of incident hemodialysis patients linked to area-level dat
 | USRDS Medical Evidence file (MEDEVID) | CMS-2728 form: demographics, comorbidities, laboratory values, access, insurance, primary cause of kidney failure, eGFR | Release held by the investigators, covering forms dated 2011 to 2019; variable definitions from the 2024 Researcher's Guide [@usrds2024guide] | `USRDS_ID` |
 | USRDS Residence file (RESIDENC) | Residential ZIP code and state over time | Same release | `USRDS_ID`, date of dialysis start within the residence period |
 | CMS Dialysis Facility Compare archives | Facility ZIP code, stations, ownership, by release | December 2005 to April 2025, via `usRds::dialysis_facility_snapshots` [@cms2025dfc] | ZIP code and date of dialysis start |
-| UDS Mapper ZIP-to-ZCTA crosswalk | ZCTA of each ZIP code | 2011 to 2019, matched to the form year, via `zippeR` [@uds_crosswalk; @zipper_pkg] | ZIP code and year |
-| American Community Survey (ACS) 5-year, subject table S0601 | ZCTA population, % female, % White, % Black, % Asian, % Hispanic, median income, % below poverty | Each year 2011 to 2019, matched to the form year [@tidycensus] | ZCTA (from the crosswalk) and year |
+| UDS Mapper ZIP-to-ZCTA crosswalk | ZCTA of each ZIP code | 2011 to 2019, matched to the year dialysis started, via `zippeR` [@uds_crosswalk; @zipper_pkg] | ZIP code and year |
+| American Community Survey (ACS) 5-year, subject table S0601 | ZCTA population, % female, % White, % Black, % Asian, % Hispanic, median income, % below poverty | Each year 2011 to 2019, matched to the year dialysis started [@tidycensus] | ZCTA (from the crosswalk) and year |
 | Dartmouth Atlas ZIP-to-HSA crosswalks | HSA of each ZIP code | 2011 to 2019, matched to the year [@dartmouth_crosswalks] | ZIP code and year |
 | Dartmouth Atlas primary care measures | HSA ambulatory-sensitive discharges, leg amputations, diabetic eye exams, HbA1c testing, mammography | 2015 [@dartmouth_primarycare] | HSA |
 | Dartmouth Atlas hospital resources | HSA acute care beds and hospital FTE employees per 1,000 | 2012 [@dartmouth_capacity] | HSA |
@@ -59,23 +59,23 @@ Cross-sectional study of incident hemodialysis patients linked to area-level dat
 8. Sex recorded.
 9. eGFR at initiation recorded and no higher than 20 mL/min/1.73 m², as in the original code (decided by Vagish Hemmige, 27 October 2026, in a working session: "Use the code"). The paper says "less than 20", and its Figure 1 labels the 38,708 excluded patients "eGFR <20". As in the original code, missing eGFR is removed in the same step.
 10. A residential ZIP code in effect on the date of dialysis start (RESIDENC period containing `DIALDAT`), unique per patient.
-11. The ZIP code has a ZCTA in the UDS Mapper crosswalk for the form year, and ACS data are available for that ZCTA and year. The original code intended this crosswalk but never applied it, matching ZIP codes to ZCTAs directly; the replication applies it (decided by Vagish Hemmige, 27 October 2026, in a working session: "I intended at some point to cross-walk this but never did").
+11. The ZIP code has a ZCTA in the UDS Mapper crosswalk for the year dialysis started, and ACS data are available for that ZCTA and year. The original code intended this crosswalk but never applied it, matching ZIP codes to ZCTAs directly; the replication applies it (decided by Vagish Hemmige, 27 October 2026, in a working session: "I intended at some point to cross-walk this but never did").
 12. A facility snapshot current on the date of dialysis start, in the same calendar year as the form. The original code's facility join required the two years to match.
-13. An HSA for the ZIP code in the crosswalk for the form year.
+13. An HSA for the ZIP code in the crosswalk for the year dialysis started.
 14. Residence in the 48 contiguous states or the District of Columbia (excludes Alaska, Hawaii, territories, and states not assigned a Census region).
 15. Race recorded (not unknown) and Hispanic ethnicity recorded (not unknown).
 16. ZIP code has a RUCA code other than 99 (zero-population ZIP code) and complete ACS covariates.
 
 The original code applied several of these filters outside its CONSORT table, and its table misreported others; see section 12. In this replication every exclusion is a flowchart step, so the diagram reproduces the cohort exactly.
 
-**Year of linkage.** ACS, crosswalk and population data are matched to the year of the Medical Evidence form (`MEFDATE`), as in the original code; facility counts are matched to the date of dialysis start (`DIALDAT`). The original code's facility join also required the two years to be equal. **Open:** [#D3] whether all area linkage uses the year of `DIALDAT`.
+**Year of linkage.** All area data (ZCTA crosswalk, ACS, HSA, HSA population) are matched to the year dialysis started (`DIALDAT`), the same year as the facility counts. The original code matched area data to the year of the Medical Evidence form (`MEFDATE`) and its facility join silently required the two years to be equal; the replication corrects this (decided by Vagish Hemmige, 27 October 2026).
 
 ## 5. Exposure
 
 **HSA dialysis facility density:** the number of dialysis facilities in the patient's HSA on the date of dialysis start, divided by the HSA's population, times 100,000 [@hemmige2024density].
 
 - **Facilities:** every facility listed in the CMS release current on the date of dialysis start (`usRds::add_dialysis_facility_counts()`), assigned to an HSA by its ZIP code and the crosswalk for that calendar year. Facilities whose ZIP code has no HSA are not counted.
-- **HSA population:** the ACS total population of the ZCTAs of the ZIP codes in the HSA, using the Dartmouth and ZCTA crosswalks and ACS for the form year. Each ZCTA is counted once per HSA, because several ZIP codes can share a ZCTA. ZCTAs without ACS data contribute nothing.
+- **HSA population:** the ACS total population of the ZCTAs of the ZIP codes in the HSA, using the Dartmouth and ZCTA crosswalks and ACS for the year dialysis started. Each ZCTA is counted once per HSA, because several ZIP codes can share a ZCTA. ZCTAs without ACS data contribute nothing.
 - **Categories:** 0 facilities; then cut at the 25th, 50th and 75th percentiles of density among all patients in the final cohort (zeros included), each category including its upper bound. The paper reports cut points of 1.36, 1.95 and 2.76 per 100,000 [@hemmige2024density].
 - **Continuous version:** density per 100,000, for sensitivity analyses.
 - **Also described:** facility stations per 100,000, and for-profit and non-profit facility counts.
@@ -97,7 +97,7 @@ All patient covariates are measured on the first Medical Evidence form, at initi
 | Insurance | Hierarchy as in the original code: none; else Medicaid (including dual eligibility); else Medicare or Medicare Advantage; else employer group; else other (including VA) |
 | Serum albumin, hemoglobin | `ALBUM` (g/dL), `HEGLB` (g/dL) |
 | Primary cause of kidney failure | `PDIS` mapped to six categories: diabetes; hypertension and cardiac disease; glomerulonephritis; hereditary or polycystic kidney disease; transplant failure or complications; other (including unknown and unmapped codes). **Open:** [#D4] the mapping (see below) |
-| ZIP code poverty, % Black residents | ACS S0601, for the ZIP code's ZCTA and form year |
+| ZIP code poverty, % Black residents | ACS S0601, for the ZIP code's ZCTA and the year dialysis started |
 | Rural-urban type | Primary RUCA code grouped as metropolitan (1 to 3), micropolitan (4 to 6), small town (7 to 9) and rural (10) [@ers2020ruca], the four groups in the paper's Table 1 |
 | Census region | From the residence state |
 | HSA quality benchmarks | Ambulatory-sensitive discharges per 1,000 enrollees; percentage of diabetic enrollees with an eye exam (2015) and with HbA1c testing (2015); percentage of women with a mammogram in 2 years; leg amputations per 1,000 [@dartmouth_primarycare]. Hospital beds and FTE employees per 1,000 [@dartmouth_capacity] are described but not in the models. Dartmouth codes -88888 and -99999 are set to missing; the original code turned them into positive values (decided by Vagish Hemmige, 27 October 2026, in a working session). |
@@ -168,6 +168,7 @@ Each is applied in the replication and its effect is reported (section 9). Decis
 | Facility files expanded to one row per ZIP code per day | Interval join on each release's validity period |
 | Dartmouth suppression codes made positive | Set to missing |
 | Home hemodialysis kept despite the stated exclusion | ([#D1]) |
+| Area data matched to the form year and facility counts to the dialysis start year; patients whose years differed were silently dropped | All area data matched to the year dialysis started; no one dropped for a year mismatch |
 | ACS subject-table variable codes assumed to be the same every year | Each year's variable labels are checked against the expected text before use |
 
 ## Reporting map

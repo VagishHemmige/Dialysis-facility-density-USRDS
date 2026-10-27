@@ -47,7 +47,7 @@ references/esrd-cause-categories.csv ──────────────�
 - **Facility counts by date.** `usRds::add_dialysis_facility_counts()` matches each patient's `DIALDAT` to the CMS release in effect (an interval join on `valid_from`/`valid_to`), then counts facilities in the ZIP code and in its HSA for that calendar year. Rows never multiply; dates outside coverage give `NA`.
 - **Cohort and diagram from one object.** Every exclusion is an `fc_filter()` call on `linked_forms`; `cohort` is `fc_view(cohort_fc, what = "data")`. No script removes patients elsewhere.
 - **Joins state their relationship.** Every join of area data to patients is `many-to-one`; a duplicate key stops the run.
-- **ZIP codes reach ACS through ZCTAs.** Each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the form year (`zippeR`); HSA population counts each ZCTA once (`hsa_population_from_zcta()`).
+- **ZIP codes reach ACS through ZCTAs.** Each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year dialysis started (`zippeR`); HSA population counts each ZCTA once (`hsa_population_from_zcta()`).
 - **Public inputs are checked.** ACS labels are checked for every year (`check_acs_labels()`); Dartmouth columns are found by pattern and must match exactly one column (`select_by_pattern()`).
 
 ## Dependencies outside this repository

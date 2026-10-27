@@ -37,8 +37,8 @@ cohort_fc <- linked_forms |>
   fc_filter(has_zcta, label = "ZIP code has a ZCTA (UDS Mapper crosswalk for the year)",
             show_exc = TRUE) |>
   fc_filter(has_acs, label = "ACS data for the ZCTA and year", show_exc = TRUE) |>
-  fc_filter(has_facility_snapshot & year == dialysis_year,
-            label = "Facility data for the dialysis start date, same year as the form",
+  fc_filter(has_facility_snapshot,
+            label = "Facility data for the dialysis start date",
             show_exc = TRUE) |>
   fc_filter(has_hsa, label = "ZIP code in a Health Service Area", show_exc = TRUE) |>
   fc_filter(!is.na(region) & !state %in% noncontiguous_states,
@@ -52,8 +52,8 @@ cohort_fc <- linked_forms |>
 cohort <- fc_view(cohort_fc, what = "data") |>
   assert_unique(USRDS_ID)
 
-# The HSA of the form year and of the dialysis start date must be the same,
-# because only patients whose form year is their dialysis-start year are kept
+# The HSA used for the population and the one usRds used for the facility
+# counts come from the same crosswalk year, so they must agree
 hsa_mismatches <- cohort |>
   filter(hsanum != hsanum_dialysis_date)
 

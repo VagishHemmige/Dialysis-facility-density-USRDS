@@ -47,7 +47,7 @@ This is the step the original code spent most of its length on: it expanded ever
 
 ## ACS, HSA and other area data
 
-Each ZIP code is mapped to its ZCTA with the crosswalk for the year of the form, and ACS data are joined by ZCTA; the HSA, population and benchmarks are matched by ZIP code and the form year, as in the original code ([#D3]). Every join states its expected relationship, so an unexpected duplicate stops the run.
+Each ZIP code is mapped to its ZCTA with the crosswalk for the year dialysis started, and ACS data are joined by ZCTA; the HSA and its population are matched by ZIP code and the same year, so area data and facility counts describe the same year. The original code used the year of the form for area data and silently dropped patients whose two years differed. Every join states its expected relationship, so an unexpected duplicate stops the run.
 
 ```{r}
 #| label: attach-area-data

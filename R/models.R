@@ -156,13 +156,22 @@ imputation_formula <- mixed_formula(
   "early_start", "density_category", c(model_3_covariates, model_2_laboratory)
 )
 
+# Each completed data set is fitted explicitly and the fits are pooled by
+# Rubin's rules. The shorter with(imputed, glmer(...)) does not work here: a
+# formula built by mixed_formula() looks for the variables outside the
+# imputed data sets.
 imputation_estimates <- imputed |>
-  with(glmer(
-    imputation_formula,
-    family = binomial,
-    nAGQ = glmer_nagq,
-    control = glmerControl(optimizer = "bobyqa")
-  )) |>
+  mice::complete(action = "all") |>
+  map(\(completed) {
+    glmer(
+      imputation_formula,
+      data = completed,
+      family = binomial,
+      nAGQ = glmer_nagq,
+      control = glmerControl(optimizer = "bobyqa")
+    )
+  }) |>
+  as.mira() |>
   pool() |>
   summary(conf.int = TRUE, exponentiate = TRUE) |>
   as_tibble() |>

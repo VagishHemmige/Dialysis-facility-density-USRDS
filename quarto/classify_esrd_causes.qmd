@@ -62,27 +62,22 @@ The prompt makes three rules:
 
 ## The six categories
 
-::: callout-warning
-## Draft definitions
-The definitions in the prompt are placeholders, written to show how the classification is specified. The deciders settle the real ones (open decision [#D4]).
-:::
-
 The original analysis took the six categories from a spreadsheet with one sheet per category ("Diabetes", "Hypertensive and Cardiac", "Glomerulonephritis", "HereditaryPCKD", "Transplant", "Other"), which no longer exists. Only the categories' names survive, in the sheet names and in the paper's Table 1, which labels the transplant category "solid organ and bone marrow" [@hemmige2024density].
 
-The draft definitions follow the USRDS primary disease groups, the groups of the CMS-2728 list of primary causes [@cms2728_causes; @usrds2018adr]:
+The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the USRDS primary disease groups, the groups of the CMS-2728 list of primary causes [@cms2728_causes; @usrds2018adr], and depart from them where the clinical definition differs:
 
-| Paper category | Draft definition, in USRDS groups |
+| Paper category | Definition, in USRDS groups |
 |---|---|
 | Diabetes | Diabetes |
 | Hypertension and cardiac disease | Hypertension and large vessel disease (including renovascular disease and atheroembolism), plus kidney failure attributed to heart disease, as the sheet name "Hypertensive and Cardiac" suggests |
-| Glomerulonephritis | Glomerulonephritis (primary glomerular disease) |
+| Glomerulonephritis | Glomerulonephritis, plus the glomerulonephritis in "Secondary GN/vasculitis": lupus nephritis, ANCA vasculitis, anti-GBM disease and Henoch-Schönlein purpura. USRDS keeps secondary disease in its own group, but clinically these are glomerulonephritis. Thrombotic microangiopathies and scleroderma, also in that USRDS group, stay in Other. |
 | Hereditary or polycystic kidney disease | The cystic and hereditary part of "Cystic/hereditary/congenital", as the sheet name "HereditaryPCKD" suggests; congenital anomalies go to Other |
 | Transplant failure or complications | Transplant complications of any solid organ or bone marrow, as Table 1 says (USRDS counted these among miscellaneous conditions until the 2015 form gave them their own group) |
-| Other | Secondary glomerulonephritis and vasculitis, interstitial nephritis and pyelonephritis, congenital anomalies, neoplasms, miscellaneous conditions, and unknown or missing causes |
+| Other | Thrombotic microangiopathies and scleroderma, interstitial nephritis and pyelonephritis, congenital anomalies, neoplasms, miscellaneous conditions, and unknown or missing causes |
 
-**HIV.** USRDS has always placed HIV-associated (AIDS) nephropathy among the miscellaneous conditions, not with glomerulonephritis: in its older reference tables, and as code B20 in the "Miscellaneous conditions" group of the 2015 CMS-2728 list [@cms2728_causes]. The draft therefore puts HIV in Other. The three models did the same on the first run.
+**HIV.** USRDS has always placed HIV-associated (AIDS) nephropathy among the miscellaneous conditions, not with glomerulonephritis: in its older reference tables, and as code B20 in the "Miscellaneous conditions" group of the 2015 CMS-2728 list [@cms2728_causes]. HIV is therefore in Other. The three models did the same on the first run.
 
-**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, USRDS reported glomerulonephritis at 7.3% and cystic kidney disease at 2.8% [@usrds2018adr]. The paper's lower shares fit glomerulonephritis without its secondary forms, and polycystic and hereditary disease without congenital anomalies. But the cohort is in-center hemodialysis only, and patients with glomerulonephritis or polycystic kidney disease more often start on peritoneal dialysis or receive a transplant, so the comparison cannot settle either boundary. Small groups such as HIV are invisible in these percentages.
+**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, USRDS reported glomerulonephritis at 7.3% and cystic kidney disease at 2.8% [@usrds2018adr]. The cohort is in-center hemodialysis only, and patients with glomerulonephritis or polycystic kidney disease more often start on peritoneal dialysis or receive a transplant, so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.
 
 ## Prompt and schema in code
 

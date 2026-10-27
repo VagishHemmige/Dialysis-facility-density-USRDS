@@ -297,23 +297,24 @@ cached_votes <- function(path, classify) {
 }
 
 ## ---- fn-ensemble-agreement
-# One row per code: each provider's category and reason, whether every
-# provider answered and all agree, and the accepted category when they do.
-ensemble_agreement <- function(votes, codes) {
+# One row per code: each provider's category and reason, how many providers
+# answered, whether all agree, and the accepted category. A category is
+# accepted when at least `min_agreement` providers give it.
+ensemble_agreement <- function(votes, codes, min_agreement) {
   n_providers_total <- n_distinct(votes$provider)
 
+  top_category <- votes |>
+    count(code, category, name = "n_agreeing") |>
+    slice_max(n_agreeing, n = 1, with_ties = FALSE, by = code)
+
   agreement <- votes |>
-    summarize(
-      n_providers = n(),
-      n_categories = n_distinct(category),
-      first_category = first(category),
-      .by = code
-    ) |>
+    summarize(n_providers = n(), n_categories = n_distinct(category), .by = code) |>
+    left_join(top_category, by = "code", relationship = "one-to-one") |>
     mutate(
       unanimous = n_providers == n_providers_total & n_categories == 1,
-      model_category = if_else(unanimous, first_category, NA_character_)
+      model_category = if_else(n_agreeing >= min_agreement, category, NA_character_)
     ) |>
-    select(code, n_providers, unanimous, model_category)
+    select(code, n_providers, n_agreeing, unanimous, model_category)
 
   each_provider <- votes |>
     select(code, provider, category, reason) |>

@@ -148,18 +148,22 @@ test_that("cached_votes asks once and then reads the saved file", {
   expect_equal(second$code, first$code)
 })
 
-test_that("ensemble_agreement accepts only unanimous codes", {
-  codes <- tibble(code = c("A", "B", "C"), description = c("a", "b", "c"))
+test_that("ensemble_agreement accepts a category given by enough providers", {
+  codes <- tibble(code = c("A", "B", "C", "D"), description = c("a", "b", "c", "d"))
   votes <- tribble(
     ~code, ~provider, ~category, ~reason,
     "A", "p1", "Diabetes", "r", "A", "p2", "Diabetes", "r", "A", "p3", "Diabetes", "r",
     "B", "p1", "Diabetes", "r", "B", "p2", "Other", "r", "B", "p3", "Diabetes", "r",
-    "C", "p1", "Other", "r", "C", "p2", "Other", "r"
+    "C", "p1", "Other", "r", "C", "p2", "Other", "r",
+    "D", "p1", "Diabetes", "r", "D", "p2", "Other", "r", "D", "p3", "Glomerulonephritis", "r"
   )
-  out <- ensemble_agreement(votes, codes)
-  expect_equal(out$code, c("A", "B", "C"))
-  expect_equal(out$unanimous, c(TRUE, FALSE, FALSE))
-  expect_equal(out$model_category, c("Diabetes", NA, NA))
+  majority <- ensemble_agreement(votes, codes, min_agreement = 2)
+  expect_equal(majority$code, c("A", "B", "C", "D"))
+  expect_equal(majority$unanimous, c(TRUE, FALSE, FALSE, FALSE))
+  expect_equal(majority$model_category, c("Diabetes", "Diabetes", "Other", NA))
+
+  all_three <- ensemble_agreement(votes, codes, min_agreement = 3)
+  expect_equal(all_three$model_category, c("Diabetes", NA, NA, NA))
 })
 
 test_that("HSA population counts a shared ZCTA once", {

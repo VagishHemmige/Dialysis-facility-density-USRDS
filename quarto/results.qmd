@@ -44,10 +44,20 @@ These are kept above as printed. Each is listed so that the replication's output
 
 **Table 1**
 
+Each percentage was recomputed from its count and column size, and each group of rows was added up against its column size. Four percentages do not match their counts:
+
 -   Tunneled catheter, >0-1.36 column: 135,574 is printed as 94.3%; 135,574 / 174,185 is 77.8%.
 -   Commercial insurance, >0-1.36 column: 20,378 is printed as 21.9%; 20,378 / 174,185 is 11.7%.
--   Rural-urban type: the four rows sum to 31,547 in the 0 column (n = 36,947) and to 205,678 in the >2.76 column (n = 210,690). In the 0 column, metropolitan is printed as 9,186 (39.5%), but 9,186 / 36,947 is 24.9%.
--   The dialysis access and insurance rows add up to the column totals in every column. Men total 484,346, as in the abstract; the Results text gives 483,346.
+-   Metropolitan, 0 column: 9,186 is printed as 39.5%; 9,186 / 36,947 is 24.9%.
+-   Micropolitan, >2.76 column: 28,576 is printed as 16.0%; 28,576 / 210,690 is 13.6%.
+
+Three groups of rows do not add up to their column size:
+
+-   Rural-urban type, 0 column: the four rows sum to 31,547, against n = 36,947 (5,400 short).
+-   Rural-urban type, >2.76 column: the rows sum to 205,678, against n = 210,690 (5,012 short).
+-   Race, >2.76 column: the rows sum to 210,691, one more than n = 210,690. As a result, the White row sums to 558,365 across the columns, while eTable 1 gives 558,364.
+
+The other group totals (sex, ethnicity, nephrology care, dialysis access, insurance and etiology) add up in every column. Seven other percentages differ from their counts by 0.05 to 0.1 points, which is consistent with rounding an already-rounded value. Men total 484,346, as in the abstract; the Results text gives 483,346.
 
 **Table 2**
 

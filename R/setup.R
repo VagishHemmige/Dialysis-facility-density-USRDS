@@ -47,8 +47,6 @@ noncontiguous_states <- c("ALASKA", "HAWAII")
 density_per_population <- 100000
 # Cut points: these percentiles of density among patients in the final cohort
 density_percentiles <- c(0.25, 0.50, 0.75)
-# Published cut points, for comparison only (Table 1 of the paper)
-published_density_cutpoints <- c(1.36, 1.95, 2.76)
 
 ## ---- define-linkage-constants
 # ACS 5-year subject table S0601 variables, with a pattern each year's label
@@ -66,7 +64,7 @@ acs_variables <- tribble(
 )
 
 # Dartmouth Atlas codes that are not values: -88888 too small, -99999 suppressed.
-# Open decision #D5: the original code made them positive; here they are NA.
+# The original code made them positive; here they are NA (decided 27 October 2026).
 dartmouth_missing_codes <- c(-88888, -99999)
 
 # Census regions by state (USRDS STATE is labelled with format $STATFIP)

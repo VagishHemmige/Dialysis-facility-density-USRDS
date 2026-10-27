@@ -49,7 +49,7 @@ Density is facilities per 100,000 HSA residents, cut at the quartiles of density
 
 ## Linkage constants
 
-Each ACS variable carries a pattern its label must match in every year. Subject-table codes such as `S0601_C01_047` can mean different things in different years, and the original code assumed they did not; now a mismatch stops the run. Dartmouth's -88888 and -99999 are codes for small or suppressed values, not numbers ([#D5]). The RUCA groups give the four rural-urban types in the paper's Table 1.
+Each ACS variable carries a pattern its label must match in every year. Subject-table codes such as `S0601_C01_047` can mean different things in different years, and the original code assumed they did not; now a mismatch stops the run. Dartmouth's -88888 and -99999 are codes for small or suppressed values, not numbers, so they become missing. The RUCA groups give the four rural-urban types in the paper's Table 1.
 
 ```{r}
 #| label: define-linkage-constants

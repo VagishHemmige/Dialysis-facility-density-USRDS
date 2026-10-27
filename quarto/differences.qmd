@@ -39,7 +39,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
-| Dartmouth Atlas negative values were made positive (`ifelse(x < 0, -x, x)`). Dartmouth codes small values as -88888 and suppressed values as -99999 [@dartmouth_primarycare], so suppressed HSAs would enter as 88,888 or 99,999. | Open decision [#D5] | Set to missing. | Table 1 benchmark rows and Model 3, if the original files held these codes |
+| Dartmouth Atlas negative values were made positive (`ifelse(x < 0, -x, x)`). Dartmouth codes small values as -88888 and suppressed values as -99999 [@dartmouth_primarycare], so suppressed HSAs would enter as 88,888 or 99,999. | Corrected error | Set to missing (decided 27 October 2026). | Table 1 benchmark rows and Model 3, if the original files held these codes |
 | ACS subject-table variable codes (for example `S0601_C01_047`) were assumed to mean the same thing every year. | Corrected error | Each year's labels are checked; a mismatch stops the run. | None if the codes were stable; otherwise ZIP code income and poverty |
 | ACS data were downloaded once and cached in a local file. | Rebuilt | Downloaded by `tidycensus` on each fresh run, with the Census Bureau's cache. | None, unless the Census Bureau has revised the estimates |
 | RUCA codes, Dartmouth crosswalks, benchmarks and boundaries were read from files on the analyst's computer; the benchmarks were Stata files made by hand. | Rebuilt | Downloaded from the publishers' URLs. The benchmark spreadsheets are very likely the sources of the original Stata files; the code checks each column by name. | None, if the spreadsheets match |

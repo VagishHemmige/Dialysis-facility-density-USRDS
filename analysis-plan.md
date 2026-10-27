@@ -100,7 +100,7 @@ All patient covariates are measured on the first Medical Evidence form, at initi
 | ZIP code poverty, % Black residents | ACS S0601, for the ZIP code's ZCTA and form year |
 | Rural-urban type | Primary RUCA code grouped as metropolitan (1 to 3), micropolitan (4 to 6), small town (7 to 9) and rural (10) [@ers2020ruca], the four groups in the paper's Table 1 |
 | Census region | From the residence state |
-| HSA quality benchmarks | Ambulatory-sensitive discharges per 1,000 enrollees; percentage of diabetic enrollees with an eye exam (2015) and with HbA1c testing (2015); percentage of women with a mammogram in 2 years; leg amputations per 1,000 [@dartmouth_primarycare]. Hospital beds and FTE employees per 1,000 [@dartmouth_capacity] are described but not in the models. Dartmouth codes -88888 and -99999 are set to missing; the original code turned them into positive values. **Open:** [#D5] |
+| HSA quality benchmarks | Ambulatory-sensitive discharges per 1,000 enrollees; percentage of diabetic enrollees with an eye exam (2015) and with HbA1c testing (2015); percentage of women with a mammogram in 2 years; leg amputations per 1,000 [@dartmouth_primarycare]. Hospital beds and FTE employees per 1,000 [@dartmouth_capacity] are described but not in the models. Dartmouth codes -88888 and -99999 are set to missing; the original code turned them into positive values (decided by Vagish Hemmige, 27 October 2026, in a working session). |
 
 **Cause of kidney failure mapping.** The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format `$PD96DET` [@usrds2024guide], a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three large language models (from OpenAI, Anthropic and Google), called through `ellmer` [@ellmer_pkg] with the same prompt and a structured output schema, each classify every code. A code is accepted when all three agree; every other code is reviewed by the deciders, who record the category and their initials. Agreement among the models is reported with Fleiss' kappa. The reviewed mapping is committed to `references/` and is the only version the analysis reads. No patient data are sent to the models. Patient-level cross-checks against USRDS's own disease group (`DISGRPC`, PATIENTS file) and against the published Table 1 counts are run by an authorized person. **Open:** [#D4] whether a model-drafted, clinician-reviewed mapping is acceptable for the replication, and the definition of each category.
 
@@ -165,7 +165,7 @@ Each is applied in the replication and its effect is reported (section 9). Decis
 | Oct 2017 and Jan 2018 CMS files code ownership as 1/2; for-profit counts were 0 for dialysis starts from October 2017 to March 2018 | Ownership harmonized in `usRds` |
 | A ZIP code with any facility of unknown ownership or stations had all its for-profit, non-profit or station counts set to 0 | Counts ignore only the record with the missing value |
 | Facility files expanded to one row per ZIP code per day | Interval join on each release's validity period |
-| Dartmouth suppression codes made positive | Set to missing ([#D5]) |
+| Dartmouth suppression codes made positive | Set to missing |
 | Home hemodialysis kept despite the stated exclusion | ([#D1]) |
 | ACS subject-table variable codes assumed to be the same every year | Each year's variable labels are checked against the expected text before use |
 

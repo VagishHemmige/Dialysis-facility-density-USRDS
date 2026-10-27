@@ -143,12 +143,14 @@ esrd_cause_categories <- c(
 )
 esrd_cause_mapping_file <- "references/esrd-cause-categories.csv"
 
-# Models used by R/classify_esrd_causes.R (the same three providers as the
-# USRDS-PDF-analysis-project ensemble)
+# Models used by R/classify_esrd_causes.R: the same three providers as the
+# USRDS-PDF-analysis-project ensemble, each provider's current general-purpose
+# model as of October 2026 (the abstract used gpt-5.1, claude-sonnet-4-5 and
+# gemini-2.5-flash). The models used are recorded in the output file.
 esrd_classifier_models <- list(
-  openai = "gpt-5.1",
-  anthropic = "claude-sonnet-4-5",
-  google = "gemini-2.5-flash"
+  openai = "gpt-6.1-terra",
+  anthropic = "claude-sonnet-5-5",
+  google = "gemini-3.8-flash"
 )
 esrd_classifier_batch_size <- 100
 

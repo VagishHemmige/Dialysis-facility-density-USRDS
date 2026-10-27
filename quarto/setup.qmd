@@ -67,7 +67,7 @@ Every public file is downloaded from its publisher, so no file needs to come fro
 
 ## Cause of kidney failure
 
-The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three models and reviewed by the deciders (see [Classifying codes](classify_esrd_causes.qmd); [#D4]). The three models are the ones the USRDS-PDF-analysis-project ensemble used.
+The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three models and reviewed by the deciders (see [Classifying codes](classify_esrd_causes.qmd); [#D4]). The three providers are the ones the USRDS-PDF-analysis-project ensemble used, each with its current general-purpose model as of October 2026; the models used are recorded in the output file.
 
 ```{r}
 #| label: define-cause-constants

@@ -45,7 +45,7 @@ One prompt and one structured output schema for all three models. The schema res
 
 ## Three models
 
-The same three providers as the USRDS-PDF-analysis-project ensemble [@ellmer_pkg]. Every model must return every code exactly once.
+The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Every model must return every code exactly once.
 
 ```{r}
 #| label: classify-with-ensemble

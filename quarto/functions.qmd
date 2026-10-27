@@ -168,6 +168,15 @@ The share of the variance of eGFR at each level of a null mixed model.
 #| eval: false
 ```
 
+## Coding system of a cause code
+
+Labels each USRDS primary-cause code as ICD-10-CM, ICD-9-CM, a USRDS variant of an ICD-9-CM code (with a final letter), or a USRDS code for a missing or unknown cause, so the models are told which system each code comes from.
+
+```{r}
+#| label: fn-cause-code-system
+#| eval: false
+```
+
 ## Classifying codes
 
 Sends the codes to one provider in batches, through that provider's own function, and asks once more for any codes the model skipped.

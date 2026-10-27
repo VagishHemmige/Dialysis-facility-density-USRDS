@@ -149,6 +149,10 @@ esrd_cause_categories <- c(
   "Other"
 )
 esrd_cause_mapping_file <- "references/esrd-cause-categories.csv"
+# USRDS primary disease groups (the groups of the CMS-2728 list of primary
+# causes) and the paper category each one counts as; the deciders fill the
+# category column (open decision #D4)
+esrd_cause_groups_file <- "references/usrds-cause-groups.csv"
 
 # Models used by R/classify_esrd_causes.R: the same three providers as the
 # USRDS-PDF-analysis-project ensemble, each provider's current general-purpose

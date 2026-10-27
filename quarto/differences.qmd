@@ -51,7 +51,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
 | Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. | Rebuilt | `usRds::load_usrds_file()` applies the USRDS value labels. | None intended |
-| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, open decision [#D4] | Three language models classify the public USRDS code list; the deciders review every code the models disagree on. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
+| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, open decision [#D4] | Each code gets its USRDS primary disease group, from USRDS where it assigns one and otherwise from three language models; the deciders review every code the models disagree on and decide which category each group counts as. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
 | A comorbidity field that was blank became missing, which would drop the patient from a model. The published sample sizes show the paper's models kept these patients. | Rebuilt | Blank or unknown counts as not present, as on the form. | Matches the published sample sizes |
 | Race had nine levels in R; the paper reports five groups whose counts add up to each column total. | Open decision [#D6] | Middle Eastern, South Asian and Other are kept separate until the deciders say how the paper grouped them. | Table 1 race rows; models adjusting for race |
 

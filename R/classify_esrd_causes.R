@@ -1,12 +1,16 @@
-# Purpose: draft the mapping of every primary-cause code (USRDS format
-#   $PD96DET) to the six cause categories, by an ensemble of three large
-#   language models, for review by the deciders (open decision #D4).
+# Purpose: assign every primary-cause code (USRDS format $PD96DET) to its
+#   USRDS primary disease group: USRDS's own assignment where it has one, and
+#   otherwise an ensemble of three large language models, for review by the
+#   deciders (open decision #D4). The paper's six categories follow from the
+#   groups through references/usrds-cause-groups.csv.
 # Needs: setup.R and functions.R sourced first; API keys for the three
 #   providers in .Renviron (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY).
 # Produces: one file of checked answers per provider in esrd_votes_dir
-#   (data-raw/, gitignored); references/esrd-cause-categories.csv, with each model's category
-#   and reason, whether they agree, and final_category (filled for unanimous
-#   codes; the deciders fill the rest and their initials in reviewed_by).
+#   (data-raw/, gitignored); references/esrd-cause-categories.csv, with each
+#   code's USRDS primary disease group: USRDS's own where it has one,
+#   otherwise each model's group and reason, whether they agree, and
+#   final_group (filled when USRDS or all three models give it; the deciders
+#   fill the rest and their initials in reviewed_by).
 # Run once, by hand, outside main.R: it makes paid API calls.
 # Only the public code list from the USRDS Researcher's Guide is sent. No
 #   patient data are sent, and the code list is not filtered by patient data.
@@ -24,27 +28,69 @@ if (packageVersion("ellmer") < "0.4.2") {
 }
 
 ## ---- load-cause-codes
-# usRds holds Appendix C internally; usRds:::metadata_c is used until the
-# package exports the formats (to be raised in the usRds project).
+# Every primary-cause code (format $PD96DET) with its description and coding
+# system, and the USRDS primary disease group where USRDS assigns one (format
+# PD_SUBGROUP, mostly ICD-10-CM codes). usRds holds Appendix C internally;
+# usRds:::metadata_c is used until the package exports the formats.
+cause_groups <- read_csv(esrd_cause_groups_file, col_types = cols(.default = col_character()))
+
+usrds_code_groups <- usRds:::metadata_c[["PD_SUBGROUP"]] |>
+  transmute(
+    code = str_trim(as.character(value)),
+    # Subgroups are a two-digit group and a letter ("03F"); one is written "9F"
+    usrds_group = str_pad(str_extract(as.character(description), "^[0-9]+"), 2, pad = "0")
+  ) |>
+  left_join(select(cause_groups, usrds_group, group_name), by = "usrds_group") |>
+  select(code, usrds_group_name = group_name)
+
 cause_codes <- usRds:::metadata_c[["PD96DET"]] |>
   transmute(
     code = str_trim(as.character(value)),
     description = str_squish(as.character(description))
   ) |>
-  filter(code != "**OTHER**") |>
-  distinct(code, .keep_all = TRUE)
+  filter(code != "**OTHER**", code != "") |>
+  distinct(code, .keep_all = TRUE) |>
+  mutate(code_system = cause_code_system(code)) |>
+  left_join(usrds_code_groups, by = "code", relationship = "one-to-one")
+
+# Codes USRDS has grouped are the reference; the models group the others
+reference_codes <- filter(cause_codes, !is.na(usrds_group_name))
+codes_to_classify <- filter(cause_codes, is.na(usrds_group_name))
 
 ## ---- define-classification-prompt
 # The prompt is the text file esrd_classifier_prompt_file (prompts/), shown in
-# full on the website. {{category_list}} and {{code_list}} are filled in for
-# each batch.
+# full on the website. For each batch, {{group_list}} becomes the USRDS groups,
+# {{reference_list}} the codes USRDS has grouped, and {{code_list}} the batch.
+describe_code <- function(codes) {
+  str_glue("{codes$code} [{codes$code_system}]: {codes$description}")
+}
+
+group_list <- cause_groups |>
+  str_glue_data("- {group_name}: for example, {examples}") |>
+  str_flatten("\n")
+
+reference_list <- reference_codes |>
+  arrange(usrds_group_name, code) |>
+  mutate(line = str_glue("{describe_code(pick(everything()))} -> {usrds_group_name}")) |>
+  pull(line) |>
+  str_flatten("\n")
+
 classification_prompt <- function(batch) {
   ellmer::interpolate_file(
     esrd_classifier_prompt_file,
-    category_list = str_flatten(str_c("- ", esrd_cause_categories), "\n"),
-    code_list = str_flatten(str_c(batch$code, ": ", batch$description), "\n")
+    group_list = group_list,
+    reference_list = reference_list,
+    code_list = str_flatten(describe_code(batch), "\n")
   )
 }
+
+classification_type <- ellmer::type_array(
+  ellmer::type_object(
+    code = ellmer::type_string("The code exactly as given"),
+    category = ellmer::type_enum(cause_groups$group_name, "USRDS primary disease group"),
+    reason = ellmer::type_string("Reason, at most 15 words")
+  )
+)
 
 # A short fingerprint of the prompt text, ignoring Windows line endings. It is
 # part of each saved answer file's name, so editing the prompt asks every
@@ -54,14 +100,6 @@ prompt_version <- esrd_classifier_prompt_file |>
   str_remove_all("\r") |>
   rlang::hash() |>
   str_sub(1, 8)
-
-classification_type <- ellmer::type_array(
-  ellmer::type_object(
-    code = ellmer::type_string("The code exactly as given"),
-    category = ellmer::type_enum(esrd_cause_categories, "Cause of kidney failure category"),
-    reason = ellmer::type_string("Reason, at most 15 words")
-  )
-)
 
 ## ---- define-providers
 # One function per provider. Each takes a batch of codes and returns one row
@@ -105,9 +143,9 @@ votes <- providers |>
         str_glue("{provider}-{esrd_classifier_models[[provider]]}-{prompt_version}.csv")
       ),
       classify = function() {
-        cause_codes |>
+        codes_to_classify |>
           classify_codes(ask, batch_size = esrd_classifier_batch_size) |>
-          check_votes(cause_codes, esrd_cause_categories, provider)
+          check_votes(codes_to_classify, cause_groups$group_name, provider)
       }
     ) |>
       mutate(provider = provider)
@@ -115,20 +153,38 @@ votes <- providers |>
   list_rbind()
 
 ## ---- measure-agreement
-mapping <- ensemble_agreement(votes, cause_codes) |>
+# One row per code. A code USRDS has grouped keeps that group. For the others,
+# the group is accepted when all three models agree; the deciders fill
+# final_group for the rest. The paper's category follows from the group
+# (references/usrds-cause-groups.csv, read in link_area_data.R).
+model_groups <- ensemble_agreement(votes, codes_to_classify) |>
+  rename(model_group = model_category)
+
+mapping <- cause_codes |>
+  left_join(
+    select(model_groups, -description, -code_system, -usrds_group_name),
+    by = "code",
+    relationship = "one-to-one"
+  ) |>
   mutate(
-    final_category = model_category,
-    reviewed_by = if_else(unanimous, "unanimous", NA_character_),
+    final_group = coalesce(usrds_group_name, model_group),
+    reviewed_by = case_when(
+      !is.na(usrds_group_name) ~ "USRDS",
+      unanimous ~ "unanimous",
+      .default = NA_character_
+    ),
     classified_on = as.character(Sys.Date()),
-    models = str_flatten(unlist(esrd_classifier_models), "; ")
+    models = str_flatten(unlist(esrd_classifier_models), "; "),
+    prompt_version = prompt_version
   )
 
-agreement <- mapping |>
+agreement <- model_groups |>
   select(starts_with("category_")) |>
   irr::kappam.fleiss()
 
 message(str_glue(
-  "{sum(mapping$unanimous)} of {nrow(mapping)} codes unanimous; ",
+  "{nrow(reference_codes)} codes grouped by USRDS; ",
+  "{sum(model_groups$unanimous)} of {nrow(model_groups)} others unanimous; ",
   "Fleiss' kappa {round(agreement$value, 3)}. Review the others before running main.R."
 ))
 

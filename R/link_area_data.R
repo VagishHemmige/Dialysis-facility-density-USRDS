@@ -4,31 +4,52 @@
 #   failure; and compute HSA facility density. No one is excluded here.
 # Needs: medevid_forms (prepare_patients.R); zcta_crosswalk, acs_zcta, hsa_crosswalk,
 #   hsa_population, ruca_zip, hsa_benchmarks (download_public_data.R);
-#   esrd_cause_mapping_file (setup.R).
+#   esrd_cause_mapping_file and esrd_cause_groups_file (setup.R).
 # Produces: linked_forms (medevid_forms with area variables and
 #   availability flags used by create_cohort.R).
 
 ## ---- read-cause-mapping
-# The reviewed mapping of every $PD96DET code (R/classify_esrd_causes.R).
+# Each $PD96DET code's USRDS primary disease group (R/classify_esrd_causes.R,
+# reviewed by the deciders), and the paper category each group counts as
+# (references/usrds-cause-groups.csv, filled by the deciders).
 if (!file.exists(esrd_cause_mapping_file)) {
   stop(str_glue(
     "Missing {esrd_cause_mapping_file}. Run R/classify_esrd_causes.R and review it first."
   ), call. = FALSE)
 }
+
+cause_group_categories <- esrd_cause_groups_file |>
+  read_csv(col_types = cols(.default = col_character())) |>
+  select(final_group = group_name, esrd_cause = category) |>
+  assert_unique(final_group)
+
+undecided_groups <- cause_group_categories |>
+  filter(!esrd_cause %in% esrd_cause_categories)
+
+if (nrow(undecided_groups) > 0) {
+  stop(str_glue(
+    "{nrow(undecided_groups)} group(s) in {esrd_cause_groups_file} have no category ",
+    "from esrd_cause_categories (setup.R): {str_flatten_comma(undecided_groups$final_group)}."
+  ), call. = FALSE)
+}
+
 esrd_cause_mapping <- esrd_cause_mapping_file |>
   read_csv(col_types = cols(.default = col_character())) |>
-  transmute(PDIS = code, esrd_cause = final_category) |>
-  assert_unique(PDIS)
+  select(PDIS = code, final_group) |>
+  assert_unique(PDIS) |>
+  left_join(cause_group_categories, by = "final_group", relationship = "many-to-one")
 
 unreviewed_codes <- esrd_cause_mapping |>
-  filter(!esrd_cause %in% esrd_cause_categories)
+  filter(is.na(esrd_cause))
 
 if (nrow(unreviewed_codes) > 0) {
   stop(str_glue(
-    "{nrow(unreviewed_codes)} code(s) in {esrd_cause_mapping_file} have no final_category ",
-    "from esrd_cause_categories (setup.R)."
+    "{nrow(unreviewed_codes)} code(s) in {esrd_cause_mapping_file} have no final_group ",
+    "from {esrd_cause_groups_file}."
   ), call. = FALSE)
 }
+
+esrd_cause_mapping <- select(esrd_cause_mapping, PDIS, esrd_cause)
 
 ## ---- attach-facility-counts
 # usRds finds the CMS release current on each patient's dialysis start date and
@@ -101,4 +122,5 @@ linked_forms <- linked_forms |>
     esrd_cause = "Presumed cause of kidney failure"
   )
 
-rm(first_forms, facility_crosswalk, esrd_cause_mapping, unreviewed_codes)
+rm(first_forms, facility_crosswalk, esrd_cause_mapping, unreviewed_codes, cause_group_categories,
+   undecided_groups)

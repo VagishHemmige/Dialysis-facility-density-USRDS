@@ -5,8 +5,9 @@
 #   providers in .Renviron (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY).
 # Produces: one file of checked answers per provider in esrd_votes_dir
 #   (data-raw/, gitignored); references/esrd-cause-categories.csv, with each model's category
-#   and reason, whether they agree, and final_category (filled for unanimous
-#   codes; the deciders fill the rest and their initials in reviewed_by).
+#   and reason, whether they agree, and final_category (filled when at least
+#   esrd_classifier_min_agreement models agree; the deciders fill the rest and
+#   their initials in reviewed_by).
 # Run once, by hand, outside main.R: it makes paid API calls.
 # Only the public code list from the USRDS Researcher's Guide is sent. No
 #   patient data are sent, and the code list is not filtered by patient data.
@@ -36,12 +37,25 @@ cause_codes <- usRds:::metadata_c[["PD96DET"]] |>
 
 ## ---- define-classification-prompt
 # The prompt is the text file esrd_classifier_prompt_file (prompts/), shown in
-# full on the website. {{category_list}} and {{code_list}} are filled in for
-# each batch.
+# full on the website. It defines each category in words; {{code_list}} is
+# filled in for each batch.
+prompt_text <- read_lines(esrd_classifier_prompt_file)
+
+# The structured output can only return names from esrd_cause_categories, so
+# the prompt must define each of them under exactly that name
+undefined_categories <- esrd_cause_categories |>
+  discard(\(category) any(str_starts(prompt_text, str_glue("- {category}:"))))
+
+if (length(undefined_categories) > 0) {
+  stop(str_glue(
+    "{esrd_classifier_prompt_file} has no definition line ",
+    "(\"- <category>: ...\") for: {str_flatten_comma(undefined_categories)}."
+  ), call. = FALSE)
+}
+
 classification_prompt <- function(batch) {
   ellmer::interpolate_file(
     esrd_classifier_prompt_file,
-    category_list = str_flatten(str_c("- ", esrd_cause_categories), "\n"),
     code_list = str_flatten(str_c(batch$code, ": ", batch$description), "\n")
   )
 }
@@ -49,8 +63,7 @@ classification_prompt <- function(batch) {
 # A short fingerprint of the prompt text, ignoring Windows line endings. It is
 # part of each saved answer file's name, so editing the prompt asks every
 # provider again instead of reusing answers to the old prompt.
-prompt_version <- esrd_classifier_prompt_file |>
-  read_lines() |>
+prompt_version <- prompt_text |>
   str_remove_all("\r") |>
   rlang::hash() |>
   str_sub(1, 8)
@@ -115,10 +128,14 @@ votes <- providers |>
   list_rbind()
 
 ## ---- measure-agreement
-mapping <- ensemble_agreement(votes, cause_codes) |>
+mapping <- ensemble_agreement(votes, cause_codes, min_agreement = esrd_classifier_min_agreement) |>
   mutate(
     final_category = model_category,
-    reviewed_by = if_else(unanimous, "unanimous", NA_character_),
+    reviewed_by = case_when(
+      unanimous ~ "unanimous",
+      !is.na(model_category) ~ str_glue("{n_agreeing} of 3 models"),
+      .default = NA_character_
+    ),
     classified_on = as.character(Sys.Date()),
     models = str_flatten(unlist(esrd_classifier_models), "; ")
   )
@@ -128,7 +145,9 @@ agreement <- mapping |>
   irr::kappam.fleiss()
 
 message(str_glue(
-  "{sum(mapping$unanimous)} of {nrow(mapping)} codes unanimous; ",
+  "{sum(mapping$unanimous)} of {nrow(mapping)} codes unanimous, ",
+  "{sum(!is.na(mapping$model_category))} accepted by at least ",
+  "{esrd_classifier_min_agreement} models; ",
   "Fleiss' kappa {round(agreement$value, 3)}. Review the others before running main.R."
 ))
 

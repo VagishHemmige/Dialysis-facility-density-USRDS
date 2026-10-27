@@ -160,6 +160,10 @@ esrd_classifier_models <- list(
   google = "gemini-3.8-flash"
 )
 esrd_classifier_batch_size <- 100
+# A category is accepted when at least this many of the three models give it
+# (2 of 3; decided by Vagish Hemmige, 27 October 2026). Other codes go to the
+# deciders.
+esrd_classifier_min_agreement <- 2
 esrd_classifier_prompt_file <- "prompts/esrd-cause-classification.md"
 # Output limit for Claude. ellmer 0.5.0 caps Claude's answers at 4,096 tokens
 # unless told otherwise, too few for a batch of 100 codes with reasons; the

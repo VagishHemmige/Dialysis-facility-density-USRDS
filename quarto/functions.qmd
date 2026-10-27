@@ -197,7 +197,7 @@ Saves a provider's checked answers the first time and reads them back on a rerun
 
 ## Combining the models
 
-One row per code with each model's category; a code is accepted only when all three agree.
+One row per code with each model's category and reason; a category is accepted when at least `min_agreement` models give it (two of three in this project).
 
 ```{r}
 #| label: fn-ensemble-agreement

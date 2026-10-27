@@ -7,7 +7,7 @@
 
 ## ---- define-flowchart-labels
 egfr_label <- str_glue("eGFR recorded and ≤ {egfr_maximum} mL/min/1.73 m²")
-year_label <- str_glue("Medical Evidence form dated {min(study_years)}–{max(study_years)}")
+year_label <- str_glue("Dialysis started {min(study_years)}–{max(study_years)}")
 age_label <- str_glue("Age ≥ {minimum_age} years")
 setting_label <- str_glue(
   "Dialysis setting: {str_flatten(str_to_lower(dialysis_settings_kept), ' or ')}"
@@ -22,7 +22,7 @@ cohort_fc <- linked_forms |>
   as_fc(label = "USRDS Medical Evidence forms") |>
   fc_filter(first_form, label = "First form per patient",
             show_exc = TRUE, label_exc = "Second or later dialysis episode") |>
-  fc_filter(year %in% study_years, label = year_label, show_exc = TRUE) |>
+  fc_filter(dialysis_year %in% study_years, label = year_label, show_exc = TRUE) |>
   fc_filter(age >= minimum_age, label = age_label, show_exc = TRUE) |>
   fc_filter(DIALTYP == "HEMO", label = "Hemodialysis", show_exc = TRUE) |>
   fc_filter(DIALSET %in% dialysis_settings_kept,

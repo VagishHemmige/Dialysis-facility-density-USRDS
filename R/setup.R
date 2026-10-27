@@ -19,7 +19,7 @@ library(gt)
 library(mice)
 
 ## ---- define-study-constants
-# Cohort (analysis-plan.md section 4)
+# Cohort (analysis-plan.md section 4): years in which dialysis started
 study_years <- 2011:2019
 minimum_age <- 18
 
@@ -179,7 +179,9 @@ imputation_count <- 10
 imputation_seed <- 20231020
 
 # Covariates added at each step of Table 2 (section 8; open decision #D6)
-model_1_covariates <- c("age", "sex", "race", "hispanic", "year")
+# Year of hemodialysis initiation, as the paper's Methods say; the original R
+# code used the year of the form (decided 27 October 2026)
+model_1_covariates <- c("age", "sex", "race", "hispanic", "dialysis_year")
 model_2_covariates <- c(model_1_covariates,
                         "heart_failure", "coronary_disease", "diabetes",
                         "cerebrovascular_disease", "alcohol_or_drug", "immobility",

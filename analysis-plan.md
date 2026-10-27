@@ -50,7 +50,7 @@ Cross-sectional study of incident hemodialysis patients linked to area-level dat
 **Eligibility, in order.** Each step is one box of the cohort flowchart. Steps 1 to 9 come from the paper and the original code; steps 10 to 16 are linkage and completeness requirements from the original code.
 
 1. First Medical Evidence form per patient (earliest `MEFDATE`); later forms describe a second or later dialysis episode.
-2. Form dated 2011 to 2019. The paper starts in 2011 because of the IDEAL trial [@cooper2010ideal]. The original code applied the lower bound explicitly and the upper bound only implicitly, through the ACS linkage.
+2. Dialysis started (`DIALDAT`) 2011 to 2019, as the paper states. The paper starts in 2011 because of the IDEAL trial [@cooper2010ideal]. The original code used the year of the form (`MEFDATE`), applying the lower bound explicitly and the upper bound only implicitly, through the ACS linkage (decided by Vagish Hemmige, 27 October 2026).
 3. Age 18 or older at incidence (`INC_AGE`).
 4. Hemodialysis as the primary type of dialysis (`DIALTYP` = hemodialysis).
 5. Dialysis setting. The paper excludes patients who began home dialysis. In the 2024 Researcher's Guide, format `$MESET`, `DIALSET` code 1 is "Home" and code 2 is "Dialysis facility/center"; the original code kept codes 1 and 2, so it removed skilled nursing and unknown settings but kept home hemodialysis. The published Figure 1 labels the patients it removed (14,380) "receiving home hemodialysis", so the coding may have differed in the release used. **Open:** [#D1] keep codes 1 and 2 (the original code) or code 2 only (the paper).
@@ -90,7 +90,7 @@ All patient covariates are measured on the first Medical Evidence form, at initi
 | Sex | `SEX` |
 | Race | `RACE` (format `$MERACE`), reported in the paper's five groups: White, Black, Asian, Native American, Pacific Islander. The five published counts sum to each column's total, so the form's Middle Eastern, South Asian and Other/multiracial codes were merged into those groups in the Stata analysis; how is not recorded. Here Middle Eastern counts as White and South Asian as Asian (1997 OMB race standard), and Other/multiracial as White, the largest group (chosen for this demonstration at Vagish Hemmige's request, 27 October 2026). |
 | Hispanic ethnicity | `ETHN`: Hispanic (codes 1, 2, 5) vs non-Hispanic (code 3) |
-| Year | Year of `MEFDATE` |
+| Year | Year dialysis started (`DIALDAT`), "year of hemodialysis initiation" in the paper; the original R code used the year of `MEFDATE` (decided by Vagish Hemmige, 27 October 2026) |
 | Comorbidities | Heart failure (`COMO_CHF`); coronary disease (`COMO_ASHD`); diabetes (any of `COMO_DM_INS`, `COMO_DM_ORAL`, `COMO_DM_NOMEDS`, `COMO_DM_RET`); cerebrovascular disease (`COMO_CVATIA`); cancer (`COMO_CANC`); alcohol or drug dependence (`COMO_ALCHO`, `COMO_DRUG`); immobility (`COMO_INAMB`, `COMO_NEEDASST`, `COMO_INTRANS`); institutionalized (`COMO_INST`, `COMO_INST_AL`, `COMO_INST_NURS`, `COMO_INST_OTH`). Each is "yes" when any listed field is yes |
 | Access type | `ACCESSTYPE`: AV fistula, AV graft, catheter, other |
 | Access to pre-kidney-failure nephrology care | `NEPHCARE`: none, some, unknown (unknown or blank kept as its own level), as in the paper's Table 1 and the Model 3 footnote (decided by Vagish Hemmige, 27 October 2026, in a working session). The duration (`NEPHCARERANGE`) is not used. |
@@ -169,6 +169,7 @@ Each is applied in the replication and its effect is reported (section 9). Decis
 | Dartmouth suppression codes made positive | Set to missing |
 | Home hemodialysis kept despite the stated exclusion | ([#D1]) |
 | Area data matched to the form year and facility counts to the dialysis start year; patients whose years differed were silently dropped | All area data matched to the year dialysis started; no one dropped for a year mismatch |
+| Study period and the year covariate defined by the form date (`MEFDATE`); the paper defines both by the start of hemodialysis | Both use the year dialysis started (`DIALDAT`) |
 | ACS subject-table variable codes assumed to be the same every year | Each year's variable labels are checked against the expected text before use |
 
 ## Reporting map

@@ -11,7 +11,7 @@
 ## ---- prepare-model-data
 model_data <- cohort |>
   mutate(
-    year = factor(year),
+    dialysis_year = factor(dialysis_year),
     density_category = relevel(density_category, ref = levels(density_category)[1])
   )
 

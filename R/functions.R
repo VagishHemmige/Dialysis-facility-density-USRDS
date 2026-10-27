@@ -247,25 +247,69 @@ variance_shares <- function(model) {
 }
 
 ## ---- fn-classify-codes
-# Ask one chat model to classify codes in batches; returns one row per code.
-# `chat_fn` creates a fresh chat for each batch (for example a call to
-# ellmer::chat_anthropic()), so batches do not share conversation history.
-classify_codes <- function(codes, chat_fn, prompt_fn, type, batch_size, provider) {
-  codes |>
-    mutate(batch = (row_number() - 1) %/% batch_size) |>
-    group_split(batch) |>
-    map(function(batch) {
-      chat <- chat_fn()
-      chat$chat_structured(prompt_fn(batch), type = type) |>
-        as_tibble()
-    }) |>
-    list_rbind() |>
-    transmute(
-      code = as.character(code),
-      category = as.character(category),
-      reason = as.character(reason),
-      provider = provider
-    )
+# Classify codes with one model, in batches. `ask` is that provider's function:
+# it takes a batch of codes (code, description) and returns one row per code
+# with code, category and reason. Codes the model skipped are asked once more.
+classify_codes <- function(codes, ask, batch_size) {
+  ask_in_batches <- function(codes) {
+    codes |>
+      select(code, description) |>
+      mutate(batch = (row_number() - 1) %/% batch_size) |>
+      group_split(batch, .keep = FALSE) |>
+      map(ask) |>
+      list_rbind() |>
+      transmute(
+        code = as.character(code),
+        category = as.character(category),
+        reason = as.character(reason)
+      )
+  }
+
+  answers <- ask_in_batches(codes)
+  skipped <- anti_join(codes, answers, by = "code")
+
+  if (nrow(skipped) > 0) {
+    answers <- bind_rows(answers, ask_in_batches(skipped))
+  }
+
+  answers
+}
+
+## ---- fn-check-votes
+# Stop unless one model answered every code exactly once, asked about no code
+# that was not given, and used only the allowed categories. Returns the votes.
+check_votes <- function(votes, codes, categories, provider) {
+  missing <- anti_join(codes, votes, by = "code")
+  unknown <- anti_join(votes, codes, by = "code")
+  repeated <- votes |>
+    count(code) |>
+    filter(n > 1)
+  wrong_category <- votes |>
+    filter(!category %in% categories)
+
+  if (nrow(missing) + nrow(unknown) + nrow(repeated) + nrow(wrong_category) > 0) {
+    stop(str_glue(
+      "{provider}: {nrow(missing)} code(s) missing, {nrow(unknown)} not asked about, ",
+      "{nrow(repeated)} repeated, {nrow(wrong_category)} with a category not in the list."
+    ), call. = FALSE)
+  }
+
+  invisible(votes)
+}
+
+## ---- fn-cached-votes
+# One provider's answers, saved to `path` the first time so that a rerun does
+# not pay for them again. `classify` is called only when the file does not
+# exist; delete the file to ask that provider again.
+cached_votes <- function(path, classify) {
+  if (file.exists(path)) {
+    return(read_csv(path, col_types = cols(.default = col_character())))
+  }
+
+  votes <- classify()
+  dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+  write_csv(votes, path, na = "")
+  votes
 }
 
 ## ---- fn-ensemble-agreement

@@ -19,7 +19,7 @@ The current implementation: scripts, data flow, and the objects passed between t
 | 9 | `R/tables.R` | 7, 8 | `table_1`; HTML files in `tables/` | Outputs, gitignored |
 | 10 | `R/figures.R` | 3, 6 | PNG files in `figures/` | Outputs, gitignored |
 
-`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and writes `references/esrd-cause-categories.csv` from the public `$PD96DET` code list. It calls three paid APIs and sends no patient data.
+`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and writes `references/esrd-cause-categories.csv` from the public `$PD96DET` code list. It calls three paid APIs, one function per provider, and sends no patient data. Each provider's checked answers are saved in `data-raw/esrd-cause-votes/` (gitignored), so a rerun pays only for providers that have not finished.
 
 ## Data flow
 

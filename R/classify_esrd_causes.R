@@ -76,7 +76,11 @@ ask_google <- function(batch) {
 }
 
 ask_anthropic <- function(batch) {
-  chat <- ellmer::chat_anthropic(model = esrd_classifier_models$anthropic, echo = "none")
+  chat <- ellmer::chat_anthropic(
+    model = esrd_classifier_models$anthropic,
+    params = ellmer::params(max_tokens = esrd_classifier_claude_max_tokens),
+    echo = "none"
+  )
   chat$chat_structured(classification_prompt(batch), type = classification_type)
 }
 

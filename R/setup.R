@@ -160,6 +160,9 @@ esrd_classifier_models <- list(
   google = "gemini-3.8-flash"
 )
 esrd_classifier_batch_size <- 100
+# Each provider's checked answers are saved here (gitignored), so a rerun does
+# not pay for a provider that already finished
+esrd_votes_dir <- file.path(public_data_dir, "esrd-cause-votes")
 
 ## ---- define-model-constants
 # Mixed-effects logistic models (section 8). nAGQ = 1 is the Laplace

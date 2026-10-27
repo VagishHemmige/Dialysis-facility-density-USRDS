@@ -36,16 +36,25 @@ The original mapping spreadsheet is lost. Its replacement starts from a public l
 
 ## Prompt and schema
 
-One prompt and one structured output schema for all three models. The schema restricts each answer to the six category names, so no answer needs cleaning.
+One prompt for all three models, and one structured output schema that restricts each answer to the six category names. Claude's JSON answers are held to the same categories by the check below.
 
 ```{r}
 #| label: define-classification-prompt
 #| eval: false
 ```
 
-## Three models
+## One function per provider
 
-The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Every model must return every code exactly once.
+The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Each has its own function, because the providers differ: OpenAI and Google take ellmer's structured output, while Claude models with adaptive thinking reject the forced tool call that structured output uses, so Claude is asked for the same answer as JSON text.
+
+```{r}
+#| label: define-providers
+#| eval: false
+```
+
+## Running and saving each provider
+
+Each provider runs and is checked on its own: every code answered exactly once, no invented codes, only the six categories. Its answers are then saved under the provider and model name, so a rerun after a failure asks only the providers that have not finished.
 
 ```{r}
 #| label: classify-with-ensemble

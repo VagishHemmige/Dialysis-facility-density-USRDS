@@ -87,10 +87,16 @@ census_regions <- list(
 # Primary RUCA code groups (ERS), the four rural-urban types in the paper's Table 1
 ruca_groups <- tribble(
   ~ruca1, ~rural_urban,
-  1,  "Metropolitan", 2,  "Metropolitan", 3,  "Metropolitan",
-  4,  "Micropolitan", 5,  "Micropolitan", 6,  "Micropolitan",
-  7,  "Small town",   8,  "Small town",   9,  "Small town",
-  10, "Rural"
+  1,      "Metropolitan",
+  2,      "Metropolitan",
+  3,      "Metropolitan",
+  4,      "Micropolitan",
+  5,      "Micropolitan",
+  6,      "Micropolitan",
+  7,      "Small town",
+  8,      "Small town",
+  9,      "Small town",
+  10,     "Rural"
 )
 ruca_not_coded <- 99  # zero-population ZIP code
 

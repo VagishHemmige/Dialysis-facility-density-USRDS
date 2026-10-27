@@ -14,23 +14,29 @@
 # usRds holds Appendix C internally; usRds:::metadata_c is used until the
 # package exports the formats (to be raised in the usRds project).
 cause_codes <- usRds:::metadata_c[["PD96DET"]] |>
-  transmute(code = str_trim(as.character(value)), description = str_squish(as.character(description))) |>
+  transmute(
+    code = str_trim(as.character(value)),
+    description = str_squish(as.character(description))
+  ) |>
   filter(code != "**OTHER**") |>
   distinct(code, .keep_all = TRUE)
 
 ## ---- define-classification-prompt
 classification_prompt <- function(batch) {
-  paste0(
+  category_list <- str_flatten(str_c("- ", esrd_cause_categories), "\n")
+  code_list <- str_flatten(str_c(batch$code, ": ", batch$description), "\n")
+
+  str_glue(
     "You are a nephrologist classifying the primary cause of kidney failure recorded ",
     "on the CMS-2728 Medical Evidence form, using the USRDS code list.\n\n",
     "Assign each code to exactly one of these categories:\n",
-    paste0("- ", esrd_cause_categories, collapse = "\n"), "\n\n",
+    "{category_list}\n\n",
     "Use 'Other' for every cause that fits none of the first five, and for codes ",
     "meaning missing, unknown or unreconcilable. Classify from the code and its ",
     "description only; do not assume information that is not given.\n",
     "Return one entry per code, with the code exactly as given and a reason of ",
     "at most 15 words.\n\nCodes:\n",
-    paste0(batch$code, ": ", batch$description, collapse = "\n")
+    "{code_list}"
   )
 }
 
@@ -55,13 +61,19 @@ votes <- imap(providers, function(chat_fn, provider) {
 }) |>
   list_rbind()
 
-# Every model must return every code exactly once
-check_votes <- count(votes, provider, code)
-stopifnot(
-  all(check_votes$n == 1),
-  all(table(check_votes$provider) == nrow(cause_codes)),
-  all(votes$code %in% cause_codes$code)
-)
+# Every model must return every code exactly once, and no code that was not
+# asked about
+vote_problems <- cause_codes |>
+  select(code) |>
+  cross_join(tibble(provider = names(providers))) |>
+  full_join(count(votes, provider, code), by = join_by(code, provider)) |>
+  filter(is.na(n) | n != 1 | !code %in% cause_codes$code)
+
+if (nrow(vote_problems) > 0) {
+  stop(str_glue(
+    "{nrow(vote_problems)} code and model pair(s) are missing, repeated or unknown."
+  ), call. = FALSE)
+}
 
 ## ---- measure-agreement
 mapping <- ensemble_agreement(votes, cause_codes) |>
@@ -69,15 +81,17 @@ mapping <- ensemble_agreement(votes, cause_codes) |>
     final_category = model_category,
     reviewed_by = if_else(unanimous, "unanimous", NA_character_),
     classified_on = as.character(Sys.Date()),
-    models = paste(unlist(esrd_classifier_models), collapse = "; ")
+    models = str_flatten(unlist(esrd_classifier_models), "; ")
   )
 
 agreement <- mapping |>
   select(starts_with("category_")) |>
   irr::kappam.fleiss()
 
-message(sprintf("%d of %d codes unanimous; Fleiss' kappa %.3f. Review the others before running main.R.",
-                sum(mapping$unanimous), nrow(mapping), agreement$value))
+message(str_glue(
+  "{sum(mapping$unanimous)} of {nrow(mapping)} codes unanimous; ",
+  "Fleiss' kappa {round(agreement$value, 3)}. Review the others before running main.R."
+))
 
 ## ---- write-mapping
 write_csv(mapping, esrd_cause_mapping_file, na = "")

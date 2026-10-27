@@ -11,18 +11,24 @@
 ## ---- read-cause-mapping
 # The reviewed mapping of every $PD96DET code (R/classify_esrd_causes.R).
 if (!file.exists(esrd_cause_mapping_file)) {
-  stop("Missing ", esrd_cause_mapping_file, ". Run R/classify_esrd_causes.R and review it first.",
-       call. = FALSE)
+  stop(str_glue(
+    "Missing {esrd_cause_mapping_file}. Run R/classify_esrd_causes.R and review it first."
+  ), call. = FALSE)
 }
-esrd_cause_mapping <- read_csv(esrd_cause_mapping_file, col_types = cols(.default = col_character())) |>
-  transmute(PDIS = code, esrd_cause = final_category)
+esrd_cause_mapping <- esrd_cause_mapping_file |>
+  read_csv(col_types = cols(.default = col_character())) |>
+  transmute(PDIS = code, esrd_cause = final_category) |>
+  assert_unique(PDIS)
 
-if (anyNA(esrd_cause_mapping$esrd_cause) ||
-    !all(esrd_cause_mapping$esrd_cause %in% esrd_cause_categories)) {
-  stop("Every code in ", esrd_cause_mapping_file,
-       " needs a final_category from esrd_cause_categories (setup.R).", call. = FALSE)
+unreviewed_codes <- esrd_cause_mapping |>
+  filter(!esrd_cause %in% esrd_cause_categories)
+
+if (nrow(unreviewed_codes) > 0) {
+  stop(str_glue(
+    "{nrow(unreviewed_codes)} code(s) in {esrd_cause_mapping_file} have no final_category ",
+    "from esrd_cause_categories (setup.R)."
+  ), call. = FALSE)
 }
-stopifnot(!anyDuplicated(esrd_cause_mapping$PDIS))
 
 ## ---- attach-facility-counts
 # usRds finds the CMS release current on each patient's dialysis start date and
@@ -50,8 +56,7 @@ linked_forms <- medevid_forms |>
   left_join(first_forms, by = "USRDS_ID", relationship = "many-to-one") |>
   left_join(zcta_crosswalk, by = join_by(zip, year), relationship = "many-to-one") |>
   left_join(acs_zcta, by = join_by(zcta, year), relationship = "many-to-one") |>
-  left_join(select(hsa_crosswalk, zip, year, hsanum),
-            by = join_by(zip, year), relationship = "many-to-one") |>
+  left_join(facility_crosswalk, by = join_by(zip, year), relationship = "many-to-one") |>
   left_join(hsa_population, by = join_by(year, hsanum), relationship = "many-to-one") |>
   left_join(hsa_benchmarks, by = "hsanum", relationship = "many-to-one") |>
   left_join(select(ruca_zip, zip, ruca1, rural_urban), by = "zip", relationship = "many-to-one") |>
@@ -62,7 +67,10 @@ linked_forms <- medevid_forms |>
     esrd_cause = factor(coalesce(esrd_cause, "Other"), levels = esrd_cause_categories)
   )
 
-stopifnot(nrow(linked_forms) == nrow(medevid_forms))
+# The joins must not add or drop forms
+if (nrow(linked_forms) != nrow(medevid_forms)) {
+  stop("Linking area data changed the number of Medical Evidence forms.", call. = FALSE)
+}
 
 ## ---- compute-density
 # Facilities per 100,000 HSA residents on the date of dialysis start.
@@ -74,9 +82,7 @@ linked_forms <- linked_forms |>
     has_acs = !is.na(zip_population),
     has_facility_snapshot = !is.na(facility_snapshot_date),
     has_hsa = !is.na(hsanum) & !is.na(hsa_center_density) & is.finite(hsa_center_density),
-    has_complete_acs = if_all(c(zip_population, zip_percent_female, zip_percent_white,
-                                zip_percent_black, zip_percent_asian, zip_percent_hispanic,
-                                zip_median_income, zip_percent_poverty), ~ !is.na(.x)),
+    has_complete_acs = if_all(all_of(acs_variables$name), \(x) !is.na(x)),
     has_ruca = !is.na(ruca1) & ruca1 != ruca_not_coded
   ) |>
   set_variable_labels(
@@ -95,4 +101,4 @@ linked_forms <- linked_forms |>
     esrd_cause = "Presumed cause of kidney failure"
   )
 
-rm(first_forms, facility_crosswalk, esrd_cause_mapping)
+rm(first_forms, facility_crosswalk, esrd_cause_mapping, unreviewed_codes)

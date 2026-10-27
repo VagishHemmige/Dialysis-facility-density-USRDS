@@ -96,6 +96,24 @@ Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).
 #| eval: false
 ```
 
+## Alternative columns
+
+Takes, row by row, the first value present across several columns. A release of the Medical Evidence file has the provider ID as `PROVUSRD_DIAL` or as `PROVUSRD`, and this picks whichever is there.
+
+```{r}
+#| label: fn-first-non-missing
+#| eval: false
+```
+
+## Unique keys
+
+Stops if any key appears more than once, and otherwise passes the data on, so it can end a pipeline. Every lookup table is checked this way before it is joined to patients.
+
+```{r}
+#| label: fn-assert-unique
+#| eval: false
+```
+
 ## Checking ACS variables
 
 Compares each year's ACS label with the expected pattern and stops on any mismatch or absent variable.
@@ -111,6 +129,15 @@ Zero facilities is its own category; the other four are cut at the quartiles, ea
 
 ```{r}
 #| label: fn-density-categories
+#| eval: false
+```
+
+## eGFR limit
+
+Applies the eGFR restriction: at or below the limit, or strictly below it, as set in `setup.R` (open decision #D2).
+
+```{r}
+#| label: fn-egfr-within-limit
 #| eval: false
 ```
 

@@ -51,15 +51,17 @@ medevid_forms <- medevid_labelled |>
       RACE == "ASIAN" ~ "Asian",
       RACE == "AMERICAN INDIAN/ALASKAN NATIVE" ~ "Native American",
       RACE == "PACIFIC ISLANDER" ~ "Pacific Islander",
-      # Open decision #D6: how these were grouped in the published tables
-      RACE == "MIDEAST" ~ "Middle Eastern",
-      RACE == "INDIAN SUBCO" ~ "South Asian",
-      RACE == "OTHER/MULTI-RACIAL" ~ "Other",
+      # The paper reports five groups. Middle Eastern is counted as White and
+      # South Asian as Asian (the OMB 1997 race standard), and Other or
+      # multiracial as White, the largest group; how Stata grouped them is
+      # not recorded (chosen for this demonstration, 27 October 2026)
+      RACE == "MIDEAST" ~ "White",
+      RACE == "INDIAN SUBCO" ~ "Asian",
+      RACE == "OTHER/MULTI-RACIAL" ~ "White",
       .default = NA_character_
     ),
     race = factor(race, levels = c(
-      "White", "Black", "Asian", "Native American", "Pacific Islander",
-      "Middle Eastern", "South Asian", "Other"
+      "White", "Black", "Asian", "Native American", "Pacific Islander"
     )),
     hispanic = case_when(
       ETHN %in% c("HISPANIC-MEXICAN", "HISPANIC OTHER", "HISPANIC NON-SPECIFIED") ~ "Hispanic",

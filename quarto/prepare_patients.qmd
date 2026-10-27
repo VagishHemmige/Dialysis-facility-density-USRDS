@@ -36,7 +36,7 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Patient variables
 
-Each form is numbered within its patient, and the first form is flagged. Race keeps the form's Middle Eastern, South Asian and Other codes separate, because how the paper grouped them is not recorded ([#D6]). The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
+Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard, and Other or multiracial counts as White, the largest group. The detailed race is kept as `race_detailed`. The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
 
 ```{r}
 #| label: derive-patient-variables

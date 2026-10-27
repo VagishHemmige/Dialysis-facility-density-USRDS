@@ -54,7 +54,7 @@ format_or_table <- function(df, title) {
 }
 
 table_2 <- estimates$table_2 |>
-  format_or_table("Odds of starting hemodialysis at eGFR > 10 by HSA facility density")
+  format_or_table("Odds of starting hemodialysis at eGFR ≥ 10 by HSA facility density")
 
 table_sensitivity <- bind_rows(estimates$sensitivity, estimates$egfr_range) |>
   format_or_table("Sensitivity analyses")

@@ -68,7 +68,7 @@ medevid_forms <- medevid_labelled |>
     ),
     hispanic = factor(hispanic, levels = c("Non-Hispanic", "Hispanic")),
     egfr = GFR_EPI,
-    early_start = as.integer(egfr > early_egfr_threshold),
+    early_start = as.integer(egfr >= early_egfr_threshold),
     albumin = ALBUM,
     hemoglobin = HEGLB,
     access_type = case_when(
@@ -160,7 +160,7 @@ medevid_forms <- medevid_forms |>
     race = "Race",
     hispanic = "Hispanic ethnicity",
     egfr = "eGFR at initiation (CKD-EPI), mL/min/1.73 m2",
-    early_start = "eGFR above 10 mL/min/1.73 m2 at initiation",
+    early_start = "eGFR 10 mL/min/1.73 m2 or above at initiation",
     albumin = "Serum albumin, g/dL",
     hemoglobin = "Serum hemoglobin, g/dL",
     access_type = "Access used at first outpatient dialysis",

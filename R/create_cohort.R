@@ -6,8 +6,7 @@
 #   the data from the final step).
 
 ## ---- define-flowchart-labels
-egfr_sign <- if_else(egfr_maximum_inclusive, "≤", "<")
-egfr_label <- str_glue("eGFR recorded and {egfr_sign} {egfr_maximum} mL/min/1.73 m²")
+egfr_label <- str_glue("eGFR recorded and ≤ {egfr_maximum} mL/min/1.73 m²")
 year_label <- str_glue("Medical Evidence form dated {min(study_years)}–{max(study_years)}")
 age_label <- str_glue("Age ≥ {minimum_age} years")
 setting_label <- str_glue(
@@ -28,7 +27,7 @@ cohort_fc <- linked_forms |>
   fc_filter(!is.na(insurance), label = "Insurance recorded", show_exc = TRUE) |>
   fc_filter(!is.na(access_type), label = "Access type recorded", show_exc = TRUE) |>
   fc_filter(!is.na(sex), label = "Sex recorded", show_exc = TRUE) |>
-  fc_filter(!is.na(egfr) & egfr_within_limit(egfr, egfr_maximum, egfr_maximum_inclusive),
+  fc_filter(!is.na(egfr) & egfr <= egfr_maximum,
             label = egfr_label, show_exc = TRUE) |>
   fc_filter(has_residence, label = "Residential ZIP code on the dialysis start date", show_exc = TRUE) |>
   fc_filter(has_zcta, label = "ZIP code has a ZCTA (UDS Mapper crosswalk for the year)",

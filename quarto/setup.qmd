@@ -31,7 +31,7 @@ Each data source has an access package: `usRds` for the USRDS files and the CMS 
 
 ## Cohort constants
 
-These implement section 4 of the analysis plan. Two of them are open decisions, and both default to the original code's behavior so the first run reproduces it. `dialysis_settings_kept` keeps home and facility settings because the original code did, although the paper says home dialysis was excluded ([#D1]). `egfr_maximum_inclusive` keeps eGFR of exactly 20, as the original code did, although the paper says "less than 20" ([#D2]).
+These implement section 4 of the analysis plan. `dialysis_settings_kept` keeps home and facility settings because the original code did, although the paper says home dialysis was excluded; this is an open decision ([#D1]). The eGFR restriction (20 or below) and the outcome (early means 10 or above) also follow the original code, where the paper's text says "less than 20" and "greater than 10"; the two differ only for patients at exactly 20 or exactly 10.
 
 ```{r}
 #| label: define-study-constants

@@ -37,7 +37,7 @@ These are kept above as printed. Each is listed so that the replication's output
 **Figure 1**
 
 -   The 14,380 patients labelled "Receiving home hemodialysis" are those the original code removed for having a dialysis setting (`DIALSET`) other than codes 1 and 2. In the 2024 USRDS Researcher's Guide, code 1 is home and code 2 is a dialysis facility, so under that coding these 14,380 would be skilled nursing or unknown settings and home patients would have stayed in. Open decision D1.
--   "38,708 eGFR <20 mL/min/1.73 m²" are patients excluded for an eGFR **above** 20 (or missing), as the paper's Methods and the original code describe. Open decision D2.
+-   "38,708 eGFR <20 mL/min/1.73 m²" are patients excluded for an eGFR **above** 20 (or missing), as the original code describes. The paper's Methods say "less than 20"; the replication keeps the code's rule of 20 or below.
 -   The 224 patients whose ZIP code "did not agree with a ZCTA" were counted by the original code but never removed by it; see the [differences page](differences.qmd).
 -   No box shows exclusions for missing insurance or for a ZIP code with no RUCA code, although the original code applied both. The original code recorded the RUCA exclusion as removing 0 patients.
 -   The counts add up: 3,416,330 − 2,571,864 = 844,466, and the 12 exclusion counts sum to 2,571,864.

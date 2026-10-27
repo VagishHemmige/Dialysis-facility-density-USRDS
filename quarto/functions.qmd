@@ -132,15 +132,6 @@ Zero facilities is its own category; the other four are cut at the quartiles, ea
 #| eval: false
 ```
 
-## eGFR limit
-
-Applies the eGFR restriction: at or below the limit, or strictly below it, as set in `setup.R` (open decision #D2).
-
-```{r}
-#| label: fn-egfr-within-limit
-#| eval: false
-```
-
 ## Odds ratios
 
 Extracts the density terms of a fitted model as odds ratios with Wald confidence intervals and the number of patients the model used.

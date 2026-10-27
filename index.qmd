@@ -19,7 +19,7 @@ Rebuilding the analysis this way turned up several errors in the original code. 
 
 ## Methods
 
-The authoritative specification is [`analysis-plan.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md). In brief: incident adults on in-center hemodialysis with an eGFR of 20 or below; exposure, HSA dialysis facilities per 100,000 residents in five categories; outcome, eGFR above 10 at initiation; mixed-effects logistic models with a random intercept for HSA, progressively adjusted for patient, clinical, area and HSA characteristics [@vonelm2007strobe; @benchimol2015record].
+The authoritative specification is [`analysis-plan.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md). In brief: incident adults on in-center hemodialysis with an eGFR of 20 or below; exposure, HSA dialysis facilities per 100,000 residents in five categories; outcome, eGFR of 10 or above at initiation; mixed-effects logistic models with a random intercept for HSA, progressively adjusted for patient, clinical, area and HSA characteristics [@vonelm2007strobe; @benchimol2015record].
 
 ## Status
 

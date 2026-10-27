@@ -28,12 +28,12 @@ minimum_age <- 18
 # Open decision #D1; default reproduces the original code.
 dialysis_settings_kept <- c("HOME", "DIALYSIS FACILITY/CENTER")
 
-# eGFR restriction (mL/min/1.73 m2). The original code kept values <= 20;
-# the paper says < 20. Open decision #D2; default reproduces the original code.
+# eGFR restriction (mL/min/1.73 m2): 20 or below, as in the original code
+# (the paper says "less than 20"; decided 27 October 2026)
 egfr_maximum <- 20
-egfr_maximum_inclusive <- TRUE
 
-# Outcome (section 7): early initiation is eGFR above this value
+# Outcome (section 7): early initiation is eGFR of 10 or above, as in the
+# original code (the paper says "greater than 10"; decided 27 October 2026)
 early_egfr_threshold <- 10
 
 # Sensitivity analysis: eGFR range from the original code (exclusive bounds)

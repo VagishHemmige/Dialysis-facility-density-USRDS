@@ -3,11 +3,12 @@ title: "Differences from the original code"
 format: html
 ---
 
-This page lists every way this replication differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density]. Each difference is one of three kinds:
+This page lists every way this replication differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density], and every place where the paper's text differs from that code. Each entry is one of four kinds:
 
 -   **Corrected error**: the original code did not do what it intended. The replication does, and the effect on the published numbers will be measured on the first full run.
 -   **Open decision**: the original code and the paper disagree, or neither says. The replication reproduces the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.
 -   **Rebuilt**: the original material is not available, so the step is rebuilt from public sources.
+-   **Paper differs from code**: the paper's text describes a rule slightly differently from the code that produced its numbers. The replication follows the code, as the deciders chose, and the entry records the paper's wording.
 
 ::: callout-note
 ## Status
@@ -22,7 +23,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 | At least eight filters were applied outside the CONSORT table: the facility linkage, a second sex check, missing ZIP population, % White, % Black, % Asian and % Hispanic, and missing region. The income and poverty rows were labelled "ZIPPercentageFemale". | Corrected error | As above. | Figure 1 counts |
 | A ZIP-to-ZCTA crosswalk was intended, and counted in the CONSORT table (224 patients in the published Figure 1), but never applied: ZIP codes were matched to ACS ZCTAs as if they were the same. Residents of the roughly one in five ZIP codes whose ZCTA has a different number (mostly PO box ZIP codes) found no ACS data and were excluded at the "ACS ZCTA code data missing" step. | Corrected error | The intended crosswalk is applied: each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year (`zippeR`), with its own flowchart step. HSA population counts each ZCTA once. | Cohort size (likely larger), ACS variables, HSA population and density |
 | `DIALSET` codes 1 and 2 were kept, labelled "Remove patients receiving home HD". In the USRDS Researcher's Guide (2024, format `$MESET`), code 1 is home and code 2 is a dialysis facility, so home hemodialysis patients stayed in; the paper says they were excluded. The published Figure 1 shows 14,380 patients excluded as "receiving home hemodialysis": those are the patients outside codes 1 and 2, so either the coding differed in the release used or the label is wrong. | Open decision [#D1] | Default keeps codes 1 and 2. | Cohort size and every estimate, slightly |
-| eGFR was restricted to 20 or below, and patients with missing eGFR were removed in the same step without being counted separately. The paper says "less than 20"; the published Figure 1 labels the 38,708 excluded patients "eGFR <20", which reads as a label slip for "> 20". | Open decision [#D2] | Default keeps 20 or below; missing eGFR is still in the same step. | Patients with eGFR of exactly 20 |
+| eGFR was restricted to 20 or below, and patients with missing eGFR were removed in the same step without being counted separately. The paper says "less than 20"; the published Figure 1 labels the 38,708 excluded patients "eGFR <20", which reads as a label slip for "> 20". | Paper differs from code | The code's rule: 20 or below, missing eGFR in the same step (decided 27 October 2026). | None; the paper's wording differs only for eGFR of exactly 20 |
 | ACS data and the HSA were matched to the year of the form (`MEFDATE`) and facility counts to the dialysis date (`DIALDAT`). The facility join silently required the two years to be equal. | Open decision [#D3] | Same matching; the same-year requirement is now a flowchart step, so its count is visible. | Possibly none, if the two years always match |
 | No upper bound on the form year; 2020 and later forms were removed only because no ACS data were downloaded for them. | Corrected error | Forms dated 2011 to 2019 are one flowchart step. | Figure 1 counts |
 
@@ -51,6 +52,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
 | Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. | Rebuilt | `usRds::load_usrds_file()` applies the USRDS value labels. | None intended |
+| The outcome `GFR_DICH` counted eGFR of 10 or above as early. The paper describes the outcome as eGFR "greater than 10" vs "less than or equal to 10". | Paper differs from code | The code's rule: 10 or above is early (decided 27 October 2026). | None, if Stata used `GFR_DICH`; otherwise patients at exactly 10 |
 | The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, open decision [#D4] | Three language models classify the public USRDS code list; the deciders review every code the models disagree on. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
 | A comorbidity field that was blank became missing, which would drop the patient from a model. The published sample sizes show the paper's models kept these patients. | Rebuilt | Blank or unknown counts as not present, as on the form. | Matches the published sample sizes |
 | Race had nine levels in R; the paper reports five groups whose counts add up to each column total. | Open decision [#D6] | Middle Eastern, South Asian and Other are kept separate until the deciders say how the paper grouped them. | Table 1 race rows; models adjusting for race |

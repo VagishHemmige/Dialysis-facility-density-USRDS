@@ -199,17 +199,6 @@ categorize_density <- function(density, cutpoints, digits = 2) {
   factor(category, levels = 1:5, labels = density_category_labels(cutpoints, digits))
 }
 
-## ---- fn-egfr-within-limit
-# The eGFR restriction (analysis-plan.md section 4, open decision #D2):
-# at or below the limit when `inclusive`, otherwise strictly below.
-egfr_within_limit <- function(egfr, maximum, inclusive) {
-  if (inclusive) {
-    egfr <= maximum
-  } else {
-    egfr < maximum
-  }
-}
-
 ## ---- fn-density-odds-ratios
 # Odds ratios (95% Wald CI, p value) for the density terms of a fitted model,
 # with the number of patients the model used.

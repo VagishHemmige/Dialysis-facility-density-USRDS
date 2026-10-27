@@ -155,11 +155,6 @@ test_that("ZIP codes missing from the ZCTA crosswalk add nothing", {
   expect_equal(hsa_population_from_zcta(hsa, zcta, pop)$hsa_population, 500)
 })
 
-test_that("the eGFR limit is inclusive or strict as set", {
-  expect_equal(egfr_within_limit(c(19.9, 20, 20.1), 20, inclusive = TRUE), c(TRUE, TRUE, FALSE))
-  expect_equal(egfr_within_limit(c(19.9, 20, 20.1), 20, inclusive = FALSE), c(TRUE, FALSE, FALSE))
-})
-
 test_that("assert_unique stops on duplicated keys and passes data through", {
   df <- tibble(zip = c("10467", "10467"), year = c(2015, 2016))
   expect_identical(assert_unique(df, zip, year), df)

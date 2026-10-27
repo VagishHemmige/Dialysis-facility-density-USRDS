@@ -57,7 +57,7 @@ Cross-sectional study of incident hemodialysis patients linked to area-level dat
 6. Insurance status recorded (at least one coverage field marked yes).
 7. Vascular access type at first outpatient dialysis recorded (`ACCESSTYPE` not unknown).
 8. Sex recorded.
-9. eGFR at initiation recorded and no higher than 20 mL/min/1.73 m². The paper says "less than 20", and its Figure 1 labels the 38,708 excluded patients "eGFR <20"; the original code kept values of 20 or below, and dropped missing eGFR within the same step without counting them separately. **Open:** [#D2] whether the bound is < 20 or ≤ 20, and whether missing eGFR is its own flowchart step.
+9. eGFR at initiation recorded and no higher than 20 mL/min/1.73 m², as in the original code (decided by Vagish Hemmige, 27 October 2026, in a working session: "Use the code"). The paper says "less than 20", and its Figure 1 labels the 38,708 excluded patients "eGFR <20". As in the original code, missing eGFR is removed in the same step.
 10. A residential ZIP code in effect on the date of dialysis start (RESIDENC period containing `DIALDAT`), unique per patient.
 11. The ZIP code has a ZCTA in the UDS Mapper crosswalk for the form year, and ACS data are available for that ZCTA and year. The original code intended this crosswalk but never applied it, matching ZIP codes to ZCTAs directly; the replication applies it (decided by Vagish Hemmige, 27 October 2026, in a working session: "I intended at some point to cross-walk this but never did").
 12. A facility snapshot current on the date of dialysis start, in the same calendar year as the form. The original code's facility join required the two years to match.
@@ -106,7 +106,7 @@ All patient covariates are measured on the first Medical Evidence form, at initi
 
 ## 7. Outcome
 
-**Primary:** eGFR at initiation (`GFR_EPI`, CKD-EPI creatinine equation [@levey2009ckdepi] as calculated by USRDS, with the race coefficient) greater than 10 vs at most 10 mL/min/1.73 m² [@hemmige2024density].
+**Primary:** eGFR at initiation (`GFR_EPI`, CKD-EPI creatinine equation [@levey2009ckdepi] as calculated by USRDS, with the race coefficient) of 10 or above vs below 10 mL/min/1.73 m², as in the original code's `GFR_DICH` (decided by Vagish Hemmige, 27 October 2026, in a working session: "Use the code"). The paper describes the outcome as greater than 10 vs at most 10 [@hemmige2024density]; the two differ only for patients at exactly 10.
 
 **Secondary:** eGFR as a continuous variable.
 
@@ -116,7 +116,7 @@ There is no follow-up; the outcome is measured at the index event.
 
 **Descriptive analysis.** Table 1 by the five density categories: means (SD) for continuous variables and counts (%) for categorical ones, with one-way ANOVA for continuous and chi-squared tests for categorical variables [@hemmige2024density]. Missing data are reported for each variable.
 
-**Primary model.** Mixed-effects logistic regression of eGFR > 10 on the density category (reference: 0 facilities), with a random intercept for HSA, progressively adjusted [@hemmige2024density]:
+**Primary model.** Mixed-effects logistic regression of eGFR ≥ 10 on the density category (reference: 0 facilities), with a random intercept for HSA, progressively adjusted [@hemmige2024density]:
 
 - **Model 1:** age, sex, race, Hispanic ethnicity, year.
 - **Model 2:** Model 1 plus heart failure, coronary disease, diabetes, cerebrovascular disease, alcohol or drug dependence, immobility, institutionalized, access type, primary cause of kidney failure, and (in the first version) serum albumin and hemoglobin.

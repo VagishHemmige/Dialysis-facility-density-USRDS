@@ -19,7 +19,7 @@ The current implementation: scripts, data flow, and the objects passed between t
 | 9 | `R/tables.R` | 7, 8 | `table_1`; HTML files in `tables/` | Outputs, gitignored |
 | 10 | `R/figures.R` | 3, 6 | PNG files in `figures/` | Outputs, gitignored |
 
-`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and writes `references/esrd-cause-categories.csv`, the USRDS primary disease group of every code in the public `$PD96DET` list. `link_area_data.R` turns groups into the paper's categories through `references/usrds-cause-groups.csv`. It calls three paid APIs, one function per provider, and sends no patient data. The prompt is `prompts/esrd-cause-classification.md`. Each provider's checked answers are saved in `data-raw/esrd-cause-votes/` (gitignored), named by provider, model and a fingerprint of the prompt, so a rerun pays only for providers that have not finished with the current prompt.
+`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and writes `references/esrd-cause-categories.csv` from the public `$PD96DET` code list. It calls three paid APIs, one function per provider, and sends no patient data. The prompt is `prompts/esrd-cause-classification.md`. Each provider's checked answers are saved in `data-raw/esrd-cause-votes/` (gitignored), named by provider, model and a fingerprint of the prompt, so a rerun pays only for providers that have not finished with the current prompt.
 
 ## Data flow
 

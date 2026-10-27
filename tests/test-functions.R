@@ -199,12 +199,3 @@ test_that("first_non_missing takes the first column with a value", {
     rep(NA_character_, 3)
   )
 })
-
-test_that("cause_code_system tells the code systems apart", {
-  expect_equal(
-    cause_code_system(c("M3131", "U071", "4464", "4464Z", "*****", "UUUUU", "00U", "99999Z")),
-    c("ICD-10-CM", "ICD-10-CM", "ICD-9-CM", "ICD-9-CM, USRDS variant",
-      "USRDS code for a missing or unknown cause", "USRDS code for a missing or unknown cause",
-      "USRDS code for a missing or unknown cause", "USRDS code for a missing or unknown cause")
-  )
-})

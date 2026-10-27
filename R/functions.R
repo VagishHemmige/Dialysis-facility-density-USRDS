@@ -246,30 +246,14 @@ variance_shares <- function(model) {
     transmute(level = grp, variance = vcov, share = vcov / sum(vcov))
 }
 
-## ---- fn-cause-code-system
-# The coding system of a USRDS primary-cause code ($PD96DET): ICD-10-CM (a
-# letter then digits), ICD-9-CM (digits), a USRDS variant of an ICD-9-CM code
-# (digits then a letter), or a USRDS code for a missing or unknown cause
-# (all zeros, eights or nines, or no digits, such as 00000Z, 99999Z, *****, U).
-cause_code_system <- function(code) {
-  case_when(
-    str_detect(code, "^(0+|8+|9+)[A-Z]?$") | !str_detect(code, "[0-9]") ~
-      "USRDS code for a missing or unknown cause",
-    str_detect(code, "^[A-Z][0-9]") ~ "ICD-10-CM",
-    str_detect(code, "^[0-9]+$") ~ "ICD-9-CM",
-    str_detect(code, "^[0-9]+[A-Z]$") ~ "ICD-9-CM, USRDS variant",
-    .default = "USRDS code for a missing or unknown cause"
-  )
-}
-
 ## ---- fn-classify-codes
 # Classify codes with one model, in batches. `ask` is that provider's function:
-# it takes a batch of codes (with every column of `codes`) and returns one row
-# per code with code, category and reason. Codes the model skipped are asked
-# once more.
+# it takes a batch of codes (code, description) and returns one row per code
+# with code, category and reason. Codes the model skipped are asked once more.
 classify_codes <- function(codes, ask, batch_size) {
   ask_in_batches <- function(codes) {
     codes |>
+      select(code, description) |>
       mutate(batch = (row_number() - 1) %/% batch_size) |>
       group_split(batch, .keep = FALSE) |>
       map(ask) |>

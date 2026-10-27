@@ -25,6 +25,15 @@ The code sections below are imported directly from that script when this page is
 knitr::read_chunk("../R/classify_esrd_causes.R")
 ```
 
+## ellmer version
+
+The script needs ellmer 0.4.2 or later. From that version, ellmer uses Anthropic's own structured output for current Claude models; earlier versions force a tool call, which these models reject.
+
+```{r}
+#| label: check-ellmer-version
+#| eval: false
+```
+
 ## The code list
 
 The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format `$PD96DET` with its description, from Appendix C of the Researcher's Guide, which `usRds` already holds. No patient data are involved, and the list is not filtered by what appears in the data.
@@ -36,7 +45,7 @@ The original mapping spreadsheet is lost. Its replacement starts from a public l
 
 ## Prompt and schema
 
-One prompt for all three models, and one structured output schema that restricts each answer to the six category names. Claude's JSON answers are held to the same categories by the check below.
+One prompt and one structured output schema for all three models. The schema restricts each answer to the six category names, and the check below confirms it.
 
 ```{r}
 #| label: define-classification-prompt
@@ -45,7 +54,7 @@ One prompt for all three models, and one structured output schema that restricts
 
 ## One function per provider
 
-The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Each has its own function, because the providers differ: OpenAI and Google take ellmer's structured output, while Claude models with adaptive thinking reject the forced tool call that structured output uses, so Claude is asked for the same answer as JSON text.
+The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Each has its own function, so each provider can be run, checked and saved on its own.
 
 ```{r}
 #| label: define-providers

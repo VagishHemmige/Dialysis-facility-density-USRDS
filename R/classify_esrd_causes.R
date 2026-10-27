@@ -11,6 +11,18 @@
 # Only the public code list from the USRDS Researcher's Guide is sent. No
 #   patient data are sent, and the code list is not filtered by patient data.
 
+## ---- check-ellmer-version
+# ellmer 0.4.2 and later use Anthropic's own structured output for Claude 4.5
+# and newer models. Earlier versions force a tool call instead, which current
+# Claude models reject ("tool_choice ... not supported for this model").
+# ellmer 0.5.0 and later also need Gemini 3 or newer for structured output.
+if (packageVersion("ellmer") < "0.4.2") {
+  stop(str_glue(
+    "ellmer {packageVersion('ellmer')} is too old for the Claude model in setup.R. ",
+    "Run install.packages(\"ellmer\") to get 0.4.2 or later."
+  ), call. = FALSE)
+}
+
 ## ---- load-cause-codes
 # usRds holds Appendix C internally; usRds:::metadata_c is used until the
 # package exports the formats (to be raised in the usRds project).
@@ -51,10 +63,7 @@ classification_type <- ellmer::type_array(
 
 ## ---- define-providers
 # One function per provider. Each takes a batch of codes and returns one row
-# per code with code, category and reason. OpenAI and Google use ellmer's
-# structured output. Claude models with adaptive thinking reject the forced
-# tool call that structured output relies on ("tool_choice ... not supported
-# for this model"), so Claude is asked for the same answer as plain JSON text.
+# per code with code, category and reason, through ellmer's structured output.
 # Every provider's answers then pass the same check (check_votes()).
 ask_openai <- function(batch) {
   chat <- ellmer::chat_openai(model = esrd_classifier_models$openai, echo = "none")
@@ -68,15 +77,7 @@ ask_google <- function(batch) {
 
 ask_anthropic <- function(batch) {
   chat <- ellmer::chat_anthropic(model = esrd_classifier_models$anthropic, echo = "none")
-  prompt <- str_glue(
-    "{classification_prompt(batch)}\n\n",
-    "Answer with only a JSON array of objects with the fields code, category ",
-    "and reason, where category is exactly one of the category names above. ",
-    "Write nothing else."
-  )
-
-  chat$chat(prompt) |>
-    parse_json_answer()
+  chat$chat_structured(classification_prompt(batch), type = classification_type)
 }
 
 providers <- list(

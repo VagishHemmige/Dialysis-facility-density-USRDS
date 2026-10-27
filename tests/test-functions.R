@@ -126,13 +126,6 @@ test_that("classify_codes batches codes and asks again for skipped codes", {
   expect_equal(nrow(out), 5)
 })
 
-test_that("parse_json_answer reads a fenced or bare JSON array", {
-  bare <- '[{"code": "A", "category": "Other", "reason": "r"}]'
-  fenced <- str_c("```json\n", bare, "\n```")
-  expect_equal(parse_json_answer(bare)$code, "A")
-  expect_equal(parse_json_answer(fenced)$category, "Other")
-})
-
 test_that("check_votes stops on missing, unknown, repeated or invalid answers", {
   codes <- tibble(code = c("A", "B"))
   good <- tibble(code = c("A", "B"), category = c("Diabetes", "Other"))

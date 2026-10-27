@@ -177,15 +177,6 @@ Sends the codes to one provider in batches, through that provider's own function
 #| eval: false
 ```
 
-## Reading a JSON answer
-
-Reads a model's plain-text answer that holds a JSON array, with or without a ```` ```json ```` fence around it. Used for Claude, which is asked for JSON text instead of ellmer's structured output.
-
-```{r}
-#| label: fn-parse-json-answer
-#| eval: false
-```
-
 ## Checking a provider's answers
 
 Stops unless the model answered every code exactly once, invented no code, and used only the six category names.

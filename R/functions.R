@@ -275,17 +275,6 @@ classify_codes <- function(codes, ask, batch_size) {
   answers
 }
 
-## ---- fn-parse-json-answer
-# A model's plain-text answer holding a JSON array, as a tibble. A ```json
-# fence around the array is ignored.
-parse_json_answer <- function(text) {
-  text |>
-    str_remove("^\\s*```(json)?") |>
-    str_remove("```\\s*$") |>
-    jsonlite::fromJSON() |>
-    as_tibble()
-}
-
 ## ---- fn-check-votes
 # Stop unless one model answered every code exactly once, asked about no code
 # that was not given, and used only the allowed categories. Returns the votes.

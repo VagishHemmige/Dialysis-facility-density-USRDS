@@ -128,7 +128,7 @@ The **Access** column of "Data sources" says which sources are restricted. For e
 - **Joins** use `join_by()` with an explicit `relationship` where possible. After every interval join and every join of records to people, assert that rows did not multiply, and decide deliberately what happens to unmatched rows.
 - **Dates and windows** are written as inclusive bounds, matching the plan, and the edges are tested on synthetic data.
 - **Code that turns model output into reported numbers** lives in named functions in `R/functions.R`, tested on synthetic data with a known answer.
-- **Style:** the tidyverse style guide. Style changes go in their own commits.
+- **Style:** readable tidyverse code, following the tidyverse style guide. Transform data with dplyr pipelines (`|>`), one step per line; use stringr (`str_glue()`, `str_flatten()`, `str_to_upper()`) rather than `paste()`, `sprintf()` or `toupper()`; purrr (`map()`, `pmap()`, `list_rbind()`) rather than `for` loops or `sapply()`; `case_when(.default = )` rather than nested `ifelse()`; `\(x)` rather than `~ .x`. Select models, rows and columns by name, never by position. Checks are a `filter()` of the problem rows followed by `stop()` with a message that says what failed (or `assert_unique()` for keys), not bare `stopifnot()`. Long calls put one argument per line. Style changes go in their own commits.
 
 ## Checks for any change
 

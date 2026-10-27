@@ -8,44 +8,44 @@
 
 ## ---- load-medevid
 # usRds applies the USRDS value labels (Appendix C), so codes become their
-# documented meanings (for example DIALSET 1 = "HOME"). PDIS is kept as the
-# raw code, because several codes share a description and the cause mapping
-# is by code.
+# documented meanings (for example DIALSET 1 = "HOME").
 medevid_columns <- c(
   "USRDS_ID", "MEFDATE", "DIALDAT", "INC_AGE", "SEX", "RACE", "ETHN",
   "DIALTYP", "DIALSET", "GFR_EPI", "SERCR", "ALBUM", "HEGLB", "WEIGHT", "HEIGHT",
-  "ACCESSTYPE", "NEPHCARE", "NEPHCARERANGE", "PDIS", "CDTYPE",
-  "PROVUSRD", "PROVUSRD_DIAL"
+  "ACCESSTYPE", "NEPHCARE", "NEPHCARERANGE", "PDIS", "CDTYPE"
 )
 
-# Loaded whole, then narrowed: the provider ID column is PROVUSRD in older
-# releases and PROVUSRD_DIAL in the 2024 Researcher's Guide.
-medevid_raw <- load_usrds_file("MEDEVID", factor_labels = FALSE) |>
-  select(any_of(medevid_columns), starts_with("MEDCOV_"), starts_with("COMO_"))
-for (col in c("PROVUSRD", "PROVUSRD_DIAL")) {
-  if (!col %in% names(medevid_raw)) medevid_raw[[col]] <- NA
-}
+# The provider ID column is PROVUSRD_DIAL in the 2024 Researcher's Guide and
+# PROVUSRD in older releases; whichever the release has is used.
+provider_columns <- c("PROVUSRD_DIAL", "PROVUSRD")
 
-medevid_labelled <- medevid_raw |>
-  select(-PDIS) |>
+# PDIS is kept as the raw code, because several codes share a description and
+# the cause mapping is by code. It is renamed while the labels are applied, so
+# usRds does not recognize it, and then renamed back.
+medevid_labelled <- load_usrds_file("MEDEVID", factor_labels = FALSE) |>
+  select(
+    any_of(medevid_columns),
+    any_of(provider_columns),
+    starts_with("MEDCOV_"),
+    starts_with("COMO_")
+  ) |>
+  rename(PDIS_CODE = PDIS) |>
   apply_usrds_factors(file_key = "MEDEVID") |>
-  mutate(PDIS = str_trim(as.character(medevid_raw$PDIS)))
+  rename(PDIS = PDIS_CODE) |>
+  mutate(PDIS = str_trim(as.character(PDIS)))
 
 ## ---- derive-patient-variables
 medevid_forms <- medevid_labelled |>
   arrange(USRDS_ID, MEFDATE) |>
-  mutate(
-    form_order = row_number(),
-    .by = USRDS_ID
-  ) |>
+  mutate(form_order = row_number(), .by = USRDS_ID) |>
   mutate(
     first_form = form_order == 1,
     year = as.integer(year(MEFDATE)),
     dialysis_year = as.integer(year(DIALDAT)),
     age = INC_AGE,
-    sex = factor(str_to_title(as.character(SEX)), levels = c("Male", "Female")),
+    sex = factor(str_to_title(SEX), levels = c("Male", "Female")),
     race_detailed = as.character(RACE),
-    race = factor(case_when(
+    race = case_when(
       RACE == "WHITE" ~ "White",
       RACE == "BLACK" ~ "Black",
       RACE == "ASIAN" ~ "Asian",
@@ -55,37 +55,54 @@ medevid_forms <- medevid_labelled |>
       RACE == "MIDEAST" ~ "Middle Eastern",
       RACE == "INDIAN SUBCO" ~ "South Asian",
       RACE == "OTHER/MULTI-RACIAL" ~ "Other",
-      TRUE ~ NA_character_
-    ), levels = c("White", "Black", "Asian", "Native American", "Pacific Islander",
-                  "Middle Eastern", "South Asian", "Other")),
-    hispanic = factor(case_when(
+      .default = NA_character_
+    ),
+    race = factor(race, levels = c(
+      "White", "Black", "Asian", "Native American", "Pacific Islander",
+      "Middle Eastern", "South Asian", "Other"
+    )),
+    hispanic = case_when(
       ETHN %in% c("HISPANIC-MEXICAN", "HISPANIC OTHER", "HISPANIC NON-SPECIFIED") ~ "Hispanic",
       ETHN == "NON-HISPANIC" ~ "Non-Hispanic",
-      TRUE ~ NA_character_
-    ), levels = c("Non-Hispanic", "Hispanic")),
+      .default = NA_character_
+    ),
+    hispanic = factor(hispanic, levels = c("Non-Hispanic", "Hispanic")),
     egfr = GFR_EPI,
     early_start = as.integer(egfr > early_egfr_threshold),
     albumin = ALBUM,
     hemoglobin = HEGLB,
-    access_type = factor(case_when(
+    access_type = case_when(
       ACCESSTYPE == "AVF" ~ "Arteriovenous fistula",
       ACCESSTYPE == "GRAFT" ~ "Arteriovenous graft",
       ACCESSTYPE == "CATH" ~ "Catheter",
       ACCESSTYPE == "OTHER" ~ "Other",
-      TRUE ~ NA_character_
-    ), levels = c("Catheter", "Arteriovenous fistula", "Arteriovenous graft", "Other")),
+      .default = NA_character_
+    ),
+    access_type = factor(access_type, levels = c(
+      "Catheter", "Arteriovenous fistula", "Arteriovenous graft", "Other"
+    )),
     nephrology_care = derive_nephrology_care(NEPHCARE, NEPHCARERANGE),
-    nephrology_care_any = factor(case_when(
+    nephrology_care_any = case_when(
       nephrology_care == "None" ~ "No nephrology care",
       nephrology_care == "Unknown" ~ "Unknown",
-      TRUE ~ "Some nephrology care"
-    ), levels = c("No nephrology care", "Some nephrology care", "Unknown")),
-    insurance = factor(
-      derive_insurance(MEDCOV_NONE, MEDCOV_MDCD, MEDCOV_MDCR, MEDCOV_ADVANTAGE,
-                       MEDCOV_GROUP, MEDCOV_DVA, MEDCOV_OTHER),
-      levels = c("Medicare or managed Medicare", "No insurance", "Medicaid",
-                 "Commercial", "Other (including VA)")
+      .default = "Some nephrology care"
     ),
+    nephrology_care_any = factor(nephrology_care_any, levels = c(
+      "No nephrology care", "Some nephrology care", "Unknown"
+    )),
+    insurance = derive_insurance(
+      none = MEDCOV_NONE,
+      medicaid = MEDCOV_MDCD,
+      medicare = MEDCOV_MDCR,
+      advantage = MEDCOV_ADVANTAGE,
+      group = MEDCOV_GROUP,
+      va = MEDCOV_DVA,
+      other = MEDCOV_OTHER
+    ),
+    insurance = factor(insurance, levels = c(
+      "Medicare or managed Medicare", "No insurance", "Medicaid",
+      "Commercial", "Other (including VA)"
+    )),
     heart_failure = as.integer(any_yes(COMO_CHF)),
     coronary_disease = as.integer(any_yes(COMO_ASHD)),
     diabetes = as.integer(any_yes(COMO_DM_INS, COMO_DM_ORAL, COMO_DM_NOMEDS, COMO_DM_RET)),
@@ -94,7 +111,7 @@ medevid_forms <- medevid_labelled |>
     alcohol_or_drug = as.integer(any_yes(COMO_ALCHO, COMO_DRUG)),
     immobility = as.integer(any_yes(COMO_INAMB, COMO_NEEDASST, COMO_INTRANS)),
     institutionalized = as.integer(any_yes(COMO_INST, COMO_INST_AL, COMO_INST_NURS, COMO_INST_OTH)),
-    dialysis_provider = coalesce(as.character(PROVUSRD_DIAL), as.character(PROVUSRD))
+    dialysis_provider = first_non_missing(pick(any_of(provider_columns)))
   )
 
 ## ---- load-residence
@@ -117,9 +134,8 @@ residence_on_dialysis_date <- medevid_forms |>
     by = join_by(USRDS_ID, between(DIALDAT, BEGRES, ENDRES)),
     relationship = "one-to-many"
   ) |>
-  mutate(n_periods = n(), .by = USRDS_ID) |>
-  filter(n_periods == 1) |>
-  transmute(USRDS_ID, zip = ZIPCODE, state = toupper(as.character(STATE)))
+  filter(n() == 1, .by = USRDS_ID) |>
+  transmute(USRDS_ID, zip = ZIPCODE, state = str_to_upper(STATE))
 
 medevid_forms <- medevid_forms |>
   left_join(residence_on_dialysis_date, by = "USRDS_ID", relationship = "many-to-one") |>
@@ -128,38 +144,41 @@ medevid_forms <- medevid_forms |>
     has_residence = !is.na(zip)
   )
 
-stopifnot(nrow(medevid_forms) == nrow(medevid_raw))
+# The joins must not add or drop forms
+if (nrow(medevid_forms) != nrow(medevid_labelled)) {
+  stop("Matching residences changed the number of Medical Evidence forms.", call. = FALSE)
+}
 
 ## ---- label-patient-variables
-medevid_forms <- set_variable_labels(
-  medevid_forms,
-  first_form = "First Medical Evidence form for the patient",
-  year = "Year of the Medical Evidence form (MEFDATE)",
-  dialysis_year = "Year of the start of regular chronic dialysis (DIALDAT)",
-  age = "Age at incidence, years",
-  sex = "Sex",
-  race = "Race",
-  hispanic = "Hispanic ethnicity",
-  egfr = "eGFR at initiation (CKD-EPI), mL/min/1.73 m2",
-  early_start = "eGFR above 10 mL/min/1.73 m2 at initiation",
-  albumin = "Serum albumin, g/dL",
-  hemoglobin = "Serum hemoglobin, g/dL",
-  access_type = "Access used at first outpatient dialysis",
-  nephrology_care = "Pre-kidney-failure nephrology care (duration)",
-  nephrology_care_any = "Access to pre-kidney-failure nephrology care",
-  insurance = "Insurance",
-  heart_failure = "Heart failure",
-  coronary_disease = "Coronary disease",
-  diabetes = "Diabetes",
-  cerebrovascular_disease = "Cerebrovascular disease",
-  cancer = "Cancer",
-  alcohol_or_drug = "Alcohol or drug dependence",
-  immobility = "Immobility",
-  institutionalized = "Institutionalized",
-  dialysis_provider = "USRDS provider ID of the dialysis facility",
-  zip = "Residential ZIP code on the date of dialysis start",
-  state = "Residential state on the date of dialysis start",
-  region = "Census region of residence"
-)
+medevid_forms <- medevid_forms |>
+  set_variable_labels(
+    first_form = "First Medical Evidence form for the patient",
+    year = "Year of the Medical Evidence form (MEFDATE)",
+    dialysis_year = "Year of the start of regular chronic dialysis (DIALDAT)",
+    age = "Age at incidence, years",
+    sex = "Sex",
+    race = "Race",
+    hispanic = "Hispanic ethnicity",
+    egfr = "eGFR at initiation (CKD-EPI), mL/min/1.73 m2",
+    early_start = "eGFR above 10 mL/min/1.73 m2 at initiation",
+    albumin = "Serum albumin, g/dL",
+    hemoglobin = "Serum hemoglobin, g/dL",
+    access_type = "Access used at first outpatient dialysis",
+    nephrology_care = "Pre-kidney-failure nephrology care (duration)",
+    nephrology_care_any = "Access to pre-kidney-failure nephrology care",
+    insurance = "Insurance",
+    heart_failure = "Heart failure",
+    coronary_disease = "Coronary disease",
+    diabetes = "Diabetes",
+    cerebrovascular_disease = "Cerebrovascular disease",
+    cancer = "Cancer",
+    alcohol_or_drug = "Alcohol or drug dependence",
+    immobility = "Immobility",
+    institutionalized = "Institutionalized",
+    dialysis_provider = "USRDS provider ID of the dialysis facility",
+    zip = "Residential ZIP code on the date of dialysis start",
+    state = "Residential state on the date of dialysis start",
+    region = "Census region of residence"
+  )
 
-rm(medevid_raw, medevid_labelled, residence, residence_on_dialysis_date)
+rm(medevid_labelled, residence, residence_on_dialysis_date)

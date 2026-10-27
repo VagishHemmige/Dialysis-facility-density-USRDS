@@ -27,9 +27,10 @@ table_1 <- cohort |>
   modify_spanning_header(all_stat_cols() ~ "**HSA facility density per 100,000 population**")
 
 ## ---- build-regression-tables
-estimates <- if (exists("table_2_estimates")) {
-  list(table_2 = table_2_estimates, sensitivity = sensitivity_estimates,
-       race = race_estimates, egfr_range = egfr_range_estimates)
+# The estimates from this session if models.R has just run, otherwise the
+# saved ones
+estimates <- if (exists("model_estimates")) {
+  model_estimates
 } else {
   readRDS(file.path("models", "model_estimates.rds"))
 }
@@ -41,20 +42,36 @@ format_or_table <- function(df, title) {
     fmt_number(c(odds_ratio, conf_low, conf_high), decimals = 2) |>
     fmt_number(p_value, decimals = 3) |>
     fmt_integer(n) |>
-    cols_label(term = "Density category", odds_ratio = "OR", conf_low = "95% CI low",
-               conf_high = "95% CI high", p_value = "P", n = "N") |>
+    cols_label(
+      term = "Density category",
+      odds_ratio = "OR",
+      conf_low = "95% CI low",
+      conf_high = "95% CI high",
+      p_value = "P",
+      n = "N"
+    ) |>
     tab_header(title = title)
 }
 
-table_2 <- format_or_table(estimates$table_2,
-                           "Odds of starting hemodialysis at eGFR > 10 by HSA facility density")
-table_sensitivity <- format_or_table(bind_rows(estimates$sensitivity, estimates$egfr_range),
-                                     "Sensitivity analyses")
-table_race <- format_or_table(estimates$race, "Models stratified by race (eTable 1)")
+table_2 <- estimates$table_2 |>
+  format_or_table("Odds of starting hemodialysis at eGFR > 10 by HSA facility density")
+
+table_sensitivity <- bind_rows(estimates$sensitivity, estimates$egfr_range) |>
+  format_or_table("Sensitivity analyses")
+
+table_race <- estimates$race |>
+  format_or_table("Models stratified by race (eTable 1)")
 
 ## ---- export-tables
 dir.create(tables_dir, showWarnings = FALSE)
-gt::gtsave(as_gt(table_1), file.path(tables_dir, "table_1.html"))
-gt::gtsave(table_2, file.path(tables_dir, "table_2.html"))
-gt::gtsave(table_sensitivity, file.path(tables_dir, "table_sensitivity.html"))
-gt::gtsave(table_race, file.path(tables_dir, "etable_1_race.html"))
+# File name = table
+output_tables <- list(
+  "table_1.html" = as_gt(table_1),
+  "table_2.html" = table_2,
+  "table_sensitivity.html" = table_sensitivity,
+  "etable_1_race.html" = table_race
+)
+
+iwalk(output_tables, function(table, file_name) {
+  gtsave(table, file.path(tables_dir, file_name))
+})

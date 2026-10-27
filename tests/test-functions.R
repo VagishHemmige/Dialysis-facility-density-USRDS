@@ -154,3 +154,23 @@ test_that("ZIP codes missing from the ZCTA crosswalk add nothing", {
   pop <- tibble(zcta = "10467", year = 2015L, zip_population = 500)
   expect_equal(hsa_population_from_zcta(hsa, zcta, pop)$hsa_population, 500)
 })
+
+test_that("the eGFR limit is inclusive or strict as set", {
+  expect_equal(egfr_within_limit(c(19.9, 20, 20.1), 20, inclusive = TRUE), c(TRUE, TRUE, FALSE))
+  expect_equal(egfr_within_limit(c(19.9, 20, 20.1), 20, inclusive = FALSE), c(TRUE, FALSE, FALSE))
+})
+
+test_that("assert_unique stops on duplicated keys and passes data through", {
+  df <- tibble(zip = c("10467", "10467"), year = c(2015, 2016))
+  expect_identical(assert_unique(df, zip, year), df)
+  expect_error(assert_unique(df, zip), "appear more than once")
+})
+
+test_that("first_non_missing takes the first column with a value", {
+  df <- tibble(PROVUSRD_DIAL = c("A", NA, NA), PROVUSRD = c(1, 2, NA))
+  expect_equal(first_non_missing(df), c("A", "2", NA))
+  expect_equal(
+    tibble(x = 1:3) |> mutate(id = first_non_missing(pick(any_of("absent")))) |> pull(id),
+    rep(NA_character_, 3)
+  )
+})

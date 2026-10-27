@@ -35,23 +35,25 @@ cause_codes <- usRds:::metadata_c[["PD96DET"]] |>
   distinct(code, .keep_all = TRUE)
 
 ## ---- define-classification-prompt
+# The prompt is the text file esrd_classifier_prompt_file (prompts/), shown in
+# full on the website. {{category_list}} and {{code_list}} are filled in for
+# each batch.
 classification_prompt <- function(batch) {
-  category_list <- str_flatten(str_c("- ", esrd_cause_categories), "\n")
-  code_list <- str_flatten(str_c(batch$code, ": ", batch$description), "\n")
-
-  str_glue(
-    "You are a nephrologist classifying the primary cause of kidney failure recorded ",
-    "on the CMS-2728 Medical Evidence form, using the USRDS code list.\n\n",
-    "Assign each code to exactly one of these categories:\n",
-    "{category_list}\n\n",
-    "Use 'Other' for every cause that fits none of the first five, and for codes ",
-    "meaning missing, unknown or unreconcilable. Classify from the code and its ",
-    "description only; do not assume information that is not given.\n",
-    "Return one entry per code, with the code exactly as given and a reason of ",
-    "at most 15 words.\n\nCodes:\n",
-    "{code_list}"
+  ellmer::interpolate_file(
+    esrd_classifier_prompt_file,
+    category_list = str_flatten(str_c("- ", esrd_cause_categories), "\n"),
+    code_list = str_flatten(str_c(batch$code, ": ", batch$description), "\n")
   )
 }
+
+# A short fingerprint of the prompt text, ignoring Windows line endings. It is
+# part of each saved answer file's name, so editing the prompt asks every
+# provider again instead of reusing answers to the old prompt.
+prompt_version <- esrd_classifier_prompt_file |>
+  read_lines() |>
+  str_remove_all("\r") |>
+  rlang::hash() |>
+  str_sub(1, 8)
 
 classification_type <- ellmer::type_array(
   ellmer::type_object(
@@ -92,15 +94,15 @@ providers <- list(
 
 ## ---- classify-with-ensemble
 # Each provider is run and checked on its own, and its answers are saved in
-# esrd_votes_dir under the provider and model name. If one provider fails,
-# rerunning the script asks only the providers that have no saved file;
-# changing a model in setup.R asks that provider again.
+# esrd_votes_dir under the provider, model and prompt version. If one provider
+# fails, rerunning the script asks only the providers that have no saved file;
+# changing a model in setup.R or the prompt file asks again.
 votes <- providers |>
   imap(function(ask, provider) {
     cached_votes(
       path = file.path(
         esrd_votes_dir,
-        str_glue("{provider}-{esrd_classifier_models[[provider]]}.csv")
+        str_glue("{provider}-{esrd_classifier_models[[provider]]}-{prompt_version}.csv")
       ),
       classify = function() {
         cause_codes |>

@@ -43,9 +43,26 @@ The original mapping spreadsheet is lost. Its replacement starts from a public l
 #| eval: false
 ```
 
-## Prompt and schema
+## The prompt
 
-One prompt and one structured output schema for all three models. The schema restricts each answer to the six category names, and the check below confirms it.
+All three models receive the same prompt, word for word. It is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md), so that it can be read and edited on its own and shown here exactly as sent:
+
+```{verbatim}
+#| file: ../prompts/esrd-cause-classification.md
+#| lang: markdown
+```
+
+For each batch of 100 codes, `{{category_list}}` becomes the six category names, one per line, and `{{code_list}}` becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, `4464Z: WEGENERS GRANULOMATOSIS`). Nothing else about a code is sent.
+
+The prompt makes three rules:
+
+-   **One category per code**, from the six in the paper's Table 1.
+-   **"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable, as in the original analysis.
+-   **No inference beyond the description.** The model classifies from the code and its description only. This keeps the models from inventing context, but it also makes them literal: a first run sent vasculitis, lupus without a named nephritis, and congenital anomalies to "Other" whenever the description did not name the category. Where the category boundaries lie is open decision [#D4].
+
+## Prompt and schema in code
+
+The structured output schema restricts each answer to the six category names, and the check below confirms it. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again.
 
 ```{r}
 #| label: define-classification-prompt

@@ -15,13 +15,13 @@ model_data <- cohort |>
     density_category = relevel(density_category, ref = levels(density_category)[1])
   )
 
+# Mixed-effects logistic regression with a random intercept for HSA (glmmTMB;
+# see setup.R for why not lme4::glmer)
 fit_logistic <- function(data, exposure, covariates) {
-  glmer(
+  glmmTMB(
     mixed_formula("early_start", exposure, covariates),
     data = data,
-    family = binomial,
-    nAGQ = glmer_nagq,
-    control = glmerControl(optimizer = "bobyqa")
+    family = binomial
   )
 }
 
@@ -157,20 +157,12 @@ imputation_formula <- mixed_formula(
 )
 
 # Each completed data set is fitted explicitly and the fits are pooled by
-# Rubin's rules. The shorter with(imputed, glmer(...)) does not work here: a
-# formula built by mixed_formula() looks for the variables outside the
+# Rubin's rules. The shorter with(imputed, glmmTMB(...)) does not work here:
+# a formula built by mixed_formula() looks for the variables outside the
 # imputed data sets.
 imputation_estimates <- imputed |>
   mice::complete(action = "all") |>
-  map(\(completed) {
-    glmer(
-      imputation_formula,
-      data = completed,
-      family = binomial,
-      nAGQ = glmer_nagq,
-      control = glmerControl(optimizer = "bobyqa")
-    )
-  }) |>
+  map(\(completed) glmmTMB(imputation_formula, data = completed, family = binomial)) |>
   as.mira() |>
   pool() |>
   summary(conf.int = TRUE, exponentiate = TRUE) |>

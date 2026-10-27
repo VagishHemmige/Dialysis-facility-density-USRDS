@@ -3,7 +3,7 @@ title: "6. Models"
 format: html
 ---
 
-Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes ([#D6]).
+Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -37,7 +37,23 @@ Year enters as a factor and the reference category is zero facilities, as in the
 
 ## Table 2
 
-Mixed-effects logistic models with a random intercept for HSA [@lme4_pkg], progressively adjusted. Models 2 and 3 are fit with and without albumin and hemoglobin; with them, patients missing either value drop out, as in the paper's complete-case models.
+Mixed-effects logistic models with a random intercept for HSA, progressively adjusted, fit with `glmmTMB` [@glmmtmb]. Models 2 and 3 are fit with and without albumin and hemoglobin; with them, patients missing either value drop out, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are the three the paper's Methods name (HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
+
+### Choosing the model-fitting package
+
+The paper fit its models in Stata 15, whose default for these models is adaptive Gauss-Hermite quadrature with 7 points. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
+
+| Fit | Time | Convergence warnings | Odds ratio, highest vs zero density |
+|---|---|---|---|
+| `lme4::glmer` [@lme4_pkg], default settings | 117 s | 4 | 10.08 (not converged) |
+| `lme4::glmer`, rescaled covariates, higher iteration limit | 111 s | 0 | 10.62 |
+| `lme4::glmer`, 7-point quadrature (Stata's default) | 119 s | 0 | 10.63 |
+| `glmmTMB` [@glmmtmb] | 4 s | 0 | 10.63 |
+
+The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Two other options were considered:
+
+-   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method, but is slower on data of this size.
+-   **`MixedModels.jl`**, the Julia successor to `lme4` by its original author, is the fastest for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` is a young, single-maintainer package with little recent activity, so it was not used.
 
 ```{r}
 #| label: fit-table-2-models

@@ -22,7 +22,7 @@ knitr::read_chunk("../R/setup.R")
 
 ## Packages
 
-Each data source has an access package: `usRds` for the USRDS files and the CMS facility snapshots, `tidycensus` for the American Community Survey. `flowchart` builds the cohort, so the STROBE diagram and the analytic data come from the same code. `lme4` fits the mixed models, `gtsummary` and `gt` build the tables, and `mice` imputes albumin and hemoglobin.
+Each data source has an access package: `usRds` for the USRDS files and the CMS facility snapshots, `tidycensus` for the American Community Survey. `flowchart` builds the cohort, so the STROBE diagram and the analytic data come from the same code. `glmmTMB` fits the mixed-effects logistic models and `lme4` the linear ones, `gtsummary` and `gt` build the tables, and `mice` imputes albumin and hemoglobin.
 
 ```{r}
 #| label: load-packages
@@ -76,7 +76,7 @@ The six categories are those of the paper's Table 1. The mapping of every USRDS 
 
 ## Model constants
 
-The covariate sets follow the footnotes of the paper's Table 2. The paper's models were fit in Stata and its exact specification is not available, so these sets and the estimation method are an open decision ([#D6]). `glmer_nagq = 1` is the Laplace approximation, closer to Stata's default than the `nAGQ = 0` the original R code used.
+The covariate sets follow the footnotes of the paper's Table 2, and Model 3's HSA benchmarks are the three the paper's Methods name. The logistic models are fit with `glmmTMB` (Laplace approximation); the models page explains why.
 
 ```{r}
 #| label: define-model-constants

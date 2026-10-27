@@ -12,7 +12,8 @@ library(tidycensus)   # American Community Survey (needs a Census API key)
 library(zippeR)       # ZIP code to ZCTA crosswalks by year (UDS Mapper)
 library(readxl)
 library(sf)
-library(lme4)
+library(lme4)        # linear mixed models (eGFR as a continuous outcome)
+library(glmmTMB)     # mixed-effects logistic models
 library(broom.mixed)
 library(gtsummary)
 library(gt)
@@ -177,13 +178,17 @@ esrd_classifier_claude_max_tokens <- 16000
 esrd_votes_dir <- file.path(public_data_dir, "esrd-cause-votes")
 
 ## ---- define-model-constants
-# Mixed-effects logistic models (section 8). nAGQ = 1 is the Laplace
-# approximation; the original R code used 0. Open decision #D6.
-glmer_nagq <- 1
+# Mixed-effects logistic models (section 8) are fit with glmmTMB, using the
+# Laplace approximation. On synthetic data shaped like Model 3, lme4::glmer
+# needed rescaled covariates and a higher iteration limit to converge and took
+# about 30 times longer, for the same estimates; adaptive quadrature with 7
+# points (Stata's default) changed the odds ratios only in the third decimal
+# (decided by Vagish Hemmige, 27 October 2026).
 imputation_count <- 10
 imputation_seed <- 20231020
 
-# Covariates added at each step of Table 2 (section 8; open decision #D6)
+# Covariates added at each step of Table 2 (section 8), from the Table 2
+# footnotes; the HSA benchmarks are the three the Methods name
 # Year of hemodialysis initiation, as the paper's Methods say; the original R
 # code used the year of the form (decided 27 October 2026)
 model_1_covariates <- c("age", "sex", "race", "hispanic", "dialysis_year")

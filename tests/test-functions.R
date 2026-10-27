@@ -89,12 +89,18 @@ test_that("density_odds_ratios recovers a known odds ratio", {
       u = rnorm(200, 0, 0.3)[hsanum],
       early_start = rbinom(n, 1, plogis(-0.5 + log(2) * (density_category == "high") + u))
     )
-  m <- glmer(early_start ~ density_category + (1 | hsanum), data = sim, family = binomial)
-  out <- density_odds_ratios(m, model_name = "synthetic")
-  expect_equal(nrow(out), 1)
-  expect_equal(out$model, "synthetic")
-  expect_equal(out$n, n)
-  expect_true(out$conf_low < 2 && out$conf_high > 2)
+  # The models use glmmTMB; lme4::glmer is checked too, as the alternative
+  fits <- list(
+    glmmTMB = glmmTMB::glmmTMB(early_start ~ density_category + (1 | hsanum), data = sim, family = binomial),
+    glmer = glmer(early_start ~ density_category + (1 | hsanum), data = sim, family = binomial)
+  )
+  for (m in fits) {
+    out <- density_odds_ratios(m, model_name = "synthetic")
+    expect_equal(nrow(out), 1)
+    expect_equal(out$model, "synthetic")
+    expect_equal(out$n, n)
+    expect_true(out$conf_low < 2 && out$conf_high > 2)
+  }
 })
 
 test_that("variance_shares sum to one", {

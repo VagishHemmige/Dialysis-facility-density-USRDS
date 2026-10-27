@@ -106,21 +106,46 @@ test_that("variance_shares sum to one", {
   expect_equal(shares$level, c("hsanum", "Residual"))
 })
 
-test_that("classify_codes batches codes and labels the provider", {
+test_that("classify_codes batches codes and asks again for skipped codes", {
   codes <- tibble(code = sprintf("C%02d", 1:5), description = "synthetic")
   calls <- 0
-  fake_chat <- function() {
+  # A fake provider that skips C03 the first time it sees it
+  seen <- character()
+  fake_ask <- function(batch) {
     calls <<- calls + 1
-    list(chat_structured = function(prompt, type) {
-      batch <- regmatches(prompt, gregexpr("C\\d{2}", prompt))[[1]]
-      data.frame(code = batch, category = "Other", reason = "synthetic")
-    })
+    answer <- batch |>
+      filter(code != "C03" | "C03" %in% seen) |>
+      transmute(code, category = "Other", reason = "synthetic")
+    seen <<- c(seen, batch$code)
+    answer
   }
-  out <- classify_codes(codes, fake_chat, function(b) paste(b$code, collapse = " "),
-                        type = NULL, batch_size = 2, provider = "fake")
-  expect_equal(calls, 3)
-  expect_equal(out$code, codes$code)
-  expect_true(all(out$provider == "fake"))
+  out <- classify_codes(codes, fake_ask, batch_size = 2)
+  expect_equal(calls, 4)
+  expect_setequal(out$code, codes$code)
+  expect_equal(nrow(out), 5)
+})
+
+test_that("check_votes stops on missing, unknown, repeated or invalid answers", {
+  codes <- tibble(code = c("A", "B"))
+  good <- tibble(code = c("A", "B"), category = c("Diabetes", "Other"))
+  expect_identical(check_votes(good, codes, c("Diabetes", "Other"), "fake"), good)
+  expect_error(check_votes(good[1, ], codes, c("Diabetes", "Other"), "fake"), "1 code\\(s\\) missing")
+  expect_error(check_votes(bind_rows(good, good[1, ]), codes, c("Diabetes", "Other"), "fake"), "1 repeated")
+  expect_error(check_votes(mutate(good, category = "Gout"), codes, c("Diabetes", "Other"), "fake"),
+               "2 with a category")
+})
+
+test_that("cached_votes asks once and then reads the saved file", {
+  path <- file.path(tempfile(), "fake.csv")
+  calls <- 0
+  classify <- function() {
+    calls <<- calls + 1
+    tibble(code = "A", category = "Other", reason = "r")
+  }
+  first <- cached_votes(path, classify)
+  second <- cached_votes(path, classify)
+  expect_equal(calls, 1)
+  expect_equal(second$code, first$code)
 })
 
 test_that("ensemble_agreement accepts only unanimous codes", {

@@ -3,12 +3,25 @@
 #   language models, for review by the deciders (open decision #D4).
 # Needs: setup.R and functions.R sourced first; API keys for the three
 #   providers in .Renviron (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY).
-# Produces: references/esrd-cause-categories.csv, with each model's category
+# Produces: one file of checked answers per provider in esrd_votes_dir
+#   (data-raw/, gitignored); references/esrd-cause-categories.csv, with each model's category
 #   and reason, whether they agree, and final_category (filled for unanimous
 #   codes; the deciders fill the rest and their initials in reviewed_by).
 # Run once, by hand, outside main.R: it makes paid API calls.
 # Only the public code list from the USRDS Researcher's Guide is sent. No
 #   patient data are sent, and the code list is not filtered by patient data.
+
+## ---- check-ellmer-version
+# ellmer 0.4.2 and later use Anthropic's own structured output for Claude 4.5
+# and newer models. Earlier versions force a tool call instead, which current
+# Claude models reject ("tool_choice ... not supported for this model").
+# ellmer 0.5.0 and later also need Gemini 3 or newer for structured output.
+if (packageVersion("ellmer") < "0.4.2") {
+  stop(str_glue(
+    "ellmer {packageVersion('ellmer')} is too old for the Claude model in setup.R. ",
+    "Run install.packages(\"ellmer\") to get 0.4.2 or later."
+  ), call. = FALSE)
+}
 
 ## ---- load-cause-codes
 # usRds holds Appendix C internally; usRds:::metadata_c is used until the
@@ -48,32 +61,52 @@ classification_type <- ellmer::type_array(
   )
 )
 
-## ---- classify-with-ensemble
+## ---- define-providers
+# One function per provider. Each takes a batch of codes and returns one row
+# per code with code, category and reason, through ellmer's structured output.
+# Every provider's answers then pass the same check (check_votes()).
+ask_openai <- function(batch) {
+  chat <- ellmer::chat_openai(model = esrd_classifier_models$openai, echo = "none")
+  chat$chat_structured(classification_prompt(batch), type = classification_type)
+}
+
+ask_google <- function(batch) {
+  chat <- ellmer::chat_google_gemini(model = esrd_classifier_models$google, echo = "none")
+  chat$chat_structured(classification_prompt(batch), type = classification_type)
+}
+
+ask_anthropic <- function(batch) {
+  chat <- ellmer::chat_anthropic(model = esrd_classifier_models$anthropic, echo = "none")
+  chat$chat_structured(classification_prompt(batch), type = classification_type)
+}
+
 providers <- list(
-  openai = function() ellmer::chat_openai(model = esrd_classifier_models$openai),
-  anthropic = function() ellmer::chat_anthropic(model = esrd_classifier_models$anthropic),
-  google = function() ellmer::chat_google_gemini(model = esrd_classifier_models$google)
+  openai = ask_openai,
+  anthropic = ask_anthropic,
+  google = ask_google
 )
 
-votes <- imap(providers, function(chat_fn, provider) {
-  classify_codes(cause_codes, chat_fn, classification_prompt, classification_type,
-                 batch_size = esrd_classifier_batch_size, provider = provider)
-}) |>
+## ---- classify-with-ensemble
+# Each provider is run and checked on its own, and its answers are saved in
+# esrd_votes_dir under the provider and model name. If one provider fails,
+# rerunning the script asks only the providers that have no saved file;
+# changing a model in setup.R asks that provider again.
+votes <- providers |>
+  imap(function(ask, provider) {
+    cached_votes(
+      path = file.path(
+        esrd_votes_dir,
+        str_glue("{provider}-{esrd_classifier_models[[provider]]}.csv")
+      ),
+      classify = function() {
+        cause_codes |>
+          classify_codes(ask, batch_size = esrd_classifier_batch_size) |>
+          check_votes(cause_codes, esrd_cause_categories, provider)
+      }
+    ) |>
+      mutate(provider = provider)
+  }) |>
   list_rbind()
-
-# Every model must return every code exactly once, and no code that was not
-# asked about
-vote_problems <- cause_codes |>
-  select(code) |>
-  cross_join(tibble(provider = names(providers))) |>
-  full_join(count(votes, provider, code), by = join_by(code, provider)) |>
-  filter(is.na(n) | n != 1 | !code %in% cause_codes$code)
-
-if (nrow(vote_problems) > 0) {
-  stop(str_glue(
-    "{nrow(vote_problems)} code and model pair(s) are missing, repeated or unknown."
-  ), call. = FALSE)
-}
 
 ## ---- measure-agreement
 mapping <- ensemble_agreement(votes, cause_codes) |>

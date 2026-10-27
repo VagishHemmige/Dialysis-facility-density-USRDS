@@ -161,10 +161,28 @@ The share of the variance of eGFR at each level of a null mixed model.
 
 ## Classifying codes
 
-Sends the code list to one model in batches of 100 and returns one row per code. Each batch starts a new chat, so batches do not influence each other. Short code descriptions need none of the checkpointing the PDF project needed for 200,000-character papers.
+Sends the codes to one provider in batches, through that provider's own function, and asks once more for any codes the model skipped.
 
 ```{r}
 #| label: fn-classify-codes
+#| eval: false
+```
+
+## Checking a provider's answers
+
+Stops unless the model answered every code exactly once, invented no code, and used only the six category names.
+
+```{r}
+#| label: fn-check-votes
+#| eval: false
+```
+
+## Saving each provider's answers
+
+Saves a provider's checked answers the first time and reads them back on a rerun, so a failure in one provider never means paying the others again.
+
+```{r}
+#| label: fn-cached-votes
 #| eval: false
 ```
 

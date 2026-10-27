@@ -67,6 +67,8 @@ website:
 
       - section: Published results
         contents:
+          - href: quarto/results.qmd
+            text: Published figures and tables
           - href: quarto/supplement.qmd
             text: Published supplement
 

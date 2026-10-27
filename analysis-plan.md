@@ -52,11 +52,11 @@ Cross-sectional study of incident hemodialysis patients linked to area-level dat
 2. Form dated 2011 to 2019. The paper starts in 2011 because of the IDEAL trial [@cooper2010ideal]. The original code applied the lower bound explicitly and the upper bound only implicitly, through the ACS linkage.
 3. Age 18 or older at incidence (`INC_AGE`).
 4. Hemodialysis as the primary type of dialysis (`DIALTYP` = hemodialysis).
-5. Dialysis setting. The paper excludes patients who began home dialysis. In the 2024 Researcher's Guide, format `$MESET`, `DIALSET` code 1 is "Home" and code 2 is "Dialysis facility/center"; the original code kept codes 1 and 2, so it removed skilled nursing and unknown settings but kept home hemodialysis. **Open:** [#D1] keep codes 1 and 2 (the original code) or code 2 only (the paper).
+5. Dialysis setting. The paper excludes patients who began home dialysis. In the 2024 Researcher's Guide, format `$MESET`, `DIALSET` code 1 is "Home" and code 2 is "Dialysis facility/center"; the original code kept codes 1 and 2, so it removed skilled nursing and unknown settings but kept home hemodialysis. The published Figure 1 labels the patients it removed (14,380) "receiving home hemodialysis", so the coding may have differed in the release used. **Open:** [#D1] keep codes 1 and 2 (the original code) or code 2 only (the paper).
 6. Insurance status recorded (at least one coverage field marked yes).
 7. Vascular access type at first outpatient dialysis recorded (`ACCESSTYPE` not unknown).
 8. Sex recorded.
-9. eGFR at initiation recorded and no higher than 20 mL/min/1.73 m². The paper says "less than 20"; the original code kept values of 20 or below, and dropped missing eGFR within the same step without counting them separately. **Open:** [#D2] whether the bound is < 20 or ≤ 20, and whether missing eGFR is its own flowchart step.
+9. eGFR at initiation recorded and no higher than 20 mL/min/1.73 m². The paper says "less than 20", and its Figure 1 labels the 38,708 excluded patients "eGFR <20"; the original code kept values of 20 or below, and dropped missing eGFR within the same step without counting them separately. **Open:** [#D2] whether the bound is < 20 or ≤ 20, and whether missing eGFR is its own flowchart step.
 10. A residential ZIP code in effect on the date of dialysis start (RESIDENC period containing `DIALDAT`), unique per patient.
 11. ACS data available for the ZIP code (as ZCTA) and form year.
 12. A facility snapshot current on the date of dialysis start, in the same calendar year as the form. The original code's facility join required the two years to match.

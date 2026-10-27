@@ -32,6 +32,7 @@ Contributions follow the rules in [`AGENTS.md`](https://github.com/VagishHemmige
 -   [**5. Density categories**](define_exposure.qmd): the five exposure categories.
 -   [**6. Models**](models.qmd): Table 2 and sensitivity analyses.
 -   [**Tables**](tables.qmd) and [**Figures**](figures.qmd): building and exporting the outputs.
+-   [**Published figures and tables**](results.qmd): the article's Figures 1 and 2 and Tables 1 and 2, reproduced unchanged.
 -   [**Published supplement**](supplement.qmd): the published eTables and eFigures, reproduced unchanged.
 -   [**Classifying codes with an LLM ensemble**](classify_esrd_causes.qmd): the cause of kidney failure mapping.
 

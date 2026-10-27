@@ -160,6 +160,7 @@ esrd_classifier_models <- list(
   google = "gemini-3.8-flash"
 )
 esrd_classifier_batch_size <- 100
+esrd_classifier_prompt_file <- "prompts/esrd-cause-classification.md"
 # Output limit for Claude. ellmer 0.5.0 caps Claude's answers at 4,096 tokens
 # unless told otherwise, too few for a batch of 100 codes with reasons; the
 # other providers have no default cap in ellmer.

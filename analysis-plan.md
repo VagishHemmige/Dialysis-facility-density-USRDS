@@ -159,6 +159,7 @@ Each is applied in the replication and its effect is reported (section 9). Decis
 
 | Original behavior | Correction |
 |---|---|
+| A patient with two residence periods covering the dialysis start date would have been duplicated (a uniqueness check was printed but not enforced) | A patient with no matching period, or more than one, has no residence and is excluded at that flowchart step |
 | CONSORT table counted the RUCA exclusion as 0 (compared a labelled factor to `11`) while the next line removed patients | Every exclusion is an `fc_filter()` step |
 | Exclusions for the facility linkage, a second sex check, ZIP population, % White, % Black, % Asian, % Hispanic and region were applied outside the CONSORT table; the income and poverty rows were labelled "ZIPPercentageFemale" | As above |
 | A ZIP-to-ZCTA step was counted (224 patients in the published Figure 1) but never applied; ZIP codes were matched to ZCTAs directly | The intended crosswalk is applied (UDS Mapper, by year), with its own flowchart step; HSA population counts each ZCTA once |

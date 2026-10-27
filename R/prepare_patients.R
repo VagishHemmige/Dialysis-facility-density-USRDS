@@ -12,7 +12,7 @@
 medevid_columns <- c(
   "USRDS_ID", "MEFDATE", "DIALDAT", "INC_AGE", "SEX", "RACE", "ETHN",
   "DIALTYP", "DIALSET", "GFR_EPI", "SERCR", "ALBUM", "HEGLB", "WEIGHT", "HEIGHT",
-  "ACCESSTYPE", "NEPHCARE", "NEPHCARERANGE", "PDIS", "CDTYPE"
+  "ACCESSTYPE", "NEPHCARE", "PDIS", "CDTYPE"
 )
 
 # The provider ID column is PROVUSRD_DIAL in the 2024 Researcher's Guide and
@@ -81,15 +81,7 @@ medevid_forms <- medevid_labelled |>
     access_type = factor(access_type, levels = c(
       "Catheter", "Arteriovenous fistula", "Arteriovenous graft", "Other"
     )),
-    nephrology_care = derive_nephrology_care(NEPHCARE, NEPHCARERANGE),
-    nephrology_care_any = case_when(
-      nephrology_care == "None" ~ "No nephrology care",
-      nephrology_care == "Unknown" ~ "Unknown",
-      .default = "Some nephrology care"
-    ),
-    nephrology_care_any = factor(nephrology_care_any, levels = c(
-      "No nephrology care", "Some nephrology care", "Unknown"
-    )),
+    nephrology_care = derive_nephrology_care(NEPHCARE),
     insurance = derive_insurance(
       none = MEDCOV_NONE,
       medicaid = MEDCOV_MDCD,
@@ -164,8 +156,7 @@ medevid_forms <- medevid_forms |>
     albumin = "Serum albumin, g/dL",
     hemoglobin = "Serum hemoglobin, g/dL",
     access_type = "Access used at first outpatient dialysis",
-    nephrology_care = "Pre-kidney-failure nephrology care (duration)",
-    nephrology_care_any = "Access to pre-kidney-failure nephrology care",
+    nephrology_care = "Access to pre-kidney-failure nephrology care",
     insurance = "Insurance",
     heart_failure = "Heart failure",
     coronary_disease = "Coronary disease",

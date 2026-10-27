@@ -93,7 +93,7 @@ All patient covariates are measured on the first Medical Evidence form, at initi
 | Year | Year of `MEFDATE` |
 | Comorbidities | Heart failure (`COMO_CHF`); coronary disease (`COMO_ASHD`); diabetes (any of `COMO_DM_INS`, `COMO_DM_ORAL`, `COMO_DM_NOMEDS`, `COMO_DM_RET`); cerebrovascular disease (`COMO_CVATIA`); cancer (`COMO_CANC`); alcohol or drug dependence (`COMO_ALCHO`, `COMO_DRUG`); immobility (`COMO_INAMB`, `COMO_NEEDASST`, `COMO_INTRANS`); institutionalized (`COMO_INST`, `COMO_INST_AL`, `COMO_INST_NURS`, `COMO_INST_OTH`). Each is "yes" when any listed field is yes |
 | Access type | `ACCESSTYPE`: AV fistula, AV graft, catheter, other |
-| Pre-kidney-failure nephrology care | `NEPHCARE` and `NEPHCARERANGE`: none, < 6 months, 6 to 12 months, > 12 months, unknown |
+| Access to pre-kidney-failure nephrology care | `NEPHCARE`: none, some, unknown (unknown or blank kept as its own level), as in the paper's Table 1 and the Model 3 footnote (decided by Vagish Hemmige, 27 October 2026, in a working session). The duration (`NEPHCARERANGE`) is not used. |
 | Insurance | Hierarchy as in the original code: none; else Medicaid (including dual eligibility); else Medicare or Medicare Advantage; else employer group; else other (including VA) |
 | Serum albumin, hemoglobin | `ALBUM` (g/dL), `HEGLB` (g/dL) |
 | Primary cause of kidney failure | `PDIS` mapped to six categories: diabetes; hypertension and cardiac disease; glomerulonephritis; hereditary or polycystic kidney disease; transplant failure or complications; other (including unknown and unmapped codes). **Open:** [#D4] the mapping (see below) |
@@ -120,7 +120,7 @@ There is no follow-up; the outcome is measured at the index event.
 
 - **Model 1:** age, sex, race, Hispanic ethnicity, year.
 - **Model 2:** Model 1 plus heart failure, coronary disease, diabetes, cerebrovascular disease, alcohol or drug dependence, immobility, institutionalized, access type, primary cause of kidney failure, and (in the first version) serum albumin and hemoglobin.
-- **Model 3:** Model 2 plus insurance, nephrology care, rural-urban type, ZIP code poverty, ZIP code % Black, and HSA quality benchmarks.
+- **Model 3:** Model 2 plus insurance, access to nephrology care (none, some, unknown), rural-urban type, ZIP code poverty, ZIP code % Black, and HSA quality benchmarks.
 
 Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them, the analysis uses complete cases (the paper reports 533,375 patients). The paper used Stata; its exact covariate coding and estimation options are not available, so these models are rebuilt from the paper's text and Table 2 footnotes. Estimation uses `lme4::glmer` [@lme4_pkg] with the Laplace approximation. **Open:** [#D6] the Stata recoding and model specification that are not in the paper: the race groups (section 6), the exact covariates in Model 3 (in particular whether mammography and leg amputations are among the "HSA quality benchmarks"), and the estimation method.
 

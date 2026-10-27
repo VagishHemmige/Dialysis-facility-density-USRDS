@@ -44,7 +44,7 @@ The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medi
 
 ## Nephrology care
 
-Combines whether the patient saw a nephrologist with how long. Unknown is its own level, so the models keep the patients the paper kept.
+Whether the patient saw a nephrologist before kidney failure: none, some or unknown, as in the paper's Table 1 and Model 3. Unknown is its own level, so the models keep the patients the paper kept.
 
 ```{r}
 #| label: fn-derive-nephrology-care

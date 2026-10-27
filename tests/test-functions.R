@@ -28,10 +28,9 @@ test_that("insurance follows the original hierarchy", {
 })
 
 test_that("nephrology care keeps unknown as a level", {
-  out <- derive_nephrology_care(c("NO", "YES", "YES", "YES", "YES", "UKN", NA),
-                                c(NA, "< 6 MONTHS", "6-12 MONTHS", "> 12 MONTHS", NA, NA, NA))
-  expect_equal(as.character(out), c("None", "< 6 months", "6 to 12 months", "> 12 months",
-                                    "Yes, duration unknown", "Unknown", "Unknown"))
+  out <- derive_nephrology_care(c("NO", "YES", "Yes", "UNKNOWN", NA))
+  expect_equal(as.character(out), c("No nephrology care", "Some nephrology care",
+                                    "Some nephrology care", "Unknown", "Unknown"))
 })
 
 test_that("regions are assigned by state name", {

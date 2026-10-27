@@ -27,23 +27,18 @@ derive_insurance <- function(none, medicaid, medicare, advantage, group, va, oth
 }
 
 ## ---- fn-derive-nephrology-care
-# Pre-kidney-failure nephrology care from NEPHCARE (format YN9FMT) and
-# NEPHCARERANGE (format RANGE). Unknown is kept as its own level so that
-# models do not drop patients, matching the published sample sizes.
-derive_nephrology_care <- function(nephcare, nephcare_range) {
+# Access to pre-kidney-failure nephrology care from NEPHCARE (format YN9FMT),
+# as in the paper's Table 1 and Model 3. Unknown or blank is its own level, so
+# the models keep these patients, as the published sample sizes show.
+derive_nephrology_care <- function(nephcare) {
   nephcare <- str_to_upper(nephcare)
-  nephcare_range <- str_to_upper(nephcare_range)
 
   case_when(
-    nephcare %in% "NO" ~ "None",
-    nephcare %in% "YES" & nephcare_range %in% "< 6 MONTHS" ~ "< 6 months",
-    nephcare %in% "YES" & nephcare_range %in% "6-12 MONTHS" ~ "6 to 12 months",
-    nephcare %in% "YES" & nephcare_range %in% "> 12 MONTHS" ~ "> 12 months",
-    nephcare %in% "YES" ~ "Yes, duration unknown",
+    nephcare %in% "YES" ~ "Some nephrology care",
+    nephcare %in% "NO" ~ "No nephrology care",
     .default = "Unknown"
   ) |>
-    factor(levels = c("None", "< 6 months", "6 to 12 months", "> 12 months",
-                      "Yes, duration unknown", "Unknown"))
+    factor(levels = c("No nephrology care", "Some nephrology care", "Unknown"))
 }
 
 ## ---- fn-assign-region

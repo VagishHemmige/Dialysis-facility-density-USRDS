@@ -9,7 +9,7 @@ table_1_variables <- c(
   "age", "sex", "race", "hispanic",
   "heart_failure", "coronary_disease", "diabetes", "cerebrovascular_disease",
   "cancer", "immobility", "alcohol_or_drug",
-  "nephrology_care_any", "albumin", "hemoglobin", "access_type", "insurance",
+  "nephrology_care", "albumin", "hemoglobin", "access_type", "insurance",
   "esrd_cause", "zip_percent_black", "zip_percent_poverty",
   "hsa_ambulatory_sensitive_discharges", "hsa_percent_mammogram",
   "hsa_percent_hba1c", "hsa_percent_eye_exam", "profit_centers_area", "rural_urban"

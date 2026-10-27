@@ -1,0 +1,64 @@
+---
+title: "3. Linking area data"
+format: html
+---
+
+Attaches facility counts, ACS, HSA, benchmarks, RUCA and the cause of kidney failure to each patient's first form, and computes the exposure. Nobody is excluded here.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/link_area_data.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/link_area_data.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+-   [`R/download_public_data.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/download_public_data.R)
+-   [`R/prepare_patients.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/prepare_patients.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/link_area_data.R")
+```
+
+## Cause of kidney failure mapping
+
+The reviewed mapping must exist and give every code a category; otherwise the run stops with instructions.
+
+```{r}
+#| label: read-cause-mapping
+#| eval: false
+```
+
+## Facility counts on the dialysis date
+
+This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. `usRds::add_dialysis_facility_counts()` instead finds the CMS release current on each patient's date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes two errors in the original counts (see [Differences](differences.qmd)).
+
+```{r}
+#| label: attach-facility-counts
+#| eval: false
+```
+
+## ACS, HSA and other area data
+
+Matched by ZIP code and the year of the form, as in the original code ([#D3]). Every join states its expected relationship, so an unexpected duplicate stops the run.
+
+```{r}
+#| label: attach-area-data
+#| eval: false
+```
+
+## Facility density
+
+Facilities per 100,000 HSA residents, plus the availability flags the flowchart filters on.
+
+```{r}
+#| label: compute-density
+#| eval: false
+```

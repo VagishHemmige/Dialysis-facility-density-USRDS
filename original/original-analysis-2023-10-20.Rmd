@@ -1,0 +1,3070 @@
+---
+title: "LG USRDS race analysis"
+author: "Vagish Hemmgie"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  word_document: default
+---
+
+<!--
+Archived copy of the original analysis (October 2023), kept for comparison with
+the replication in this repository. The only edits: file locations on the
+analyst's computer are replaced by "<data folder>/", and this note is added.
+The code is otherwise unchanged and is not run by this repository.
+-->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Libraries:
+
+```{r libraries}
+
+library(tidyverse)
+library(flextable)
+library(haven)
+library(tidycensus)
+library(lubridate)
+library(lme4)
+library(broom)
+library(broom.mixed)
+library(lmerTest)
+library(gtsummary)
+library(readxl)
+library(gt)
+library(sf)
+library(writexl)
+library(RCT)
+library(tmap)
+library(ggbeeswarm)
+library(ggpubr)
+
+```
+
+##Dialysis data
+
+The following files were downloaded and unzipped from <https://data.cms.gov/provider-data/archived-data/dialysis-facilities> <https://wayback.archive-it.org/all/20160104132404/https://data.medicare.gov/data/archives/dialysis-facility-compare>
+
+```{r uploaddialysisdata}
+
+
+#Create list of files
+File_List_csv_raw<-list.files(path=".", pattern="csv", recursive = TRUE)
+File_List_txt_raw<-list.files(path=".", pattern="txt", recursive = TRUE)
+
+#List raw csv files
+File_List_csv_raw%>%
+  as.data.frame()%>%
+  flextable()
+
+#List raw tab files
+File_List_txt_raw%>%
+  as.data.frame()%>%
+  flextable()
+
+#Create a file with all facility level CSV file names
+File_List_csv_clean<-tibble(File_List_csv_raw)%>%
+  filter(!str_detect(File_List_csv_raw, "ICH"))%>%
+  filter(str_detect(File_List_csv_raw, "FAC"))%>%
+  rename(FileName=File_List_csv_raw)
+
+#Create a file with all facility level txt file names
+File_List_txt_clean<-tibble(File_List_txt_raw)%>%
+  filter(!str_detect(File_List_txt_raw, "readme"))%>%
+  rename(FileName=File_List_txt_raw)
+
+#Define input function for CSV
+dialysis_read_csv<-function(x) {
+read_csv(x, col_types = cols(Zip = col_character()),
+         locale=locale(encoding="latin1"))%>%
+    rename_with(toupper)%>%
+    rename(TOTSTAS='# OF DIALYSIS STATIONS')%>%
+    rename_with(~case_when(
+      .=="PROFIT OR NON-PROFIT"~"PROFIT_STATUS",
+      .=="PROFIT OR NON-PROFIT?"~"PROFIT_STATUS",
+      TRUE~.
+    ))%>%
+    select(ZIP, TOTSTAS, PROFIT_STATUS)%>%
+    mutate(ZIP=case_when(
+      str_length(ZIP)==5~ZIP,
+      str_length(ZIP)==4~paste0(0,ZIP),
+      str_length(ZIP)==3~paste0(0,0,ZIP),
+    ))%>%
+    group_by(ZIP)%>%
+    summarize(TotalDialysisCentersZIP=n(), 
+              TotalDialysisStationsZIP=sum(TOTSTAS),
+              TotalProfitDialysisCentersZIP=sum(PROFIT_STATUS=="Profit"),
+              TotalProfitDialysisStationsZIP=sum(TOTSTAS[PROFIT_STATUS=="Profit"]),
+              TotalNonProfitDialysisCentersZIP=sum(PROFIT_STATUS=="Non-Profit"),
+              TotNonProfitDialysisStationsZIP=sum(TOTSTAS[PROFIT_STATUS=="Non-Profit"])
+              )%>%
+    return()
+}
+
+#Define input function for TXT
+dialysis_read_txt<-function(x) {
+  read_delim(x, "\t", escape_double = FALSE, col_types = cols(phyzip = col_character()), trim_ws = TRUE) %>%
+    rename_with(toupper)%>%
+    rename(ZIP= PHYZIP)%>%
+    rename(PROFIT_STATUS=OWNTYPE)%>%
+    select(ZIP, TOTSTAS, PROFIT_STATUS)%>%
+    mutate(ZIP=case_when(
+      str_length(ZIP)==5~ZIP,
+      str_length(ZIP)==4~paste0(0,ZIP),
+      str_length(ZIP)==3~paste0(0,0,ZIP),
+    ))%>%
+    group_by(ZIP)%>%
+    summarize(TotalDialysisCentersZIP=n(), 
+              TotalDialysisStationsZIP=sum(TOTSTAS),
+              TotalProfitDialysisCentersZIP=sum(PROFIT_STATUS==1),
+              TotalProfitDialysisStationsZIP=sum(TOTSTAS[PROFIT_STATUS==1]),
+              TotalNonProfitDialysisCentersZIP=sum(PROFIT_STATUS==2),
+              TotNonProfitDialysisStationsZIP=sum(TOTSTAS[PROFIT_STATUS==2])
+              )%>%
+    return()
+}
+
+#Create data list of CSV files
+data_csv_clean<-File_List_csv_clean%>%
+  mutate(file_contents = map(FileName,~dialysis_read_csv(.)))
+
+#Create data list of TXT files
+data_txt_clean<-File_List_txt_clean%>%
+  mutate(file_contents = map(FileName,~dialysis_read_txt(.)))
+
+#Combine data
+data_combined_clean<-bind_rows(data_csv_clean, data_txt_clean)%>%
+  #Create a variable which stores the year
+  mutate(Year=str_extract(FileName, "20[0-9][0-9]"))%>%
+  #Create temp var which stores time as 4 digit year, 2 digit month, 2 digit day if filename uses this format
+  mutate(time=parse_number(FileName))%>%
+  mutate(time=ifelse(time>10000,time,NA))%>%
+  mutate(time=as.character(time))%>%
+  #Create a variable which stores the month
+  mutate(Month=ifelse(is.na(time), str_extract(FileName, "_[0-1][0-9]_"), str_sub(time,5,6) ))%>%
+  mutate(Month=parse_number(Month))%>%
+  #Create a variable which stores the day of month; assume first of the month for more recent years
+  mutate(Day=ifelse(is.na(time), 1, str_sub(time,7,8) ))%>%
+  #Create a DateStart variable:
+  mutate(DateStart=paste0(Year,"-",Month,"-",Day))%>%
+  mutate(DateStart=as.Date(DateStart))%>%
+  select(-time, -Year, -Month, -Day)%>%
+  arrange(DateStart)%>%
+  mutate(DateEnd=lead(DateStart)-1)%>%
+  filter(!is.na(DateEnd))%>%
+  #Expand data set based on duration
+  mutate(Duration=DateEnd-DateStart+1)%>%
+  mutate(Duration=as.numeric((Duration)))%>%
+  uncount(Duration)%>%
+  group_by(FileName)%>%
+  mutate(N=row_number()-1)%>%
+  mutate(DateCurrent=N+DateStart)%>%
+  ungroup
+  
+  
+  
+#Unnest data
+data_combined_clean_unnested<-data_combined_clean%>%
+  unnest(cols=file_contents)%>%
+  arrange(ZIP, DateCurrent)%>%
+  select(-N, -DateStart, -DateEnd, -FileName)
+  
+#Remove unneeded files
+rm(data_combined_clean)
+gc()
+  
+```
+
+```{r}
+#Import and clean USRDS data
+
+#First, we import data from the Medical Evidence Form
+medevid_raw <- read_sas("<data folder>/medevid.sas7bdat", NULL)%>%
+  select(RACE, ETHN, MEFDATE, SEX, DIALDAT, SERCR, TDATE, WEIGHT, HEIGHT, PROVUSRD, USRDS_ID, INC_AGE, GFR_MDRD, 
+         GFR_EPI, DIALSET, DIALTYP, NEPHCARE, NEPHCARERANGE, PDIS, CDTYPE, ALBUM, HEGLB, 
+         ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"))%>%
+  arrange(USRDS_ID, MEFDATE)%>%
+  group_by(USRDS_ID)%>%
+  mutate(N=row_number())%>%
+  ungroup()%>%
+  mutate(Year=year(MEFDATE))%>%
+  mutate(RACE=factor(RACE,
+         levels=c("1","11","2","3","4","41","5","6","9"),
+         labels=c("White","MidEast","Black","Native American","Asian","South Asian",
+         "Pacific Islander","Other","Unknown")))%>%
+#Define a Hispanic ethnicity variable
+    mutate(HISPANIC=factor(ETHN,
+         levels=c("1","2","3","5","9"),
+         labels=c("Hispanic","Hispanic","Non-Hispanic","Hispanic","Unknown")
+         ))%>%
+  select(-ETHN)%>%
+#Create factor variables for whether pt had nephrology care or not
+  mutate(NEPHCARE=factor(NEPHCARE,
+         levels=c("1","2","9"),
+         labels=c("Nephrology care","No nephrology care","Unknown")
+         ))%>%
+  mutate(NEPHCARERANGE=ifelse(NEPHCARE=="No nephrology care","99",NEPHCARERANGE))%>%
+  mutate(NEPHCARERANGE=factor(NEPHCARERANGE,
+         levels=c("0","1","2", "99"),
+         labels=c("< 6 months","6-12 months","> 12 months", "None")
+         ))%>%
+#Create labelled factor variable for access type
+  mutate(ACCESSTYPE=ifelse(ACCESSTYPE==5, NA, ACCESSTYPE))%>%
+  mutate(
+    ACCESSTYPE=factor(ACCESSTYPE,
+         levels=c("1","2","3", "4"),
+         labels=c("AVF","AVG","Catheter", "Other")
+         )
+  )%>%
+#Create labelled factor variables for presence of fistula/graft at time of HD initiation
+  mutate(AVFMATURING=ifelse(AVFMATURING==9, NA, AVFMATURING))%>%
+  mutate(
+    AVFMATURING=factor(AVFMATURING,
+         levels=c("1","2"),
+         labels=c("Yes","No")
+         )
+  )%>%
+  
+  mutate(AVGMATURING=ifelse(AVGMATURING==9, NA, AVGMATURING))%>%
+  mutate(
+    AVGMATURING=factor(AVGMATURING,
+         levels=c("1","2"),
+         labels=c("Yes","No")
+         )
+  )%>%
+  
+  #Create variable based on insurance status
+  mutate(INSURANCESTATUS=case_when(
+    MEDCOV_NONE=="Y"~"No insurance",
+    MEDCOV_MDCD=="Y"~"Medicaid/Dual eligible/Managed Medicaid",
+    MEDCOV_MDCR=="Y"~"Medicare/managed Medicare",
+    MEDCOV_ADVANTAGE=="Y"~"Medicare/managed Medicare",
+    MEDCOV_GROUP=="Y"~"Commercial",
+    MEDCOV_DVA=="Y"~"Other",
+    MEDCOV_OTHER=="Y"~"Other"
+  ))%>%
+  
+  
+#Convert a number of factor variables
+  mutate(SEX=as.factor(SEX))%>%
+  mutate(DIALSET=as.factor(DIALSET))%>%
+  mutate(DIALTYP=as.factor(DIALTYP))%>%
+  mutate(CDTYPE=as.factor(CDTYPE))%>%
+  mutate(PROVUSRD=as.factor(PROVUSRD))%>%
+  mutate(INSURANCESTATUS=as.factor(INSURANCESTATUS))%>%
+  mutate(across(.cols = starts_with("MEDCOV"),
+                .fns = factor
+                ))%>%
+  mutate(across(.cols = starts_with("COMO_"),
+                .fns = factor
+                ))%>%
+  
+#Create dichotomous variable for GFR
+  mutate(GFR_DICH=case_when(
+    GFR_EPI<10~0,
+    GFR_EPI>=10~1,
+    is.na(GFR_EPI)~NA_real_
+  ))
+```
+
+We export all known diagnosis codes for cause of ESRD to a CSV:
+
+```{r savedxcodes}
+
+#Create name of place to save data
+CSV_Dx_name<-paste0("medevid_dx_codes_",Sys.Date(),".csv")
+
+#create file of diagnoses
+medevid_raw%>%
+  group_by(PDIS, CDTYPE)%>%
+  count()%>%
+  write_csv(CSV_Dx_name)
+```
+
+CONSORT statement flowchart--count patients who meet criteria, then remove them.
+The CONSORT_statement df contains the number of pts retained and removed in each step
+
+```{r}
+
+#Count total number of patients in medical evidence form
+medevid_raw%>%
+  count()
+CONSORT_statement<-tibble(
+  step="Count total number of patients in medical evidence form",
+  beginning_number=NA_integer_,
+  number_removed=NA_integer_,
+  ending=(medevid_raw%>%count()%>%pull())
+)
+
+#Remove pts who are on second or greater dialysis episodes
+medevid_raw%>%
+  count(N>1)
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove pts who are on second or greater dialysis episodes",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(N>1)%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(N==1)%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(N==1)%>%
+  select(-N)
+  
+#Remove patients who start dialysis prior to 2011
+medevid_raw%>%
+  count(Year<=2010)
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients who start dialysis prior to 2011",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(Year<=2010)%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(Year>2010)%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(Year>2010)
+
+#Remove patients under age 18 at start of HD
+medevid_raw%>%
+  count(INC_AGE<18)
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients under age 18 at start of HD",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(INC_AGE<18)%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(INC_AGE>=18)%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(INC_AGE>=18)
+
+#Remove patients not receiving HD
+medevid_raw%>%
+  count(DIALTYP!=1)
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients not receiving HD",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(DIALTYP!=1)%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(DIALTYP==1)%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(DIALTYP==1)
+
+#Remove patients receiving home HD:
+medevid_raw%>%
+  count(!(DIALSET==1|DIALSET==2))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients receiving home HD",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(!(DIALSET==1|DIALSET==2))%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(DIALSET==1|DIALSET==2)%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(DIALSET==1|DIALSET==2)
+
+#Remove patients with no prior Nephrology care (note: we are de-activating this code)
+#medevid_raw%>%
+  #count(NEPHCARE=="No nephrology care")
+#medevid_raw<-medevid_raw%>%
+ # filter(!(NEPHCARE=="No nephrology care"))
+
+#Remove patients with missing prior Nephrology care  (note: we are de-activating this code)
+#medevid_raw%>%
+  #count(NEPHCARE=="Unknown")
+#medevid_raw%>%
+  #count(is.na(NEPHCARE))
+#medevid_raw<-medevid_raw%>%
+  #filter(!(NEPHCARE=="Unknown"))
+
+#Remove patients who are neither white nor black  (note: we are de-activating this code)
+#medevid_raw%>%
+  #count(!(RACE=="White" | RACE=="Black"))
+#medevid_raw<-medevid_raw%>%
+  #filter(RACE=="White" | RACE=="Black")
+
+#Remove patients for whom insurance status is missing
+medevid_raw%>%
+  count(is.na(INSURANCESTATUS))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients for whom insurance status is missing",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(is.na(INSURANCESTATUS))%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(!(is.na(INSURANCESTATUS)))%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(!(is.na(INSURANCESTATUS)))
+
+#Remove patients for whom access type is missing
+medevid_raw%>%
+  count(is.na(ACCESSTYPE))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients for whom access type is missing",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(is.na(ACCESSTYPE))%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(!(is.na(ACCESSTYPE)))%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(!(is.na(ACCESSTYPE)))
+
+#Remove patients for whom SEX is missing
+medevid_raw%>%
+  count(SEX=="U")
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients for whom SEX is missing",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(SEX=="U")%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(!(SEX=="U"))%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(!(SEX=="U"))
+
+#Remove patients for whom GFR>20 is missing
+medevid_raw%>%
+  count(GFR_EPI>20)
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients for whom GFR<20",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%filter(GFR_EPI>20)%>%count%>%pull()),
+  ending=(medevid_raw%>%filter(!(GFR_EPI>20))%>%count()%>%pull())
+)
+medevid_raw<-medevid_raw%>%
+  filter(!(GFR_EPI>20))
+
+#Exclude Alaska and Hawaii later in file
+
+```
+
+Variable validation
+
+```{r}
+
+#Validate insurance status
+medevid_raw%>%filter(INSURANCESTATUS=="No insurance")%>%
+  select(starts_with("MEDCOV"))%>%
+  tbl_summary()
+
+medevid_raw%>%filter(INSURANCESTATUS=="Medicaid/Dual eligible/Managed Medicaid")%>%
+  select(starts_with("MEDCOV"))%>%
+  tbl_summary()
+
+medevid_raw%>%filter(INSURANCESTATUS=="Medicare/managed Medicare")%>%
+  select(starts_with("MEDCOV"))%>%
+  tbl_summary()
+
+medevid_raw%>%filter(INSURANCESTATUS=="Commercial")%>%
+  select(starts_with("MEDCOV"))%>%
+  tbl_summary()
+
+medevid_raw%>%filter(INSURANCESTATUS=="No insurance")%>%
+  select(starts_with("MEDCOV"))%>%
+  tbl_summary()
+
+medevid_raw<-medevid_raw%>%
+  select(-starts_with("MEDCOV"))
+
+
+```
+
+```{r}
+
+#Next, we import the ZIP code data
+residenc_raw <- read_sas("<data folder>/residenc.sas7bdat", NULL)%>%
+  select(USRDS_ID, ZIPCODE, BEGRES, ENDRES, COUNTY, STATE)%>%
+  arrange(USRDS_ID, BEGRES)%>%
+  group_by(USRDS_ID)%>%
+  mutate(N=row_number())
+
+medevid_raw%>%
+  count()
+
+#Merge ZIP code and MedEvid files and only keep observations where dialysis start 
+MergedUSRDSDataRaw<-inner_join(medevid_raw, residenc_raw, by="USRDS_ID")%>%
+  filter(DIALDAT>=BEGRES & DIALDAT<=ENDRES)%>%
+  arrange(USRDS_ID)
+
+#Confirm that USRDS_ID remains unique
+length(unique(MergedUSRDSDataRaw$USRDS_ID))==length((MergedUSRDSDataRaw$USRDS_ID))
+
+#See number of pts in file after merge
+length(MergedUSRDSDataRaw$USRDS_ID)
+
+#Add appropriate row to the CONSORT statement:      
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients with no ZIP code in residence file at time of dialysis initiation",
+  beginning_number=(medevid_raw%>%count()%>%pull()),
+  number_removed=(medevid_raw%>%count()%>%pull()-length(MergedUSRDSDataRaw$USRDS_ID)),
+  ending=(length(MergedUSRDSDataRaw$USRDS_ID))
+)
+
+#Create crosswalk ZIP to ZCTA
+ZIP_ZCTA_crosswalk_2010<-zipzcta::zipzcta%>%rename(ZIPCODE=zip)%>%
+  select(ZIPCODE, zcta)
+
+#Merge USRDS Raw data with crosswalk
+MergedUSRDSDataRaw<-MergedUSRDSDataRaw%>%left_join(ZIP_ZCTA_crosswalk_2010)
+
+#Add appropriate row to the CONSORT statement:      
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients whose ZIP code does not correlate with a ZCTA in 2010 census",
+  beginning_number=(MergedUSRDSDataRaw%>%count()%>%pull()),
+  number_removed=(filter(MergedUSRDSDataRaw, is.na(zcta))%>%count()%>%pull()),
+  ending=(filter(MergedUSRDSDataRaw, !is.na(zcta))%>%count()%>%pull())
+)
+
+ 
+#rm residence_raw and medevid files
+rm(residenc_raw)
+rm(medevid_raw)
+gc()
+```
+
+```{r}
+
+#The ZIP codes without dialysis facilities are not in the data_combined_clean_unnested file, so we add them to avoid later problems
+
+#We pull the list of zip codes from the medevidraw file
+
+FullZIPCODEListUSRDS<-MergedUSRDSDataRaw%>%select(ZIPCODE)%>%
+  unique()%>%
+  rename(ZIP=ZIPCODE)
+
+FullZIPCODEListFacilitiesFile<-data_combined_clean_unnested%>%
+  select(ZIP)%>%
+  unique()
+
+ZIPCodesToAddDF<-setdiff(FullZIPCODEListUSRDS, FullZIPCODEListFacilitiesFile)
+
+data_combined_clean_unnested<-data_combined_clean_unnested%>%bind_rows(ZIPCodesToAddDF)%>%
+  ungroup()%>%
+  complete(ZIP, DateCurrent)%>%
+  filter(ZIP!="")%>%
+  filter(!is.na(DateCurrent))%>%
+  arrange(ZIP, DateCurrent)%>%
+  #Introduce ZIP code lagged variable
+  group_by(ZIP)%>%
+  mutate(oneyrlagTotalDialysisCentersZIP = lag(TotalDialysisCentersZIP, n=365, order_by=ZIP))%>%
+  mutate(oneyrlagTotalDialysisStationsZIP = lag(TotalDialysisStationsZIP, n=365, order_by=ZIP))%>%
+  
+  #Fill in missing values for "Total Dialysis Centers"
+  mutate(TotalDialysisCentersZIP=ifelse(is.na(TotalDialysisCentersZIP),0,TotalDialysisCentersZIP))%>%
+  mutate(TotalDialysisStationsZIP=ifelse(is.na(TotalDialysisStationsZIP),0,TotalDialysisStationsZIP))%>%
+  mutate(TotalProfitDialysisCentersZIP=ifelse(is.na(TotalProfitDialysisCentersZIP),0,TotalProfitDialysisCentersZIP))%>%
+  mutate(TotalProfitDialysisStationsZIP=ifelse(is.na(TotalProfitDialysisStationsZIP),0,TotalProfitDialysisStationsZIP))%>%
+  mutate(TotalNonProfitDialysisCentersZIP=ifelse(is.na(TotalNonProfitDialysisCentersZIP),0,TotalNonProfitDialysisCentersZIP))%>%
+  mutate(TotNonProfitDialysisStationsZIP=ifelse(is.na(TotNonProfitDialysisStationsZIP),0,TotNonProfitDialysisStationsZIP))
+
+gc()
+
+```
+
+```{r importdxcodes}
+
+#We define the function that pulls the ICD_categories from a spreadsheet
+get_dialysis_cause<-function(ICD_category) {
+read_excel("<data folder>/dialysis project medevid_dx_codes_2021-11-25.xlsx", 
+    sheet = ICD_category)%>%
+  return()
+}
+
+#Actually pull ICD categories from spreadsheet
+Dialysis_Cause_DF<-tibble(DialysisCause=c("Diabetes","Hypertensive and Cardiac", "Glomerulonephritis", 
+                                          "HereditaryPCKD", "Transplant", "Other"))%>%
+  mutate(ICD_data=map(DialysisCause,get_dialysis_cause))%>%
+  unnest(cols = c(ICD_data))%>%
+  select(DialysisCause, ICD)%>%
+#Remove duplicate rows
+  distinct()
+
+
+```
+
+```{r importacsdata}
+
+
+#Define input function for ACS
+dialysis_get_ACS<-function(y) {
+get_acs(geography = "zcta", 
+        variables = c(ZIPTotalPopulation = "S0601_C01_001",
+                      ZIPPercentageFemale="S0601_C01_012",
+                      ZIPPercentageWhite="S0601_C01_014",
+                      ZIPPercentageBlack="S0601_C01_015",
+                      ZIPPercentageAsian="S0601_C01_017",
+                      ZIPPercentageHispanic="S0601_C01_021",
+                      ZIPMedianIncome="S0601_C01_047",
+                      ZIPPercentagePoverty="S0601_C01_049"
+                      ), 
+        year=y)%>%
+  mutate(ZIP=str_sub(NAME,7,11))%>%
+  select(-moe,-NAME, -GEOID)%>%
+  pivot_wider(names_from = variable, values_from=estimate)%>%
+  arrange(ZIP)%>%
+  return()
+}
+
+
+if (file.exists("<data folder>/acs_raw.rds")) {
+  acs_raw <- readRDS("<data folder>/acs_raw.rds")
+} else {
+#Import and clean ACS data
+#First, we create a list of the years we are conducting the study (2011-2019)
+acs_raw<-tibble(Year=seq(2011,2019))%>%
+  #This next step runs the dialysis_get_ACS function from above for every year above, creating a nested data list
+  mutate(ACS_data = map(Year,dialysis_get_ACS))%>%
+  #Unnest the data set to create a data set that we can merge with the USRDS based on Year and ZIP
+  unnest(ACS_data)%>%
+  rename(ZIPCODE=ZIP)
+  saveRDS(acs_raw, "<data folder>/acs_raw.rds")
+}
+
+gc()
+
+```
+
+Import file to label ZIP codes as rural or urban:
+```{r}
+RUCA2010zipcode_raw <- read_excel("<data folder>/RUCA2010zipcode.xlsx", 
+                              sheet = "Data", 
+                              col_types = c("text", "text", "text", "text", "text"))
+
+RUCA1Levels <- read_excel("<data folder>/RUCA2010zipcode.xlsx", sheet = "Primary RUCA codes", col_types = c("text", "text"))%>%
+  pull(RUCA1Levels)
+
+RUCA1Labels <- read_excel("<data folder>/RUCA2010zipcode.xlsx", sheet = "Primary RUCA codes", col_types = c("text", "text"))%>%
+  pull(RUCA1Labels)
+
+RUCA2Levels <- read_excel("<data folder>/RUCA2010zipcode.xlsx", sheet = "Secondary RUCA codes", col_types = c("text", "text"))%>%
+  pull(RUCA2Levels)
+
+RUCA2Labels <- read_excel("<data folder>/RUCA2010zipcode.xlsx", sheet = "Secondary RUCA codes", col_types = c("text", "text"))%>%
+  pull(RUCA2Labels)
+
+RUCA2010zipcode_clean <- RUCA2010zipcode_raw%>%
+  mutate(RUCA1=factor(RUCA1,
+                      levels =RUCA1Levels,
+                      labels = RUCA1Labels))%>%
+  mutate(RUCA2=factor(RUCA2,
+                      levels =RUCA2Levels,
+                      labels = RUCA2Labels))%>%
+  select(-STATE, ZIP_TYPE)
+
+rm(RUCA2010zipcode_raw)
+  
+gc()
+
+```
+
+
+```{r}
+
+#Import HSA to ZIP crosswalks, obtained from https://data.dartmouthatlas.org/supplemental/#crosswalks
+
+#Create list of files from 2011 to 2019 and save as a data frame:
+File_List_HSA_raw<-list.files(path="<data folder>/HSA Crosswalks", pattern="xls", recursive = TRUE)%>%
+  tibble(filepathHSA=paste0("<data folder>/HSA Crosswalks/", .))%>%
+  select(filepathHSA)
+
+#Define import function:
+HSA_read_xls<-function(x) {
+read_xls(x)%>%
+    select(starts_with("zipcode"), hsanum)%>%
+    pivot_longer(
+      cols = starts_with("zipcode"),
+      names_to = "year",
+      names_prefix = "zipcode",
+      values_to = "zipcode"
+    )%>%
+    mutate(year=as.numeric(year))%>%
+    mutate(year=2000+year)%>%
+    mutate(zipcode=as.character(zipcode))%>%
+    mutate(zipcode=case_when(
+      nchar(zipcode)==3~paste0("00",zipcode),
+      nchar(zipcode)==4~paste0("0",zipcode),
+      nchar(zipcode)==5~zipcode))%>%
+    
+    
+    return
+  
+}
+
+
+#Run functions that import HSA files
+data_HSA_raw<-File_List_HSA_raw%>%
+  mutate(file_contents = map(filepathHSA,~HSA_read_xls(.)))%>%
+  unnest(c=(file_contents))%>%
+  select(-filepathHSA)%>%
+  rename(Year=year)%>%
+  rename(ZIPCODE=zipcode)
+
+#Take ACS file and use it to calculate HSA-level population
+data_HSA_clean<-acs_raw%>%
+  select(Year, ZIPCODE, ZIPTotalPopulation)%>%
+  right_join(data_HSA_raw)%>%
+  group_by(Year, hsanum)%>%
+  mutate(HSATotalPopulation=sum(ZIPTotalPopulation, na.rm = TRUE))%>%
+  ungroup()%>%
+  select(-ZIPTotalPopulation)
+
+gc()
+
+#Take facility unnested file and merge with HSA file to calculate HSA level variables
+
+data_combined_clean_unnested<-data_combined_clean_unnested%>%
+  mutate(Year=year(DateCurrent))%>%
+  left_join(data_HSA_raw, by=c("ZIP"="ZIPCODE", "Year"))
+
+gc()
+  
+#Add HSA level variables
+  data_combined_clean_unnested<-data_combined_clean_unnested%>%
+  group_by(hsanum, DateCurrent)%>%
+    mutate(TotalDialysisCentersHSA=sum(TotalDialysisCentersZIP, na.rm = TRUE), 
+              TotalDialysisStationsHSA=sum(TotalDialysisStationsZIP, na.rm = TRUE),
+              TotalProfitDialysisCentersHSA=sum(TotalProfitDialysisCentersZIP, na.rm = TRUE),
+              TotalProfitDialysisStationsHSA=sum(TotalProfitDialysisStationsZIP, na.rm = TRUE),
+              TotalNonProfitDialysisCentersHSA=sum(TotalNonProfitDialysisCentersZIP, na.rm = TRUE),
+              TotNonProfitDialysisStationsHSA=sum(TotNonProfitDialysisStationsZIP, na.rm = TRUE))%>%
+  ungroup()%>%
+  mutate(across(ends_with("HSA"), ~ifelse(is.na(hsanum), NA, .x)))
+
+gc()
+```
+
+
+```{r}
+
+#We create a data set we can use for mapping
+
+#Import map file from https://data.dartmouthatlas.org/supplemental/
+
+HSA_map<-read_sf("<data folder>/HsaBdry_AK_HI_unmodified.shp")%>%
+  rename(hsanum=HSA93)%>%
+  select(hsanum, geometry, STATE)
+
+HSA_short_data_1<-data_combined_clean_unnested%>%select(hsanum, DateCurrent, Year, ends_with("HSA"))%>%
+  filter(month(DateCurrent)==1)%>%
+  filter(day(DateCurrent)==1)%>%
+  select(-DateCurrent)%>%
+  filter(!is.na(hsanum))%>%
+  distinct()
+
+HSA_short_data_2<-data_HSA_clean%>%
+  select(-ZIPCODE)%>%
+  distinct()
+
+HSA_short_data_map<-HSA_short_data_1%>%
+  left_join(HSA_short_data_2)%>%
+  left_join(HSA_map)%>%
+  st_as_sf()%>%
+  mutate(HSATotalCenterDensity=(TotalDialysisCentersHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(HSATotalStationDensity=(TotalDialysisStationsHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(CenterMapLabel=paste0("HSA: ", hsanum, "\n Dialysis Center Density: ", round(HSATotalCenterDensity, digits=1)))%>%
+  mutate(StationMapLabel=paste0("HSA: ", hsanum, "\n Dialysis Station Density: ", round(HSATotalStationDensity, digits = 1)))
+
+HSA_short_data_map<-HSA_short_data_map%>%
+  st_make_valid()%>%
+  filter(st_is_valid(.)==TRUE)
+
+#We import and merge results from Dartmouth atlas, then merge into map file
+hsa_hospitalcapacity <- read_dta("<data folder>/hsa_hospitalcapacity.dta")
+hsahittingbenchmark <- read_dta("<data folder>/hsahittingbenchmark.dta")
+
+HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
+  left_join(hsahittingbenchmark)%>%
+  mutate(Legamputationsper1000Medica=ifelse(Legamputationsper1000Medica<0, -Legamputationsper1000Medica, Legamputationsper1000Medica))%>%
+  mutate(annualpercenteyeexam2015=ifelse(annualpercenteyeexam2015<0, -annualpercenteyeexam2015, annualpercenteyeexam2015))%>%
+  mutate(femaleswithonemammointwoyears=ifelse(femaleswithonemammointwoyears<0, -femaleswithonemammointwoyears,
+                                              femaleswithonemammointwoyears))%>%
+  mutate(percentwithhgba1c2015=ifelse(percentwithhgba1c2015<0, -percentwithhgba1c2015, percentwithhgba1c2015))
+
+  
+#rm(HSA_short_data_1)
+#rm(HSA_short_data_2)
+  
+gc()
+
+```
+
+
+
+```{r merges}
+
+#First, join the USRDS and ACS data
+
+#Do we have a missing data problem?
+anti_join(MergedUSRDSDataRaw, acs_raw, by=c("ZIPCODE", "Year"))%>%count()
+MergedUSRDSDataRaw%>%
+  count()
+
+#It appears we do!  Should we do this as as an inner join or a full join?  And then account for this in the CONSORT chart
+MergedData<-inner_join(MergedUSRDSDataRaw, acs_raw, by=c("ZIPCODE", "Year"))
+
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients for whom ACS ZCTA code data are missing",
+  beginning_number=(MergedUSRDSDataRaw%>%count()%>%pull()),
+  number_removed=(anti_join(MergedUSRDSDataRaw, acs_raw, by=c("ZIPCODE", "Year"))%>%count()%>%pull()),
+  ending=(MergedData%>%count()%>%pull())
+)
+
+gc()
+
+#Then, join the above data with the dialysis data set
+
+#Do we have a missing data problem?
+MergedData%>%
+  anti_join(data_combined_clean_unnested, by=c("ZIPCODE"="ZIP", "DIALDAT"="DateCurrent", "Year"))%>%count()
+
+#We don't!
+
+MergedData<-MergedData%>%
+  inner_join(data_combined_clean_unnested, by=c("ZIPCODE"="ZIP", "DIALDAT"="DateCurrent", "Year"))
+MergedData%>%count()
+
+#Remove dialysis data set given its size and that it's no longer needed
+rm(data_combined_clean_unnested)
+gc()
+
+#Subsequent merges
+
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients for whom ZIP code does not correspond to an HSA",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%left_join(Dialysis_Cause_DF, by=c("PDIS"="ICD"))%>% select(-hsanum)%>%
+    anti_join(data_HSA_clean, by=c("ZIPCODE", "Year"))%>%count()%>%pull()),
+  ending=((MergedData%>%left_join(Dialysis_Cause_DF, by=c("PDIS"="ICD"))%>% select(-hsanum)%>%
+    inner_join(data_HSA_clean, by=c("ZIPCODE", "Year"))%>%count()%>%pull()))
+)
+
+
+MergedData<-MergedData%>%
+  left_join(Dialysis_Cause_DF, by=c("PDIS"="ICD"))%>%
+  select(-hsanum)%>%
+  #Now add HSA variables
+  inner_join(data_HSA_clean, by=c("ZIPCODE", "Year"))%>%
+
+  #Create dialysis cause variable and fill in missing values with "Other"
+  mutate(DialysisCause=ifelse(is.na(DialysisCause)==TRUE, "Other", DialysisCause))%>%
+  mutate(DialysisCause=as.factor(DialysisCause))%>%
+  
+  #Fill in missing values for "Total Dialysis Centers"
+  mutate(TotalDialysisCentersZIP=ifelse(is.na(TotalDialysisCentersZIP),0,TotalDialysisCentersZIP))%>%
+  mutate(TotalDialysisStationsZIP=ifelse(is.na(TotalDialysisStationsZIP),0,TotalDialysisStationsZIP))%>%
+  mutate(TotalProfitDialysisCentersZIP=ifelse(is.na(TotalProfitDialysisCentersZIP),0,TotalProfitDialysisCentersZIP))%>%
+  mutate(TotalProfitDialysisStationsZIP=ifelse(is.na(TotalProfitDialysisStationsZIP),0,TotalProfitDialysisStationsZIP))%>%
+  mutate(TotalNonProfitDialysisCentersZIP=ifelse(is.na(TotalNonProfitDialysisCentersZIP),0,TotalNonProfitDialysisCentersZIP))%>%
+  mutate(TotNonProfitDialysisStationsZIP=ifelse(is.na(TotNonProfitDialysisStationsZIP),0,TotNonProfitDialysisStationsZIP))%>%
+  
+  #Adjust variables for ZIP code population
+  mutate(dcpp=(TotalDialysisCentersZIP/ZIPTotalPopulation)*100000)%>%
+  mutate(dcpp1=(TotalDialysisStationsZIP/ZIPTotalPopulation)*100000)%>%
+  mutate(dcpp2=(oneyrlagTotalDialysisStationsZIP/ZIPTotalPopulation)*100000)%>%
+  
+  mutate(dcpp_profit=(TotalProfitDialysisCentersZIP/ZIPTotalPopulation)*100000)%>%
+  mutate(dcpp1_profit=(TotalProfitDialysisStationsZIP/ZIPTotalPopulation)*100000)%>%
+  
+  mutate(dcpp_nonprofit=(TotalNonProfitDialysisCentersZIP/ZIPTotalPopulation)*100000)%>%
+  mutate(dcpp1_nonprofit=(TotNonProfitDialysisStationsZIP/ZIPTotalPopulation)*100000)%>%
+
+  
+  mutate(stations3_ZIP=case_when(
+    dcpp1==0~0,
+    dcpp1>0 & dcpp1<=66~1,
+    dcpp1>66~2,
+    is.na(dcpp1)~NA_real_
+  )
+         )%>%
+  mutate(stations3_ZIP=factor(stations3_ZIP,
+                          levels = c(0,1,2),
+                          labels = c("0", "Between 0 and 66", "66+")))%>%
+  mutate(lag3_ZIP=case_when(
+    dcpp2==0~0,
+    dcpp2>0 & dcpp2<=114.6~1,
+    dcpp2>114.6~2,
+    is.na(dcpp2)~NA_real_
+  )
+         )%>%
+  mutate(lag3_ZIP=factor(lag3_ZIP,
+                          levels = c(0,1,2),
+                          labels = c("0", "Between 0 and 114.6", "114.6+")))%>%
+  mutate(centers3_ZIP=case_when(
+    dcpp==0~0,
+    dcpp>0 & dcpp<=6.7~1,
+    dcpp>6.7~2,
+    is.na(dcpp)~NA_real_
+  )
+         )%>%
+  mutate(centers3_ZIP=factor(centers3_ZIP,
+                          levels = c(0,1,2),
+                          labels = c("0", "Between 0 and 6.7", "6.7+")))%>%
+  
+  #HSA variables
+  mutate(HSATotalCenterDensity=(TotalDialysisCentersHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(HSATotalStationDensity=(TotalDialysisStationsHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(HSAProfitCenterDensity=(TotalProfitDialysisCentersHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(HSAProfitStationDensity=(TotalProfitDialysisStationsHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(HSANonProfitCenterDensity=(TotalNonProfitDialysisCentersHSA/ HSATotalPopulation)*100000 )%>%
+  mutate(HSANonProfitStationDensity=(TotNonProfitDialysisStationsHSA/ HSATotalPopulation)*100000 )
+  
+MergedData$stations3_ZIP<-relevel(MergedData$stations3_ZIP, "Between 0 and 66")
+MergedData$lag3_ZIP<-relevel(MergedData$lag3_ZIP, "Between 0 and 114.6")
+MergedData$centers3_ZIP<-relevel(MergedData$centers3_ZIP, "Between 0 and 6.7")
+    
+#Label the STATE variable and label regions
+State_labels <- read_excel("<data folder>/State labels.xlsx")
+STATEFIPSList<-State_labels%>%pull(STATEFIPS)
+STATELABELList<-State_labels%>%pull(STATELABEL)
+NortheastList<-c("Connecticut","Maine","Massachusetts","Vermont","New Hampshire","New York","Pennsylvania","Rhode Island","New Jersey")
+MidwestList<-c("North Dakota","South Dakota","Nebraska","Kansas","Minnesota","Iowa",
+               "Missouri","Wisconsin","Illinois","Michigan","Indiana","Ohio")
+WestList<-c("Washington","Oregon","California","Idaho","Nevada","Arizona","Utah","Montana","Wyoming","Colorado","New Mexico")
+SouthList<-c("Oklahoma","Texas","Arkansas","Louisiana","Kentucky","Tennessee","Mississippi","Alabama",
+              "West Virginia","Maryland","Delaware","District of Columbia","Virginia","North Carolina","South Carolina",
+              "Georgia","Florida")
+PacificList<-c("Alaska", "Hawaii")
+
+
+
+MergedData<-MergedData%>%
+  mutate(STATE=factor(STATE,
+                      levels = STATEFIPSList,
+                      labels = STATELABELList))%>%
+  #Create a regions variable
+  mutate(region=case_when(
+    STATE %in% NortheastList~"Northeast",
+    STATE %in% MidwestList~"Midwest",
+    STATE %in% WestList~"West",
+    STATE %in% SouthList~"South",
+    STATE %in% PacificList~"Pacific",
+  ))
+
+rm(State_labels)
+rm(STATEFIPSList)
+rm(STATELABELList)
+
+#Remove pts in Alaska and Hawaii:
+MergedData%>%
+  count(region=="Pacific")
+
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients in Alaska and Hawaii",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(region=="Pacific")%>%count()%>%pull()),
+  ending=(MergedData%>%filter(region!="Pacific")%>%count()%>%pull())
+)
+
+#Remove pts in Alaska and Hawaii:
+MergedData<-MergedData%>%
+  filter(region!="Pacific")
+
+#Missing data filtering for RACE
+MergedData%>%
+  count(RACE=="Unknown")
+MergedData%>%
+  count(is.na(RACE))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients if RACE is missing or unknown",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(RACE=="Unknown" | is.na(RACE)==TRUE)%>%count()%>%pull()),
+  ending=(MergedData%>%filter(!(RACE=="Unknown")&is.na(RACE)==FALSE)%>%count()%>%pull())
+)
+MergedData<-MergedData%>%
+  filter(!(RACE=="Unknown")&is.na(RACE)==FALSE)
+
+
+
+#Missing data filtering for MEFDATE
+MergedData%>%
+  count(is.na(MEFDATE))
+
+#Missing data filtering for SEX
+MergedData%>%
+  count(SEX=="U")
+MergedData%>%
+  count(is.na(SEX))
+MergedData<-MergedData%>%
+  filter(!(SEX=="U")&is.na(SEX)==FALSE)%>%
+  mutate(SEX=factor(SEX))
+
+MergedData%>%
+  count(is.na(DIALDAT))
+
+MergedData%>%
+  count(is.na(SERCR))
+
+MergedData%>%
+  count(is.na(WEIGHT))
+
+MergedData%>%
+  count(is.na(HEIGHT))
+
+MergedData%>%
+  count(is.na(INC_AGE))
+
+MergedData%>%
+  count(is.na(GFR_MDRD))
+#Decide if we remove if missing
+#MergedData<-MergedData%>%
+#  filter(is.na(GFR_MDRD)==FALSE)
+
+MergedData%>%
+  count(is.na(GFR_EPI))
+
+#Missing data filtering for NEPHCARE
+MergedData%>%
+  count(NEPHCARE=="Unknown")
+MergedData%>%
+  count(is.na(NEPHCARE))
+#MergedData<-MergedData%>%
+#  filter(!(NEPHCARE=="Unknown"))
+
+#Missing data filtering for NEPHCARERANGE
+MergedData%>%
+  count(is.na(NEPHCARERANGE))
+MergedData%>%
+  count(is.na(NEPHCARERANGE))
+#MergedData<-MergedData%>%
+#  filter(!is.na(NEPHCARERANGE))
+
+#Missing data filtering for HISPANIC
+MergedData%>%
+  count(HISPANIC=="Unknown")
+MergedData%>%
+  count(is.na(HISPANIC))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients if Hispanic ethnicity is missing or unknown",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(HISPANIC=="Unknown" | is.na(HISPANIC)==TRUE)%>%count()%>%pull()),
+  ending=(MergedData%>%filter(!(HISPANIC=="Unknown")&is.na(HISPANIC)==FALSE)%>%count()%>%pull())
+)
+MergedData<-MergedData%>%
+  filter(!(HISPANIC=="Unknown")&is.na(HISPANIC)==FALSE)
+
+#Missing data filtering for ZIPTotalPopulation
+MergedData%>%
+  count(is.na(ZIPTotalPopulation))
+MergedData<-MergedData%>%
+  filter(is.na(ZIPTotalPopulation)==FALSE)
+
+#Missing data filtering for ZIPPercentageFemale
+MergedData%>%
+  count(is.na(ZIPPercentageFemale))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients if ZIPPercentageFemale is missing or unknown",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(is.na(ZIPPercentageFemale)==TRUE)%>%count()%>%pull()),
+  ending=(MergedData%>%filter(is.na(ZIPPercentageFemale)==FALSE)%>%count()%>%pull())
+)
+MergedData<-MergedData%>%
+  filter(is.na(ZIPPercentageFemale)==FALSE)
+
+#Missing data filtering for ZIPPercentageWhite
+MergedData%>%
+  count(is.na(ZIPPercentageWhite))
+MergedData<-MergedData%>%
+  filter(is.na(ZIPPercentageWhite)==FALSE)
+
+#Missing data filtering for ZIPPercentageBlack
+MergedData%>%
+  count(is.na(ZIPPercentageBlack))
+MergedData<-MergedData%>%
+  filter(is.na(ZIPPercentageBlack)==FALSE)
+
+#Missing data filtering for ZIPPercentageAsian
+MergedData%>%
+  count(is.na(ZIPPercentageAsian))
+MergedData<-MergedData%>%
+  filter(is.na(ZIPPercentageAsian)==FALSE)
+
+#Missing data filtering for ZIPPercentageHispanic
+MergedData%>%
+  count(is.na(ZIPPercentageHispanic))
+MergedData<-MergedData%>%
+  filter(is.na(ZIPPercentageHispanic)==FALSE)
+
+#Missing data filtering for ZIPMedianIncome
+MergedData%>%
+  count(is.na(ZIPMedianIncome))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients if ZIPPercentageFemale is missing or unknown",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(is.na(ZIPMedianIncome)==TRUE)%>%count()%>%pull()),
+  ending=(MergedData%>%filter(is.na(ZIPMedianIncome)==FALSE)%>%count()%>%pull())
+)
+MergedData<-MergedData%>%
+  filter(is.na(ZIPMedianIncome)==FALSE)
+
+#Missing data filtering for ZIPPercentagePoverty
+MergedData%>%
+  count(is.na(ZIPPercentagePoverty))
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients if ZIPPercentageFemale is missing or unknown",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(is.na(ZIPPercentagePoverty)==TRUE)%>%count()%>%pull()),
+  ending=(MergedData%>%filter(is.na(ZIPPercentagePoverty)==FALSE)%>%count()%>%pull())
+)
+MergedData<-MergedData%>%
+  filter(is.na(ZIPPercentagePoverty)==FALSE)
+
+#Missing data filtering for region.  What states are missing?
+MergedData%>%
+  count(is.na(region))
+MergedData%>%
+  filter(is.na(region))%>%
+  distinct(STATE)%>%
+  arrange(STATE)
+MergedData<-MergedData%>%
+  filter(is.na(region)==FALSE)
+
+
+#Why are we missing dialysis cause data
+MergedData%>%filter(is.na(DialysisCause))%>%
+  group_by(PDIS)%>%
+  count()%>%
+  flextable()
+
+#Why are we missing HSA data?
+MergedData%>%select(ZIPCODE, hsanum,Year)%>%
+  filter(is.na(hsanum))%>%
+  count(ZIPCODE)%>%
+  arrange(desc(n))%>%
+  flextable()
+
+gc()
+
+#We import and merge results from Dartmouth atlas
+hsa_hospitalcapacity <- read_dta("<data folder>/hsa_hospitalcapacity.dta")
+hsahittingbenchmark <- read_dta("<data folder>/hsahittingbenchmark.dta")
+
+#Do we have a missing data problem?
+MergedData%>%
+  anti_join(hsa_hospitalcapacity)%>%
+  count()
+
+MergedData%>%
+  anti_join(hsahittingbenchmark)%>%
+  count()
+
+MergedData<-MergedData%>%
+  left_join(hsa_hospitalcapacity)%>%
+  left_join(hsahittingbenchmark)%>%
+  mutate(Legamputationsper1000Medica=ifelse(Legamputationsper1000Medica<0, -Legamputationsper1000Medica, Legamputationsper1000Medica))%>%
+  mutate(annualpercenteyeexam2015=ifelse(annualpercenteyeexam2015<0, -annualpercenteyeexam2015, annualpercenteyeexam2015))%>%
+  mutate(femaleswithonemammointwoyears=ifelse(femaleswithonemammointwoyears<0, -femaleswithonemammointwoyears,
+                                              femaleswithonemammointwoyears))%>%
+  mutate(percentwithhgba1c2015=ifelse(percentwithhgba1c2015<0, -percentwithhgba1c2015, percentwithhgba1c2015))
+
+
+
+MergedData%>%
+  count(is.na(unneccessaryhosptper1000))
+
+MergedData%>%
+  count(is.na(Legamputationsper1000Medica))
+
+MergedData%>%
+  count(is.na(annualpercenteyeexam2015))
+
+MergedData%>%
+  count(is.na(femaleswithonemammointwoyears))
+
+MergedData%>%
+  count(is.na(percentwithhgba1c2015))
+
+MergedData%>%
+  count(is.na(FTEHospitalEmployeesper1000))
+
+MergedData%>%
+  count(is.na(AcuteCareHospitalBedsper10))
+
+rm(hsa_hospitalcapacity)
+rm(hsahittingbenchmark)
+gc()
+
+
+#Is there a missing data problem?
+MergedData%>%
+  anti_join(RUCA2010zipcode_clean, by=c("ZIPCODE"="ZIP_CODE"))%>%
+  count()
+#Confirm, no missing data for Urban/Rural
+
+
+#Add code to merge urban/rural
+MergedData<-MergedData%>%
+  left_join(RUCA2010zipcode_clean, by=c("ZIPCODE"="ZIP_CODE"))
+
+#Remove patients for whom RUCA1 is not coded--this is a code for no pts actually live in this ZIP code
+CONSORT_statement<-CONSORT_statement%>%
+  add_row(
+  step="Remove patients if RUCA is not coded",
+  beginning_number=(MergedData%>%count()%>%pull()),
+  number_removed=(MergedData%>%filter(RUCA1==11)%>%count()%>%pull()),
+  ending=(MergedData%>%filter(RUCA1!=11)%>%count()%>%pull())
+)
+
+MergedData<-MergedData%>%
+  filter(RUCA1!="Not coded: Census tract has zero population and no rural-urban identifier information")
+
+#Now we create quantiles of some of the variables
+HSATotalCenterDensityQuartiles<-quantile(MergedData$HSATotalCenterDensity, probs=c(0.25, 0.5, 0.75))
+HSATotlCenterDensity_labels<-c("0",
+      paste("Nonzero ≤", round(HSATotalCenterDensityQuartiles[1],2)),
+      paste(round(HSATotalCenterDensityQuartiles[1],2), "to", round(HSATotalCenterDensityQuartiles[2],2)),
+      paste(round(HSATotalCenterDensityQuartiles[2],2), "to", round(HSATotalCenterDensityQuartiles[3],2)),
+      paste("Greater than",round(HSATotalCenterDensityQuartiles[3],2)))
+
+HSATotalStationDensityQuartiles<-quantile(MergedData$HSATotalStationDensity, probs=c(0.25, 0.5, 0.75))
+HSATotStationDensity_labels<-c("0",
+      paste("Nonzero ≤", round(HSATotalStationDensityQuartiles[1],2)),
+      paste(round(HSATotalStationDensityQuartiles[1],2), "to", round(HSATotalStationDensityQuartiles[2],2)),
+      paste(round(HSATotalStationDensityQuartiles[2],2), "to", round(HSATotalStationDensityQuartiles[3],2)),
+      paste("Greater than",round(HSATotalStationDensityQuartiles[3],2)))
+
+
+MergedData<-MergedData%>%
+  mutate(ZIPPercentageBlack_cat=ntile_label(ZIPPercentageBlack,4))%>%
+  mutate(ZIPPercentageBlack_cat=factor(ZIPPercentageBlack_cat))%>%
+  mutate(HSATotlCenterDensity_categorical=case_when(
+    HSATotalCenterDensity==0~0,
+    HSATotalCenterDensity>0 & HSATotalCenterDensity<=HSATotalCenterDensityQuartiles[1]~1,
+    HSATotalCenterDensity>HSATotalCenterDensityQuartiles[1] & HSATotalCenterDensity<=HSATotalCenterDensityQuartiles[2]~2,
+    HSATotalCenterDensity>HSATotalCenterDensityQuartiles[2] & HSATotalCenterDensity<=HSATotalCenterDensityQuartiles[3]~3,
+    HSATotalCenterDensity>HSATotalCenterDensityQuartiles[3] & !is.na(HSATotalCenterDensity)~4
+  ))%>%
+  mutate(HSATotlCenterDensity_categorical=factor(HSATotlCenterDensity_categorical,
+                                                 levels=c(0,1,2,3,4),
+                                                 labels = HSATotlCenterDensity_labels))%>%
+  mutate(HSATotStationDensity_categorical=case_when(
+    HSATotalStationDensity==0~0,
+    HSATotalStationDensity>0 & HSATotalStationDensity<=HSATotalStationDensityQuartiles[1]~1,
+    HSATotalStationDensity>HSATotalStationDensityQuartiles[1] & HSATotalStationDensity<=HSATotalStationDensityQuartiles[2]~2,
+    HSATotalStationDensity>HSATotalStationDensityQuartiles[2] & HSATotalStationDensity<=HSATotalStationDensityQuartiles[3]~3,
+    HSATotalStationDensity>HSATotalStationDensityQuartiles[3] & !is.na(HSATotalStationDensity)~4
+  ))%>%
+  mutate(HSATotStationDensity_categorical=factor(HSATotStationDensity_categorical,
+                                                 levels=c(0,1,2,3,4),
+                                                 labels = HSATotStationDensity_labels))%>%
+      
+
+  #And create comorbidity variables:
+  mutate(heartfailure=ifelse(COMO_CHF=="Y", 1, 0))%>%
+  mutate(cad=ifelse(COMO_ASHD=="Y", 1, 0))%>%
+  mutate(diabetes=ifelse(COMO_DM_INS=="Y"|COMO_DM_ORAL=="Y"|COMO_DM_NOMEDS=="Y"|COMO_DM_RET=="Y", 1, 0))%>%
+  mutate(cerebrovasc=ifelse(COMO_CVATIA=="Y", 1, 0))%>%
+  mutate(alcordrug=ifelse(COMO_ALCHO=="Y"| COMO_DRUG=="Y", 1, 0))%>%
+  mutate(immobility=ifelse(COMO_INAMB=="Y"| COMO_NEEDASST=="Y"|COMO_INTRANS =="Y", 1, 0))%>%
+  mutate(institution=ifelse(COMO_INST=="Y"|COMO_INST_AL=="Y"|COMO_INST_NURS=="Y"|COMO_INST_OTH=="Y", 1, 0))%>%
+  mutate(canceryes=ifelse(COMO_CANC=="Y", 1,0))
+
+#Create a variable which stores the Stata file name
+MergedData_name<-paste0("MergedData ",Sys.Date(),".dta")
+
+#Save the merged data set as a Stata file
+MergedData%>%
+  write_dta(MergedData_name)
+
+#Save the R data set
+saveRDS(MergedData, "Merged_data_2023-10-5.RDS")
+
+#Save the consort Excel file
+write_xlsx(CONSORT_statement,"CONSORT statement 2023-10-5.xlsx")
+```
+
+```{r}
+
+#Create tables
+
+MergedData%>%
+  select(stations3_ZIP, SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution, starts_with("RUCA"), 
+         ends_with("tertiles"), ends_with("categorical"))%>%
+  select(-COMORBID, -HSAName)%>%
+
+    tbl_summary(by=stations3_ZIP)%>%
+  add_p()
+
+MergedData%>%
+  select(stations3_ZIP, SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution, starts_with("RUCA"), 
+         ends_with("tertiles"), ends_with("categorical"))%>%
+  select(-COMORBID, -HSAName)%>%
+  tbl_summary(by=HSATotlCenterDensity_categorical)%>%
+  add_p()
+
+MergedData%>%
+  select(stations3_ZIP, SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution, starts_with("RUCA"), 
+         ends_with("tertiles"), ends_with("categorical"))%>%
+  select(-COMORBID, -HSAName)%>%
+    tbl_summary(by=HSATotStationDensity_categorical)%>%
+  add_p()
+
+
+MergedData%>%
+  select(centers3_ZIP, SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution, starts_with("RUCA"))%>%
+  tbl_summary(by=centers3_ZIP)%>%
+  add_p()
+
+MergedData%>%
+  select(SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,GFR_DICH,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution,
+         Legamputationsper1000Medica, starts_with("RUCA"))%>%
+    select(-COMORBID, -HSAName)%>%
+  tbl_summary(by=GFR_DICH)%>%
+  add_p()
+
+MergedData%>%
+  select(SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution, unneccessaryhosptper1000,
+         Legamputationsper1000Medica,annualpercenteyeexam2015,femaleswithonemammointwoyears, percentwithhgba1c2015,
+         FTEHospitalEmployeesper1000, AcuteCareHospitalBedsper10, starts_with("RUCA"))%>%
+  select(-COMORBID, -HSAName)%>%
+    tbl_summary(by=HSATotlCenterDensity_categorical)%>%
+  add_p()
+
+MergedData%>%
+  select(SEX, NEPHCARERANGE, INC_AGE,HEIGHT,WEIGHT,SERCR,GFR_MDRD,GFR_EPI,ZIPPercentagePoverty, 
+         TotalDialysisStationsZIP, TotalProfitDialysisStationsZIP, TotNonProfitDialysisStationsZIP, oneyrlagTotalDialysisStationsZIP,
+         ZIPTotalPopulation, ZIPPercentageBlack, dcpp, dcpp2, dcpp_profit, dcpp1_profit, dcpp_nonprofit, dcpp1_nonprofit, DialysisCause,
+         ALBUM, HEGLB,ACCESSTYPE, AVFMATURING, AVGMATURING, starts_with("MEDCOV"), starts_with("COMO"), ends_with("HSA"), 
+         starts_with("HSA"), region,heartfailure,cad,diabetes,cerebrovasc,alcordrug,immobility,institution, unneccessaryhosptper1000,
+         Legamputationsper1000Medica,annualpercenteyeexam2015,femaleswithonemammointwoyears, percentwithhgba1c2015,
+         FTEHospitalEmployeesper1000, AcuteCareHospitalBedsper10, starts_with("RUCA"))%>%
+  select(-COMORBID, -HSAName)%>%
+  tbl_summary(by=HSATotStationDensity_categorical)%>%
+  add_p()
+
+#Calculate density in each tertile
+
+rm(MergedUSRDSDataRaw)
+gc()
+
+```
+
+Explore characteristics of HSA density
+
+```{r}
+VarList<-c("INC_AGE", "SEX", "HISPANIC", "RACE", "INSURANCESTATUS", "ACCESSTYPE", "NEPHCARE", "NEPHCARERANGE",
+           "ZIPPercentagePoverty","ZIPPercentageBlack","heartfailure","cad","diabetes","cerebrovasc","alcordrug","immobility",
+           "institution","HEGLB","ALBUM","region")
+
+for(var in VarList)
+{
+print("HSATotalStationDensity")
+lm(as.formula(paste0("HSATotalStationDensity~",var)), data=MergedData)%>%tidy()%>%print()
+print("HSATotalCenterDensity")
+lm(as.formula(paste0("HSATotalCenterDensity~",var)), data=MergedData)%>%tidy()%>%print()
+}
+
+
+
+```
+
+
+
+Let's plot individual level data
+
+```{r plots}
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=INC_AGE))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.01)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 175)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=INC_AGE))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.01)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 175)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=unneccessaryhosptper1000))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$unneccessaryhosptper1000), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=unneccessaryhosptper1000))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$unneccessaryhosptper1000, na.rm = TRUE))+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=Legamputationsper1000Medica))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$Legamputationsper1000Medica), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=Legamputationsper1000Medica))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$Legamputationsper1000Medica), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=Legamputationsper1000Medica))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$Legamputationsper1000Medica), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=Legamputationsper1000Medica))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$Legamputationsper1000Medica), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=annualpercenteyeexam2015))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$annualpercenteyeexam2015), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=annualpercenteyeexam2015))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$annualpercenteyeexam2015), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=femaleswithonemammointwoyears))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$femaleswithonemammointwoyears), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=femaleswithonemammointwoyears))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$femaleswithonemammointwoyears), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=percentwithhgba1c2015))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$percentwithhgba1c2015), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=percentwithhgba1c2015))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$percentwithhgba1c2015), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=FTEHospitalEmployeesper1000))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$FTEHospitalEmployeesper1000), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=FTEHospitalEmployeesper1000))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$FTEHospitalEmployeesper1000), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=AcuteCareHospitalBedsper10))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$AcuteCareHospitalBedsper10), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=AcuteCareHospitalBedsper10))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$AcuteCareHospitalBedsper10), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=ALBUM))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$ALBUM), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=ALBUM))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$ALBUM), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=GFR_EPI))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$GFR_EPI), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=GFR_EPI))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$GFR_EPI), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=HSATotalStationDensity))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$HSATotalStationDensity), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=HSATotalStationDensity))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5898)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$HSATotalStationDensity), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+MergedData%>%ggplot(mapping = aes(x=HSATotlCenterDensity_categorical, y=HSATotalCenterDensity))+
+  geom_quasirandom(mapping = aes(color=HSATotlCenterDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$HSATotalCenterDensity), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+MergedData%>%ggplot(mapping = aes(x=HSATotStationDensity_categorical, y=HSATotalCenterDensity))+
+  geom_quasirandom(mapping = aes(color=HSATotStationDensity_categorical), alpha=0.02)+
+  stat_compare_means(comparisons = list(c(1,2),c(1,3),c(1,4), c(1,5)))+
+  stat_compare_means(label.y = 1.25*max(MergedData$HSATotalCenterDensity), na.rm = TRUE)+
+  stat_summary(fun.y="median", geom="crossbar")+
+  theme_bw()+ theme(legend.position = "none")
+
+
+```
+
+```{r lowess}
+
+#Lowess plots
+
+MergedData%>%ggplot()+
+  geom_jitter(mapping=aes(x=HSATotalCenterDensity, y=GFR_EPI), alpha=0.01)+
+  geom_smooth(mapping=aes(x=HSATotalCenterDensity, y=GFR_EPI), method="loess")+
+  theme_bw()
+
+#Facet by race
+
+```
+
+
+
+
+Let's HSA-level averages of individual level data
+
+```{r}
+
+#Note,the same HSA can correspond to different categories of density in different time periods, so we cannot plot at a global level using a beeswarm plot.  We can, however, add these variables to the map and then create a map
+MergedData%>%
+  group_by(hsanum)%>%
+  summarize(HSA_CHF_proportion=mean(heartfailure),
+            HSA_CAD_proportion=mean(cad),
+            HSA_diabetes_proportion=mean(diabetes),
+            HSA_cerebrovasc_proportion=mean(cerebrovasc),
+            HSA_alcordrug_proportion=mean(alcordrug),
+            HSA_immobility_proportion=mean(immobility),
+            HSA_institution_proportion=mean(institution),
+            )
+
+
+#Set up tmap library for interactive html maps
+tmap_mode("view")
+
+HSACenterMap<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("HSATotalCenterDensity",
+              id="CenterMapLabel",
+              title = "Dialysis center density\nper 100,000",
+              style="jenks")
+tmap_save(HSACenterMap, "HSA Center Density Interactive Map 2023-10-18.html")
+
+HSACenterMap2<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+    mutate(HSATotlCenterDensity_categorical=case_when(
+    HSATotalCenterDensity==0~0,
+    HSATotalCenterDensity>0 & HSATotalCenterDensity<=HSATotalCenterDensityQuartiles[1]~1,
+    HSATotalCenterDensity>HSATotalCenterDensityQuartiles[1] & HSATotalCenterDensity<=HSATotalCenterDensityQuartiles[2]~2,
+    HSATotalCenterDensity>HSATotalCenterDensityQuartiles[2] & HSATotalCenterDensity<=HSATotalCenterDensityQuartiles[3]~3,
+    HSATotalCenterDensity>HSATotalCenterDensityQuartiles[3] & !is.na(HSATotalCenterDensity)~4
+  ))%>%
+  mutate(HSATotlCenterDensity_categorical=factor(HSATotlCenterDensity_categorical,
+                                                 levels=c(0,1,2,3,4),
+                                                 labels = HSATotlCenterDensity_labels))%>%
+  tm_shape()+
+  tm_polygons("HSATotlCenterDensity_categorical",
+              id="CenterMapLabel",
+              title = "Dialysis center density\nper 100,000")
+tmap_save(HSACenterMap, "HSA Center Density Interactive Map 2 2023-10-18.html")
+
+
+HSAStationMap<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%tm_shape()+
+  tm_polygons("HSATotalStationDensity",
+              id="StationMapLabel",
+              title = "Dialysis station density\nper 100,000",
+              style="jenks")
+tmap_save(HSAStationMap, "HSA Station Density Interactive Map 2023-10-18.html")
+
+
+HSAStationMap2<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+    mutate(HSATotStationDensity_categorical=case_when(
+    HSATotalStationDensity==0~0,
+    HSATotalStationDensity>0 & HSATotalStationDensity<=HSATotalStationDensityQuartiles[1]~1,
+    HSATotalStationDensity>HSATotalStationDensityQuartiles[1] & HSATotalStationDensity<=HSATotalStationDensityQuartiles[2]~2,
+    HSATotalStationDensity>HSATotalStationDensityQuartiles[2] & HSATotalStationDensity<=HSATotalStationDensityQuartiles[3]~3,
+    HSATotalStationDensity>HSATotalStationDensityQuartiles[3] & !is.na(HSATotalStationDensity)~4
+  ))%>%
+  mutate(HSATotStationDensity_categorical=factor(HSATotStationDensity_categorical,
+                                                 levels=c(0,1,2,3,4),
+                                                 labels = HSATotStationDensity_labels))%>%
+  tm_shape()+
+  tm_polygons("HSATotStationDensity_categorical",
+              id="StationMapLabel",
+              title = "Dialysis station density\nper 100,000")
+tmap_save(HSACenterMap, "HSA Station Density Interactive Map 2 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("unneccessaryhosptper1000",
+              style="jenks")
+tmap_save(temp_map, "HSA unneccessaryhosptper1000 Interactive Map 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("Legamputationsper1000Medica",
+              style="jenks")
+tmap_save(temp_map, "HSA Legamputationsper1000Medica Interactive Map 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("annualpercenteyeexam2015",
+              style="jenks")
+tmap_save(temp_map, "HSA annualpercenteyeexam2015 Interactive Map 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("femaleswithonemammointwoyears",
+              style="jenks")
+tmap_save(temp_map, "HSA femaleswithonemammointwoyears Interactive Map 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("percentwithhgba1c2015",
+              style="jenks")
+tmap_save(temp_map, "HSA percentwithhgba1c2015 Interactive Map 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("FTEHospitalEmployeesper1000",
+              style="jenks")
+tmap_save(temp_map, "HSA FTEHospitalEmployeesper1000 Interactive Map 2023-10-18.html")
+
+temp_map<-HSA_short_data_map%>%
+  filter(Year==2019)%>%
+  filter(STATE!=2 & STATE!=0 & STATE!=12)%>%
+  tm_shape()+
+  tm_polygons("AcuteCareHospitalBedsper10",
+              style="jenks")
+tmap_save(temp_map, "HSA AcuteCareHospitalBedsper10 Interactive Map 2023-10-18.html")
+
+
+
+
+```
+
+
+
+ZIP Code level modeling
+
+```{r models1, eval=FALSE}
+
+#Run glm and mixed effects model with various predictors:
+
+model1<-lm(GFR_EPI~RACE, data=MergedData)
+model1R<-lmer(GFR_EPI~RACE+(1 | ZIPCODE), data=MergedData)
+
+model2<-lm(GFR_EPI~RACE+HISPANIC+ZIPPercentageBlack+factor(Year)+factor(TotalDialysisCentersZIP), 
+             data=MergedData)
+model2R<-lmer(GFR_EPI~RACE+HISPANIC+ZIPPercentageBlack+factor(Year)+factor(TotalDialysisCentersZIP)+(1 | ZIPCODE), 
+             data=MergedData)
+
+model3<-lm(GFR_EPI~ZIPPercentageBlack_cat, data=MergedData)
+model3R<-lmer(GFR_EPI~ZIPPercentageBlack_cat+(1 | ZIPCODE), data=MergedData)
+
+model4<-lm(GFR_EPI~ZIPPercentageBlack_cat+RACE, data=MergedData)
+model4R<-lmer(GFR_EPI~ZIPPercentageBlack_cat+RACE+(1 | ZIPCODE), data=MergedData)
+
+
+model5<-lm(GFR_EPI~ZIPPercentageBlack_cat+RACE+INC_AGE, data=MergedData)
+model5R<-lmer(GFR_EPI~ZIPPercentageBlack_cat+RACE+INC_AGE+(1 | ZIPCODE), data=MergedData)
+
+model6<-lm(GFR_EPI~ZIPPercentageBlack_cat+RACE+INC_AGE, data=MergedData)
+model6R<-lmer(GFR_EPI~ZIPPercentageBlack_cat+RACE+INC_AGE+(1 | ZIPCODE), data=MergedData)
+
+model7<-lm(GFR_EPI~ZIPPercentageBlack_cat+RACE+INC_AGE+ZIPPercentagePoverty, 
+             data=MergedData)
+model7R<-lmer(GFR_EPI~ZIPPercentageBlack_cat+RACE+INC_AGE+ZIPPercentagePoverty+(1 | ZIPCODE), 
+             data=MergedData)
+
+model8<-lm(GFR_EPI~ZIPPercentageBlack_cat*TotalDialysisStationsZIP+RACE+INC_AGE+ZIPPercentagePoverty, 
+             data=MergedData)
+model8R<-lmer(GFR_EPI~ZIPPercentageBlack_cat*TotalDialysisStationsZIP+RACE+INC_AGE+ZIPPercentagePoverty+
+               (1 | ZIPCODE), 
+             data=MergedData)
+
+
+model9<-lm(GFR_EPI~ZIPPercentageBlack_cat*RACE+TotalDialysisStationsZIP+INC_AGE+ZIPPercentagePoverty, 
+             data=MergedData)
+model9R<-lmer(GFR_EPI~ZIPPercentageBlack_cat*RACE+TotalDialysisStationsZIP+INC_AGE+ZIPPercentagePoverty+
+               (1 | ZIPCODE), 
+             data=MergedData)
+
+model10<-glm(GFR_DICH~RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+DialysisCause,
+               data=MergedData,
+               family=binomial)
+
+model10R<-glmer(GFR_DICH~RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+model11<-glm(GFR_DICH~RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+DialysisCause,
+               data=MergedData,
+               family=binomial)
+model11R<-glmer(GFR_DICH~RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+DialysisCause+
+               (1 | ZIPCODE)+(1 | PROVUSRD),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+model12<-lm(SERCR~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause, 
+             data=MergedData)
+model12R<-lmer(SERCR~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause+
+               (1 | ZIPCODE), 
+             data=MergedData)
+
+model13<-lm(GFR_EPI~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause,
+             data=MergedData)
+model13R<-lmer(GFR_EPI~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause+
+               (1 | ZIPCODE), 
+             data=MergedData)
+
+model14<-lm(GFR_EPI~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause, 
+             data=MergedData)
+model14R<-lmer(GFR_EPI~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause+
+               (1 | ZIPCODE)+(1 | PROVUSRD), 
+             data=MergedData)
+
+model15<-lm(GFR_EPI~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause+dcpp+dcpp1, 
+             data=MergedData)
+model15R<-lmer(GFR_EPI~stations3_ZIP*ZIPPercentageBlack+RACE+INC_AGE+SEX+NEPHCARERANGE+WEIGHT+HEIGHT+as.factor(Year)+
+                DialysisCause+dcpp+dcpp1+
+               (1 | ZIPCODE)+(1 | PROVUSRD), 
+             data=MergedData)
+
+model16R<-lmer(GFR_EPI~(1 | ZIPCODE)+(1 | PROVUSRD), 
+             data=MergedData)
+
+model17<-glm(GFR_DICH~centers3+DialysisCause, data=MergedData,  family=binomial)
+model17R<-glmer(GFR_DICH~centers3+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+model18<-glm(GFR_DICH~centers3+INC_AGE+RACE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model18R<-glmer(GFR_DICH~centers3+INC_AGE+RACE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+model19<-glm(GFR_DICH~centers3*RACE+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model19R<-glmer(GFR_DICH~centers3*RACE+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+model20<-glm(GFR_DICH~centers3*RACE+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model20R<-glmer(GFR_DICH~centers3*RACE+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+model21<-glm(GFR_DICH~centers3*RACE+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model21R<-glmer(GFR_DICH~centers3*RACE+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model22<-glm(GFR_DICH~centers3*ZIPPercentageBlack+RACE+INC_AGE+as.factor(Year)+NEPHCARERANGE+
+               ZIPPercentageBlack+ZIPPercentagePoverty+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model22R<-glmer(GFR_DICH~centers3*ZIPPercentageBlack+RACE+INC_AGE+as.factor(Year)+NEPHCARERANGE+
+               ZIPPercentageBlack+ZIPPercentagePoverty+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model23<-glm(GFR_DICH~centers3*RACE+INC_AGE+SEX+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model23R<-glmer(GFR_DICH~centers3*RACE+INC_AGE+SEX+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model24<-glm(GFR_DICH~centers3+INC_AGE+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model24R<-glmer(GFR_DICH~centers3+INC_AGE+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model25<-glm(GFR_DICH~centers3*SEX+INC_AGE+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model25R<-glmer(GFR_DICH~centers3*SEX+INC_AGE+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model26<-glm(GFR_DICH~centers3*RACE+SEX+INC_AGE+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model26R<-glmer(GFR_DICH~centers3*RACE+SEX+INC_AGE+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model27<-glm(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model27R<-glmer(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+
+model28<-glm(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentageBlack+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model28R<-glmer(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+
+model29<-glm(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model29R<-glmer(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+
+model30<-glm(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause,
+             data=MergedData,  
+             family=binomial)
+model30R<-glmer(GFR_DICH~centers3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+
+                  DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+
+model31<-glm(GFR_DICH~lag3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model31R<-glmer(GFR_DICH~lag3*RACE+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0
+               )
+
+
+model32W<-MergedData%>%filter(RACE=="White")%>%
+  glm(GFR_DICH~SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=.,  
+             family=binomial)
+model32WR<-MergedData%>%filter(RACE=="White")%>%
+  glmer(GFR_DICH~SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+model32B<-MergedData%>%filter(RACE=="Black")%>%
+  glm(GFR_DICH~SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=.,  
+             family=binomial)
+model32BR<-MergedData%>%filter(RACE=="Black")%>%
+  glmer(GFR_DICH~SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+model33W<-MergedData%>%filter(RACE=="White")%>%
+  glm(GFR_DICH~lag3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=.,  
+             family=binomial)
+model33WR<-MergedData%>%filter(RACE=="White")%>%
+  glmer(GFR_DICH~lag3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+model33B<-MergedData%>%filter(RACE=="Black")%>%
+  glm(GFR_DICH~lag3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=.,  
+             family=binomial)
+model33BR<-MergedData%>%filter(RACE=="Black")%>%
+  glmer(GFR_DICH~lag3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+
+
+#Model 29 run separately for black and white
+
+model34W<-MergedData%>%filter(RACE=="White")%>%
+  glm(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+DialysisCause, 
+             data=.,  
+             family=binomial)
+model34WR<-MergedData%>%filter(RACE=="White")%>%
+  glmer(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+
+model34B<-MergedData%>%filter(RACE=="Black")%>%
+  glm(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+DialysisCause, 
+             data=.,  
+             family=binomial)
+model34BR<-MergedData%>%filter(RACE=="Black")%>%
+  glmer(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+#Model 30 run separately for black and white
+model35W<-MergedData%>%filter(RACE=="White")%>%
+  glm(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=.,  
+             family=binomial)
+model35WR<-MergedData%>%filter(RACE=="White")%>%
+  glmer(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+
+model35B<-MergedData%>%filter(RACE=="Black")%>%
+  glm(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause, 
+             data=.,  
+             family=binomial)
+model35BR<-MergedData%>%filter(RACE=="Black")%>%
+  glmer(GFR_DICH~centers3+SEX+INC_AGE+as.factor(Year)+ZIPPercentagePoverty+ZIPPercentageBlack+DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+
+#Model 21 run separately for black and white
+
+model36W<-MergedData%>%filter(RACE=="White")%>%
+  glm(GFR_DICH~centers3+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause, 
+             data=.,  
+             family=binomial)
+model36WR<-MergedData%>%filter(RACE=="White")%>%
+  glmer(GFR_DICH~centers3+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+model36B<-MergedData%>%filter(RACE=="Black")%>%
+  glm(GFR_DICH~centers3+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause, 
+             data=.,  
+             family=binomial)
+model36BR<-MergedData%>%filter(RACE=="Black")%>%
+  glmer(GFR_DICH~centers3+INC_AGE+as.factor(Year)+ZIPPercentageBlack+ZIPPercentagePoverty+NEPHCARERANGE+
+               DialysisCause+
+               (1 | ZIPCODE), 
+             data=.,  
+             family=binomial,
+               nAGQ=0)
+
+
+
+```
+
+HSA level models:
+
+```{r moremodels,eval=FALSE}
+
+model37<-glm(GFR_DICH~HSATotalCenterDensity, 
+             data=MergedData,  
+             family=binomial)
+model37R<-glmer(GFR_DICH~HSATotalCenterDensity+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model38<-glm(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model38R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model39<-glm(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty, 
+             data=MergedData,  
+             family=binomial)
+model39R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model40<-glm(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model40R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model41<-glm(GFR_DICH~HSATotalCenterDensity, 
+             data=MergedData,  
+             family=binomial)
+model41R<-glmer(GFR_DICH~HSATotalCenterDensity+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model42<-glm(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model42R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model43<-glm(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty, 
+             data=MergedData,  
+             family=binomial)
+model43R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model44<-glm(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model44R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model45<-glm(GFR_DICH~1, 
+             data=MergedData,  
+             family=binomial)
+model45R<-glmer(GFR_DICH~1+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model46R<-glmer(GFR_DICH~1+
+               (1 | hsanum/PROVUSRD),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model47R<-glmer(GFR_DICH~1+
+               (1 | region/hsanum/PROVUSRD),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model48<-glm(GFR_DICH~1, 
+             data=MergedData,  
+             family=binomial)
+model48R<-glmer(GFR_DICH~1+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model49<-glm(GFR_DICH~HSATotalCenterDensity*heartfailure+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model49R<-glmer(GFR_DICH~GFR_DICH~HSATotalCenterDensity*heartfailure+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model50<-glm(GFR_DICH~HSATotalCenterDensity*diabetes+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model50R<-glmer(GFR_DICH~GFR_DICH~HSATotalCenterDensity*diabetes+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model51<-glm(GFR_DICH~HSATotalCenterDensity*INC_AGE+factor(Year)+ INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model51R<-glmer(GFR_DICH~GFR_DICH~HSATotalCenterDensity*INC_AGE+factor(Year)+ INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model52<-glm(GFR_DICH~HSATotalCenterDensity*factor(Year)+INC_AGE+INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model52R<-glmer(GFR_DICH~GFR_DICH~HSATotalCenterDensity*factor(Year)+INC_AGE+INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model53<-glm(GFR_DICH~HSATotalStationDensity, 
+             data=MergedData,  
+             family=binomial)
+model53R<-glmer(GFR_DICH~HSATotalStationDensity+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model54<-glm(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model54R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model55<-glm(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty, 
+             data=MergedData,  
+             family=binomial)
+model55R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model56<-glm(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model56R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model57<-glm(GFR_DICH~HSATotalStationDensity, 
+             data=MergedData,  
+             family=binomial)
+model57R<-glmer(GFR_DICH~HSATotalStationDensity+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model58<-glm(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause, 
+             data=MergedData,  
+             family=binomial)
+model58R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model59<-glm(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty, 
+             data=MergedData,  
+             family=binomial)
+model59R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model60<-glm(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+               region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000+ Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model60R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+
+                  NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+                  unneccessaryhosptper1000+ Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model61<-glm(GFR_DICH~HSATotalStationDensity*heartfailure+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model61R<-glmer(GFR_DICH~GFR_DICH~HSATotalStationDensity*heartfailure+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model62<-glm(GFR_DICH~HSATotalStationDensity*diabetes+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model62R<-glmer(GFR_DICH~GFR_DICH~HSATotalStationDensity*diabetes+factor(Year)+ INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model63<-glm(GFR_DICH~HSATotalStationDensity*INC_AGE+factor(Year)+ INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model63R<-glmer(GFR_DICH~GFR_DICH~HSATotalStationDensity*INC_AGE+factor(Year)+ INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model64<-glm(GFR_DICH~HSATotalStationDensity*factor(Year)+INC_AGE+INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica, 
+             data=MergedData,  
+             family=binomial)
+model64R<-glmer(GFR_DICH~GFR_DICH~HSATotalStationDensity*factor(Year)+INC_AGE+INSURANCESTATUS+RACE+diabetes+HISPANIC+ 
+               NEPHCARERANGE+ACCESSTYPE+cad+heartfailure+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+ 
+               FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+               unneccessaryhosptper1000 +Legamputationsper1000Medica+
+               (1 | hsanum),
+               data=MergedData,
+               family=binomial,
+               nAGQ=0)
+
+model65<-lm(GFR_EPI~1, 
+   data=MergedData)
+
+model65R<-lmer(GFR_EPI~1+
+     (1 | hsanum), 
+   data=MergedData)
+
+model66R<-lmer(GFR_EPI~1+
+     (1 | hsanum/PROVUSRD), 
+   data=MergedData)
+
+model67<-lm(GFR_EPI~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+     NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause, 
+   data=MergedData)
+
+model67R<-lmer(GFR_EPI~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+       NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+     (1 | hsanum), 
+   data=MergedData)
+
+model68<-lm(GFR_EPI~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+     NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+     region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+     unneccessaryhosptper1000+ Legamputationsper1000Medica, 
+   data=MergedData)
+
+model68R<-lmer(GFR_EPI~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+       NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+FTEHospitalEmployeesper1000+
+       AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+unneccessaryhosptper1000+ Legamputationsper1000Medica+
+     (1 | hsanum), 
+   data=MergedData)
+
+model69<-lm(GFR_EPI~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+     NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause, 
+   data=MergedData)
+
+model69R<-lmer(GFR_EPI~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+       NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+     (1 | hsanum), 
+   data=MergedData)
+
+model70<-lm(GFR_EPI~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+     NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+     region+FTEHospitalEmployeesper1000+AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+
+     unneccessaryhosptper1000+ Legamputationsper1000Medica, 
+   data=MergedData)
+
+model70R<-lmer(GFR_EPI~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+ 
+       NEPHCARERANGE+ACCESSTYPE+cad+diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+FTEHospitalEmployeesper1000+
+       AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+unneccessaryhosptper1000+ Legamputationsper1000Medica+
+     (1 | hsanum), 
+   data=MergedData)
+
+#Stratified models
+model71R<-MergedData%>%
+  group_by(RACE)%>%
+  nest()%>%
+  mutate(model=map(data, ~glmer(GFR_DICH ~ HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+ACCESSTYPE+region+INC_AGE+HISPANIC+
+                                  NEPHCARERANGE+region+SEX+INC_AGE+ZIPPercentagePoverty+cad+diabetes+cerebrovasc+
+                                  alcordrug+immobility+institution+AcuteCareHospitalBedsper10+annualpercenteyeexam2015+
+                                  unneccessaryhosptper1000+percentwithhgba1c2015+Legamputationsper1000Medica+FTEHospitalEmployeesper1000+
+                                  (1|hsanum), 
+                                data=.x,
+                                family=binomial,
+                                nAGQ=0)))%>%
+  select(RACE, model)
+
+model72R<-MergedData%>%
+  group_by(ACCESSTYPE)%>%
+  nest()%>%
+  mutate(model=map(data, ~glmer(GFR_DICH ~ HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+ACCESSTYPE+region+INC_AGE+HISPANIC+
+                                  NEPHCARERANGE+region+SEX+ INC_AGE+ZIPPercentagePoverty+cad+diabetes+cerebrovasc+
+                                  alcordrug+immobility+institution+AcuteCareHospitalBedsper10+annualpercenteyeexam2015+
+                                  unneccessaryhosptper1000+percentwithhgba1c2015+Legamputationsper1000Medica+FTEHospitalEmployeesper1000, 
+                                data=.x,
+                                family=binomial,
+                                nAGQ=0)))%>%
+  select(ACCESSTYPE, model)
+ 
+model73R<-MergedData%>%
+  group_by(NEPHCARERANGE)%>%
+  nest()%>%
+  mutate(model=map(data, ~glmer(GFR_DICH ~ HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+  ACCESSTYPE+region+INC_AGE+HISPANIC+
+                                  NEPHCARERANGE+region+SEX+ INC_AGE+ZIPPercentagePoverty+cad+diabetes+cerebrovasc+
+                                  alcordrug+immobility+institution+AcuteCareHospitalBedsper10+annualpercenteyeexam2015+
+                                  unneccessaryhosptper1000+percentwithhgba1c2015+Legamputationsper1000Medica+FTEHospitalEmployeesper1000, 
+                                data=.x,
+                                family=binomial,
+                                nAGQ=0)))%>%
+  select(NEPHCARERANGE, model)
+
+model74R<-MergedData%>%
+  group_by(RACE)%>%
+  nest()%>%
+  mutate(model=map(data, ~glmer(GFR_DICH ~ HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+  ACCESSTYPE+region+INC_AGE+HISPANIC+
+                                  NEPHCARERANGE+region+SEX+ INC_AGE+ZIPPercentagePoverty+cad+diabetes+cerebrovasc+
+                                  alcordrug+immobility+institution+AcuteCareHospitalBedsper10+annualpercenteyeexam2015+
+                                  unneccessaryhosptper1000+percentwithhgba1c2015+Legamputationsper1000Medica+FTEHospitalEmployeesper1000, 
+                                data=.x,
+                                family=binomial,
+                                nAGQ=0)))%>%
+  select(RACE, model)
+
+model75R<-MergedData%>%
+  group_by(ACCESSTYPE)%>%
+  nest()%>%
+  mutate(model=map(data, ~glmer(GFR_DICH ~ HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+  ACCESSTYPE+region+INC_AGE+HISPANIC+
+                                  NEPHCARERANGE+region+SEX+ INC_AGE+ZIPPercentagePoverty+cad+diabetes+cerebrovasc+
+                                  alcordrug+immobility+institution+AcuteCareHospitalBedsper10+annualpercenteyeexam2015+
+                                  unneccessaryhosptper1000+percentwithhgba1c2015+Legamputationsper1000Medica+FTEHospitalEmployeesper1000, 
+                                data=.x,
+                                family=binomial,
+                                nAGQ=0)))%>%
+  select(ACCESSTYPE, model)
+ 
+model76R<-MergedData%>%
+  group_by(NEPHCARERANGE)%>%
+  nest()%>%
+  mutate(model=map(data, ~glmer(GFR_DICH ~ HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+  ACCESSTYPE+region+INC_AGE+HISPANIC+
+                                  NEPHCARERANGE+region+SEX+ INC_AGE+ZIPPercentagePoverty+cad+diabetes+cerebrovasc+
+                                  alcordrug+immobility+institution+AcuteCareHospitalBedsper10+annualpercenteyeexam2015+
+                                  unneccessaryhosptper1000+percentwithhgba1c2015+Legamputationsper1000Medica+FTEHospitalEmployeesper1000, 
+                                data=.x,
+                                family=binomial,
+                                nAGQ=0)))%>%
+  select(NEPHCARERANGE, model)
+
+#Sensitivity analysis
+model77R<-lmer(GFR_EPI~1+
+     (1 | hsanum), 
+   data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ))
+
+model78R<-lmer(GFR_EPI~1+
+     (1 | hsanum/PROVUSRD), 
+   data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ))
+
+model79R<-glmer(GFR_DICH~HSATotalCenterDensity+
+        (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model80R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+NEPHCARERANGE+ACCESSTYPE+cad+
+                  diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+        (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model81R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+NEPHCARERANGE+ACCESSTYPE+cad+
+                  diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+FTEHospitalEmployeesper1000+
+                  AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+unneccessaryhosptper1000+
+                  Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty+
+                  (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model82R<-glmer(GFR_DICH~HSATotalCenterDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+NEPHCARERANGE+ACCESSTYPE+cad+
+                  diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+FTEHospitalEmployeesper1000+
+                  AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+unneccessaryhosptper1000+ 
+                  Legamputationsper1000Medica+
+                  (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model83R<-glmer(GFR_DICH~HSATotalStationDensity+
+        (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model84R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+NEPHCARERANGE+ACCESSTYPE+cad+
+                  diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+
+                  (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model85R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+NEPHCARERANGE+ACCESSTYPE+cad+
+                  diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+FTEHospitalEmployeesper1000+
+                  AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+unneccessaryhosptper1000+
+                  Legamputationsper1000Medica+ZIPPercentageBlack+ZIPPercentagePoverty+
+                  (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+model86R<-glmer(GFR_DICH~HSATotalStationDensity+factor(Year)+heartfailure+INSURANCESTATUS+RACE+INC_AGE+HISPANIC+NEPHCARERANGE+ACCESSTYPE+cad+
+                  diabetes+cerebrovasc+alcordrug+immobility+institution+DialysisCause+region+FTEHospitalEmployeesper1000+
+                  AcuteCareHospitalBedsper10+percentwithhgba1c2015+annualpercenteyeexam2015+unneccessaryhosptper1000+
+                  Legamputationsper1000Medica+
+                  (1|hsanum), 
+             data=filter(MergedData, GFR_EPI>5 &GFR_EPI<25 ),  
+             family=binomial)
+
+```
+
+
+Create tables
+```{r tables and graphic, eval=FALSE}
+
+#Create regression tables
+
+MergedData%>%
+  select(-ZIPCODE,-MEFDATE, -DIALDAT, -TDATE, -BEGRES, -ENDRES, -USRDS_ID, -PROVUSRD, -PDIS)%>%
+  tbl_summary()
+
+MergedData%>%
+  select(-ZIPCODE,-MEFDATE, -DIALDAT, -TDATE, -BEGRES, -ENDRES, -USRDS_ID, -PROVUSRD)%>%
+  tbl_summary(by=ZIPPercentageBlack_cat)%>%
+  modify_spanning_header(all_stat_cols() ~ "**Black ZIP code percentage by Quartile**")
+
+
+tbl_regression(model1)
+tbl_regression(model1R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model2)
+tbl_regression(model2R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model3)
+tbl_regression(model3R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model4)
+tbl_regression(model4R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model5)
+tbl_regression(model5R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model6)
+tbl_regression(model6R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model7)
+tbl_regression(model7R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model8)
+tbl_regression(model8R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model9)
+tbl_regression(model9R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model10, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model10R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, estimate_fun = 
+                 purrr::partial(style_ratio, digits = 3))
+
+
+tbl_regression(model11, exponentiate = TRUE,estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model11R, exponentiate = TRUE,tidy_fun = broom.mixed::tidy, estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model12)
+tbl_regression(model12R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model13)
+tbl_regression(model13R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model14)
+tbl_regression(model14R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model15)
+tbl_regression(model15R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model16R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model17, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model17R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model18, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model18R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+
+tbl_regression(model19, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model19R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model20, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model20R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model21, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model21R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model22, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model22R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model23, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model23R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model24, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model24R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model25, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model25R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model26, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model26R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model27, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model27R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model28, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model28R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+
+tbl_regression(model29, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model29R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model30, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model30R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model31, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model31R, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+
+table32W<-tbl_regression(model32W, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+table32B<-tbl_regression(model32B, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_stack(tbls = list(table32W, table32B),
+          group_header = list("WHITE", "BLACK"))
+
+table32WR<-tbl_regression(model32WR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+table32BR<-tbl_regression(model32BR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+tbl_stack(tbls = list(table32WR, table32BR),
+          group_header = list("WHITE", "BLACK"))
+
+
+table33W<-tbl_regression(model33W, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+table33B<-tbl_regression(model33B, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_stack(tbls = list(table33W, table33B),
+          group_header = list("WHITE", "BLACK"))
+
+table33WR<-tbl_regression(model33WR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+table33BR<-tbl_regression(model33BR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+tbl_stack(tbls = list(table33WR, table33BR),
+          group_header = list("WHITE", "BLACK"))
+
+
+table34W<-tbl_regression(model34W, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+table34B<-tbl_regression(model34B, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_stack(tbls = list(table34W, table34B),
+          group_header = list("WHITE", "BLACK"))
+
+table34WR<-tbl_regression(model33WR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+table34BR<-tbl_regression(model33BR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+tbl_stack(tbls = list(table34WR, table34BR),
+          group_header = list("WHITE", "BLACK"))
+
+
+table35W<-tbl_regression(model35W, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+table35B<-tbl_regression(model35B, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_stack(tbls = list(table35W, table35B),
+          group_header = list("WHITE", "BLACK"))
+
+table35WR<-tbl_regression(model35WR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+table35BR<-tbl_regression(model35BR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+tbl_stack(tbls = list(table35WR, table35BR),
+          group_header = list("WHITE", "BLACK"))
+
+table36W<-tbl_regression(model36W, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+table36B<-tbl_regression(model36B, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_stack(tbls = list(table36W, table36B),
+          group_header = list("WHITE", "BLACK"))
+
+table36WR<-tbl_regression(model36WR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+table36BR<-tbl_regression(model36BR, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3),
+               tidy_fun = broom.mixed::tidy)
+tbl_stack(tbls = list(table36WR, table36BR),
+          group_header = list("WHITE", "BLACK"))
+
+
+```
+
+
+Create more tables
+```{r moretables, eval=FALSE}
+
+tbl_regression(model37, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model37R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model38, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model38R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model39, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model39R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model40, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model40R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model41, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model41R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model39, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model39R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model40, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model40R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model41, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model41R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model42, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model42R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model43, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model43R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model44, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model44R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model45, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model45R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model46R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model47R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model48, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model48R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model49, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model49R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model50, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model50R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model51, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model51R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model52, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model52R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model53, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model53R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model54, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model54R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model55, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model55R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model56, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model56R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model57, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model57R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model58, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model58R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model59, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model59R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model60, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model60R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model61, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model61R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model62, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model62R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model63, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model63R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model64, exponentiate = TRUE, estimate_fun = purrr::partial(style_ratio, digits = 3))
+tbl_regression(model64R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model65)
+tbl_regression(model65R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model66R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model67)
+tbl_regression(model67R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model68)
+tbl_regression(model68R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model69)
+tbl_regression(model69R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model70)
+tbl_regression(model70R, tidy_fun = broom.mixed::tidy)
+
+
+
+
+tbl_regression(model77R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model78R, tidy_fun = broom.mixed::tidy)
+
+tbl_regression(model79R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model80R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model81R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model82R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model83R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model84R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model85R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+tbl_regression(model86R, exponentiate = TRUE, tidy_fun = broom.mixed::tidy, 
+               estimate_fun = purrr::partial(style_ratio, digits = 3))
+
+
+```
+
+
+
+
+```{r citations}
+citation()
+citation("tidyverse")
+citation("flextable")
+citation("haven")
+citation("tidycensus")
+citation("lubridate")
+citation("lme4")
+citation("broom")
+citation("broom.mixed")
+citation("lmerTest")
+citation("gtsummary")
+citation("gt")
+citation("sf")
+citation("writexl")
+citation("RCT")
+citation("tmap")
+
+```

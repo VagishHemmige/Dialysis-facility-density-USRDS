@@ -1,0 +1,108 @@
+---
+title: "6. Models"
+format: html
+---
+
+Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes ([#D6]).
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/models.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/models.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+-   [`R/define_exposure.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/define_exposure.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/models.R")
+```
+
+## Model data
+
+Year enters as a factor and the reference category is zero facilities, as in the paper.
+
+```{r}
+#| label: prepare-model-data
+#| eval: false
+```
+
+## Table 2
+
+Mixed-effects logistic models with a random intercept for HSA [@lme4_pkg], progressively adjusted. Models 2 and 3 are fit with and without albumin and hemoglobin; with them, patients missing either value drop out, as in the paper's complete-case models.
+
+```{r}
+#| label: fit-table-2-models
+#| eval: false
+```
+
+## Sensitivity analyses
+
+Without HSAs that have no facility (reference: category 2), and with density as a continuous exposure.
+
+```{r}
+#| label: fit-sensitivity-models
+#| eval: false
+```
+
+## By race
+
+Separate models for White and Black patients (eTable 1).
+
+```{r}
+#| label: fit-race-stratified-models
+#| eval: false
+```
+
+## Continuous eGFR
+
+Linear mixed models of eGFR (eTable 2).
+
+```{r}
+#| label: fit-linear-models
+#| eval: false
+```
+
+## Variance decomposition
+
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs.
+
+```{r}
+#| label: fit-variance-decomposition
+#| eval: false
+```
+
+## eGFR range
+
+A sensitivity analysis from the original code, restricted to eGFR above 5 and below 25.
+
+```{r}
+#| label: fit-egfr-range-sensitivity
+#| eval: false
+```
+
+## Multiple imputation
+
+Ten imputations of albumin and hemoglobin by chained equations, pooled. The paper does not give its imputation model, so this one is provisional ([#D7]).
+
+```{r}
+#| label: fit-imputation-models
+#| eval: false
+```
+
+## Saving
+
+Estimates are saved in the gitignored `models/` folder with the `usRds` version, so tables can be rebuilt without refitting.
+
+```{r}
+#| label: save-models
+#| eval: false
+```

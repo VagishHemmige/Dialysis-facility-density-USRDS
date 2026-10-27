@@ -1,0 +1,160 @@
+---
+title: "Functions"
+format: html
+---
+
+Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in [`tests/test-functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R).
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/functions.R")
+```
+
+## Yes/no fields
+
+The CMS-2728 form records comorbidities and insurance as yes, no or unknown. A condition counts as present only when a field is "YES"; missing or unknown counts as not present. The original code returned missing for missing fields, which would drop patients from the models; the published sample sizes show the paper's models did not.
+
+```{r}
+#| label: fn-any-yes
+#| eval: false
+```
+
+## Insurance
+
+The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medicare (including Medicare Advantage), then employer group, then other (including VA).
+
+```{r}
+#| label: fn-derive-insurance
+#| eval: false
+```
+
+## Nephrology care
+
+Combines whether the patient saw a nephrologist with how long. Unknown is its own level, so the models keep the patients the paper kept.
+
+```{r}
+#| label: fn-derive-nephrology-care
+#| eval: false
+```
+
+## Census region
+
+Regions by state name, because usRds labels the residence state with its name (format `$STATFIP`). This replaces the original code's state-label spreadsheet.
+
+```{r}
+#| label: fn-assign-region
+#| eval: false
+```
+
+## Dartmouth codes
+
+Sets Dartmouth's -88888 and -99999 to missing. The original code turned every negative value positive, which would have entered suppressed HSAs as 88,888 or 99,999.
+
+```{r}
+#| label: fn-clean-dartmouth-codes
+#| eval: false
+```
+
+## Finding spreadsheet columns
+
+Finds exactly one column for each measure, or stops and lists the candidates.
+
+```{r}
+#| label: fn-select-by-pattern
+#| eval: false
+```
+
+## Spreadsheets with title rows
+
+Dartmouth spreadsheets put titles above the header; this finds the header row.
+
+```{r}
+#| label: fn-read-header-table
+#| eval: false
+```
+
+## ZIP codes
+
+Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).
+
+```{r}
+#| label: fn-standardize-zip
+#| eval: false
+```
+
+## Checking ACS variables
+
+Compares each year's ACS label with the expected pattern and stops on any mismatch or absent variable.
+
+```{r}
+#| label: fn-check-acs-labels
+#| eval: false
+```
+
+## Density categories
+
+Zero facilities is its own category; the other four are cut at the quartiles, each including its upper bound, as in the original code.
+
+```{r}
+#| label: fn-density-categories
+#| eval: false
+```
+
+## Odds ratios
+
+Extracts the density terms of a fitted model as odds ratios with Wald confidence intervals and the number of patients the model used.
+
+```{r}
+#| label: fn-density-odds-ratios
+#| eval: false
+```
+
+## Model formulas
+
+Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model's covariates are a list in `setup.R`.
+
+```{r}
+#| label: fn-model-formula
+#| eval: false
+```
+
+## Variance shares
+
+The share of the variance of eGFR at each level of a null mixed model.
+
+```{r}
+#| label: fn-variance-share
+#| eval: false
+```
+
+## Classifying codes
+
+Sends the code list to one model in batches of 100 and returns one row per code. Each batch starts a new chat, so batches do not influence each other. Short code descriptions need none of the checkpointing the PDF project needed for 200,000-character papers.
+
+```{r}
+#| label: fn-classify-codes
+#| eval: false
+```
+
+## Combining the models
+
+One row per code with each model's category; a code is accepted only when all three agree.
+
+```{r}
+#| label: fn-ensemble-agreement
+#| eval: false
+```

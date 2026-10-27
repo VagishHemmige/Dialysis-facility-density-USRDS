@@ -1,0 +1,98 @@
+---
+title: "1. Public area data"
+format: html
+---
+
+Downloads every public area-level source from its publisher and prepares it for linkage. It uses no USRDS data.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/download_public_data.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/download_public_data.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/download_public_data.R")
+```
+
+## Downloads
+
+Files are cached in the gitignored `data-raw/` folder, so later runs do not download again. The original analysis read copies of these files from the analyst's computer; here each comes from a published URL (see [`references.bib`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/references.bib)).
+
+```{r}
+#| label: download-public-files
+#| eval: false
+```
+
+## ZIP code to HSA
+
+One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are published as zipped CSV rather than Excel; the original reader only looked for Excel files. Each ZIP code and year must appear once.
+
+```{r}
+#| label: read-hsa-crosswalk
+#| eval: false
+```
+
+## American Community Survey
+
+ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. As in the original code, the ZCTA code is used as the ZIP code; the original's separate ZIP-to-ZCTA crosswalk was counted in its CONSORT table but never used to filter, so it is dropped here.
+
+```{r}
+#| label: download-acs
+#| eval: false
+```
+
+## HSA population
+
+The denominator of the exposure: the sum of ZCTA populations over the ZIP codes in each HSA that year.
+
+```{r}
+#| label: compute-hsa-population
+#| eval: false
+```
+
+## Rural-urban type
+
+The 2010 ERS ZIP code file, grouped into metropolitan, micropolitan, small town and rural by primary RUCA code.
+
+```{r}
+#| label: read-ruca
+#| eval: false
+```
+
+## HSA benchmarks
+
+Primary care measures (2015) and hospital resources (2012). These are the published spreadsheets the original analysis's Stata files were very likely made from; the code finds each measure's column by pattern and sets suppression codes to missing.
+
+```{r}
+#| label: read-dartmouth-benchmarks
+#| eval: false
+```
+
+## HSA boundaries
+
+Used only for the maps in Figure 2.
+
+```{r}
+#| label: read-hsa-boundaries
+#| eval: false
+```
+
+## Labels
+
+Each area variable is labelled with its source and year.
+
+```{r}
+#| label: label-area-variables
+#| eval: false
+```

@@ -1,0 +1,40 @@
+---
+title: "About"
+format: html
+---
+
+## The study
+
+Hemmige V, Deshpande P, Norris KC, Shen JI, Erickson KF, Johansen KL, Golestaneh L. Geographic dialysis facility density and early dialysis initiation. *JAMA Network Open*. 2024;7(1):e2350009 [@hemmige2024density].
+
+-   **Ladan Golestaneh** (senior author)
+-   **Vagish Hemmige** (first author, statistical analysis and this repository)
+
+Scientific decisions for the replication are made by Vagish Hemmige and Ladan Golestaneh.
+
+## This repository
+
+This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by `R/main.R`, using `usRds`, `flowchart` and `tidycensus`. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through `usRds` on the computer of an authorized analyst.
+
+Contributions follow the rules in [`AGENTS.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/AGENTS.md); open decisions and known issues are tracked in [Issues](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues).
+
+## Pages
+
+-   [**Clinical background**](background.qmd): why the timing of dialysis and facility density matter.
+-   [**Differences from the original code**](differences.qmd): every correction and open decision.
+-   [**The original R Markdown file**](original.qmd): the October 2023 analysis, as text.
+-   [**Setup**](setup.qmd): packages and every constant.
+-   [**Functions**](functions.qmd): tested helper functions.
+-   [**1. Public area data**](download_public_data.qmd): ACS, Dartmouth Atlas and RUCA downloads.
+-   [**2. USRDS patient data**](prepare_patients.qmd): Medical Evidence and Residence files through `usRds`.
+-   [**3. Linking area data**](link_area_data.qmd): facility counts by date, area data and the exposure.
+-   [**4. Cohort flowchart**](create_cohort.qmd): every exclusion as one `flowchart` step.
+-   [**5. Density categories**](define_exposure.qmd): the five exposure categories.
+-   [**6. Models**](models.qmd): Table 2 and sensitivity analyses.
+-   [**Tables**](tables.qmd) and [**Figures**](figures.qmd): building and exporting the outputs.
+-   [**Classifying codes with an LLM ensemble**](classify_esrd_causes.qmd): the cause of kidney failure mapping.
+
+## References
+
+::: {#refs}
+:::

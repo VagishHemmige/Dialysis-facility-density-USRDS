@@ -1,0 +1,53 @@
+---
+title: "4. Cohort flowchart"
+format: html
+---
+
+Builds the analytic cohort with `flowchart` [@flowchart_pkg]. Every exclusion is one `fc_filter()` step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/create_cohort.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/create_cohort.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/link_area_data.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/link_area_data.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/create_cohort.R")
+```
+
+## Labels
+
+Box labels are built from the constants in `setup.R`, so they cannot drift from the code.
+
+```{r}
+#| label: define-flowchart-labels
+#| eval: false
+```
+
+## Exclusions
+
+In the original code the cohort was filtered in about 27 separate places, and a hand-maintained table recorded the counts. The table and the data drifted apart: one exclusion was recorded as removing nobody while the next line removed patients; at least eight filters (including the facility linkage) were never recorded; two rows were labelled with the wrong variable; and one recorded step was never applied. Here each step both filters and counts, so the diagram cannot disagree with the data.
+
+```{r}
+#| label: build-flowchart
+#| eval: false
+```
+
+## The cohort
+
+The data from the final step, one row per patient. The HSA used for facility counts and the HSA used for population are checked to be the same.
+
+```{r}
+#| label: extract-cohort
+#| eval: false
+```

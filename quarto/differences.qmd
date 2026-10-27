@@ -1,0 +1,79 @@
+---
+title: "Differences from the original code"
+format: html
+---
+
+This page lists every way this replication differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density]. Each difference is one of three kinds:
+
+-   **Corrected error**: the original code did not do what it intended. The replication does, and the effect on the published numbers will be measured on the first full run.
+-   **Open decision**: the original code and the paper disagree, or neither says. The replication reproduces the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.
+-   **Rebuilt**: the original material is not available, so the step is rebuilt from public sources.
+
+::: callout-note
+## Status
+The replication has not yet been run on the USRDS data. The column "Effect on published results" says what each difference can change; the size of each effect will be added after the first run, once the outputs have been checked and cleared for release.
+:::
+
+## Cohort construction
+
+| Original code | Kind | Replication | Effect on published results |
+|---|---|---|---|
+| The CONSORT table was kept by hand, separately from the filters. The RUCA exclusion compared a labelled factor with the number `11`, so the table recorded 0 patients removed while the next line removed patients. | Corrected error | Every exclusion is a `flowchart::fc_filter()` step, so the diagram is the cohort. | Figure 1 counts; the cohort itself is unchanged |
+| At least eight filters were applied outside the CONSORT table: the facility linkage, a second sex check, missing ZIP population, % White, % Black, % Asian and % Hispanic, and missing region. The income and poverty rows were labelled "ZIPPercentageFemale". | Corrected error | As above. | Figure 1 counts |
+| A ZIP-to-ZCTA step was counted in the CONSORT table but never applied. | Corrected error | Removed; ZIP codes are matched to ACS ZCTAs directly, which is what the original code actually did. | Figure 1 counts |
+| `DIALSET` codes 1 and 2 were kept, labelled "Remove patients receiving home HD". In the USRDS Researcher's Guide (2024, format `$MESET`), code 1 is home and code 2 is a dialysis facility, so home hemodialysis patients stayed in; the paper says they were excluded. | Open decision [#D1] | Default keeps codes 1 and 2. | Cohort size and every estimate, slightly |
+| eGFR was restricted to 20 or below, and patients with missing eGFR were removed in the same step without being counted separately. The paper says "less than 20". | Open decision [#D2] | Default keeps 20 or below; missing eGFR is still in the same step. | Patients with eGFR of exactly 20 |
+| ACS data and the HSA were matched to the year of the form (`MEFDATE`) and facility counts to the dialysis date (`DIALDAT`). The facility join silently required the two years to be equal. | Open decision [#D3] | Same matching; the same-year requirement is now a flowchart step, so its count is visible. | Possibly none, if the two years always match |
+| No upper bound on the form year; 2020 and later forms were removed only because no ACS data were downloaded for them. | Corrected error | Forms dated 2011 to 2019 are one flowchart step. | Figure 1 counts |
+
+## Facility counts
+
+| Original code | Kind | Replication | Effect on published results |
+|---|---|---|---|
+| Every CMS facility file was expanded to one row per ZIP code per day, from 2005 to 2020, to look up counts by date. | Rebuilt | `usRds::add_dialysis_facility_counts()` uses an interval join on each CMS release's validity period. | None intended; much faster |
+| The October 2017 and January 2018 CMS files code ownership as `1` and `2` instead of "Profit" and "Non-Profit". The reader compared with the text "Profit", so for-profit and non-profit counts were 0 for patients starting dialysis from October 2017 to March 2018. Code 1 is profit, confirmed by matching provider numbers with the July 2017 release. | Corrected error | Ownership is harmonized in `usRds`. | Table 1 row "HSA level total of for-profit dialysis facilities"; not the exposure, which counts all facilities |
+| A ZIP code with any facility of unknown ownership or station count had its whole for-profit, non-profit or station count set to 0 (a sum with a missing value is missing, and missing was then set to 0). | Corrected error | Only the record with the missing value is left out. | Station counts and ownership counts, slightly |
+| A one-year lagged station count was missing, not 0, where a ZIP code had no facility a year earlier. | Corrected error | `usRds` returns 0. Not used in the published models. | None |
+
+## Area data
+
+| Original code | Kind | Replication | Effect on published results |
+|---|---|---|---|
+| Dartmouth Atlas negative values were made positive (`ifelse(x < 0, -x, x)`). Dartmouth codes small values as -88888 and suppressed values as -99999 [@dartmouth_primarycare], so suppressed HSAs would enter as 88,888 or 99,999. | Open decision [#D5] | Set to missing. | Table 1 benchmark rows and Model 3, if the original files held these codes |
+| ACS subject-table variable codes (for example `S0601_C01_047`) were assumed to mean the same thing every year. | Corrected error | Each year's labels are checked; a mismatch stops the run. | None if the codes were stable; otherwise ZIP code income and poverty |
+| ACS data were downloaded once and cached in a local file. | Rebuilt | Downloaded by `tidycensus` on each fresh run, with the Census Bureau's cache. | None, unless the Census Bureau has revised the estimates |
+| RUCA codes, Dartmouth crosswalks, benchmarks and boundaries were read from files on the analyst's computer; the benchmarks were Stata files made by hand. | Rebuilt | Downloaded from the publishers' URLs. The benchmark spreadsheets are very likely the sources of the original Stata files; the code checks each column by name. | None, if the spreadsheets match |
+| The 2018 and 2019 Dartmouth crosswalks are published as zipped CSV; the original reader only read Excel files. | Rebuilt | Both formats are read. | None |
+| State FIPS codes were labelled from a spreadsheet. | Rebuilt | `usRds` labels the state from the USRDS format `$STATFIP`. | None |
+
+## Patient variables
+
+| Original code | Kind | Replication | Effect on published results |
+|---|---|---|---|
+| Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. | Rebuilt | `usRds::load_usrds_file()` applies the USRDS value labels. | None intended |
+| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, open decision [#D4] | Three language models classify the public USRDS code list; the deciders review every code the models disagree on. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
+| A comorbidity field that was blank became missing, which would drop the patient from a model. The published sample sizes show the paper's models kept these patients. | Rebuilt | Blank or unknown counts as not present, as on the form. | Matches the published sample sizes |
+| Race had nine levels in R; the paper reports five groups whose counts add up to each column total. | Open decision [#D6] | Middle Eastern, South Asian and Other are kept separate until the deciders say how the paper grouped them. | Table 1 race rows; models adjusting for race |
+
+## Models
+
+| Original code | Kind | Replication | Effect on published results |
+|---|---|---|---|
+| The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt, open decision [#D6] | Rebuilt from the paper's text and Table 2 footnotes, with `lme4::glmer` and the Laplace approximation. | Table 2, slightly, through estimation differences |
+| The multiple imputation model is not described beyond "chained equations, 10 imputations". | Rebuilt, open decision [#D7] | A provisional imputation model. | The imputation sensitivity analysis |
+
+## Outputs
+
+| Original code | Kind | Replication | Effect on published results |
+|---|---|---|---|
+| Two interactive maps saved the center-density map under the station-density file names. | Corrected error | One function draws and saves each map. | None on the paper (its Figure 2 is a static map) |
+| The patient-level analysis file was written to Stata and RDS files next to the code. | Corrected error | Nothing patient-level is written to the project; only tables and figures, which stay out of Git until cleared. | None |
+
+## How much simpler
+
+The original file's data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 345 lines across five scripts, because the access packages do the work: `usRds` loads and labels the USRDS files and counts facilities by date, `tidycensus` loads the ACS, and `flowchart` builds and counts the cohort at once. The facility logic moved into `usRds`, where it is tested and can be reused by other projects.
+
+## References
+
+::: {#refs}
+:::

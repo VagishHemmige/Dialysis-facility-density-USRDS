@@ -1,0 +1,31 @@
+---
+title: "Dialysis facility density and early dialysis initiation: a replication"
+format: html
+---
+
+## The study
+
+Hemmige and colleagues studied 844,466 adults who started in-center hemodialysis in the United States from 2011 to 2019, using the US Renal Data System (USRDS) [@hemmige2024density]. Patients living in Health Service Areas (HSAs) with the most dialysis facilities per resident had higher odds of starting dialysis at an estimated glomerular filtration rate (eGFR) above 10 mL/min/1.73 m²: an odds ratio of 1.06 (95% CI 1.02 to 1.10) compared with HSAs with no facility. The [clinical background](quarto/background.qmd) page explains why that matters.
+
+## What this site does
+
+This repository reproduces the paper's analysis from public code. The original analysis was a single R Markdown file of more than 3,000 lines (shown [here](quarto/original.qmd), with local file locations removed). It is rebuilt with packages that do the repetitive work:
+
+-   **usRds** [@usrds_pkg] loads and labels the USRDS files, and attaches CMS dialysis facility counts to each patient by the date dialysis started.
+-   **flowchart** [@flowchart_pkg] applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.
+-   **tidycensus** [@tidycensus] downloads the American Community Survey, and every other area-level file is downloaded from its publisher.
+
+Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the [differences page](quarto/differences.qmd). Where the original code and the paper disagree, the choice is left to the investigators.
+
+## Methods
+
+The authoritative specification is [`analysis-plan.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md). In brief: incident adults on in-center hemodialysis with an eGFR of 20 or below; exposure, HSA dialysis facilities per 100,000 residents in five categories; outcome, eGFR above 10 at initiation; mixed-effects logistic models with a random intercept for HSA, progressively adjusted for patient, clinical, area and HSA characteristics [@vonelm2007strobe; @benchimol2015record].
+
+## Status
+
+The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Open decisions are tracked as [GitHub issues](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues).
+
+## References
+
+::: {#refs}
+:::

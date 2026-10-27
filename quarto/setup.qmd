@@ -1,0 +1,93 @@
+---
+title: "Setup"
+format: html
+---
+
+This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call `library()` or hard-code a number.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/setup.R")
+```
+
+## Packages
+
+Each data source has an access package: `usRds` for the USRDS files and the CMS facility snapshots, `tidycensus` for the American Community Survey. `flowchart` builds the cohort, so the STROBE diagram and the analytic data come from the same code. `lme4` fits the mixed models, `gtsummary` and `gt` build the tables, and `mice` imputes albumin and hemoglobin.
+
+```{r}
+#| label: load-packages
+#| eval: false
+```
+
+## Cohort constants
+
+These implement section 4 of the analysis plan. Two of them are open decisions, and both default to the original code's behavior so the first run reproduces it. `dialysis_settings_kept` keeps home and facility settings because the original code did, although the paper says home dialysis was excluded ([#D1]). `egfr_maximum_inclusive` keeps eGFR of exactly 20, as the original code did, although the paper says "less than 20" ([#D2]).
+
+```{r}
+#| label: define-study-constants
+#| eval: false
+```
+
+## Exposure constants
+
+Density is facilities per 100,000 HSA residents, cut at the quartiles of density among patients in the final cohort. The published cut points are kept only so the tables can be compared with the paper; they are never used to categorize.
+
+```{r}
+#| label: define-exposure-constants
+#| eval: false
+```
+
+## Linkage constants
+
+Each ACS variable carries a pattern its label must match in every year. Subject-table codes such as `S0601_C01_047` can mean different things in different years, and the original code assumed they did not; now a mismatch stops the run. Dartmouth's -88888 and -99999 are codes for small or suppressed values, not numbers ([#D5]). The RUCA groups give the four rural-urban types in the paper's Table 1.
+
+```{r}
+#| label: define-linkage-constants
+#| eval: false
+```
+
+## Download locations
+
+Every public file is downloaded from its publisher, so no file needs to come from an analyst's computer. The Dartmouth column patterns are regular expressions; the download script stops if a pattern matches no column or more than one, so a change in the published spreadsheets cannot silently pick the wrong measure.
+
+```{r}
+#| label: define-download-locations
+#| eval: false
+```
+
+## Cause of kidney failure
+
+The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three models and reviewed by the deciders (see [Classifying codes](classify_esrd_causes.qmd); [#D4]). The three providers are the ones the USRDS-PDF-analysis-project ensemble used, each with its current general-purpose model as of October 2026; the models used are recorded in the output file.
+
+```{r}
+#| label: define-cause-constants
+#| eval: false
+```
+
+## Model constants
+
+The covariate sets follow the footnotes of the paper's Table 2. The paper's models were fit in Stata and its exact specification is not available, so these sets and the estimation method are an open decision ([#D6]). `glmer_nagq = 1` is the Laplace approximation, closer to Stata's default than the `nAGQ = 0` the original R code used.
+
+```{r}
+#| label: define-model-constants
+#| eval: false
+```
+
+## Output folders
+
+Tables and figures are written to folders that are gitignored until the outputs are checked against the paper and cleared for release.
+
+```{r}
+#| label: define-output-paths
+#| eval: false
+```

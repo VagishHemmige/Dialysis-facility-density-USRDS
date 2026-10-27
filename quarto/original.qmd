@@ -1,0 +1,24 @@
+---
+title: "The original R Markdown file"
+format: html
+---
+
+This is the analysis file from October 2023 that produced the published cohort and Table 1 [@hemmige2024density]. It is kept for comparison: the [differences page](differences.qmd) lists each place where the replication departs from it, and why.
+
+The file is unchanged except that file locations on the analyst's computer are replaced by `<data folder>/`. It is shown as text and is never run.
+
+::: {.Rcode title="Source file"}
+-   [`original/original-analysis-2023-10-20.Rmd`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/original/original-analysis-2023-10-20.Rmd)
+:::
+
+```{r}
+#| file: "../original/original-analysis-2023-10-20.Rmd"
+#| eval: false
+#| code-fold: true
+#| code-summary: "Click to show/hide the original file (about 3,000 lines)"
+```
+
+## References
+
+::: {#refs}
+:::

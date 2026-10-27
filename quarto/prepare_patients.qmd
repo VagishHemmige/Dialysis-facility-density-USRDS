@@ -1,0 +1,71 @@
+---
+title: "2. USRDS patient data"
+format: html
+---
+
+Loads the Medical Evidence and Residence files through `usRds` and derives the patient-level variables. Nobody is excluded here; every exclusion is a flowchart step in [script 4](create_cohort.qmd).
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/prepare_patients.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/prepare_patients.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/prepare_patients.R")
+```
+
+## Loading the Medical Evidence file
+
+`usRds` finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how the replication found that `DIALSET` code 1 means home dialysis ([#D1]). The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
+
+```{r}
+#| label: load-medevid
+#| eval: false
+```
+
+## Patient variables
+
+Each form is numbered within its patient, and the first form is flagged. Race keeps the form's Middle Eastern, South Asian and Other codes separate, because how the paper grouped them is not recorded ([#D6]). The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
+
+```{r}
+#| label: derive-patient-variables
+#| eval: false
+```
+
+## Loading the Residence file
+
+Residence periods with ZIP code and state, again with USRDS labels.
+
+```{r}
+#| label: load-residence
+#| eval: false
+```
+
+## Residence on the dialysis date
+
+An interval join picks the residence period that contains the date of dialysis start. A patient with no such period, or with more than one, gets no residence and is excluded in the flowchart, where the count is shown.
+
+```{r}
+#| label: match-residence-to-dialysis-date
+#| eval: false
+```
+
+## Labels
+
+Each derived variable is labelled with its definition and units.
+
+```{r}
+#| label: label-patient-variables
+#| eval: false
+```

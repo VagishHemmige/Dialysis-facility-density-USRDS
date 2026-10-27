@@ -1,0 +1,55 @@
+---
+title: "Tables"
+format: html
+---
+
+Builds Table 1 and the regression tables, and exports them to the gitignored `tables/` folder.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/tables.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/tables.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+-   [`R/define_exposure.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/define_exposure.R)
+-   [`R/models.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/models.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/tables.R")
+```
+
+## Table 1
+
+Patient and HSA characteristics by density category, with means (SD), counts (%), one-way ANOVA and chi-squared tests, as in the paper.
+
+```{r}
+#| label: build-table-1
+#| eval: false
+```
+
+## Regression tables
+
+Odds ratios for the density categories, grouped by model.
+
+```{r}
+#| label: build-regression-tables
+#| eval: false
+```
+
+## Export
+
+HTML files in `tables/`, which stays out of Git until the tables are checked against the paper and cleared for release.
+
+```{r}
+#| label: export-tables
+#| eval: false
+```

@@ -1,0 +1,71 @@
+---
+title: "Classifying codes with an LLM ensemble"
+format: html
+---
+
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three large language models, for review by the deciders ([#D4]). It is run once, by hand, because it calls paid APIs; the reviewed file in `references/` is what the analysis reads.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/classify_esrd_causes.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/classify_esrd_causes.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/classify_esrd_causes.R")
+```
+
+## The code list
+
+The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format `$PD96DET` with its description, from Appendix C of the Researcher's Guide, which `usRds` already holds. No patient data are involved, and the list is not filtered by what appears in the data.
+
+```{r}
+#| label: load-cause-codes
+#| eval: false
+```
+
+## Prompt and schema
+
+One prompt and one structured output schema for all three models. The schema restricts each answer to the six category names, so no answer needs cleaning.
+
+```{r}
+#| label: define-classification-prompt
+#| eval: false
+```
+
+## Three models
+
+The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Every model must return every code exactly once.
+
+```{r}
+#| label: classify-with-ensemble
+#| eval: false
+```
+
+## Agreement
+
+A code is accepted when all three models agree. The rest are left for the deciders, who fill `final_category` and their initials. Agreement is summarized with Fleiss' kappa.
+
+```{r}
+#| label: measure-agreement
+#| eval: false
+```
+
+## Writing the mapping
+
+The one CSV file the repository tracks as data; it holds only public codes and descriptions.
+
+```{r}
+#| label: write-mapping
+#| eval: false
+```

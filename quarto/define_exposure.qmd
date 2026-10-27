@@ -1,0 +1,45 @@
+---
+title: "5. Density categories"
+format: html
+---
+
+Cuts HSA facility density into the five published categories, using quartiles from the final cohort.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/define_exposure.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/define_exposure.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+-   [`R/create_cohort.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/create_cohort.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/define_exposure.R")
+```
+
+## Cut points
+
+The 25th, 50th and 75th percentiles of density among all patients, zeros included, as in the original code. The paper reports 1.36, 1.95 and 2.76 facilities per 100,000.
+
+```{r}
+#| label: compute-cutpoints
+#| eval: false
+```
+
+## Categories
+
+Zero facilities, then four categories each including its upper bound.
+
+```{r}
+#| label: categorize-density
+#| eval: false
+```

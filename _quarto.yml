@@ -1,0 +1,104 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - quarto/**
+
+author:
+  - name: Vagish Hemmige
+    affiliations:
+      - Montefiore Medical Center/Albert Einstein College of Medicine
+
+bibliography: references.bib
+
+website:
+  title: "Dialysis facility density: a replication"
+  site-url: https://vagishhemmige.github.io/Dialysis-facility-density-USRDS
+  repo-url: https://github.com/VagishHemmige/Dialysis-facility-density-USRDS
+  repo-branch: main
+  repo-actions: [edit, issue]
+  page-navigation: true
+
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - href: index.qmd
+        text: Home
+
+      - section: Background
+        contents:
+          - href: quarto/background.qmd
+            text: Clinical background
+          - href: quarto/differences.qmd
+            text: Differences from the original code
+          - href: quarto/original.qmd
+            text: The original R Markdown file
+
+      - section: Setup and helper functions
+        contents:
+          - href: quarto/setup.qmd
+            text: Setup
+          - href: quarto/functions.qmd
+            text: Functions
+
+      - section: Data processing and analysis
+        contents:
+          - href: quarto/download_public_data.qmd
+            text: 1. Public area data
+          - href: quarto/prepare_patients.qmd
+            text: 2. USRDS patient data
+          - href: quarto/link_area_data.qmd
+            text: 3. Linking area data
+          - href: quarto/create_cohort.qmd
+            text: 4. Cohort flowchart
+          - href: quarto/define_exposure.qmd
+            text: 5. Density categories
+          - href: quarto/models.qmd
+            text: 6. Models
+
+      - section: Tables and figures
+        contents:
+          - href: quarto/tables.qmd
+            text: Tables
+          - href: quarto/figures.qmd
+            text: Figures
+
+      - section: Published results
+        contents:
+          - href: quarto/results.qmd
+            text: Published figures and tables
+          - href: quarto/supplement.qmd
+            text: Published supplement
+
+      - section: Cause of kidney failure
+        contents:
+          - href: quarto/classify_esrd_causes.qmd
+            text: Classifying codes with an LLM ensemble
+
+      - href: quarto/about.qmd
+        text: About
+
+custom-callout:
+  Rcode:
+    icon: true
+    icon-symbol: "💻"
+    color: pink
+
+filters:
+  - custom-callout
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true
+    page-layout: full
+    code-summary: "Click to show/hide R Code"
+
+# The site shows code; it never runs the analysis. Only the hidden
+# read_chunk() imports set eval: true.
+execute:
+  eval: false

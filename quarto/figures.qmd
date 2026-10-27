@@ -1,0 +1,54 @@
+---
+title: "Figures"
+format: html
+---
+
+Draws Figure 1 (the cohort flowchart) and Figure 2 (HSA maps), and exports them to the gitignored `figures/` folder.
+
+::: {.Rcode title="Source code"}
+The full R script is available at:
+
+-   [`R/figures.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/figures.R)
+
+This R script file is itself reliant on the following files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
+-   [`R/download_public_data.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/download_public_data.R)
+-   [`R/create_cohort.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/create_cohort.R)
+
+The code sections below are imported directly from that script when this page is rendered.
+:::
+
+```{r}
+#| include: false
+#| eval: true
+#| cache: false
+knitr::read_chunk("../R/figures.R")
+```
+
+## Figure 1
+
+`fc_draw()` draws the same flowchart object that produced the cohort.
+
+```{r}
+#| label: draw-cohort-flowchart
+#| eval: false
+```
+
+## Map data
+
+HSA facility and station density on 1 January 2019, from public data only (CMS facilities, the Dartmouth crosswalk and ACS population), joined to the 2015 eye-exam benchmark.
+
+```{r}
+#| label: compute-hsa-map-data
+#| eval: false
+```
+
+## Figure 2
+
+Three maps of the contiguous US. The original code saved some interactive maps under the wrong file names; these are drawn and saved from one function.
+
+```{r}
+#| label: draw-hsa-maps
+#| eval: false
+```

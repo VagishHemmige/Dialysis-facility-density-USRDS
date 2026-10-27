@@ -1,0 +1,55 @@
+# R, RStudio and Positron
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.httr-oauth
+.DS_Store
+
+# Quarto (docs/ is NOT ignored: it is the published site)
+/.quarto/
+**/*.quarto_ipynb
+/_freeze/
+
+# Credentials (Census API key, LLM provider keys)
+.Renviron
+.env
+*.pem
+*.key
+
+# Data files. USRDS data live outside the repository and are located through
+# usRds; this is a safety net, not access control.
+/data-raw/
+/data/
+*.csv
+*.xlsx
+*.xls
+*.rds
+*.rda
+*.sas7bdat
+*.sas7bcat
+*.xpt
+*.dta
+*.sav
+*.parquet
+*.feather
+*.arrow
+*.fst
+*.zip
+*.shp
+*.dbf
+*.shx
+*.prj
+
+# Outputs from restricted data, ignored until cleared for public release.
+# Remove the figures/ and tables/ lines only after the outputs have been checked
+# for errors and cleared under the USRDS data use agreement. Saved models in
+# models/ always stay out of Git.
+/figures/
+/tables/
+/models/
+
+# Approved public files: narrow exceptions only, never a whole format.
+# The ESRD cause mapping is built from public USRDS documentation (Appendix C,
+# format $PD96DET) and holds no patient data.
+!/references/esrd-cause-categories.csv

@@ -19,7 +19,7 @@ The current implementation: scripts, data flow, and the objects passed between t
 | 9 | `R/tables.R` | 7, 8 (or the saved estimates) | `table_1`, `published_tables`; HTML files in `tables/` | Outputs, gitignored |
 | 10 | `R/figures.R` | 3, 6; usRds facility snapshots (`summarize_dialysis_facilities()`) | PNG files in `figures/` | Outputs, gitignored |
 
-`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and needs ellmer 0.5.0 or later, the irr package and an API key for each of three providers. From the public `$PD96DET` code list it writes `references/esrd-cause-categories.csv` (the mapping the analysis reads) and `references/esrd-cause-agreement.csv` (a one-row agreement summary). It sends no patient data, and the prompt is `prompts/esrd-cause-classification.md`. Each provider's answers are saved in `data-raw/esrd-cause-votes/` (gitignored), named by provider, model and a fingerprint of the prompt, so a rerun pays only for providers that have not finished with the current prompt; saved answers are checked against the code list on every run. A rerun stops before any API call if the deciders have already reviewed codes in the mapping file, so their review cannot be overwritten.
+`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and needs ellmer 0.5.0 or later, the irr package, an API key for each of three cloud providers, and Ollama running locally with the two local models in `setup.R`. From the public `$PD96DET` code list it writes `references/esrd-cause-categories.csv` (the mapping the analysis reads) and `references/esrd-cause-agreement.csv` (a one-row agreement summary). It sends no patient data, and the prompt is `prompts/esrd-cause-classification.md`. Each of the five models' answers are saved in `data-raw/esrd-cause-votes/` (gitignored), named by provider, model and a fingerprint of the prompt, so a rerun asks only models that have not finished with the current prompt; saved answers are checked against the code list on every run. A rerun stops before any API call if the deciders have already reviewed codes in the mapping file, so their review cannot be overwritten.
 
 ## Data flow
 
@@ -60,7 +60,7 @@ references/esrd-cause-categories.csv ──────────────�
 
 - **usRds**: needs the version containing `dialysis_facility_snapshots`, `add_dialysis_facility_counts()` and `summarize_dialysis_facilities()`, which is under review in the usRds project. `R/classify_esrd_causes.R` reads the internal `usRds:::metadata_c` until the package exports its format tables.
 - **Packages used without being attached**: `ellmer`, `irr` and `rlang` (classification), `broom.mixed` (estimates).
-- **Census API key** for tidycensus; **API keys** for OpenAI, Anthropic and Google for the one-time classification.
+- **Census API key** for tidycensus; **API keys** for OpenAI, Anthropic and Google, and **Ollama** with the two local models, for the one-time classification.
 
 ## Website
 

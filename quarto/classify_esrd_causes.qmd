@@ -3,7 +3,7 @@ title: "Classifying codes with an LLM ensemble"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three large language models. Codes on which at least two of the three models agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). The script is run once, by hand, because it calls paid APIs; the file it writes to `references/` is what the analysis reads.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using five large language models: three cloud models and two that run on the analyst's own computer. Codes on which at least three of the five agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). The script is run once, by hand, because it calls paid APIs and needs the local models; the file it writes to `references/` is what the analysis reads.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -34,14 +34,15 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 **It needs**
 
 -   ellmer 0.5.0 or later [@ellmer_pkg], and the irr package for Fleiss' kappa.
--   An API key for each provider in `.Renviron`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`.
--   The models, batch size and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google).
+-   An API key for each cloud provider in `.Renviron`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`.
+-   [Ollama](https://ollama.com) running on the same computer, with the two local models pulled (`ollama pull qwen3.5:9b` and `ollama pull granite4.2:8b` in a terminal). The script checks both before asking any model, and says what to do if either is missing.
+-   The models, batch sizes and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google) in the cloud, and locally `qwen3.5:9b` (Alibaba's Qwen) and `granite4.2:8b` (IBM's Granite).
 
-**It sends** only the public list of 445 codes with their descriptions, in batches of 100: about five calls per provider, plus one more for any codes a model skipped. No patient data are sent. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.
+**It sends** only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), and of 25 to Gemini and the local models (about eighteen calls each), plus one more call for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.
 
 **It produces**
 
--   One file of checked answers per provider, in the gitignored `data-raw/` folder.
+-   One file of checked answers per model, in the gitignored `data-raw/` folder.
 -   `references/esrd-cause-categories.csv`: one row per code, with each model's category and reason, how the models agreed (`agreement`), the accepted category (`final_category`), the decider's initials (`reviewer`), and the prompt version, ellmer version, models and date.
 -   `references/esrd-cause-agreement.csv`: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.
 
@@ -79,14 +80,14 @@ The original mapping spreadsheet is lost. Its replacement starts from a public l
 
 ## The prompt
 
-All three models receive the same prompt, word for word. It is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md), so that it can be read and edited on its own and shown here exactly as sent:
+All five models receive the same prompt, word for word. It is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md), so that it can be read and edited on its own and shown here exactly as sent:
 
 ```{verbatim}
 #| file: ../prompts/esrd-cause-classification.md
 #| lang: markdown
 ```
 
-For each batch of 100 codes, `{{code_list}}` becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, `4464Z: WEGENERS GRANULOMATOSIS`). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in `setup.R`, because the structured output can only return those names.
+For each batch, `{{code_list}}` becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, `4464Z: WEGENERS GRANULOMATOSIS`). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in `setup.R`, because the structured output can only return those names.
 
 The prompt makes three rules:
 
@@ -137,18 +138,20 @@ The structured output schema restricts each answer to the six category names. Th
 #| eval: false
 ```
 
-## One function per provider
+## One function per model
 
-One model from each of three providers, set in `setup.R` [@ellmer_pkg]. Each provider has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`).
+Five models, set in `setup.R` and all called through `ellmer` [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`).
+
+The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and IBM's Granite, chosen so that the five models come from five unrelated companies and are less likely to make the same mistakes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They also show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed as well.
 
 ```{r}
 #| label: define-providers
 #| eval: false
 ```
 
-## Running, checking and saving each provider
+## Running, checking and saving each model
 
-While it runs, the script reports each provider, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). New answers are saved under the provider, model and prompt version, so a rerun after a failure asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
+Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). New answers are saved under the provider, model and prompt version, so a rerun after a failure asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
 
 ```{r}
 #| label: classify-with-ensemble
@@ -157,9 +160,9 @@ While it runs, the script reports each provider, whether its answers are read fr
 
 ## Agreement
 
-A code is accepted when at least two of the three models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 27 October 2026). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, agreed two to one, or had no majority. For codes with no majority, which means all three models chose differently, the deciders fill `final_category` and their initials in `reviewer`.
+A code is accepted when at least three of the five models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 28 October 2026, replacing two of three when the two local models were added). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "3 of 5 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
 
-Fleiss' kappa describes how far the three models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.
+Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.
 
 ```{r}
 #| label: measure-agreement

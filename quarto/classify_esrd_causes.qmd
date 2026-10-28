@@ -148,7 +148,7 @@ One model from each of three providers, set in `setup.R` [@ellmer_pkg]. Each pro
 
 ## Running, checking and saving each provider
 
-Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). New answers are saved under the provider, model and prompt version, so a rerun after a failure asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
+While it runs, the script reports each provider, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). New answers are saved under the provider, model and prompt version, so a rerun after a failure asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
 
 ```{r}
 #| label: classify-with-ensemble

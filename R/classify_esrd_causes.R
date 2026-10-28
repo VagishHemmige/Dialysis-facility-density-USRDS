@@ -155,15 +155,27 @@ providers <- list(
 # so a file that no longer matches the code list, for example after a usRds
 # update, stops the script instead of being used; delete that file to ask
 # the provider again.
+message(str_glue(
+  "Classifying {nrow(cause_codes)} codes with {length(providers)} models, ",
+  "in batches of {esrd_classifier_batch_size}. Saved answers are reused; ",
+  "a model that has to be asked can take a minute or more per batch."
+))
+
 votes <- providers |>
   imap(function(ask, provider) {
+    message("\n", provider, " (", esrd_classifier_models[[provider]], ")")
     cached_votes(
       path = file.path(
         esrd_votes_dir,
         str_glue("{provider}-{esrd_classifier_models[[provider]]}-{prompt_version}.csv")
       ),
       classify = function() {
-        classify_codes(cause_codes, ask, batch_size = esrd_classifier_batch_size)
+        classify_codes(
+          cause_codes,
+          ask,
+          batch_size = esrd_classifier_batch_size,
+          label = provider
+        )
       }
     ) |>
       check_votes(cause_codes, esrd_cause_categories, provider) |>

@@ -369,3 +369,14 @@ hsa_population_from_zcta <- function(hsa_crosswalk, zcta_crosswalk, zcta_populat
     left_join(zcta_population, by = join_by(zcta, year), relationship = "many-to-one") |>
     summarize(hsa_population = sum(zip_population, na.rm = TRUE), .by = c(year, hsanum))
 }
+
+## ---- fn-map-panel
+# One map panel of HSAs filled by a numeric column; HSAs with no value are grey.
+map_panel <- function(map, fill, title, legend) {
+  ggplot(map) +
+    geom_sf(aes(fill = .data[[fill]]), color = NA) +
+    scale_fill_viridis_c(name = legend, na.value = "grey85") +
+    coord_sf(crs = 5070) +
+    labs(title = title) +
+    theme_void()
+}

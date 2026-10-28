@@ -212,3 +212,12 @@ Builds the exposure's denominator from ZCTA populations, counting each ZCTA once
 #| label: fn-hsa-population
 #| eval: false
 ```
+
+## Map panels
+
+Draws one panel of Figure 2: HSAs filled by a numeric column, in the Albers equal-area projection (EPSG 5070), with HSAs that have no value in grey.
+
+```{r}
+#| label: fn-map-panel
+#| eval: false
+```

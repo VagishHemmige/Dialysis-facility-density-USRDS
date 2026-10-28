@@ -52,15 +52,7 @@ hsa_map <- hsa_boundaries |>
   left_join(hsa_map_data, by = "hsanum", relationship = "many-to-one")
 
 ## ---- draw-hsa-maps
-map_panel <- function(map, fill, title, legend) {
-  ggplot(map) +
-    geom_sf(aes(fill = .data[[fill]]), color = NA) +
-    scale_fill_viridis_c(name = legend, na.value = "grey85") +
-    coord_sf(crs = 5070) +
-    labs(title = title) +
-    theme_void()
-}
-
+# One panel per map (map_panel() in functions.R)
 figure_2 <- list(
   a = map_panel(
     hsa_map, "center_density",

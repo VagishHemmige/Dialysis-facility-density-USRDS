@@ -195,23 +195,31 @@ categorize_density <- function(density, cutpoints, digits = 2) {
 }
 
 ## ---- fn-density-odds-ratios
-# Odds ratios (95% Wald CI, p value) for the density terms of a fitted model,
-# with the number of patients the model used.
-density_odds_ratios <- function(model, term_pattern = "^density_category", model_name = NA_character_) {
+# The density terms of a fitted model, with 95% Wald confidence intervals, p
+# values and the number of patients the model used. Logistic models report
+# odds ratios (exponentiate = TRUE); linear models report differences.
+density_effects <- function(model, term_pattern = "^density_category",
+                            model_name = NA_character_, exponentiate = TRUE) {
   # Computed before transmute(), where the new `model` column would mask the fit
   n_used <- nobs(model)
 
-  broom.mixed::tidy(model, effects = "fixed", conf.int = TRUE, exponentiate = TRUE) |>
+  broom.mixed::tidy(model, effects = "fixed", conf.int = TRUE, exponentiate = exponentiate) |>
     filter(str_detect(term, term_pattern)) |>
     transmute(
       model = model_name,
       term,
-      odds_ratio = estimate,
+      estimate,
       conf_low = conf.low,
       conf_high = conf.high,
       p_value = p.value,
       n = n_used
     )
+}
+
+density_odds_ratios <- function(model, term_pattern = "^density_category",
+                                model_name = NA_character_) {
+  density_effects(model, term_pattern, model_name, exponentiate = TRUE) |>
+    rename(odds_ratio = estimate)
 }
 
 ## ---- fn-model-formula

@@ -130,7 +130,7 @@ Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them
 
 **Multiplicity.** None; a single primary comparison is reported, as in the paper.
 
-**Missing data.** Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin by chained equations with 10 imputations, as described in the paper. **Open:** [#D7] the imputation model (variables included, method for each variable, and pooling).
+**Missing data.** Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin by chained equations with 10 imputations, as described in the paper (eTable 2). Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin's rules. **Open:** [#D7] confirmation of this imputation model.
 
 **Software.** R, with `usRds` [@usrds_pkg], `flowchart` [@flowchart_pkg], `tidycensus` [@tidycensus], `glmmTMB` [@glmmtmb], `lme4` [@lme4_pkg] and `ellmer` [@ellmer_pkg]. The `usRds` version or commit is recorded with every result.
 
@@ -138,11 +138,12 @@ Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them
 
 | Analysis | Assumption it tests |
 |---|---|
-| Exclude HSAs with 0 facilities (reference: category 2) | That distance to care in HSAs without facilities does not drive the association |
-| Density as a continuous exposure | That the association does not depend on the choice of cut points |
-| Continuous eGFR as the outcome (linear mixed model) | That the association does not depend on the threshold of 10 |
-| Multiple imputation of albumin and hemoglobin | That complete-case results are not biased by missing laboratory values |
-| eGFR restricted to more than 5 and less than 25 (from the original code) | That results are not driven by implausible eGFR values at the extremes |
+| Exclude HSAs with 0 facilities (reference: category 2); Table 2, Models 1–3 without albumin and hemoglobin | That distance to care in HSAs without facilities does not drive the association |
+| Stratified by race, White and Black; eTable 1, Models 1–3 with albumin and hemoglobin | That the association holds within each race group |
+| Density as a continuous exposure; eTable 2, Models 1–3 with and without albumin and hemoglobin, with them imputed, and by race | That the association does not depend on the choice of cut points |
+| Continuous eGFR as the outcome (linear mixed model); eTable 3, Models 1–3 with albumin and hemoglobin, with and without HSAs with 0 facilities | That the association does not depend on the threshold of 10 |
+| Multiple imputation of albumin and hemoglobin (eTable 2) | That complete-case results are not biased by missing laboratory values |
+| Excluding eGFR of 5 or below (from the original R code; not in the paper) | That results are not driven by implausibly low eGFR values |
 | Each correction listed in section 12, applied one at a time | How much each correction to the original code changes the published estimates |
 
 ## 10. Disclosure control

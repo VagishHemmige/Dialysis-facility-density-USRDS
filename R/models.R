@@ -3,8 +3,9 @@
 # Needs: cohort with density_category (define_exposure.R); model constants and
 #   covariate sets (setup.R); density_odds_ratios(), mixed_formula(),
 #   variance_shares() (functions.R).
-# Produces: table_2_estimates, sensitivity_estimates, race_estimates,
-#   linear_estimates, variance_decomposition, imputation_estimates.
+# Produces: published_estimates (every model in Table 2 and eTables 1 to 3),
+#   variance_decomposition, egfr_range_estimates; model_estimates (all three,
+#   saved to models/).
 # Fitting takes hours on the full cohort; models are saved in the ignored
 #   models/ folder so tables.R can be rerun without refitting.
 
@@ -30,86 +31,174 @@ fit_logistic <- function(data, exposure, covariates) {
   )
 }
 
-## ---- fit-table-2-models
-# Models 1 to 3; Models 2 and 3 with and without albumin and hemoglobin.
-# One row per model: its name and its covariates.
-table_2_specs <- tribble(
-  ~model,                          ~covariates,
-  "Model 1",                       model_1_covariates,
-  "Model 2 (with albumin, Hb)",    c(model_2_covariates, model_2_laboratory),
-  "Model 3 (with albumin, Hb)",    c(model_3_covariates, model_2_laboratory),
-  "Model 2 (without albumin, Hb)", model_2_covariates,
-  "Model 3 (without albumin, Hb)", model_3_covariates
+## ---- define-published-models
+# Every model the paper and its supplement report, one row per column of a
+# published table: the table, the block of rows it sits in, the outcome
+# (early start, or eGFR for eTable 3), the exposure (density category, or
+# continuous density for eTable 2), the patients, whether Models 2 and 3
+# include albumin and hemoglobin, and whether those two are multiply imputed.
+# Model 1 never includes albumin or hemoglobin and is fit on all patients of
+# its group, as in Table 2, where it is the same in both blocks.
+published_rows <- function(table, block, outcome, exposure, patients, labs,
+                           imputed = FALSE) {
+  tibble(
+    table, block, outcome, exposure, patients, labs, imputed,
+    model = c("Model 1", "Model 2", "Model 3")
+  )
+}
+
+published_models <- bind_rows(
+  published_rows("Table 2", "With albumin and hemoglobin",
+                 "early_start", "density_category", "All", labs = TRUE),
+  published_rows("Table 2", "Without albumin and hemoglobin",
+                 "early_start", "density_category", "All", labs = FALSE),
+  published_rows("Table 2", "Without HSAs with 0 facilities",
+                 "early_start", "density_category", "Without 0-facility HSAs", labs = FALSE),
+  published_rows("eTable 1", "Black individuals",
+                 "early_start", "density_category", "Black", labs = TRUE),
+  published_rows("eTable 1", "White individuals",
+                 "early_start", "density_category", "White", labs = TRUE),
+  published_rows("eTable 2", "With albumin and hemoglobin",
+                 "early_start", "hsa_center_density", "All", labs = TRUE),
+  published_rows("eTable 2", "Without albumin and hemoglobin",
+                 "early_start", "hsa_center_density", "All", labs = FALSE),
+  published_rows("eTable 2", "Albumin and hemoglobin multiply imputed",
+                 "early_start", "hsa_center_density", "All", labs = TRUE, imputed = TRUE),
+  published_rows("eTable 2", "Black individuals, without albumin and hemoglobin",
+                 "early_start", "hsa_center_density", "Black", labs = FALSE),
+  published_rows("eTable 2", "White individuals, without albumin and hemoglobin",
+                 "early_start", "hsa_center_density", "White", labs = FALSE),
+  published_rows("eTable 3", "With albumin and hemoglobin",
+                 "egfr", "density_category", "All", labs = TRUE),
+  published_rows("eTable 3", "Without HSAs with 0 facilities, with albumin and hemoglobin",
+                 "egfr", "density_category", "Without 0-facility HSAs", labs = TRUE)
 )
 
-table_2_estimates <- table_2_specs |>
-  pmap(function(model, covariates) {
-    model_data |>
-      fit_logistic("density_category", covariates) |>
-      density_odds_ratios(model_name = model)
-  }) |>
-  list_rbind()
+# The covariates of each model; race is left out within a race group
+model_covariates <- function(model, labs, patients) {
+  covariates <- switch(
+    model,
+    "Model 1" = model_1_covariates,
+    "Model 2" = model_2_covariates,
+    "Model 3" = model_3_covariates
+  )
 
-## ---- fit-sensitivity-models
-# Without HSAs with 0 facilities (reference: category 2), and with density as
-# a continuous exposure.
-no_zero_data <- model_data |>
-  filter(density_category != levels(density_category)[1]) |>
-  mutate(density_category = droplevels(density_category))
+  if (labs && model != "Model 1") {
+    covariates <- c(covariates, model_2_laboratory)
+  }
+  if (patients %in% c("White", "Black")) {
+    covariates <- setdiff(covariates, "race")
+  }
+  covariates
+}
 
-no_zero_estimates <- table_2_specs |>
-  filter(model %in% c("Model 1", "Model 2 (without albumin, Hb)", "Model 3 (without albumin, Hb)")) |>
-  pmap(function(model, covariates) {
-    no_zero_data |>
-      fit_logistic("density_category", covariates) |>
-      density_odds_ratios(model_name = str_glue("{model} - without 0-facility HSAs"))
-  }) |>
-  list_rbind()
+published_models <- published_models |>
+  mutate(covariates = pmap(list(model, labs, patients), model_covariates))
 
-continuous_estimates <- table_2_specs |>
-  filter(model %in% c("Model 1", "Model 3 (without albumin, Hb)")) |>
-  pmap(function(model, covariates) {
-    model_data |>
-      fit_logistic("hsa_center_density", covariates) |>
-      density_odds_ratios(
-        term_pattern = "^hsa_center_density$",
-        model_name = str_glue("{model} - continuous density")
-      )
-  }) |>
-  list_rbind()
+# The patients of each group
+patient_groups <- list(
+  "All" = model_data,
+  "White" = filter(model_data, race == "White"),
+  "Black" = filter(model_data, race == "Black"),
+  "Without 0-facility HSAs" = model_data |>
+    filter(density_category != levels(density_category)[1]) |>
+    mutate(density_category = droplevels(density_category))
+)
 
-sensitivity_estimates <- bind_rows(no_zero_estimates, continuous_estimates)
+## ---- impute-albumin-hemoglobin
+# Multiple imputation of albumin and hemoglobin by chained equations, as the
+# paper describes (10 imputations), used for the eTable 2 block that reports
+# it. Only albumin and hemoglobin are imputed, by predictive mean matching,
+# from the outcome, the density category and the Model 3 covariates. HSA is
+# not a predictor (3,400 levels), and continuous density is carried along but
+# not used as a predictor, because it duplicates the density category.
+imputation_vars <- c(
+  "early_start", "density_category", "hsa_center_density", "hsanum",
+  model_3_covariates, model_2_laboratory
+)
+imputation_data <- select(model_data, all_of(imputation_vars))
 
-## ---- fit-race-stratified-models
-# Models 1 and 3 within White and within Black patients, without race as a
-# covariate.
-race_estimates <- c("White", "Black") |>
-  map(function(race_group) {
-    stratum <- filter(model_data, race == race_group)
+imputation_method <- make.method(imputation_data)
+imputation_method[!names(imputation_method) %in% model_2_laboratory] <- ""
 
-    model_1 <- stratum |>
-      fit_logistic("density_category", setdiff(model_1_covariates, "race")) |>
-      density_odds_ratios(model_name = str_glue("{race_group} - Model 1"))
+imputation_predictors <- make.predictorMatrix(imputation_data)
+imputation_predictors[, c("hsanum", "hsa_center_density")] <- 0
 
-    model_3 <- stratum |>
-      fit_logistic("density_category", setdiff(model_3_covariates, "race")) |>
-      density_odds_ratios(model_name = str_glue("{race_group} - Model 3 (without albumin, Hb)"))
+imputed_sets <- mice(
+  imputation_data,
+  m = imputation_count,
+  method = imputation_method,
+  predictorMatrix = imputation_predictors,
+  seed = imputation_seed,
+  printFlag = FALSE
+)
 
-    bind_rows(model_1, model_3)
-  }) |>
-  list_rbind()
+## ---- fit-published-models
+# One fit per distinct model; a model that appears in two blocks (Model 1 in
+# both blocks of Table 2, for example) is fit once. Logistic models report
+# odds ratios; the linear models of eTable 3 report differences in eGFR.
+fit_published_model <- function(outcome, exposure, patients, imputed, covariates) {
+  # `imputed` (TRUE or FALSE) says whether to use the imputed data sets,
+  # imputed_sets
+  model_family <- if (outcome == "early_start") binomial() else gaussian()
+  formula <- mixed_formula(outcome, exposure, covariates)
+  term_pattern <- str_glue("^{exposure}")
+  logistic <- outcome == "early_start"
 
-## ---- fit-linear-models
-# Continuous eGFR with the categorical exposure (eTable 2).
-linear_estimates <- table_2_specs |>
-  filter(model %in% c("Model 1", "Model 3 (without albumin, Hb)")) |>
-  pmap(function(model, covariates) {
-    lmer(mixed_formula("egfr", "density_category", covariates), data = model_data) |>
-      broom.mixed::tidy(effects = "fixed", conf.int = TRUE) |>
-      filter(str_detect(term, "^density_category")) |>
-      mutate(model = model, .before = 1)
-  }) |>
-  list_rbind()
+  if (!imputed) {
+    fit <- glmmTMB(formula, data = patient_groups[[patients]], family = model_family)
+    return(density_effects(fit, term_pattern, exponentiate = logistic))
+  }
+
+  # Each completed data set is fitted explicitly and the fits are pooled by
+  # Rubin's rules; with(imputed_sets, ...) would not find the variables of a
+  # formula built by mixed_formula()
+  imputed_sets |>
+    mice::complete(action = "all") |>
+    map(\(completed) glmmTMB(formula, data = completed, family = model_family)) |>
+    as.mira() |>
+    pool() |>
+    summary(conf.int = TRUE, exponentiate = logistic) |>
+    as_tibble() |>
+    filter(str_detect(term, term_pattern)) |>
+    transmute(
+      model = NA_character_,
+      term = as.character(term),
+      estimate,
+      conf_low = `2.5 %`,
+      conf_high = `97.5 %`,
+      p_value = p.value,
+      n = nrow(imputation_data)
+    )
+}
+
+published_models <- published_models |>
+  mutate(fit_key = map_chr(
+    transpose(pick(outcome, exposure, patients, imputed, covariates)),
+    rlang::hash
+  ))
+
+published_fits <- published_models |>
+  distinct(fit_key, .keep_all = TRUE) |>
+  mutate(result = pmap(
+    list(outcome, exposure, patients, imputed, covariates),
+    fit_published_model
+  )) |>
+  select(fit_key, result)
+
+published_estimates <- published_models |>
+  left_join(published_fits, by = "fit_key", relationship = "many-to-one") |>
+  select(table, block, model, outcome, exposure, result) |>
+  unnest(result, names_sep = "_") |>
+  select(
+    table, block, model, outcome, exposure,
+    term = result_term,
+    estimate = result_estimate,
+    conf_low = result_conf_low,
+    conf_high = result_conf_high,
+    p_value = result_p_value,
+    n = result_n
+  )
 
 ## ---- fit-variance-decomposition
 # Share of the variance of eGFR at the HSA and facility levels (null models).
@@ -127,63 +216,20 @@ facility_variance <- lmer(
 variance_decomposition <- bind_rows(hsa_variance, facility_variance)
 
 ## ---- fit-egfr-range-sensitivity
+# From the original R code, not in the paper: Model 3 among patients with eGFR
+# between 5 and 25. The cohort already has eGFR of 20 or below, so in effect
+# this excludes patients with eGFR of 5 or below.
 egfr_range_estimates <- model_data |>
   filter(egfr > sensitivity_egfr_range[1], egfr < sensitivity_egfr_range[2]) |>
   fit_logistic("density_category", model_3_covariates) |>
-  density_odds_ratios(model_name = "Model 3 (without albumin, Hb) - eGFR 5 to 25")
-
-## ---- fit-imputation-models
-# Multiple imputation of albumin and hemoglobin by chained equations
-# (open decision #D7: the imputation model below is provisional).
-imputation_vars <- c(
-  "early_start", "density_category", "hsanum",
-  model_3_covariates, model_2_laboratory
-)
-imputation_data <- select(model_data, all_of(imputation_vars))
-
-# Only albumin and hemoglobin are imputed; the HSA is not used as a predictor
-imputation_method <- make.method(imputation_data)
-imputation_method[!names(imputation_method) %in% model_2_laboratory] <- ""
-
-imputation_predictors <- make.predictorMatrix(imputation_data)
-imputation_predictors[, "hsanum"] <- 0
-
-imputed <- mice(
-  imputation_data,
-  m = imputation_count,
-  method = imputation_method,
-  predictorMatrix = imputation_predictors,
-  seed = imputation_seed,
-  printFlag = FALSE
-)
-
-imputation_formula <- mixed_formula(
-  "early_start", "density_category", c(model_3_covariates, model_2_laboratory)
-)
-
-# Each completed data set is fitted explicitly and the fits are pooled by
-# Rubin's rules. The shorter with(imputed, glmmTMB(...)) does not work here:
-# a formula built by mixed_formula() looks for the variables outside the
-# imputed data sets.
-imputation_estimates <- imputed |>
-  mice::complete(action = "all") |>
-  map(\(completed) glmmTMB(imputation_formula, data = completed, family = binomial)) |>
-  as.mira() |>
-  pool() |>
-  summary(conf.int = TRUE, exponentiate = TRUE) |>
-  as_tibble() |>
-  filter(str_detect(term, "^density_category"))
+  density_odds_ratios(model_name = "Model 3 (without albumin, Hb) - excluding eGFR of 5 or below")
 
 ## ---- save-models
 dir.create("models", showWarnings = FALSE)
 model_estimates <- list(
-  table_2 = table_2_estimates,
-  sensitivity = sensitivity_estimates,
-  race = race_estimates,
-  linear = linear_estimates,
+  published = published_estimates,
   variance = variance_decomposition,
   egfr_range = egfr_range_estimates,
-  imputation = imputation_estimates,
   usrds_version = as.character(packageVersion("usRds"))
 )
 saveRDS(model_estimates, file.path("models", "model_estimates.rds"))

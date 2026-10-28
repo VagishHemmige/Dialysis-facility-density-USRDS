@@ -67,8 +67,9 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
+| Several published models were fit only in Stata and never in R: the race-stratified Model 2, eTable 2's continuous-density models with albumin and hemoglobin, imputed and by race, and eTable 3's models with albumin and hemoglobin and without 0-facility HSAs. | Rebuilt | Every model in Table 2 and eTables 1 to 3 is fit, as presented, from one list of published models (decided 27 October 2026). | eTables 1 to 3 |
 | The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt | Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; the replication uses `glmmTMB` with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than `lme4::glmer` (decided 27 October 2026). See [Models](models.qmd) for the comparison. | Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds |
-| Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as chained equations with 10 imputations. | Rebuilt, open decision [#D7] | A provisional imputation model with `mice`, kept to show how the sensitivity analysis is replicated; it is not expected to match exactly. | The imputation sensitivity analysis (eTable 2) |
+| Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as chained equations with 10 imputations. | Rebuilt, open decision [#D7] | Albumin and hemoglobin imputed with `mice` (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. | The imputation rows of eTable 2 |
 
 ## Outputs
 

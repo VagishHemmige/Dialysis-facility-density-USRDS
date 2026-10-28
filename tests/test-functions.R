@@ -203,3 +203,18 @@ test_that("first_non_missing takes the first column with a value", {
     rep(NA_character_, 3)
   )
 })
+
+test_that("density_effects reports differences, not ratios, for a linear model", {
+  set.seed(4)
+  n <- 3000
+  sim <- tibble(
+    hsanum = sample(1:100, n, replace = TRUE),
+    density_category = factor(sample(c("low", "high"), n, replace = TRUE), levels = c("low", "high"))
+  ) |>
+    mutate(egfr = 9 + 0.5 * (density_category == "high") + rnorm(100, 0, 1)[hsanum] + rnorm(n, 0, 3))
+  fit <- glmmTMB::glmmTMB(egfr ~ density_category + (1 | hsanum), data = sim, family = gaussian())
+  out <- density_effects(fit, exponentiate = FALSE)
+  expect_equal(nrow(out), 1)
+  expect_true(out$conf_low < 0.5 && out$conf_high > 0.5)
+  expect_equal(out$n, n)
+})

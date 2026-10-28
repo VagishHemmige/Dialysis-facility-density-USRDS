@@ -134,7 +134,7 @@ Zero facilities is its own category; the other four are cut at the quartiles, ea
 
 ## Odds ratios
 
-Extracts the density terms of a fitted model as odds ratios with Wald confidence intervals and the number of patients the model used.
+Extracts the density terms of a fitted model with Wald confidence intervals and the number of patients the model used: odds ratios for logistic models, differences for linear ones.
 
 ```{r}
 #| label: fn-density-odds-ratios

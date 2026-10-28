@@ -180,7 +180,9 @@ density_category_labels <- function(cutpoints, digits = 2) {
 }
 
 categorize_density <- function(density, cutpoints, digits = 2) {
-  stopifnot(length(cutpoints) == 3, !is.unsorted(cutpoints))
+  if (length(cutpoints) != 3 || is.unsorted(cutpoints)) {
+    stop("Density cut points must be three values in increasing order.", call. = FALSE)
+  }
 
   category <- case_when(
     is.na(density) ~ NA_integer_,
@@ -315,7 +317,8 @@ check_votes <- function(votes, codes, categories, provider) {
 ## ---- fn-cached-votes
 # One provider's answers, saved to `path` the first time so that a rerun does
 # not pay for them again. `classify` is called only when the file does not
-# exist; delete the file to ask that provider again.
+# exist; delete the file to ask that provider again. The caller checks the
+# answers (check_votes()) whether they are new or read back.
 cached_votes <- function(path, classify) {
   if (file.exists(path)) {
     return(read_csv(path, col_types = cols(.default = col_character())))

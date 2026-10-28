@@ -30,6 +30,26 @@ if (nrow(unreviewed_codes) > 0) {
   ), call. = FALSE)
 }
 
+## ---- check-unmapped-causes
+# A first form whose cause code is filled in but not in the mapping is counted
+# as Other below. Many such forms would suggest the codes are written
+# differently in MEDEVID and in $PD96DET (case, spaces, leading zeros), which
+# would move real causes into Other, so warn with the share affected.
+cause_coverage <- medevid_forms |>
+  filter(first_form, !is.na(PDIS), PDIS != "") |>
+  summarize(
+    forms = n(),
+    unmapped = sum(!PDIS %in% esrd_cause_mapping$PDIS)
+  )
+
+if (cause_coverage$unmapped > 0) {
+  warning(str_glue(
+    "{round(100 * cause_coverage$unmapped / cause_coverage$forms, 2)}% of first forms ",
+    "with a cause code have a code not in {esrd_cause_mapping_file}; they are ",
+    "counted as Other. Check how the codes are written before going on."
+  ), call. = FALSE)
+}
+
 ## ---- attach-facility-counts
 # usRds finds the CMS release current on each patient's dialysis start date and
 # counts facilities in the patient's ZIP code and in the HSA that ZIP code
@@ -79,8 +99,8 @@ linked_forms <- medevid_forms |>
   left_join(select(ruca_zip, zip, ruca1, rural_urban), by = "zip", relationship = "many-to-one") |>
   left_join(esrd_cause_mapping, by = "PDIS", relationship = "many-to-one") |>
   mutate(
-    # Codes not in the mapping (blank, unknown or unreconcilable) are "Other",
-    # as in the original code
+    # Blank codes and codes not in the mapping are "Other", as in the
+    # original code (see check-unmapped-causes)
     esrd_cause = factor(coalesce(esrd_cause, "Other"), levels = esrd_cause_categories)
   )
 

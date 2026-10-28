@@ -153,11 +153,14 @@ esrd_cause_categories <- c(
   "Other"
 )
 esrd_cause_mapping_file <- "references/esrd-cause-categories.csv"
+# One row: how many codes the models agreed on, and Fleiss' kappa
+esrd_cause_agreement_file <- "references/esrd-cause-agreement.csv"
 
-# Models used by R/classify_esrd_causes.R: the same three providers as the
-# USRDS-PDF-analysis-project ensemble, each provider's current general-purpose
-# model as of October 2026 (the abstract used gpt-5.1, claude-sonnet-4-5 and
-# gemini-2.5-flash). The models used are recorded in the output file.
+# Models used by R/classify_esrd_causes.R: one from each of three providers
+# (OpenAI, Anthropic, Google), each provider's current general-purpose model as
+# of October 2026, as in an earlier ensemble by the same team that used
+# gpt-5.1, claude-sonnet-4-5 and gemini-2.5-flash. The models used are
+# recorded in the output file.
 esrd_classifier_models <- list(
   openai = "gpt-6.1-terra",
   anthropic = "claude-sonnet-5-5",

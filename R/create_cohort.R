@@ -40,7 +40,7 @@ cohort_fc <- linked_forms |>
   fc_filter(has_facility_snapshot,
             label = "Facility data for the dialysis start date",
             show_exc = TRUE) |>
-  fc_filter(has_hsa, label = "ZIP code in a Health Service Area", show_exc = TRUE) |>
+  fc_filter(has_hsa, label = "ZIP code in a Hospital Service Area (HSA)", show_exc = TRUE) |>
   fc_filter(!is.na(region) & !state %in% noncontiguous_states,
             label = "Contiguous US or District of Columbia", show_exc = TRUE) |>
   fc_filter(!is.na(race) & !is.na(hispanic), label = "Race and Hispanic ethnicity recorded",

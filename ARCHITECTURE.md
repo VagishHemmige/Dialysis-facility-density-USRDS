@@ -68,4 +68,4 @@ references/esrd-cause-categories.csv ──────────────�
 
 ## Tests
 
-`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `density_category_labels()` and `map_panel()`; the last is checked by the synthetic run of `figures.R`. `format_estimates_table()` is tested only where gt is installed.
+`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `density_category_labels()` and `map_panel()`; the last is checked by the synthetic run of `figures.R`. `format_estimates_table()` is tested only where gt is installed. `tests/test-model-example.R` checks that the model written out on the models page is the one the code fits.

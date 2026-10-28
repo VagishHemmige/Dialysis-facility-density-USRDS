@@ -92,6 +92,7 @@ filters:
 format:
   html:
     theme: cosmo
+    css: styles.css
     toc: true
     code-fold: true
     code-tools: true
@@ -99,6 +100,7 @@ format:
     code-summary: "Click to show/hide R Code"
 
 # The site shows code; it never runs the analysis. Only the hidden
-# read_chunk() imports set eval: true.
+# read_chunk() imports and calls to the site helpers in
+# quarto/_site_functions.R set eval: true.
 execute:
   eval: false

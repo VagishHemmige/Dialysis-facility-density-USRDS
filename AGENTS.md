@@ -100,6 +100,7 @@ The site documents the code. It does not run the analysis.
 - `_quarto.yml` and `index.qmd` sit at the root; `quarto/` has one page per definitive script, named after it. The `custom-callout` extension in `_extensions/` provides the `Rcode` callout.
 - Each page loads its script with `knitr::read_chunk("../R/<script>.R")` in a hidden chunk and shows each labelled section with `#| eval: false`, with prose explaining what the section does and why. Pages link to the script on GitHub and to the scripts it depends on.
 - **Never evaluate analysis code in the site.** Pages render without restricted data.
+- **Site-only helpers** live in `quarto/_site_functions.R`, which pages source and `main.R` never does. They read only code or text given to them, never data, and are tested in `tests/test-site-functions.R`. A chunk calling them (for example `side_by_side_diff()`, which shows two versions of some code side by side) is the only other kind of chunk a page may run. Helpers the analysis needs stay in `R/functions.R`.
 - The original R Markdown file is shown on its own page as code only, with machine-specific paths removed.
 - The site renders to `docs/` and is served by GitHub Pages. When you add a script, add its page and sidebar entry in the same pull request, and re-render.
 - **Prose must match the code.** If a change alters what a section does, update its explanation in the same pull request.
@@ -139,7 +140,7 @@ Check the items that apply before opening a pull request.
 - **Cohort:** do the flowchart steps' order, denominators, and labels match their conditions, and can each count be reproduced from code?
 - **Joins and denominators:** no unintended row multiplication; missing, suppressed, and zero kept distinct.
 - **Reported numbers:** does each estimate match the plan's estimand, and do tables, figures, and site prose say what the code actually computes?
-- **Structure:** is `ARCHITECTURE.md` current; are chunk labels unique and found by their pages; does every definitive script have a page and sidebar entry; does any site chunk run analysis code? Only the hidden `read_chunk()` import, and results pages reading outputs cleared for release, run.
+- **Structure:** is `ARCHITECTURE.md` current; are chunk labels unique and found by their pages; does every definitive script have a page and sidebar entry; does any site chunk run analysis code? Only the hidden `read_chunk()` import, calls to the site helpers, and results pages reading outputs cleared for release, run.
 - **Execution:** does `main.R` run in a fresh session with relative paths; are any saved intermediates or caches stale?
 
 Project-specific checks:

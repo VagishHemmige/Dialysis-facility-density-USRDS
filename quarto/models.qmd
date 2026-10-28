@@ -72,6 +72,7 @@ The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same 
 
 -   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method, but is slower on data of this size.
 -   **`MixedModels.jl`**, the Julia successor to `lme4` by its original author, is the fastest for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` is a young, single-maintainer package with little recent activity, so it was not used.
+-   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This keeps the paper's estimation method exactly (`melogit` with 7-point adaptive quadrature), and Stata is often reported to be fast for these models, but it needs a Stata licence, so it is not part of the public code. Its speed was not compared here.
 
 ## Multiple imputation
 

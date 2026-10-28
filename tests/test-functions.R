@@ -28,10 +28,9 @@ test_that("insurance follows the original hierarchy", {
 })
 
 test_that("nephrology care keeps unknown as a level", {
-  out <- derive_nephrology_care(c("NO", "YES", "YES", "YES", "YES", "UKN", NA),
-                                c(NA, "< 6 MONTHS", "6-12 MONTHS", "> 12 MONTHS", NA, NA, NA))
-  expect_equal(as.character(out), c("None", "< 6 months", "6 to 12 months", "> 12 months",
-                                    "Yes, duration unknown", "Unknown", "Unknown"))
+  out <- derive_nephrology_care(c("NO", "YES", "Yes", "UNKNOWN", NA))
+  expect_equal(as.character(out), c("No nephrology care", "Some nephrology care",
+                                    "Some nephrology care", "Unknown", "Unknown"))
 })
 
 test_that("regions are assigned by state name", {
@@ -90,12 +89,18 @@ test_that("density_odds_ratios recovers a known odds ratio", {
       u = rnorm(200, 0, 0.3)[hsanum],
       early_start = rbinom(n, 1, plogis(-0.5 + log(2) * (density_category == "high") + u))
     )
-  m <- glmer(early_start ~ density_category + (1 | hsanum), data = sim, family = binomial)
-  out <- density_odds_ratios(m, model_name = "synthetic")
-  expect_equal(nrow(out), 1)
-  expect_equal(out$model, "synthetic")
-  expect_equal(out$n, n)
-  expect_true(out$conf_low < 2 && out$conf_high > 2)
+  # The models use glmmTMB; lme4::glmer is checked too, as the alternative
+  fits <- list(
+    glmmTMB = glmmTMB::glmmTMB(early_start ~ density_category + (1 | hsanum), data = sim, family = binomial),
+    glmer = glmer(early_start ~ density_category + (1 | hsanum), data = sim, family = binomial)
+  )
+  for (m in fits) {
+    out <- density_odds_ratios(m, model_name = "synthetic")
+    expect_equal(nrow(out), 1)
+    expect_equal(out$model, "synthetic")
+    expect_equal(out$n, n)
+    expect_true(out$conf_low < 2 && out$conf_high > 2)
+  }
 })
 
 test_that("variance_shares sum to one", {
@@ -184,11 +189,6 @@ test_that("ZIP codes missing from the ZCTA crosswalk add nothing", {
   expect_equal(hsa_population_from_zcta(hsa, zcta, pop)$hsa_population, 500)
 })
 
-test_that("the eGFR limit is inclusive or strict as set", {
-  expect_equal(egfr_within_limit(c(19.9, 20, 20.1), 20, inclusive = TRUE), c(TRUE, TRUE, FALSE))
-  expect_equal(egfr_within_limit(c(19.9, 20, 20.1), 20, inclusive = FALSE), c(TRUE, FALSE, FALSE))
-})
-
 test_that("assert_unique stops on duplicated keys and passes data through", {
   df <- tibble(zip = c("10467", "10467"), year = c(2015, 2016))
   expect_identical(assert_unique(df, zip, year), df)
@@ -202,4 +202,37 @@ test_that("first_non_missing takes the first column with a value", {
     tibble(x = 1:3) |> mutate(id = first_non_missing(pick(any_of("absent")))) |> pull(id),
     rep(NA_character_, 3)
   )
+})
+
+test_that("density_effects reports differences, not ratios, for a linear model", {
+  set.seed(4)
+  n <- 3000
+  sim <- tibble(
+    hsanum = sample(1:100, n, replace = TRUE),
+    density_category = factor(sample(c("low", "high"), n, replace = TRUE), levels = c("low", "high"))
+  ) |>
+    mutate(egfr = 9 + 0.5 * (density_category == "high") + rnorm(100, 0, 1)[hsanum] + rnorm(n, 0, 3))
+  fit <- glmmTMB::glmmTMB(egfr ~ density_category + (1 | hsanum), data = sim, family = gaussian())
+  out <- density_effects(fit, exponentiate = FALSE)
+  expect_equal(nrow(out), 1)
+  expect_true(out$conf_low < 0.5 && out$conf_high > 0.5)
+  expect_equal(out$n, n)
+})
+
+test_that("format_estimates_table keeps one row per model and term, without the variable name", {
+  skip_if_not_installed("gt")
+  estimates <- tibble(
+    block = "Synthetic block",
+    model = c("Model 1", "Model 1"),
+    term = c("density_category2", "density_category3"),
+    estimate = c(1.234, 2.345),
+    conf_low = c(1.1, 2.1),
+    conf_high = c(1.4, 2.6),
+    p_value = c(0.01, 0.5),
+    n = 100L
+  )
+  out <- format_estimates_table(estimates, "Synthetic title", "OR")
+  expect_s3_class(out, "gt_tbl")
+  expect_equal(gt::extract_cells(out, term), c("2", "3"))
+  expect_equal(gt::extract_cells(out, estimate), c("1.23", "2.35"))
 })

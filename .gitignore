@@ -53,3 +53,4 @@
 # The ESRD cause mapping is built from public USRDS documentation (Appendix C,
 # format $PD96DET) and holds no patient data.
 !/references/esrd-cause-categories.csv
+!/references/esrd-cause-agreement.csv

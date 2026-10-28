@@ -36,12 +36,38 @@ Box labels are built from the constants in `setup.R`, so they cannot drift from 
 
 ## Exclusions
 
+The steps, in order, with the reason for each. Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did. The [analysis plan](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md#4-study-population), section 4, has the details.
+
+1.  **First Medical Evidence form per patient.** Later forms describe a second or later episode of dialysis, not its start.
+2.  **Dialysis started 2011 to 2019**, after the IDEAL trial changed practice (see [Clinical background](background.qmd)).
+3.  **Age 18 or older.**
+4.  **Hemodialysis**, not peritoneal dialysis.
+5.  **In-center dialysis.** The timing of a home dialysis start depends on training schedules and trainer availability, and can be very early by design, so the paper excludes them [@hemmige2024density].
+6.  **Insurance recorded**, a Model 3 covariate.
+7.  **Access type recorded**, a Model 2 covariate.
+8.  **Sex recorded**, a Model 1 covariate.
+9.  **eGFR recorded and 20 or below**, the range in which nephrologists decide when to start (see [The eGFR thresholds](background.qmd#the-egfr-thresholds)).
+10. **A residential ZIP code on the date dialysis started**, to place the patient in an area.
+11. **The ZIP code has a ZCTA** in that year's crosswalk, the Census area for which ACS data are published.
+12. **ACS data for that ZCTA and year.**
+13. **Facility data for the date dialysis started**, to count facilities.
+14. **The ZIP code is in a Dartmouth HSA**, the unit of the exposure.
+15. **The 48 contiguous states or the District of Columbia**, as the paper studies the continental US [@hemmige2024density].
+16. **Race and Hispanic ethnicity recorded**, Model 1 covariates.
+17. **Complete ACS and rural-urban data for the ZIP code**, Model 3 covariates. ZIP codes with RUCA code 99 have no population.
+
+Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.
+
 In the original code the cohort was filtered in about 27 separate places, and a hand-maintained table recorded the counts. The table and the data drifted apart: one exclusion was recorded as removing nobody while the next line removed patients; at least eight filters (including the facility linkage) were never recorded; two rows were labelled with the wrong variable; and one recorded step was never applied. Here each step both filters and counts, so the diagram cannot disagree with the data.
 
 ```{r}
 #| label: build-flowchart
 #| eval: false
 ```
+
+## Notes on the code
+
+`flowchart` turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that `main.R` has put in the global environment from `setup.R`, never objects local to a function.
 
 ## The cohort
 

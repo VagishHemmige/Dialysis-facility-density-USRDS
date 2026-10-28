@@ -22,7 +22,7 @@ knitr::read_chunk("../R/setup.R")
 
 ## Packages
 
-Each data source has an access package: `usRds` for the USRDS files and the CMS facility snapshots, `tidycensus` for the American Community Survey. `flowchart` builds the cohort, so the STROBE diagram and the analytic data come from the same code. `lme4` fits the mixed models, `gtsummary` and `gt` build the tables, and `mice` imputes albumin and hemoglobin.
+Each data source has an access package: `usRds` for the USRDS files and the CMS facility snapshots, `tidycensus` for the American Community Survey. `flowchart` builds the cohort, so the STROBE diagram and the analytic data come from the same code. `glmmTMB` fits the mixed-effects logistic models and `lme4` the linear ones, `gtsummary` and `gt` build the tables, and `mice` imputes albumin and hemoglobin.
 
 ```{r}
 #| label: load-packages
@@ -31,7 +31,7 @@ Each data source has an access package: `usRds` for the USRDS files and the CMS 
 
 ## Cohort constants
 
-These implement section 4 of the analysis plan. Two of them are open decisions, and both default to the original code's behavior so the first run reproduces it. `dialysis_settings_kept` keeps home and facility settings because the original code did, although the paper says home dialysis was excluded ([#D1]). `egfr_maximum_inclusive` keeps eGFR of exactly 20, as the original code did, although the paper says "less than 20" ([#D2]).
+These implement section 4 of the analysis plan. `dialysis_settings_kept` keeps in-center dialysis only, which excludes home dialysis as the paper says. The original code did the same by keeping `DIALSET` codes 1 and 2, but the coding has changed since: in the current USRDS coding, code 1 is home, so the setting is now named rather than numbered. The eGFR restriction (20 or below) and the outcome (early means 10 or above) also follow the original code, where the paper's text says "less than 20" and "greater than 10"; the two differ only for patients at exactly 20 or exactly 10.
 
 ```{r}
 #| label: define-study-constants
@@ -40,7 +40,7 @@ These implement section 4 of the analysis plan. Two of them are open decisions, 
 
 ## Exposure constants
 
-Density is facilities per 100,000 HSA residents, cut at the quartiles of density among patients in the final cohort. The published cut points are kept only so the tables can be compared with the paper; they are never used to categorize.
+Density is facilities per 100,000 HSA residents, cut at the 25th, 50th and 75th percentiles of density among patients in the final cohort, as in the original code. The cut points are computed from the data, never typed in; the published ones (1.36, 1.95 and 2.76) appear only in a comment in `define_exposure.R`, for comparison.
 
 ```{r}
 #| label: define-exposure-constants
@@ -49,7 +49,7 @@ Density is facilities per 100,000 HSA residents, cut at the quartiles of density
 
 ## Linkage constants
 
-Each ACS variable carries a pattern its label must match in every year. Subject-table codes such as `S0601_C01_047` can mean different things in different years, and the original code assumed they did not; now a mismatch stops the run. Dartmouth's -88888 and -99999 are codes for small or suppressed values, not numbers ([#D5]). The RUCA groups give the four rural-urban types in the paper's Table 1.
+Each ACS variable carries a pattern its label must match in every year. Subject-table codes such as `S0601_C01_047` can mean different things in different years, and the original code assumed they did not; now a mismatch stops the run. Dartmouth's -88888 and -99999 are codes for small or suppressed values, not numbers, so they become missing. The RUCA groups give the four rural-urban types in the paper's Table 1.
 
 ```{r}
 #| label: define-linkage-constants
@@ -67,7 +67,7 @@ Every public file is downloaded from its publisher, so no file needs to come fro
 
 ## Cause of kidney failure
 
-The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three models and reviewed by the deciders (see [Classifying codes](classify_esrd_causes.qmd); [#D4]). The three providers are the ones the USRDS-PDF-analysis-project ensemble used, each with its current general-purpose model as of October 2026; the models used are recorded in the output file.
+The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026; codes on which at least two agree are accepted, and the deciders review the rest (see [Classifying codes](classify_esrd_causes.qmd); [open decision D4](differences.qmd#open-decisions)). The models used, the prompt version and the ellmer version are recorded in the output file.
 
 ```{r}
 #| label: define-cause-constants
@@ -76,7 +76,7 @@ The six categories are those of the paper's Table 1. The mapping of every USRDS 
 
 ## Model constants
 
-The covariate sets follow the footnotes of the paper's Table 2. The paper's models were fit in Stata and its exact specification is not available, so these sets and the estimation method are an open decision ([#D6]). `glmer_nagq = 1` is the Laplace approximation, closer to Stata's default than the `nAGQ = 0` the original R code used.
+The covariate sets follow the footnotes of the paper's Table 2, and Model 3's HSA benchmarks are the three the paper's Methods name. The logistic models are fit with `glmmTMB` (Laplace approximation); the models page explains why.
 
 ```{r}
 #| label: define-model-constants

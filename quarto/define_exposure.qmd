@@ -28,7 +28,7 @@ knitr::read_chunk("../R/define_exposure.R")
 
 ## Cut points
 
-The 25th, 50th and 75th percentiles of density among all patients, zeros included, as in the original code. The paper reports 1.36, 1.95 and 2.76 facilities per 100,000.
+The 25th, 50th and 75th percentiles of density among all patients, zeros included, as in the original code. The paper reports 1.36, 1.95 and 2.76 facilities per 100,000. The script stops if the cut points are not three distinct positive values (for example, if a quarter or more of patients lived in HSAs with no facility, the first cut point would be 0 and category 2 would be empty).
 
 ```{r}
 #| label: compute-cutpoints
@@ -37,7 +37,7 @@ The 25th, 50th and 75th percentiles of density among all patients, zeros include
 
 ## Categories
 
-Zero facilities, then four categories each including its upper bound.
+Zero facilities, then four categories each including its upper bound. The script stops if any patient in the cohort has no category.
 
 ```{r}
 #| label: categorize-density

@@ -9,7 +9,7 @@ table_1_variables <- c(
   "age", "sex", "race", "hispanic",
   "heart_failure", "coronary_disease", "diabetes", "cerebrovascular_disease",
   "cancer", "immobility", "alcohol_or_drug",
-  "nephrology_care_any", "albumin", "hemoglobin", "access_type", "insurance",
+  "nephrology_care", "albumin", "hemoglobin", "access_type", "insurance",
   "esrd_cause", "zip_percent_black", "zip_percent_poverty",
   "hsa_ambulatory_sensitive_discharges", "hsa_percent_mammogram",
   "hsa_percent_hba1c", "hsa_percent_eye_exam", "profit_centers_area", "rural_urban"
@@ -35,41 +35,39 @@ estimates <- if (exists("model_estimates")) {
   readRDS(file.path("models", "model_estimates.rds"))
 }
 
-format_or_table <- function(df, title) {
-  df |>
-    mutate(term = str_remove(term, "^density_category")) |>
-    gt(groupname_col = "model") |>
-    fmt_number(c(odds_ratio, conf_low, conf_high), decimals = 2) |>
-    fmt_number(p_value, decimals = 3) |>
-    fmt_integer(n) |>
-    cols_label(
-      term = "Density category",
-      odds_ratio = "OR",
-      conf_low = "95% CI low",
-      conf_high = "95% CI high",
-      p_value = "P",
-      n = "N"
-    ) |>
-    tab_header(title = title)
-}
+# One gt table per published table (format_estimates_table() in functions.R).
+# Logistic models give odds ratios; eTable 3 gives differences in eGFR.
+published_titles <- tribble(
+  ~table,     ~title,                                                                                   ~estimate_label,
+  "Table 2",  "Odds of starting hemodialysis at eGFR ≥ 10 by HSA facility density",                     "OR",
+  "eTable 1", "Odds of starting hemodialysis at eGFR ≥ 10, stratified by race",                         "OR",
+  "eTable 2", "Odds of starting hemodialysis at eGFR ≥ 10 per unit of HSA facility density",            "OR",
+  "eTable 3", "Difference in eGFR at dialysis start by HSA facility density",                           "Difference in eGFR"
+)
 
-table_2 <- estimates$table_2 |>
-  format_or_table("Odds of starting hemodialysis at eGFR > 10 by HSA facility density")
+published_tables <- published_titles |>
+  pmap(function(table, title, estimate_label) {
+    estimates$published |>
+      filter(table == .env$table) |>
+      format_estimates_table(title, estimate_label)
+  }) |>
+  set_names(published_titles$table)
 
-table_sensitivity <- bind_rows(estimates$sensitivity, estimates$egfr_range) |>
-  format_or_table("Sensitivity analyses")
-
-table_race <- estimates$race |>
-  format_or_table("Models stratified by race (eTable 1)")
+table_egfr_range <- estimates$egfr_range |>
+  rename(estimate = odds_ratio) |>
+  mutate(block = "Original R code, not in the paper") |>
+  format_estimates_table("Model 3 excluding eGFR of 5 or below", "OR")
 
 ## ---- export-tables
 dir.create(tables_dir, showWarnings = FALSE)
 # File name = table
 output_tables <- list(
   "table_1.html" = as_gt(table_1),
-  "table_2.html" = table_2,
-  "table_sensitivity.html" = table_sensitivity,
-  "etable_1_race.html" = table_race
+  "table_2.html" = published_tables[["Table 2"]],
+  "etable_1_race.html" = published_tables[["eTable 1"]],
+  "etable_2_continuous.html" = published_tables[["eTable 2"]],
+  "etable_3_linear.html" = published_tables[["eTable 3"]],
+  "egfr_range.html" = table_egfr_range
 )
 
 iwalk(output_tables, function(table, file_name) {

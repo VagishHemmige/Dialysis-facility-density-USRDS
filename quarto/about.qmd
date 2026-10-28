@@ -21,7 +21,7 @@ Contributions follow the rules in [`AGENTS.md`](https://github.com/VagishHemmige
 ## Pages
 
 -   [**Clinical background**](background.qmd): why the timing of dialysis and facility density matter.
--   [**Differences from the original code**](differences.qmd): every correction and open decision.
+-   [**Differences from the original code**](differences.qmd): every correction and open decision, with a glossary of USRDS terms.
 -   [**The original R Markdown file**](original.qmd): the October 2023 analysis, as text.
 -   [**Setup**](setup.qmd): packages and every constant.
 -   [**Functions**](functions.qmd): tested helper functions.

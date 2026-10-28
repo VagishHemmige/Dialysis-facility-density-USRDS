@@ -54,7 +54,7 @@ ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Abou
 
 ## American Community Survey
 
-ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.
+ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (`GEOID`), because `tidycensus` removes the two-digit state prefix only for 2013 and later [@tidycensus]; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.
 
 ```{r}
 #| label: download-acs

@@ -44,7 +44,7 @@ The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medi
 
 ## Nephrology care
 
-Combines whether the patient saw a nephrologist with how long. Unknown is its own level, so the models keep the patients the paper kept.
+Whether the patient saw a nephrologist before kidney failure: none, some or unknown, as in the paper's Table 1 and Model 3. Unknown is its own level, so the models keep the patients the paper kept.
 
 ```{r}
 #| label: fn-derive-nephrology-care
@@ -132,21 +132,21 @@ Zero facilities is its own category; the other four are cut at the quartiles, ea
 #| eval: false
 ```
 
-## eGFR limit
-
-Applies the eGFR restriction: at or below the limit, or strictly below it, as set in `setup.R` (open decision #D2).
-
-```{r}
-#| label: fn-egfr-within-limit
-#| eval: false
-```
-
 ## Odds ratios
 
-Extracts the density terms of a fitted model as odds ratios with Wald confidence intervals and the number of patients the model used.
+Extracts the density terms of a fitted model with Wald confidence intervals and the number of patients the model used: odds ratios for logistic models, differences for linear ones.
 
 ```{r}
 #| label: fn-density-odds-ratios
+#| eval: false
+```
+
+## Estimate tables
+
+Turns those estimates into a gt table, grouped by block, with one row per model and density term. `tables.R` uses it for each published regression table.
+
+```{r}
+#| label: fn-format-estimates-table
 #| eval: false
 ```
 
@@ -210,5 +210,14 @@ Builds the exposure's denominator from ZCTA populations, counting each ZCTA once
 
 ```{r}
 #| label: fn-hsa-population
+#| eval: false
+```
+
+## Map panels
+
+Draws one panel of Figure 2: HSAs filled by a numeric column, in the Albers equal-area projection (EPSG 5070), with HSAs that have no value in grey.
+
+```{r}
+#| label: fn-map-panel
 #| eval: false
 ```

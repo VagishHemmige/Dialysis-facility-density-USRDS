@@ -69,7 +69,9 @@ zcta_crosswalk <- study_years |>
 ## ---- download-acs
 # ZCTA estimates from ACS 5-year table S0601 for each study year. Each year's
 # variable labels are checked first, because subject-table codes can change.
-# The ZCTA code is read from the NAME field ("ZCTA5 12345").
+# The ZCTA code is the last five characters of GEOID: tidycensus 2.0.0 strips
+# the two-digit state prefix from ZCTA GEOIDs only for 2013 and later, so for
+# 2011-2012 GEOID may still begin with the state code.
 acs_labels <- study_years |>
   map(function(y) {
     load_variables(y, "acs5/subject", cache = TRUE) |>
@@ -89,7 +91,7 @@ acs_zcta <- study_years |>
       survey = "acs5",
       cache_table = TRUE
     ) |>
-      transmute(zcta = str_extract(NAME, "\\d{5}$"), year = y, variable, estimate)
+      transmute(zcta = str_sub(GEOID, -5), year = y, variable, estimate)
   }) |>
   list_rbind() |>
   pivot_wider(names_from = variable, values_from = estimate) |>

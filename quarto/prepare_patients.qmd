@@ -27,7 +27,7 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Loading the Medical Evidence file
 
-`usRds` finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how the replication found that `DIALSET` code 1 means home dialysis ([#D1]). The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
+`usRds` finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how the replication found that the coding of `DIALSET` has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
 
 ```{r}
 #| label: load-medevid
@@ -36,7 +36,14 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Patient variables
 
-Each form is numbered within its patient, and the first form is flagged. Race keeps the form's Middle Eastern, South Asian and Other codes separate, because how the paper grouped them is not recorded ([#D6]). The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
+Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard [@omb1997race], and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as `race_detailed`.
+
+The clinical variables are derived as follows (the helper functions are on the [functions page](functions.qmd)):
+
+-   **Comorbidities** are present when any of their form fields is marked yes; blank or unknown counts as not present, as on the form. Diabetes combines four fields (insulin, oral medication, no medication, retinopathy), alcohol or drug dependence two, immobility three (inability to ambulate, needing assistance, inability to transfer) and institutionalized four (any type of institution).
+-   **Insurance** follows the original code's order: no insurance, then Medicaid, then Medicare or managed Medicare, then commercial (employer group), then other, including the VA.
+-   **Nephrology care before kidney failure** is no, some or unknown (`NEPHCARE`), with unknown kept as its own level.
+-   **Early start** is an eGFR of 10 or above at initiation. The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
 
 ```{r}
 #| label: derive-patient-variables

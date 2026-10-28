@@ -3,11 +3,15 @@ title: "Differences from the original code"
 format: html
 ---
 
-This page lists every way this replication differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density]. Each difference is one of three kinds:
+This page lists every way this replication differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density], and every place where the paper's text differs from that code. Each entry is one of five kinds:
 
 -   **Corrected error**: the original code did not do what it intended. The replication does, and the effect on the published numbers will be measured on the first full run.
 -   **Open decision**: the original code and the paper disagree, or neither says. The replication reproduces the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.
 -   **Rebuilt**: the original material is not available, so the step is rebuilt from public sources.
+-   **Coding changed**: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. The replication codes for the current version and keeps the original intent.
+-   **Paper differs from code**: the paper's text describes a rule slightly differently from the code that produced its numbers. The replication follows the code, as the deciders chose, and the entry records the paper's wording.
+
+USRDS variables are named as in the data (for example `DIALSET`); the [glossary](#glossary) at the end says what each one is.
 
 ::: callout-note
 ## Status
@@ -20,11 +24,15 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 |---|---|---|---|
 | The CONSORT table was kept by hand, separately from the filters. The RUCA exclusion compared a labelled factor with the number `11`, so the table recorded 0 patients removed while the next line removed patients. | Corrected error | Every exclusion is a `flowchart::fc_filter()` step, so the diagram is the cohort. | Figure 1 counts; the cohort itself is unchanged |
 | At least eight filters were applied outside the CONSORT table: the facility linkage, a second sex check, missing ZIP population, % White, % Black, % Asian and % Hispanic, and missing region. The income and poverty rows were labelled "ZIPPercentageFemale". | Corrected error | As above. | Figure 1 counts |
+| The residence period containing the date of dialysis start was found with a join that would duplicate a patient with two overlapping periods; the code printed a check that patient IDs stayed unique but did not act on it. Whether any patients have overlapping periods is not known. | Corrected error | A patient with no matching period, or more than one, gets no residence and is excluded at the "Residential ZIP code" flowchart step. | Figure 1 counts, only if overlapping periods exist |
 | A ZIP-to-ZCTA crosswalk was intended, and counted in the CONSORT table (224 patients in the published Figure 1), but never applied: ZIP codes were matched to ACS ZCTAs as if they were the same. Residents of the roughly one in five ZIP codes whose ZCTA has a different number (mostly PO box ZIP codes) found no ACS data and were excluded at the "ACS ZCTA code data missing" step. | Corrected error | The intended crosswalk is applied: each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year (`zippeR`), with its own flowchart step. HSA population counts each ZCTA once. | Cohort size (likely larger), ACS variables, HSA population and density |
-| `DIALSET` codes 1 and 2 were kept, labelled "Remove patients receiving home HD". In the USRDS Researcher's Guide (2024, format `$MESET`), code 1 is home and code 2 is a dialysis facility, so home hemodialysis patients stayed in; the paper says they were excluded. The published Figure 1 shows 14,380 patients excluded as "receiving home hemodialysis": those are the patients outside codes 1 and 2, so either the coding differed in the release used or the label is wrong. | Open decision [#D1] | Default keeps codes 1 and 2. | Cohort size and every estimate, slightly |
-| eGFR was restricted to 20 or below, and patients with missing eGFR were removed in the same step without being counted separately. The paper says "less than 20"; the published Figure 1 labels the 38,708 excluded patients "eGFR <20", which reads as a label slip for "> 20". | Open decision [#D2] | Default keeps 20 or below; missing eGFR is still in the same step. | Patients with eGFR of exactly 20 |
-| ACS data and the HSA were matched to the year of the form (`MEFDATE`) and facility counts to the dialysis date (`DIALDAT`). The facility join silently required the two years to be equal. | Open decision [#D3] | Same matching; the same-year requirement is now a flowchart step, so its count is visible. | Possibly none, if the two years always match |
-| No upper bound on the form year; 2020 and later forms were removed only because no ACS data were downloaded for them. | Corrected error | Forms dated 2011 to 2019 are one flowchart step. | Figure 1 counts |
+| `DIALSET` codes 1 and 2 were kept, labelled "Remove patients receiving home HD" (14,380 patients in the published Figure 1). That was correct for the coding of `DIALSET` at the time, which Appendix C still lists as format `$MESET_CUR` (1 hospital inpatient, 2 dialysis facility/center, 3 home), so the original kept inpatient and facility starts. The coding has since changed: in the current format `$MESET` (2024 Researcher's Guide [@usrds2024guide]), code 1 is home, 2 dialysis facility/center, 3 skilled nursing facility and 4 missing, so the same codes would now keep home dialysis. | Coding changed | In-center dialysis only ("DIALYSIS FACILITY/CENTER", code 2 in the current coding), which excludes home dialysis as the paper and the original code intended (decided 27 October 2026). | Figure 1 counts, possibly: the current coding has no inpatient code, and where patients who started dialysis in hospital or in a skilled nursing facility now fall is not yet checked |
+| eGFR was restricted to 20 or below, and patients with missing eGFR were removed in the same step without being counted separately. The paper says "less than 20"; the published Figure 1 labels the 38,708 excluded patients "eGFR <20", which reads as a label slip for "> 20". | Paper differs from code | The code's rule: 20 or below, missing eGFR in the same step (decided 27 October 2026). | None; the paper's wording differs only for eGFR of exactly 20 |
+| ACS data and the HSA were matched to the year of the form (`MEFDATE`) and facility counts to the dialysis date (`DIALDAT`). The facility join silently required the two years to be equal, dropping patients whose form was dated in a later year than their dialysis start. | Corrected error | All area data are matched to the year dialysis started, the same year as the facility counts, and no one is dropped for a year mismatch (decided 27 October 2026). | Figure 1 counts; area variables for patients whose form and start years differ |
+| The density cut points were the 25th, 50th and 75th percentiles across patients in the cohort, so an HSA counts once per patient living there. The paper describes them as "the median HSA-level dialysis facility density across the country … 1.95 (IQR 1.36–2.76)", which reads as percentiles across HSAs. The published Table 1 confirms the code: categories 3 to 5 each hold almost exactly a quarter of patients. | Paper differs from code | The code's rule: percentiles across patients. | None; the published cut points come from the code |
+| Each density category included its upper cut point (`> 0 & <= q1`, `> q1 & <= q2`, ...). The paper describes the categories as "more than 0 and less than the 25th percentile", "the 25th and less than the 50th", and so on, which would put a patient exactly at a cut point in the higher category. | Paper differs from code | The code's rule (decided 27 October 2026). | None; the paper's wording differs only for HSAs exactly at a cut point |
+| The study period was set by the date of the form (`MEFDATE`), with no upper bound; 2020 and later forms were removed only because no ACS data were downloaded for them. The paper defines the cohort as patients initiating hemodialysis from 2011 to 2019. | Corrected error | Dialysis started (`DIALDAT`) 2011 to 2019, as one flowchart step (decided 27 October 2026). | Figure 1 counts |
+| The year adjusted for in the models was the year of the form; the paper adjusts for the year of hemodialysis initiation. | Corrected error | The models adjust for the year dialysis started (decided 27 October 2026). | Table 2, slightly |
 
 ## Facility counts
 
@@ -39,7 +47,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
-| Dartmouth Atlas negative values were made positive (`ifelse(x < 0, -x, x)`). Dartmouth codes small values as -88888 and suppressed values as -99999 [@dartmouth_primarycare], so suppressed HSAs would enter as 88,888 or 99,999. | Open decision [#D5] | Set to missing. | Table 1 benchmark rows and Model 3, if the original files held these codes |
+| Dartmouth Atlas negative values were made positive (`ifelse(x < 0, -x, x)`). Dartmouth codes small values as -88888 and suppressed values as -99999 [@dartmouth_primarycare], so suppressed HSAs would enter as 88,888 or 99,999. | Corrected error | Set to missing (decided 27 October 2026). | Table 1 benchmark rows and Model 3, if the original files held these codes |
 | ACS subject-table variable codes (for example `S0601_C01_047`) were assumed to mean the same thing every year. | Corrected error | Each year's labels are checked; a mismatch stops the run. | None if the codes were stable; otherwise ZIP code income and poverty |
 | ACS data were downloaded once and cached in a local file. | Rebuilt | Downloaded by `tidycensus` on each fresh run, with the Census Bureau's cache. | None, unless the Census Bureau has revised the estimates |
 | RUCA codes, Dartmouth crosswalks, benchmarks and boundaries were read from files on the analyst's computer; the benchmarks were Stata files made by hand. | Rebuilt | Downloaded from the publishers' URLs. The benchmark spreadsheets are very likely the sources of the original Stata files; the code checks each column by name. | None, if the spreadsheets match |
@@ -51,27 +59,67 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
 | Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. | Rebuilt | `usRds::load_usrds_file()` applies the USRDS value labels. | None intended |
-| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, open decision [#D4] | Three language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
+| Nephrology care was coded twice: access (`NEPHCARE`, coded yes, no or unknown: no, some or unknown nephrology care) and duration (`NEPHCARERANGE`), with unknown duration left missing. The exploratory R models used the duration; the paper's Discussion mentions duration, while its Methods, Table 1 and the Model 3 footnote say access. | Rebuilt | Access, with unknown as its own level, so Model 3 keeps every patient, as the published n = 844,466 implies (decided 27 October 2026). | Model 3, if Stata used another coding |
+| The outcome `GFR_DICH` counted eGFR of 10 or above as early. The paper describes the outcome as eGFR "greater than 10" vs "less than or equal to 10". | Paper differs from code | The code's rule: 10 or above is early (decided 27 October 2026). | None, if Stata used `GFR_DICH`; otherwise patients at exactly 10 |
+| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, [open decision D4](#open-decisions) | Three language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
+| A primary-cause code listed on two category sheets would have joined twice and duplicated those patients. The sheets were built from the codes that appeared in the data. | Corrected error | The mapping is built from the full public code list, one row per code, and the join stops if a code appears twice. | None, unless the original sheets had such a code |
+| Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis. | Rebuilt | See [Classifying codes](classify_esrd_causes.qmd#the-six-categories) (decided 27 October 2026). | Table 1 cause rows; Models 2 and 3, slightly |
+| Access type had the arteriovenous fistula as its first level, and so as the reference in the exploratory R models. | Rebuilt | Catheter, the most common access, is the reference. | None on the density estimates; only the access-type coefficients change |
+| The paper says eGFR was "calculated by CKD-EPI equation 2012". The original code used the USRDS variable `GFR_EPI`, which the site takes to be the 2009 creatinine equation with the race coefficient [@levey2009ckdepi]; the CKD-EPI equations published in 2012 add cystatin C, which the form does not record. Still to be confirmed in the Researcher's Guide. | Paper differs from code | `GFR_EPI`, as the original code used. | None, if `GFR_EPI` is what the paper used |
 | A comorbidity field that was blank became missing, which would drop the patient from a model. The published sample sizes show the paper's models kept these patients. | Rebuilt | Blank or unknown counts as not present, as on the form. | Matches the published sample sizes |
-| Race had nine levels in R; the paper reports five groups whose counts add up to each column total. | Open decision [#D6] | Middle Eastern, South Asian and Other are kept separate until the deciders say how the paper grouped them. | Table 1 race rows; models adjusting for race |
+| Race had nine levels in R; the paper reports five groups whose counts add up to each column total, so the Stata analysis merged the others in a way that is not recorded. | Rebuilt | Middle Eastern counts as White and South Asian as Asian (1997 OMB race standard); Other or multiracial counts as White, the largest group. Chosen for this demonstration (27 October 2026). | Table 1 race rows; models adjusting for race, slightly; the White stratum of eTables 1 and 2, which includes these patients |
 
 ## Models
 
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
-| The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt, open decision [#D6] | Rebuilt from the paper's text and Table 2 footnotes, with `lme4::glmer` and the Laplace approximation. | Table 2, slightly, through estimation differences |
-| Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as chained equations with 10 imputations. | Rebuilt, open decision [#D7] | A provisional imputation model with `mice`, kept to show how the sensitivity analysis is replicated; it is not expected to match exactly. | The imputation sensitivity analysis (eTable 2) |
+| Several published models were fit only in Stata and never in R: the race-stratified Model 2, eTable 2's continuous-density models with albumin and hemoglobin, imputed and by race, and eTable 3's models with albumin and hemoglobin and without 0-facility HSAs. | Rebuilt | Every model in Table 2 and eTables 1 to 3 is fit, as presented, from one list of published models (decided 27 October 2026). | eTables 1 to 3 |
+| The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt | Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; the replication uses `glmmTMB` with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than `lme4::glmer` (decided 27 October 2026). See [Models](models.qmd) for the comparison. | Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds |
+| Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as "a multiple imputation technique with chained predictive analytics (10 imputations)", read here as chained equations. | Rebuilt, [open decision D7](#open-decisions) | Albumin and hemoglobin imputed with `mice` (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. | The imputation rows of eTable 2 |
+
+| Model 3 adjusts for "HSA-level success in achieving primary care benchmarks, such as" HbA1c testing, eye examinations among patients with diabetes and ambulatory-sensitive discharges. | Rebuilt | Those three benchmarks; the paper's "such as" may mean that Stata used more (Table 1 also reports mammography). | Model 3, if Stata used more benchmarks |
+| The original R code also fit Model 3 among patients with eGFR between 5 and 25. Not in the paper. | Rebuilt | Kept as an extra table, labelled as not in the paper. Since the cohort already has eGFR of 20 or below, it excludes eGFR of 5 or below. | None on the published tables |
 
 ## Outputs
 
 | Original code | Kind | Replication | Effect on published results |
 |---|---|---|---|
 | Two interactive maps saved the center-density map under the station-density file names. | Corrected error | One function draws and saves each map. | None on the paper (its Figure 2 is a static map) |
+| Table 1 was built in Stata; the paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which. | Rebuilt | `gtsummary` with its default layout, Welch's one-way test for continuous and chi-squared for categorical characteristics. | Table 1 layout; P values, slightly, for any variable Stata tested by Kruskal-Wallis |
+| The published Figure 2 shows density in classes. | Rebuilt | A continuous colour scale. | Figure 2 appearance only |
 | The patient-level analysis file was written to Stata and RDS files next to the code. | Corrected error | Nothing patient-level is written to the project; only tables and figures, which stay out of Git until cleared. | None |
 
 ## How much simpler
 
-The original file's data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 345 lines across five scripts, because the access packages do the work: `usRds` loads and labels the USRDS files and counts facilities by date, `tidycensus` loads the ACS, and `flowchart` builds and counts the cohort at once. The facility logic moved into `usRds`, where it is tested and can be reused by other projects.
+The original file's data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 423 lines across five scripts (counted the same way: `download_public_data.R`, `prepare_patients.R`, `link_area_data.R`, `create_cohort.R` and `define_exposure.R`), because the access packages do the work: `usRds` loads and labels the USRDS files and counts facilities by date, `tidycensus` loads the ACS, and `flowchart` builds and counts the cohort at once. The facility logic moved into `usRds`, where it is tested and can be reused by other projects.
+
+## Open decisions
+
+Two choices are still open for the deciders, Vagish Hemmige and Ladan Golestaneh:
+
+-   **D4, the cause-of-kidney-failure mapping.** Is a mapping drafted by language models and checked by the deciders acceptable for the replication, and is the mapping itself right? See [Classifying codes](classify_esrd_causes.qmd).
+-   **D7, the imputation model.** Is the imputation model used for eTable 2 acceptable: albumin and hemoglobin imputed by predictive mean matching from the outcome, the density category and the Model 3 covariates? See [Models](models.qmd#multiple-imputation).
+
+## Glossary
+
+| Term | Meaning |
+|---|---|
+| ACS | American Community Survey, the Census Bureau's yearly survey; here its 5-year ZIP code (ZCTA) estimates of income, poverty and race |
+| CONSORT table, flowchart | The count of patients removed at each exclusion step, drawn as the study's Figure 1 (a STROBE flow diagram) |
+| `DIALDAT` | Date regular dialysis started, on the Medical Evidence form |
+| `DIALSET` | Dialysis setting on the form: home, dialysis facility, and so on |
+| `DISGRPC` | USRDS's own primary disease group for each patient |
+| FIPS | Federal Information Processing Standards codes for states |
+| `GFR_DICH`, `GFR_EPI` | eGFR at dialysis start (`GFR_EPI`) and the original code's early-start indicator built from it (`GFR_DICH`) |
+| HSA | Hospital Service Area: a group of ZIP codes whose residents get most of their hospital care locally, defined by the Dartmouth Atlas [@dartmouth_faq] |
+| `MEFDATE` | Date the Medical Evidence form was completed |
+| `$MESET`, `$MESET_CUR`, `$PD96DET`, `$STATFIP` | USRDS formats, the lists that give each code's meaning, in Appendix C of the Researcher's Guide [@usrds2024guide] |
+| `NEPHCARE` | Whether the patient saw a nephrologist before kidney failure |
+| `PDIS` | Primary cause of kidney failure, as a code |
+| `PROVUSRD` | USRDS identifier of the dialysis facility |
+| RUCA | Rural-Urban Commuting Area codes, from the US Department of Agriculture |
+| UDS Mapper | The Uniform Data System Mapper's ZIP code to ZCTA crosswalk |
+| ZCTA | ZIP Code Tabulation Area: the Census Bureau's approximation of a ZIP code's area, which the ACS reports by |
 
 ## References
 

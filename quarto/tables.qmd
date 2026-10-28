@@ -29,7 +29,7 @@ knitr::read_chunk("../R/tables.R")
 
 ## Table 1
 
-Patient and HSA characteristics by density category, with means (SD), counts (%), one-way ANOVA and chi-squared tests, as in the paper.
+Patient and HSA characteristics by density category: the same 25 characteristics as the paper's Table 1, with means (SD), counts (%), a one-way test for continuous characteristics and chi-squared tests for categorical ones. The one-way test is R's `oneway.test()`, whose default is Welch's version, which does not assume equal variances across categories; the paper says one-way ANOVA. Which to use is for the deciders. The paper also lists the Kruskal-Wallis test without saying which characteristics it was used for. The layout (sections, missing counts and column headers) is gtsummary's default, not the paper's.
 
 ```{r}
 #| label: build-table-1
@@ -38,7 +38,7 @@ Patient and HSA characteristics by density category, with means (SD), counts (%)
 
 ## Regression tables
 
-Odds ratios for the density categories, grouped by model.
+One table for each published regression table (Table 2 and eTables 1–3), and one for the analysis excluding eGFR of 5 or below, which was in the original R code but not the paper. Each table has one row per model and density term, grouped as the paper groups them. Logistic models give odds ratios; eTable 3 gives differences in eGFR. The formatting function, `format_estimates_table()`, is shown on the [functions page](functions.qmd#estimate-tables).
 
 ```{r}
 #| label: build-regression-tables

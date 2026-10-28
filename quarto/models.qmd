@@ -3,7 +3,7 @@ title: "6. Models"
 format: html
 ---
 
-Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes ([#D6]).
+Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -35,45 +35,101 @@ Year enters as a factor and the reference category is zero facilities, as in the
 #| eval: false
 ```
 
-## Table 2
+## Every published model
 
-Mixed-effects logistic models with a random intercept for HSA [@lme4_pkg], progressively adjusted. Models 2 and 3 are fit with and without albumin and hemoglobin; with them, patients missing either value drop out, as in the paper's complete-case models.
+The paper's models were fit in Stata, and several of them were never in the original R code: the R file had exploratory models only. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026):
+
+| Table | Blocks | Outcome and exposure |
+|---|---|---|
+| Table 2 | With and without albumin and hemoglobin; without HSAs with 0 facilities | Early start, density category |
+| eTable 1 | Black and White individuals | Early start, density category |
+| eTable 2 | With and without albumin and hemoglobin; albumin and hemoglobin multiply imputed; Black and White individuals | Early start, continuous density |
+| eTable 3 | With albumin and hemoglobin; without HSAs with 0 facilities | eGFR (linear), density category |
+
+Each block has Models 1 to 3. The models are listed in one table, one row per published column, so nothing reported is missed and a model that appears in two blocks (Model 1 in both blocks of Table 2) is fit once. Model 1 never includes albumin or hemoglobin and uses all patients of its group, as in Table 2, where it is identical in both blocks. Within a race group, race is not a covariate. The eTable 1 headings disagree on whether albumin and hemoglobin are included (see the [supplement](supplement.qmd)); both of its sample sizes match the complete-case models, so they are included.
 
 ```{r}
-#| label: fit-table-2-models
+#| label: define-published-models
 #| eval: false
 ```
 
-## Sensitivity analyses
+## Models
 
-Without HSAs that have no facility (reference: category 2), and with density as a continuous exposure.
+Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with `glmmTMB` [@glmmtmb]: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
+
+### Choosing the model-fitting package
+
+The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with `melogit`, Stata's default is adaptive Gauss-Hermite quadrature with 7 points [@stata_melogit].
+
+A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. When each HSA has many patients, as here, the two give practically the same answer. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
+
+| Fit | Time | Convergence warnings | Odds ratio, highest vs zero density |
+|---|---|---|---|
+| `lme4::glmer` [@lme4_pkg], default settings | 117 s | 4 | 10.08 (not converged) |
+| `lme4::glmer`, rescaled covariates, higher iteration limit | 111 s | 0 | 10.62 |
+| `lme4::glmer`, 7-point quadrature (Stata's default) | 119 s | 0 | 10.63 |
+| `glmmTMB` [@glmmtmb] | 4 s | 0 | 10.63 |
+
+The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:
+
+-   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.
+-   **`MixedModels.jl`** [@mixedmodels_jl], a Julia package by Douglas Bates, the original author of `lme4`, and Phillip Alday, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` is a young, single-maintainer package with little recent activity, so it was not used.
+-   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This would keep the paper's estimation method, if the paper used `melogit` with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor `MixedModels.jl` was timed here, so how their speed compares with each other or with `glmmTMB` on these data is not known.
+
+## Multiple imputation
+
+The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model awaits the deciders' confirmation ([open decision D7](differences.qmd#open-decisions)).
 
 ```{r}
-#| label: fit-sensitivity-models
+#| label: impute-albumin-hemoglobin
 #| eval: false
 ```
 
-## By race
+## Fitting
 
-Separate models for White and Black patients (eTable 1).
+Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules, whose intervals combine the variation within and between the imputed data sets.
 
 ```{r}
-#| label: fit-race-stratified-models
+#| label: fit-published-models
 #| eval: false
 ```
 
-## Continuous eGFR
+### One model written out
 
-Linear mixed models of eGFR (eTable 2).
+The code above builds every model from the list rather than writing each one out, so no single model appears in it. As an example, this is what it fits for Table 2, Model 3, with albumin and hemoglobin, the paper's fully adjusted model. Each row of the list becomes a call like this one; the other models drop or add covariates, change the patients, or swap the outcome or exposure.
 
-```{r}
-#| label: fit-linear-models
-#| eval: false
+```r
+# Table 2, block "With albumin and hemoglobin", Model 3:
+# outcome early_start, exposure density_category, patients "All", labs TRUE
+fit <- glmmTMB(
+  early_start ~ density_category +
+    # Model 1: demographics and year (model_1_covariates)
+    age + sex + race + hispanic + dialysis_year +
+    # Model 2 adds comorbidities, access and cause (model_2_covariates)
+    heart_failure + coronary_disease + diabetes + cerebrovascular_disease +
+    alcohol_or_drug + immobility + institutionalized + access_type + esrd_cause +
+    # Model 3 adds insurance, nephrology care and area measures (model_3_covariates)
+    insurance + nephrology_care + rural_urban + zip_percent_poverty +
+    zip_percent_black + hsa_ambulatory_sensitive_discharges +
+    hsa_percent_eye_exam + hsa_percent_hba1c +
+    # labs = TRUE adds the laboratory values (model_2_laboratory)
+    albumin + hemoglobin +
+    # random intercept for HSA
+    (1 | hsanum),
+  data = patient_groups[["All"]],   # model_data: the whole cohort
+  family = binomial
+)
+
+# The rows reported: odds ratios for the four density categories against
+# HSAs with no facility, with 95% CIs, p values and the patients used
+density_effects(fit, "^density_category", exponentiate = TRUE)
 ```
+
+In the code, `model_covariates("Model 3", labs = TRUE, patients = "All")` returns these 24 covariates, and `mixed_formula()` turns them into the formula. A test (`tests/test-model-example.R`) checks that the formula on this page is the one the code builds, so the example cannot drift from the code.
 
 ## Variance decomposition
 
-How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs.
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model leaves out patients with no dialysis facility ID, so the two models are fit on slightly different sets of patients; whether to fit both on the same patients is for the deciders.
 
 ```{r}
 #| label: fit-variance-decomposition
@@ -82,19 +138,10 @@ How much of the variation in eGFR at initiation lies between HSAs, and between f
 
 ## eGFR range
 
-A sensitivity analysis from the original code, restricted to eGFR above 5 and below 25.
+A sensitivity analysis from the original R code that is not in the paper: Model 3 among patients with eGFR above 5 and below 25. Because the cohort already has eGFR of 20 or below, it in effect excludes patients with eGFR of 5 or below, and it is labelled that way.
 
 ```{r}
 #| label: fit-egfr-range-sensitivity
-#| eval: false
-```
-
-## Multiple imputation
-
-The original R code has no imputation: the paper's multiple imputation sensitivity analysis (eTable 2) was done in Stata, and the paper gives only "chained equations, 10 imputations". This rebuilds it with `mice` to show how the analysis is replicated; it is provisional and not expected to match exactly ([#D7]).
-
-```{r}
-#| label: fit-imputation-models
 #| eval: false
 ```
 

@@ -12,7 +12,7 @@
 medevid_columns <- c(
   "USRDS_ID", "MEFDATE", "DIALDAT", "INC_AGE", "SEX", "RACE", "ETHN",
   "DIALTYP", "DIALSET", "GFR_EPI", "SERCR", "ALBUM", "HEGLB", "WEIGHT", "HEIGHT",
-  "ACCESSTYPE", "NEPHCARE", "NEPHCARERANGE", "PDIS", "CDTYPE"
+  "ACCESSTYPE", "NEPHCARE", "PDIS", "CDTYPE"
 )
 
 # The provider ID column is PROVUSRD_DIAL in the 2024 Researcher's Guide and
@@ -51,15 +51,17 @@ medevid_forms <- medevid_labelled |>
       RACE == "ASIAN" ~ "Asian",
       RACE == "AMERICAN INDIAN/ALASKAN NATIVE" ~ "Native American",
       RACE == "PACIFIC ISLANDER" ~ "Pacific Islander",
-      # Open decision #D6: how these were grouped in the published tables
-      RACE == "MIDEAST" ~ "Middle Eastern",
-      RACE == "INDIAN SUBCO" ~ "South Asian",
-      RACE == "OTHER/MULTI-RACIAL" ~ "Other",
+      # The paper reports five groups. Middle Eastern is counted as White and
+      # South Asian as Asian (the OMB 1997 race standard), and Other or
+      # multiracial as White, the largest group; how Stata grouped them is
+      # not recorded (chosen for this demonstration, 27 October 2026)
+      RACE == "MIDEAST" ~ "White",
+      RACE == "INDIAN SUBCO" ~ "Asian",
+      RACE == "OTHER/MULTI-RACIAL" ~ "White",
       .default = NA_character_
     ),
     race = factor(race, levels = c(
-      "White", "Black", "Asian", "Native American", "Pacific Islander",
-      "Middle Eastern", "South Asian", "Other"
+      "White", "Black", "Asian", "Native American", "Pacific Islander"
     )),
     hispanic = case_when(
       ETHN %in% c("HISPANIC-MEXICAN", "HISPANIC OTHER", "HISPANIC NON-SPECIFIED") ~ "Hispanic",
@@ -68,7 +70,7 @@ medevid_forms <- medevid_labelled |>
     ),
     hispanic = factor(hispanic, levels = c("Non-Hispanic", "Hispanic")),
     egfr = GFR_EPI,
-    early_start = as.integer(egfr > early_egfr_threshold),
+    early_start = as.integer(egfr >= early_egfr_threshold),
     albumin = ALBUM,
     hemoglobin = HEGLB,
     access_type = case_when(
@@ -81,15 +83,7 @@ medevid_forms <- medevid_labelled |>
     access_type = factor(access_type, levels = c(
       "Catheter", "Arteriovenous fistula", "Arteriovenous graft", "Other"
     )),
-    nephrology_care = derive_nephrology_care(NEPHCARE, NEPHCARERANGE),
-    nephrology_care_any = case_when(
-      nephrology_care == "None" ~ "No nephrology care",
-      nephrology_care == "Unknown" ~ "Unknown",
-      .default = "Some nephrology care"
-    ),
-    nephrology_care_any = factor(nephrology_care_any, levels = c(
-      "No nephrology care", "Some nephrology care", "Unknown"
-    )),
+    nephrology_care = derive_nephrology_care(NEPHCARE),
     insurance = derive_insurance(
       none = MEDCOV_NONE,
       medicaid = MEDCOV_MDCD,
@@ -160,12 +154,11 @@ medevid_forms <- medevid_forms |>
     race = "Race",
     hispanic = "Hispanic ethnicity",
     egfr = "eGFR at initiation (CKD-EPI), mL/min/1.73 m2",
-    early_start = "eGFR above 10 mL/min/1.73 m2 at initiation",
+    early_start = "eGFR 10 mL/min/1.73 m2 or above at initiation",
     albumin = "Serum albumin, g/dL",
     hemoglobin = "Serum hemoglobin, g/dL",
     access_type = "Access used at first outpatient dialysis",
-    nephrology_care = "Pre-kidney-failure nephrology care (duration)",
-    nephrology_care_any = "Access to pre-kidney-failure nephrology care",
+    nephrology_care = "Access to pre-kidney-failure nephrology care",
     insurance = "Insurance",
     heart_failure = "Heart failure",
     coronary_disease = "Coronary disease",

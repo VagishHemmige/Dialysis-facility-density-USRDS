@@ -27,23 +27,18 @@ derive_insurance <- function(none, medicaid, medicare, advantage, group, va, oth
 }
 
 ## ---- fn-derive-nephrology-care
-# Pre-kidney-failure nephrology care from NEPHCARE (format YN9FMT) and
-# NEPHCARERANGE (format RANGE). Unknown is kept as its own level so that
-# models do not drop patients, matching the published sample sizes.
-derive_nephrology_care <- function(nephcare, nephcare_range) {
+# Access to pre-kidney-failure nephrology care from NEPHCARE (format YN9FMT),
+# as in the paper's Table 1 and Model 3. Unknown or blank is its own level, so
+# the models keep these patients, as the published sample sizes show.
+derive_nephrology_care <- function(nephcare) {
   nephcare <- str_to_upper(nephcare)
-  nephcare_range <- str_to_upper(nephcare_range)
 
   case_when(
-    nephcare %in% "NO" ~ "None",
-    nephcare %in% "YES" & nephcare_range %in% "< 6 MONTHS" ~ "< 6 months",
-    nephcare %in% "YES" & nephcare_range %in% "6-12 MONTHS" ~ "6 to 12 months",
-    nephcare %in% "YES" & nephcare_range %in% "> 12 MONTHS" ~ "> 12 months",
-    nephcare %in% "YES" ~ "Yes, duration unknown",
+    nephcare %in% "YES" ~ "Some nephrology care",
+    nephcare %in% "NO" ~ "No nephrology care",
     .default = "Unknown"
   ) |>
-    factor(levels = c("None", "< 6 months", "6 to 12 months", "> 12 months",
-                      "Yes, duration unknown", "Unknown"))
+    factor(levels = c("No nephrology care", "Some nephrology care", "Unknown"))
 }
 
 ## ---- fn-assign-region
@@ -185,7 +180,9 @@ density_category_labels <- function(cutpoints, digits = 2) {
 }
 
 categorize_density <- function(density, cutpoints, digits = 2) {
-  stopifnot(length(cutpoints) == 3, !is.unsorted(cutpoints))
+  if (length(cutpoints) != 3 || is.unsorted(cutpoints)) {
+    stop("Density cut points must be three values in increasing order.", call. = FALSE)
+  }
 
   category <- case_when(
     is.na(density) ~ NA_integer_,
@@ -199,35 +196,55 @@ categorize_density <- function(density, cutpoints, digits = 2) {
   factor(category, levels = 1:5, labels = density_category_labels(cutpoints, digits))
 }
 
-## ---- fn-egfr-within-limit
-# The eGFR restriction (analysis-plan.md section 4, open decision #D2):
-# at or below the limit when `inclusive`, otherwise strictly below.
-egfr_within_limit <- function(egfr, maximum, inclusive) {
-  if (inclusive) {
-    egfr <= maximum
-  } else {
-    egfr < maximum
-  }
-}
-
 ## ---- fn-density-odds-ratios
-# Odds ratios (95% Wald CI, p value) for the density terms of a fitted model,
-# with the number of patients the model used.
-density_odds_ratios <- function(model, term_pattern = "^density_category", model_name = NA_character_) {
+# The density terms of a fitted model, with 95% Wald confidence intervals, p
+# values and the number of patients the model used. Logistic models report
+# odds ratios (exponentiate = TRUE); linear models report differences.
+density_effects <- function(model, term_pattern = "^density_category",
+                            model_name = NA_character_, exponentiate = TRUE) {
   # Computed before transmute(), where the new `model` column would mask the fit
   n_used <- nobs(model)
 
-  broom.mixed::tidy(model, effects = "fixed", conf.int = TRUE, exponentiate = TRUE) |>
+  broom.mixed::tidy(model, effects = "fixed", conf.int = TRUE, exponentiate = exponentiate) |>
     filter(str_detect(term, term_pattern)) |>
     transmute(
       model = model_name,
       term,
-      odds_ratio = estimate,
+      estimate,
       conf_low = conf.low,
       conf_high = conf.high,
       p_value = p.value,
       n = n_used
     )
+}
+
+density_odds_ratios <- function(model, term_pattern = "^density_category",
+                                model_name = NA_character_) {
+  density_effects(model, term_pattern, model_name, exponentiate = TRUE) |>
+    rename(odds_ratio = estimate)
+}
+
+## ---- fn-format-estimates-table
+# A gt table of density estimates: rows grouped by block, one row per model
+# and density term, with the variable name removed from each term.
+format_estimates_table <- function(df, title, estimate_label) {
+  df |>
+    mutate(term = str_remove(term, "^(density_category|hsa_center_density)")) |>
+    select(block, model, term, estimate, conf_low, conf_high, p_value, n) |>
+    gt::gt(groupname_col = "block") |>
+    gt::fmt_number(c(estimate, conf_low, conf_high), decimals = 2) |>
+    gt::fmt_number(p_value, decimals = 3) |>
+    gt::fmt_integer(n) |>
+    gt::cols_label(
+      model = "Model",
+      term = "Density category",
+      estimate = estimate_label,
+      conf_low = "95% CI low",
+      conf_high = "95% CI high",
+      p_value = "P",
+      n = "N"
+    ) |>
+    gt::tab_header(title = title)
 }
 
 ## ---- fn-model-formula
@@ -300,7 +317,8 @@ check_votes <- function(votes, codes, categories, provider) {
 ## ---- fn-cached-votes
 # One provider's answers, saved to `path` the first time so that a rerun does
 # not pay for them again. `classify` is called only when the file does not
-# exist; delete the file to ask that provider again.
+# exist; delete the file to ask that provider again. The caller checks the
+# answers (check_votes()) whether they are new or read back.
 cached_votes <- function(path, classify) {
   if (file.exists(path)) {
     return(read_csv(path, col_types = cols(.default = col_character())))
@@ -353,4 +371,15 @@ hsa_population_from_zcta <- function(hsa_crosswalk, zcta_crosswalk, zcta_populat
     distinct(year, hsanum, zcta) |>
     left_join(zcta_population, by = join_by(zcta, year), relationship = "many-to-one") |>
     summarize(hsa_population = sum(zip_population, na.rm = TRUE), .by = c(year, hsanum))
+}
+
+## ---- fn-map-panel
+# One map panel of HSAs filled by a numeric column; HSAs with no value are grey.
+map_panel <- function(map, fill, title, legend) {
+  ggplot(map) +
+    geom_sf(aes(fill = .data[[fill]]), color = NA) +
+    scale_fill_viridis_c(name = legend, na.value = "grey85") +
+    coord_sf(crs = 5070) +
+    labs(title = title) +
+    theme_void()
 }

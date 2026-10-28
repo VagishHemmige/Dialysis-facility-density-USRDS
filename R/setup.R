@@ -12,28 +12,34 @@ library(tidycensus)   # American Community Survey (needs a Census API key)
 library(zippeR)       # ZIP code to ZCTA crosswalks by year (UDS Mapper)
 library(readxl)
 library(sf)
-library(lme4)
+library(lme4)        # linear mixed models (eGFR as a continuous outcome)
+library(glmmTMB)     # mixed-effects logistic models
 library(broom.mixed)
 library(gtsummary)
 library(gt)
 library(mice)
 
 ## ---- define-study-constants
-# Cohort (analysis-plan.md section 4)
+# Cohort (analysis-plan.md section 4): years in which dialysis started
 study_years <- 2011:2019
 minimum_age <- 18
 
-# Dialysis setting codes kept (format $MESET: 1 = HOME, 2 = DIALYSIS FACILITY/CENTER).
-# The original code kept both; the paper says home dialysis was excluded.
-# Open decision #D1; default reproduces the original code.
-dialysis_settings_kept <- c("HOME", "DIALYSIS FACILITY/CENTER")
+# Dialysis setting kept: in-center dialysis only, as the paper says (home
+# dialysis excluded). The coding of DIALSET has changed. The original code kept
+# codes 1 and 2 to exclude home dialysis, which was correct for the earlier
+# coding (Appendix C format $MESET_CUR: 1 = hospital inpatient, 2 = dialysis
+# facility/center, 3 = home). In the current coding ($MESET, 2024 Researcher's
+# Guide) 1 = home and 2 = dialysis facility/center, so the same intent now
+# keeps code 2 only. usRds labels the codes, so the setting is named here.
+# (Decided by Vagish Hemmige, 27 October 2026.)
+dialysis_settings_kept <- "DIALYSIS FACILITY/CENTER"
 
-# eGFR restriction (mL/min/1.73 m2). The original code kept values <= 20;
-# the paper says < 20. Open decision #D2; default reproduces the original code.
+# eGFR restriction (mL/min/1.73 m2): 20 or below, as in the original code
+# (the paper says "less than 20"; decided 27 October 2026)
 egfr_maximum <- 20
-egfr_maximum_inclusive <- TRUE
 
-# Outcome (section 7): early initiation is eGFR above this value
+# Outcome (section 7): early initiation is eGFR of 10 or above, as in the
+# original code (the paper says "greater than 10"; decided 27 October 2026)
 early_egfr_threshold <- 10
 
 # Sensitivity analysis: eGFR range from the original code (exclusive bounds)
@@ -47,8 +53,6 @@ noncontiguous_states <- c("ALASKA", "HAWAII")
 density_per_population <- 100000
 # Cut points: these percentiles of density among patients in the final cohort
 density_percentiles <- c(0.25, 0.50, 0.75)
-# Published cut points, for comparison only (Table 1 of the paper)
-published_density_cutpoints <- c(1.36, 1.95, 2.76)
 
 ## ---- define-linkage-constants
 # ACS 5-year subject table S0601 variables, with a pattern each year's label
@@ -66,7 +70,7 @@ acs_variables <- tribble(
 )
 
 # Dartmouth Atlas codes that are not values: -88888 too small, -99999 suppressed.
-# Open decision #D5: the original code made them positive; here they are NA.
+# The original code made them positive; here they are NA (decided 27 October 2026).
 dartmouth_missing_codes <- c(-88888, -99999)
 
 # Census regions by state (USRDS STATE is labelled with format $STATFIP)
@@ -149,11 +153,14 @@ esrd_cause_categories <- c(
   "Other"
 )
 esrd_cause_mapping_file <- "references/esrd-cause-categories.csv"
+# One row: how many codes the models agreed on, and Fleiss' kappa
+esrd_cause_agreement_file <- "references/esrd-cause-agreement.csv"
 
-# Models used by R/classify_esrd_causes.R: the same three providers as the
-# USRDS-PDF-analysis-project ensemble, each provider's current general-purpose
-# model as of October 2026 (the abstract used gpt-5.1, claude-sonnet-4-5 and
-# gemini-2.5-flash). The models used are recorded in the output file.
+# Models used by R/classify_esrd_causes.R: one from each of three providers
+# (OpenAI, Anthropic, Google), each provider's current general-purpose model as
+# of October 2026, as in an earlier ensemble by the same team that used
+# gpt-5.1, claude-sonnet-4-5 and gemini-2.5-flash. The models used are
+# recorded in the output file.
 esrd_classifier_models <- list(
   openai = "gpt-6.1-terra",
   anthropic = "claude-sonnet-5-5",
@@ -174,14 +181,20 @@ esrd_classifier_claude_max_tokens <- 16000
 esrd_votes_dir <- file.path(public_data_dir, "esrd-cause-votes")
 
 ## ---- define-model-constants
-# Mixed-effects logistic models (section 8). nAGQ = 1 is the Laplace
-# approximation; the original R code used 0. Open decision #D6.
-glmer_nagq <- 1
+# Mixed-effects logistic models (section 8) are fit with glmmTMB, using the
+# Laplace approximation. On synthetic data shaped like Model 3, lme4::glmer
+# needed rescaled covariates and a higher iteration limit to converge and took
+# about 30 times longer, for the same estimates; adaptive quadrature with 7
+# points (Stata's default) changed the odds ratios only in the third decimal
+# (decided by Vagish Hemmige, 27 October 2026).
 imputation_count <- 10
 imputation_seed <- 20231020
 
-# Covariates added at each step of Table 2 (section 8; open decision #D6)
-model_1_covariates <- c("age", "sex", "race", "hispanic", "year")
+# Covariates added at each step of Table 2 (section 8), from the Table 2
+# footnotes; the HSA benchmarks are the three the Methods name
+# Year of hemodialysis initiation, as the paper's Methods say; the original R
+# code used the year of the form (decided 27 October 2026)
+model_1_covariates <- c("age", "sex", "race", "hispanic", "dialysis_year")
 model_2_covariates <- c(model_1_covariates,
                         "heart_failure", "coronary_disease", "diabetes",
                         "cerebrovascular_disease", "alcohol_or_drug", "immobility",

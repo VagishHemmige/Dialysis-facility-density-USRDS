@@ -6,20 +6,23 @@
 #   the data from the final step).
 
 ## ---- define-flowchart-labels
-egfr_sign <- if_else(egfr_maximum_inclusive, "≤", "<")
-egfr_label <- str_glue("eGFR recorded and {egfr_sign} {egfr_maximum} mL/min/1.73 m²")
-year_label <- str_glue("Medical Evidence form dated {min(study_years)}–{max(study_years)}")
+egfr_label <- str_glue("eGFR recorded and ≤ {egfr_maximum} mL/min/1.73 m²")
+year_label <- str_glue("Dialysis started {min(study_years)}–{max(study_years)}")
 age_label <- str_glue("Age ≥ {minimum_age} years")
 setting_label <- str_glue(
   "Dialysis setting: {str_flatten(str_to_lower(dialysis_settings_kept), ' or ')}"
 )
 
 ## ---- build-flowchart
+# flowchart turns each condition into text and evaluates it again in its own
+# environment, which reaches the global environment where main.R puts the
+# constants from setup.R. Keep conditions free of string literals (flowchart
+# collapses double spaces in the text) and of objects local to a function.
 cohort_fc <- linked_forms |>
   as_fc(label = "USRDS Medical Evidence forms") |>
   fc_filter(first_form, label = "First form per patient",
             show_exc = TRUE, label_exc = "Second or later dialysis episode") |>
-  fc_filter(year %in% study_years, label = year_label, show_exc = TRUE) |>
+  fc_filter(dialysis_year %in% study_years, label = year_label, show_exc = TRUE) |>
   fc_filter(age >= minimum_age, label = age_label, show_exc = TRUE) |>
   fc_filter(DIALTYP == "HEMO", label = "Hemodialysis", show_exc = TRUE) |>
   fc_filter(DIALSET %in% dialysis_settings_kept,
@@ -28,16 +31,16 @@ cohort_fc <- linked_forms |>
   fc_filter(!is.na(insurance), label = "Insurance recorded", show_exc = TRUE) |>
   fc_filter(!is.na(access_type), label = "Access type recorded", show_exc = TRUE) |>
   fc_filter(!is.na(sex), label = "Sex recorded", show_exc = TRUE) |>
-  fc_filter(!is.na(egfr) & egfr_within_limit(egfr, egfr_maximum, egfr_maximum_inclusive),
+  fc_filter(!is.na(egfr) & egfr <= egfr_maximum,
             label = egfr_label, show_exc = TRUE) |>
   fc_filter(has_residence, label = "Residential ZIP code on the dialysis start date", show_exc = TRUE) |>
   fc_filter(has_zcta, label = "ZIP code has a ZCTA (UDS Mapper crosswalk for the year)",
             show_exc = TRUE) |>
   fc_filter(has_acs, label = "ACS data for the ZCTA and year", show_exc = TRUE) |>
-  fc_filter(has_facility_snapshot & year == dialysis_year,
-            label = "Facility data for the dialysis start date, same year as the form",
+  fc_filter(has_facility_snapshot,
+            label = "Facility data for the dialysis start date",
             show_exc = TRUE) |>
-  fc_filter(has_hsa, label = "ZIP code in a Health Service Area", show_exc = TRUE) |>
+  fc_filter(has_hsa, label = "ZIP code in a Hospital Service Area (HSA)", show_exc = TRUE) |>
   fc_filter(!is.na(region) & !state %in% noncontiguous_states,
             label = "Contiguous US or District of Columbia", show_exc = TRUE) |>
   fc_filter(!is.na(race) & !is.na(hispanic), label = "Race and Hispanic ethnicity recorded",
@@ -49,8 +52,8 @@ cohort_fc <- linked_forms |>
 cohort <- fc_view(cohort_fc, what = "data") |>
   assert_unique(USRDS_ID)
 
-# The HSA of the form year and of the dialysis start date must be the same,
-# because only patients whose form year is their dialysis-start year are kept
+# The HSA used for the population and the one usRds used for the facility
+# counts come from the same crosswalk year, so they must agree
 hsa_mismatches <- cohort |>
   filter(hsanum != hsanum_dialysis_date)
 

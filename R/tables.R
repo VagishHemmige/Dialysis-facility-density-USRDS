@@ -35,29 +35,8 @@ estimates <- if (exists("model_estimates")) {
   readRDS(file.path("models", "model_estimates.rds"))
 }
 
-# One gt table per published table: rows grouped by block, one row per model
-# and density term. Logistic models give odds ratios; eTable 3 gives
-# differences in eGFR.
-format_estimates_table <- function(df, title, estimate_label) {
-  df |>
-    mutate(term = str_remove(term, "^(density_category|hsa_center_density)")) |>
-    select(block, model, term, estimate, conf_low, conf_high, p_value, n) |>
-    gt(groupname_col = "block") |>
-    fmt_number(c(estimate, conf_low, conf_high), decimals = 2) |>
-    fmt_number(p_value, decimals = 3) |>
-    fmt_integer(n) |>
-    cols_label(
-      model = "Model",
-      term = "Density category",
-      estimate = estimate_label,
-      conf_low = "95% CI low",
-      conf_high = "95% CI high",
-      p_value = "P",
-      n = "N"
-    ) |>
-    tab_header(title = title)
-}
-
+# One gt table per published table (format_estimates_table() in functions.R).
+# Logistic models give odds ratios; eTable 3 gives differences in eGFR.
 published_titles <- tribble(
   ~table,     ~title,                                                                                   ~estimate_label,
   "Table 2",  "Odds of starting hemodialysis at eGFR ≥ 10 by HSA facility density",                     "OR",

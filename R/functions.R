@@ -222,6 +222,29 @@ density_odds_ratios <- function(model, term_pattern = "^density_category",
     rename(odds_ratio = estimate)
 }
 
+## ---- fn-format-estimates-table
+# A gt table of density estimates: rows grouped by block, one row per model
+# and density term, with the variable name removed from each term.
+format_estimates_table <- function(df, title, estimate_label) {
+  df |>
+    mutate(term = str_remove(term, "^(density_category|hsa_center_density)")) |>
+    select(block, model, term, estimate, conf_low, conf_high, p_value, n) |>
+    gt::gt(groupname_col = "block") |>
+    gt::fmt_number(c(estimate, conf_low, conf_high), decimals = 2) |>
+    gt::fmt_number(p_value, decimals = 3) |>
+    gt::fmt_integer(n) |>
+    gt::cols_label(
+      model = "Model",
+      term = "Density category",
+      estimate = estimate_label,
+      conf_low = "95% CI low",
+      conf_high = "95% CI high",
+      p_value = "P",
+      n = "N"
+    ) |>
+    gt::tab_header(title = title)
+}
+
 ## ---- fn-model-formula
 # outcome ~ exposure + covariates + (1 | cluster)
 mixed_formula <- function(outcome, exposure, covariates, cluster = "hsanum") {

@@ -218,3 +218,21 @@ test_that("density_effects reports differences, not ratios, for a linear model",
   expect_true(out$conf_low < 0.5 && out$conf_high > 0.5)
   expect_equal(out$n, n)
 })
+
+test_that("format_estimates_table keeps one row per model and term, without the variable name", {
+  skip_if_not_installed("gt")
+  estimates <- tibble(
+    block = "Synthetic block",
+    model = c("Model 1", "Model 1"),
+    term = c("density_category2", "density_category3"),
+    estimate = c(1.234, 2.345),
+    conf_low = c(1.1, 2.1),
+    conf_high = c(1.4, 2.6),
+    p_value = c(0.01, 0.5),
+    n = 100L
+  )
+  out <- format_estimates_table(estimates, "Synthetic title", "OR")
+  expect_s3_class(out, "gt_tbl")
+  expect_equal(gt::extract_cells(out, term), c("2", "3"))
+  expect_equal(gt::extract_cells(out, estimate), c("1.23", "2.35"))
+})

@@ -141,6 +141,15 @@ Extracts the density terms of a fitted model with Wald confidence intervals and 
 #| eval: false
 ```
 
+## Estimate tables
+
+Turns those estimates into a gt table, grouped by block, with one row per model and density term. `tables.R` uses it for each published regression table.
+
+```{r}
+#| label: fn-format-estimates-table
+#| eval: false
+```
+
 ## Model formulas
 
 Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model's covariates are a list in `setup.R`.

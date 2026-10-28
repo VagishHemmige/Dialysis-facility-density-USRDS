@@ -68,7 +68,7 @@
   year         = {2024},
   howpublished = {National Institute of Diabetes and Digestive and Kidney Diseases},
   url          = {https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide},
-  note         = {2024 release, as packaged in usRds (data-raw/USRDS\_Res\_Guide\_Appendix\_B\_2024.xlsx and Appendix\_C\_2024.xlsx). MEDEVID and RESIDENC variables; formats \$PD96DET, \$MESET, \$MEDIATN, \$MERACE, \$MEETH, \$STATFIP}
+  note         = {2024 release, as packaged in usRds (data-raw/USRDS\_Res\_Guide\_Appendix\_B\_2024.xlsx and Appendix\_C\_2024.xlsx). MEDEVID and RESIDENC variables; formats \$PD96DET, \$MESET, \$MESET\_CUR, \$MEDIATN, \$MERACE, \$MEETH, \$STATFIP. The URL now serves a later release; the 2024 files are those packaged in usRds}
 }
 
 @misc{cms2025dfc,
@@ -111,42 +111,52 @@
 @manual{tidycensus,
   author = {Walker, Kyle and Herman, Matt},
   title  = {tidycensus: Load {US} Census Boundary and Attribute Data as 'tidyverse' and 'sf'-Ready Data Frames},
-  note   = {R package},
+  note   = {R package version 2.0.0},
   url    = {https://walker-data.com/tidycensus/}
 }
 
 @manual{usrds_pkg,
   author = {Hemmige, Vagish},
   title  = {usRds: A Package to Automate Processing and Access to the {USRDS}},
-  note   = {R package},
+  year   = {2026},
+  note   = {R package. Version 0.1.0 is released; the facility functions (dialysis\_facility\_snapshots, add\_dialysis\_facility\_counts(), summarize\_dialysis\_facilities()) are in a development version under review, and the version or commit used is recorded with every result},
   url    = {https://vagishhemmige.github.io/usRds/}
 }
 
-@manual{flowchart_pkg,
-  author = {Satorra, Pau and Carmezim, Jo{\~a}o and Pallar{\`e}s, Nat{\`a}lia and Teb{\'e}, Cristian and Taylor, Kenneth},
-  title  = {flowchart: Tidy Flowchart Generator},
-  note   = {R package. See also doi:10.5334/jors.649},
-  url    = {https://bruigtp.github.io/flowchart/}
+@article{flowchart_pkg,
+  author  = {Satorra, Pau and Carmezim, Jo{\~a}o and Pallar{\`e}s, Nat{\`a}lia and Taylor, Kenneth A. and Teb{\'e}, Cristian},
+  title   = {flowchart: An {R} Package for Data Flowchart Generation},
+  journal = {Journal of Open Research Software},
+  year    = {2026},
+  volume  = {14},
+  number  = {1},
+  pages   = {20},
+  doi     = {10.5334/jors.649},
+  note    = {R package version 1.0.1 used}
 }
 
 @manual{ellmer_pkg,
   author = {Wickham, Hadley and Cheng, Joe and Jacobs, Aaron and Aden-Buie, Garrick and Schloerke, Barret},
   title  = {ellmer: Chat with Large Language Models},
-  note   = {R package},
+  note   = {R package; version 0.5.0 or later required},
   url    = {https://ellmer.tidyverse.org/}
 }
 
-@manual{lme4_pkg,
-  author = {Bates, Douglas and M{\"a}chler, Martin and Bolker, Ben and Walker, Steve},
-  title  = {lme4: Linear Mixed-Effects Models using 'Eigen' and S4},
-  note   = {R package},
-  url    = {https://github.com/lme4/lme4/}
+@article{lme4_pkg,
+  author  = {Bates, Douglas and M{\"a}chler, Martin and Bolker, Ben and Walker, Steve},
+  title   = {Fitting Linear Mixed-Effects Models Using {lme4}},
+  journal = {Journal of Statistical Software},
+  year    = {2015},
+  volume  = {67},
+  number  = {1},
+  pages   = {1--48},
+  doi     = {10.18637/jss.v067.i01}
 }
 
 @manual{zipper_pkg,
   author = {Prener, Christopher and Wiemken, Timothy and Cook, Angela},
   title  = {zippeR: Working with United States {ZIP} Code and {ZIP} Code Tabulation Area Data},
-  note   = {R package},
+  note   = {R package version 0.2.0},
   url    = {https://github.com/pfizer-opensource/zippeR}
 }
 
@@ -190,9 +200,9 @@
 @manual{jlme,
   author = {Choe, June},
   title  = {jlme: Regression Modelling with 'GLM.jl' and 'MixedModels.jl' in 'Julia'},
-  year   = {2025},
-  note   = {R package version 0.4.2},
-  url    = {https://github.com/yjunechoe/jlme}
+  year   = {2024},
+  note   = {R package version 0.4.1 (CRAN, 27 November 2024); development version 0.4.2 on GitHub},
+  url    = {https://CRAN.R-project.org/package=jlme}
 }
 
 @manual{rstata,
@@ -201,4 +211,69 @@
   year   = {2025},
   note   = {R package version 1.1.2},
   url    = {https://CRAN.R-project.org/package=RStata}
+}
+
+@misc{dartmouth_faq,
+  author  = {{The Dartmouth Atlas of Health Care}},
+  title   = {Frequently Asked Questions: Hospital Service Areas},
+  url     = {https://www.dartmouthatlas.org/faq/},
+  urldate = {2026-10-27}
+}
+
+@article{rosenberg2015hivan,
+  author  = {Rosenberg, Avi Z. and Naicker, Saraladevi and Winkler, Cheryl A. and Kopp, Jeffrey B.},
+  title   = {{HIV}-associated nephropathies: epidemiology, pathology, mechanisms and treatment},
+  journal = {Nature Reviews Nephrology},
+  year    = {2015},
+  volume  = {11},
+  number  = {3},
+  pages   = {150--160},
+  doi     = {10.1038/nrneph.2015.9},
+  pmid    = {25686569}
+}
+
+@article{inker2021ckdepi,
+  author  = {Inker, Lesley A. and Eneanya, Nwamaka D. and Coresh, Josef and Tighiouart, Hocine and Wang, Dan and Sang, Yingying and others},
+  title   = {New Creatinine- and Cystatin {C}-Based Equations to Estimate {GFR} without Race},
+  journal = {New England Journal of Medicine},
+  year    = {2021},
+  volume  = {385},
+  number  = {19},
+  pages   = {1737--1749},
+  doi     = {10.1056/NEJMoa2102953},
+  pmid    = {34554658}
+}
+
+@misc{omb1997race,
+  author       = {{Office of Management and Budget}},
+  title        = {Revisions to the Standards for the Classification of Federal Data on Race and Ethnicity},
+  howpublished = {Federal Register 62(210):58782--58790},
+  year         = {1997},
+  url          = {https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf}
+}
+
+@manual{stata_melogit,
+  author       = {{StataCorp}},
+  title        = {melogit: Multilevel mixed-effects logistic regression},
+  organization = {StataCorp LLC},
+  note         = {Stata Multilevel Mixed-Effects Reference Manual, current edition; the Stata 15 edition was not checked},
+  url          = {https://www.stata.com/manuals/memelogit.pdf}
+}
+
+@article{vanbuuren2011mice,
+  author  = {van Buuren, Stef and Groothuis-Oudshoorn, Karin},
+  title   = {{mice}: Multivariate Imputation by Chained Equations in {R}},
+  journal = {Journal of Statistical Software},
+  year    = {2011},
+  volume  = {45},
+  number  = {3},
+  pages   = {1--67},
+  doi     = {10.18637/jss.v045.i03}
+}
+
+@software{mixedmodels_jl,
+  author = {Alday, Phillip M. and Bates, Douglas},
+  title  = {{MixedModels.jl}: A {Julia} package for fitting (statistical) mixed-effects models},
+  doi    = {10.5281/zenodo.596435},
+  url    = {https://github.com/JuliaStats/MixedModels.jl}
 }

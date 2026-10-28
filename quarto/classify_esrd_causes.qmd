@@ -175,7 +175,7 @@ Agreement among the models shows only that they agree, not that they are right. 
 
 ## Writing the mapping
 
-The two files the repository tracks as data. They hold only public codes, descriptions and the models' answers.
+The two files the repository tracks as data. They hold only public codes, descriptions and the models' answers. The script creates the `references/` folder if it does not exist yet, as in a fresh copy of the repository, where Git keeps no empty folders.
 
 ```{r}
 #| label: write-mapping

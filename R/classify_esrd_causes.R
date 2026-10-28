@@ -216,6 +216,9 @@ message(str_glue(
 ))
 
 ## ---- write-mapping
-# Both files hold only public codes, descriptions and model answers
+# Both files hold only public codes, descriptions and model answers. Git keeps
+# no empty folders, so references/ does not exist in a fresh copy until the
+# first mapping is written and committed.
+dir.create(dirname(esrd_cause_mapping_file), recursive = TRUE, showWarnings = FALSE)
 write_csv(mapping, esrd_cause_mapping_file, na = "")
 write_csv(agreement_summary, esrd_cause_agreement_file, na = "")

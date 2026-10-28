@@ -29,7 +29,7 @@ knitr::read_chunk("../R/tables.R")
 
 ## Table 1
 
-Patient and HSA characteristics by density category: the same 25 characteristics as the paper's Table 1, with means (SD), counts (%), one-way ANOVA for continuous characteristics and chi-squared tests for categorical ones. The paper also lists the Kruskal-Wallis test without saying which characteristics it was used for. The layout (sections, missing counts and column headers) is gtsummary's default, not the paper's.
+Patient and HSA characteristics by density category: the same 25 characteristics as the paper's Table 1, with means (SD), counts (%), a one-way test for continuous characteristics and chi-squared tests for categorical ones. The one-way test is R's `oneway.test()`, whose default is Welch's version, which does not assume equal variances across categories; the paper says one-way ANOVA. Which to use is for the deciders. The paper also lists the Kruskal-Wallis test without saying which characteristics it was used for. The layout (sections, missing counts and column headers) is gtsummary's default, not the paper's.
 
 ```{r}
 #| label: build-table-1

@@ -3,7 +3,7 @@ title: "Classifying codes with an LLM ensemble"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three large language models, for review by the deciders ([#D4]). It is run once, by hand, because it calls paid APIs; the reviewed file in `references/` is what the analysis reads.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three large language models. Codes on which at least two of the three models agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). The script is run once, by hand, because it calls paid APIs; the file it writes to `references/` is what the analysis reads.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -14,6 +14,7 @@ This R script file is itself reliant on the following files:
 
 -   [`R/setup.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)
 -   [`R/functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)
+-   [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)
 
 The code sections below are imported directly from that script when this page is rendered.
 :::
@@ -25,18 +26,51 @@ The code sections below are imported directly from that script when this page is
 knitr::read_chunk("../R/classify_esrd_causes.R")
 ```
 
+::: callout-note
+## What this step needs and produces
+
+**To run it**, from the project root: `source("R/setup.R")`, `source("R/functions.R")`, then `source("R/classify_esrd_causes.R")`. It is not part of `main.R`.
+
+**It needs**
+
+-   ellmer 0.5.0 or later [@ellmer_pkg], and the irr package for Fleiss' kappa.
+-   An API key for each provider in `.Renviron`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`.
+-   The models, batch size and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google).
+
+**It sends** only the public list of 445 codes with their descriptions, in batches of 100: about five calls per provider, plus one more for any codes a model skipped. No patient data are sent. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.
+
+**It produces**
+
+-   One file of checked answers per provider, in the gitignored `data-raw/` folder.
+-   `references/esrd-cause-categories.csv`: one row per code, with each model's category and reason, how the models agreed (`agreement`), the accepted category (`final_category`), the decider's initials (`reviewer`), and the prompt version, ellmer version, models and date.
+-   `references/esrd-cause-agreement.csv`: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.
+
+**How the analysis uses it**: [Linking area data](link_area_data.qmd) reads only `code` and `final_category`. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.
+
+**Editing the file**: the deciders fill `final_category` and `reviewer` for the codes with no majority, and for any accepted code they change. Edit it as text (in Positron, or another text editor), not in Excel: 11 codes start with a zero, which Excel would strip, and those patients would silently become Other.
+:::
+
 ## ellmer version
 
-The script needs ellmer 0.4.2 or later. From that version, ellmer uses Anthropic's own structured output for current Claude models; earlier versions force a tool call, which these models reject.
+ellmer asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as `claude-sonnet-5-5` from version 0.5.0 (the function `has_claude_structured_output()` in ellmer's source). Older versions force a tool call instead, which current Claude models reject with the error "tool_choice ... not supported for this model".
 
 ```{r}
 #| label: check-ellmer-version
 #| eval: false
 ```
 
+## Protecting the deciders' review
+
+Rerunning the script rewrites the mapping file. If the deciders have already reviewed any code in it, the script stops before calling any model, so their review cannot be overwritten; the existing file has to be renamed or moved first, and the reviewed rows copied into the new one.
+
+```{r}
+#| label: protect-reviewed-mapping
+#| eval: false
+```
+
 ## The code list
 
-The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format `$PD96DET` with its description, from Appendix C of the Researcher's Guide, which `usRds` already holds. No patient data are involved, and the list is not filtered by what appears in the data.
+The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format `$PD96DET` with its description, from Appendix C of the Researcher's Guide [@usrds2024guide], which `usRds` already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.) The script stops if a code is listed twice.
 
 ```{r}
 #| label: load-cause-codes
@@ -57,31 +91,46 @@ For each batch of 100 codes, `{{code_list}}` becomes one line per code: the code
 The prompt makes three rules:
 
 -   **One category per code**, from the six in the paper's Table 1, each defined in words.
--   **"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable, as in the original analysis.
+-   **"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable. This is an assumption: the original spreadsheet had a sheet named "Other", but what it contained is not known.
 -   **No inference beyond the description.** The model classifies from the code and its description only, which keeps it from inventing context.
 
 ## The six categories
 
 The original analysis took the six categories from a spreadsheet with one sheet per category ("Diabetes", "Hypertensive and Cardiac", "Glomerulonephritis", "HereditaryPCKD", "Transplant", "Other"), which no longer exists. Only the categories' names survive, in the sheet names and in the paper's Table 1, which labels the transplant category "solid organ and bone marrow" [@hemmige2024density].
 
-The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the USRDS primary disease groups, the groups of the CMS-2728 list of primary causes [@cms2728_causes; @usrds2018adr], and depart from them where the clinical definition differs:
+The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the 12 headings of the 2015 CMS-2728 list of primary causes [@cms2728_causes] and depart from them where the clinical definition differs:
 
-| Paper category | Definition, in USRDS groups |
+| CMS-2728 heading (2015) | Category here |
 |---|---|
 | Diabetes | Diabetes |
-| Hypertension and cardiac disease | Hypertension and large vessel disease (including renovascular disease and atheroembolism), plus kidney failure attributed to heart disease, as the sheet name "Hypertensive and Cardiac" suggests |
-| Glomerulonephritis | Glomerulonephritis, plus the glomerulonephritis in "Secondary GN/vasculitis": lupus nephritis, ANCA vasculitis, anti-GBM disease and Henoch-Schönlein purpura. USRDS keeps secondary disease in its own group, but clinically these are glomerulonephritis. So is infection-related glomerular disease: post-infectious glomerulonephritis, HIV-associated nephropathy, and hepatitis-associated and cryoglobulinemic glomerulonephritis. Thrombotic microangiopathies and scleroderma, also in that USRDS group, stay in Other. |
-| Hereditary or polycystic kidney disease | The cystic and hereditary part of "Cystic/hereditary/congenital", as the sheet name "HereditaryPCKD" suggests; congenital anomalies go to Other |
-| Transplant failure or complications | Transplant complications of any solid organ or bone marrow, as Table 1 says (USRDS counted these among miscellaneous conditions until the 2015 form gave them their own group) |
-| Other | Thrombotic microangiopathies and scleroderma, infections other than infection-related glomerular disease (pyelonephritis, urinary tract infection, renal tuberculosis), interstitial nephritis, congenital anomalies, neoplasms, miscellaneous conditions, and unknown or missing causes |
+| Glomerulonephritis | Glomerulonephritis |
+| Secondary Glomerulonephritis/Vasculitis | Glomerulonephritis for lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura; Other for thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura) and scleroderma |
+| Interstitial Nephritis/Pyelonephritis | Other |
+| Transplant Complications | Transplant failure or complications |
+| Hypertension/Large Vessel Disease | Hypertension and cardiac disease |
+| Cystic/Hereditary/Congenital/Other Diseases | Hereditary or polycystic kidney disease for cystic and inherited disease; Other for congenital anomalies not described as inherited |
+| Neoplasms/Tumors | Other |
+| Disorders of Mineral Metabolism | Other |
+| Genitourinary System | Other |
+| Acute Kidney Failure | Other |
+| Miscellaneous Conditions | Other, except heart failure (Hypertension and cardiac disease) and HIV disease (Glomerulonephritis) |
 
-**HIV.** USRDS has always placed HIV-associated (AIDS) nephropathy among the miscellaneous conditions, not with glomerulonephritis: in its older reference tables, and as code B20 in the "Miscellaneous conditions" group of the 2015 CMS-2728 list [@cms2728_causes]. Clinically it is a glomerular disease, a collapsing form of focal segmental glomerulosclerosis, so here it counts as glomerulonephritis, a deliberate departure from USRDS. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other. (On the first run, before the definitions, all three models put HIV in Other.)
+The 2015 list covers only the ICD-10-CM codes. The older ICD-9-CM codes in `$PD96DET` are placed by the same definitions; anti-GBM disease (Goodpasture's syndrome), for example, appears only among them and counts as glomerulonephritis.
 
-**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, USRDS reported glomerulonephritis at 7.3% and cystic kidney disease at 2.8% [@usrds2018adr]. The cohort is in-center hemodialysis only, and patients with glomerulonephritis or polycystic kidney disease more often start on peritoneal dialysis or receive a transplant, so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.
+Four departures need a reason:
+
+-   **Secondary glomerulonephritis is glomerulonephritis.** The CMS list keeps it apart, but lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura are glomerular inflammation. Lupus described as tubulointerstitial disease is not, and goes to Other. Thrombotic microangiopathies and scleroderma kidney disease, in the same CMS heading, are injury to the small vessels and endothelium rather than glomerular inflammation, so they also go to Other.
+-   **Infection-related glomerular disease is glomerulonephritis**: post-infectious glomerulonephritis, glomerulonephritis with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other.
+-   **HIV-associated nephropathy is glomerulonephritis.** The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions [@cms2728_causes]. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis [@rosenberg2015hivan], so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository's history, and each saved answer file names the prompt version it answered.
+-   **Heart failure is cardiac disease.** The sheet name "Hypertensive and Cardiac" suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.
+
+**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.
+
+**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report [@usrds2018adr]). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 [@usrds2018adr]), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.
 
 ## Prompt and schema in code
 
-The structured output schema restricts each answer to the six category names, and the check below confirms it. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again.
+The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file.
 
 ```{r}
 #| label: define-classification-prompt
@@ -90,16 +139,16 @@ The structured output schema restricts each answer to the six category names, an
 
 ## One function per provider
 
-The same three providers as the USRDS-PDF-analysis-project ensemble, each with its current general-purpose model, set in `setup.R` [@ellmer_pkg]. Each has its own function, so each provider can be run, checked and saved on its own.
+One model from each of three providers, set in `setup.R` [@ellmer_pkg]. Each provider has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`).
 
 ```{r}
 #| label: define-providers
 #| eval: false
 ```
 
-## Running and saving each provider
+## Running, checking and saving each provider
 
-Each provider runs and is checked on its own: every code answered exactly once, no invented codes, only the six categories. Its answers are then saved under the provider and model name, so a rerun after a failure asks only the providers that have not finished.
+Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). New answers are saved under the provider, model and prompt version, so a rerun after a failure asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
 
 ```{r}
 #| label: classify-with-ensemble
@@ -108,16 +157,25 @@ Each provider runs and is checked on its own: every code answered exactly once, 
 
 ## Agreement
 
-A code is accepted when at least two of the three models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 27 October 2026); `reviewed_by` records whether the agreement was unanimous or two of three. Codes with no majority are left for the deciders, who fill `final_category` and their initials. Agreement is summarized with Fleiss' kappa.
+A code is accepted when at least two of the three models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 27 October 2026). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, agreed two to one, or had no majority. For codes with no majority, which means all three models chose differently, the deciders fill `final_category` and their initials in `reviewer`.
+
+Fleiss' kappa describes how far the three models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.
 
 ```{r}
 #| label: measure-agreement
 #| eval: false
 ```
 
+## How the mapping is checked
+
+Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:
+
+-   **Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (`DISGRPC`). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.
+-   **Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.
+
 ## Writing the mapping
 
-The one CSV file the repository tracks as data; it holds only public codes and descriptions.
+The two files the repository tracks as data. They hold only public codes, descriptions and the models' answers.
 
 ```{r}
 #| label: write-mapping

@@ -36,7 +36,14 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Patient variables
 
-Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard, and Other or multiracial counts as White, the largest group. The detailed race is kept as `race_detailed`. The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
+Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard [@omb1997race], and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as `race_detailed`.
+
+The clinical variables are derived as follows (the helper functions are on the [functions page](functions.qmd)):
+
+-   **Comorbidities** are present when any of their form fields is marked yes; blank or unknown counts as not present, as on the form. Diabetes combines four fields (insulin, oral medication, no medication, retinopathy), alcohol or drug dependence two, immobility three (inability to ambulate, needing assistance, inability to transfer) and institutionalized four (any type of institution).
+-   **Insurance** follows the original code's order: no insurance, then Medicaid, then Medicare or managed Medicare, then commercial (employer group), then other, including the VA.
+-   **Nephrology care before kidney failure** is no, some or unknown (`NEPHCARE`), with unknown kept as its own level.
+-   **Early start** is an eGFR of 10 or above at initiation. The facility ID is `PROVUSRD` in older releases and `PROVUSRD_DIAL` in the 2024 guide.
 
 ```{r}
 #| label: derive-patient-variables

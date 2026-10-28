@@ -5,17 +5,29 @@ format: html
 
 ## When to start dialysis
 
-There is no single kidney function threshold at which maintenance hemodialysis should begin. Nephrologists weigh symptoms, fluid and metabolic control, and patient preference alongside the estimated glomerular filtration rate (eGFR) [@hemmige2024density]. The IDEAL trial randomized adults with progressive chronic kidney disease to planned early or late starts and found no survival benefit from starting early [@cooper2010ideal]. After its publication in 2010, practice moved toward later initiation, which is why the cohort here begins in 2011.
+There is no formal eGFR threshold below which maintenance hemodialysis should begin. Most nephrologists use the estimated glomerular filtration rate (eGFR) as a major factor, together with clinical signs and symptoms, the availability of dialysis access, and patient preference [@hemmige2024density]. The IDEAL trial randomized adults with progressive chronic kidney disease to start dialysis at an estimated GFR of 10 to 14 mL/min (early) or 5 to 7 mL/min (late), and found no survival benefit from starting early [@cooper2010ideal]. After its publication in 2010, the trend toward earlier initiation reversed [@hemmige2024density], which is why the cohort here begins in 2011.
 
 ## Why facility density
 
-If eGFR alone does not dictate when dialysis starts, the surrounding health system may. The hypothesis of the paper is that areas organized around high-intensity treatment of end-stage disease, with many dialysis facilities per resident, start dialysis earlier than areas oriented toward prevention [@hemmige2024density]. Health Service Areas from the Dartmouth Atlas, groups of ZIP codes whose residents get most of their hospital care locally, serve as the unit for local practice patterns [@dartmouth_crosswalks].
+If eGFR alone does not dictate when dialysis starts, the surrounding health system may. The hypothesis of the paper is that areas organized around high-intensity treatment of end-stage disease, with many dialysis facilities per resident, start dialysis earlier than areas oriented toward prevention [@hemmige2024density]. The unit is the Dartmouth Atlas Hospital Service Area (HSA): a group of ZIP codes whose residents get most of their hospital care locally, about 3,400 in the US [@dartmouth_faq]. The paper calls these "health service areas"; this site keeps the abbreviation HSA.
 
 ## The measures
 
--   **eGFR at initiation** is calculated by the USRDS from the serum creatinine reported on the CMS-2728 Medical Evidence form, using the CKD-EPI equation [@levey2009ckdepi] with the race coefficient, because that is the value physicians saw when deciding.
+-   **eGFR at initiation** is calculated by the USRDS from the serum creatinine reported on the CMS-2728 Medical Evidence form, using the CKD-EPI equation [@levey2009ckdepi] with the race coefficient, because that is the value physicians saw when deciding. The paper's Methods call it "CKD-EPI equation 2012"; see the [differences page](differences.qmd#patient-variables).
 -   **Facility density** counts the dialysis facilities listed by CMS in the patient's HSA on the date dialysis started, per 100,000 residents [@cms2025dfc].
 -   **Area characteristics** come from the American Community Survey [@tidycensus], the USDA rural-urban commuting area codes [@ers2020ruca], and Dartmouth Atlas primary care and hospital measures [@dartmouth_primarycare; @dartmouth_capacity].
+
+## The eGFR thresholds
+
+Three eGFR values, all in mL/min/1.73 m², shape the analysis:
+
+-   **20, the cohort's ceiling.** Patients starting above it are excluded, because the paper restricts to the range nephrologists target for starting dialysis [@hemmige2024density]. As in the original code, 20 itself is kept.
+-   **10, the definition of an early start.** It is the lower edge of the IDEAL trial's early-start range [@cooper2010ideal]. As in the original code, 10 itself counts as early.
+-   **5, in one extra analysis.** The original R code also fit the full model only among patients with eGFR above 5. The code does not record why. This analysis is not in the paper.
+
+## Race and eGFR
+
+The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine [@levey2009ckdepi]. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper's Table 1 [@hemmige2024density]). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race [@inker2021ckdepi]; the replication keeps the paper's measure, because the question is how physicians acted on the eGFR they saw.
 
 ## References
 

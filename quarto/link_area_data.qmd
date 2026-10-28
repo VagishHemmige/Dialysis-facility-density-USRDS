@@ -29,10 +29,17 @@ knitr::read_chunk("../R/link_area_data.R")
 
 ## Cause of kidney failure mapping
 
-The reviewed mapping must exist and give every code a category; otherwise the run stops with instructions.
+The reviewed mapping, written by [Classifying codes](classify_esrd_causes.qmd), must exist and give every code one of the six categories; otherwise the run stops with instructions. Only `code` and `final_category` are read.
 
 ```{r}
 #| label: read-cause-mapping
+#| eval: false
+```
+
+A first form whose cause code is blank, or is not in the mapping, counts as Other, as in the original code. A blank cause is expected; a code that is filled in but missing from the mapping is not, and many of them would suggest that the codes are written differently in the Medical Evidence file and in the code list (case, spaces, leading zeros). That would move real causes into Other without any error, so the script warns with the share of first forms affected.
+
+```{r}
+#| label: check-unmapped-causes
 #| eval: false
 ```
 
@@ -56,7 +63,7 @@ Each ZIP code is mapped to its ZCTA with the crosswalk for the year dialysis sta
 
 ## Facility density
 
-Facilities per 100,000 HSA residents, plus the availability flags the flowchart filters on.
+Facilities per 100,000 HSA residents, plus the availability flags the flowchart filters on. A patient has an HSA only if the HSA's density is a finite number: an HSA whose population is zero would give an infinite density, so it counts as having no HSA.
 
 ```{r}
 #| label: compute-density

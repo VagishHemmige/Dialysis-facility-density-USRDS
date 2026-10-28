@@ -55,11 +55,13 @@ Each block has Models 1 to 3. The models are listed in one table, one row per pu
 
 ## Models
 
-Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with `glmmTMB` [@glmmtmb]: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are the three the paper's Methods name (HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
+Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with `glmmTMB` [@glmmtmb]: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
 
 ### Choosing the model-fitting package
 
-The paper fit its models in Stata 15, whose default for these models is adaptive Gauss-Hermite quadrature with 7 points. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
+The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with `melogit`, Stata's default is adaptive Gauss-Hermite quadrature with 7 points [@stata_melogit].
+
+A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. When each HSA has many patients, as here, the two give practically the same answer. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
 
 | Fit | Time | Convergence warnings | Odds ratio, highest vs zero density |
 |---|---|---|---|
@@ -68,15 +70,15 @@ The paper fit its models in Stata 15, whose default for these models is adaptive
 | `lme4::glmer`, 7-point quadrature (Stata's default) | 119 s | 0 | 10.63 |
 | `glmmTMB` [@glmmtmb] | 4 s | 0 | 10.63 |
 
-The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Two other options were considered:
+The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:
 
--   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method, but is slower on data of this size.
--   **`MixedModels.jl`**, the Julia successor to `lme4` by its original author, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` is a young, single-maintainer package with little recent activity, so it was not used.
--   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This keeps the paper's estimation method exactly (`melogit` with 7-point adaptive quadrature), and Stata is often reported to be fast for these models, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor `MixedModels.jl` was timed here, so how their speed compares with each other or with `glmmTMB` on these data is not known.
+-   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.
+-   **`MixedModels.jl`** [@mixedmodels_jl], a Julia package by Douglas Bates, the original author of `lme4`, and Phillip Alday, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` is a young, single-maintainer package with little recent activity, so it was not used.
+-   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This would keep the paper's estimation method, if the paper used `melogit` with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor `MixedModels.jl` was timed here, so how their speed compares with each other or with `glmmTMB` on these data is not known.
 
 ## Multiple imputation
 
-The paper reports multiple imputation of albumin and hemoglobin by chained equations with 10 imputations (eTable 2), done in Stata; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model awaits the deciders' confirmation ([#D7]).
+The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model awaits the deciders' confirmation ([open decision D7](differences.qmd#open-decisions)).
 
 ```{r}
 #| label: impute-albumin-hemoglobin
@@ -85,7 +87,7 @@ The paper reports multiple imputation of albumin and hemoglobin by chained equat
 
 ## Fitting
 
-Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules.
+Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules, whose intervals combine the variation within and between the imputed data sets.
 
 ```{r}
 #| label: fit-published-models
@@ -94,7 +96,7 @@ Each distinct model is fit once and its density terms extracted: odds ratios for
 
 ## Variance decomposition
 
-How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs.
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model leaves out patients with no dialysis facility ID, so the two models are fit on slightly different sets of patients; whether to fit both on the same patients is for the deciders.
 
 ```{r}
 #| label: fit-variance-decomposition

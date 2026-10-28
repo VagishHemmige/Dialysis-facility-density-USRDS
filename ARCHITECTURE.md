@@ -64,8 +64,8 @@ references/esrd-cause-categories.csv ──────────────�
 
 ## Website
 
-`_quarto.yml` and `index.qmd` at the root; one page per definitive script in `quarto/`, plus background, differences, results, supplement, the original file and about. Pages import code from `R/` with `knitr::read_chunk()` and never evaluate it. The site renders to `docs/`.
+`_quarto.yml` and `index.qmd` at the root; one page per definitive script in `quarto/`, plus background, differences, results, supplement, the original file and about. Pages import code from `R/` with `knitr::read_chunk()` and never evaluate it. Helpers used only by the pages, such as `side_by_side_diff()` for before-and-after code comparisons, are in `quarto/_site_functions.R`, with their style in `styles.css`; `main.R` never sources them. The site renders to `docs/`.
 
 ## Tests
 
-`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `density_category_labels()` and `map_panel()`; the last is checked by the synthetic run of `figures.R`. `format_estimates_table()` is tested only where gt is installed.
+`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `density_category_labels()` and `map_panel()`; the last is checked by the synthetic run of `figures.R`. `format_estimates_table()` is tested only where gt is installed. `tests/test-site-functions.R` tests the site helpers.

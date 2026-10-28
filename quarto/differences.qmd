@@ -54,6 +54,39 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 | The 2018 and 2019 Dartmouth crosswalks are published as zipped CSV; the original reader only read Excel files. | Rebuilt | Both formats are read. | None |
 | State FIPS codes were labelled from a spreadsheet. | Rebuilt | `usRds` labels the state from the USRDS format `$STATFIP`. | None |
 
+### In code: the Dartmouth codes
+
+The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original's names for comparison, and the replication does the same thing with `clean_dartmouth_codes()` (see [Functions](functions.qmd#dartmouth-codes)).
+
+```{r}
+#| echo: false
+#| eval: true
+source("_site_functions.R")
+
+side_by_side_diff(
+  old = r"---(
+HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
+  left_join(hsahittingbenchmark)%>%
+  mutate(Legamputationsper1000Medica=ifelse(Legamputationsper1000Medica<0, -Legamputationsper1000Medica, Legamputationsper1000Medica))%>%
+  mutate(annualpercenteyeexam2015=ifelse(annualpercenteyeexam2015<0, -annualpercenteyeexam2015, annualpercenteyeexam2015))%>%
+  mutate(femaleswithonemammointwoyears=ifelse(femaleswithonemammointwoyears<0, -femaleswithonemammointwoyears,
+                                              femaleswithonemammointwoyears))%>%
+  mutate(percentwithhgba1c2015=ifelse(percentwithhgba1c2015<0, -percentwithhgba1c2015, percentwithhgba1c2015))
+)---",
+  new = r"---(
+HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
+  left_join(hsahittingbenchmark)%>%
+  mutate(across(
+    c(Legamputationsper1000Medica, annualpercenteyeexam2015,
+      femaleswithonemammointwoyears, percentwithhgba1c2015),
+    \(x) if_else(x %in% c(-88888, -99999), NA_real_, x)
+  ))
+)---",
+  old_title = "Original: negative values made positive",
+  new_title = "Corrected: Dartmouth's codes become missing"
+)
+```
+
 ## Patient variables
 
 | Original code | Kind | Replication | Effect on published results |

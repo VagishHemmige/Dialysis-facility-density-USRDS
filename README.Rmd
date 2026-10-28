@@ -42,7 +42,7 @@ Requires authorized access to the USRDS Medical Evidence and Residence files, lo
 
 1. Point usRds at the USRDS files once: `usRds::set_USRDS_wd("<folder>", permanent = TRUE)`.
 2. Install a Census API key once: `tidycensus::census_api_key("<key>", install = TRUE)`.
-3. Create and review `references/esrd-cause-categories.csv` by running `R/classify_esrd_causes.R` once (needs OpenAI, Anthropic and Google API keys).
+3. Create and review `references/esrd-cause-categories.csv` by running `R/classify_esrd_causes.R` once (needs OpenAI, Anthropic and Google API keys, and Ollama with the two local models).
 4. Run `R/main.R` from the project root.
 
 Public area data are downloaded to `data-raw/` on the first run. Tables and figures are written to `tables/` and `figures/`, which stay out of Git until they are checked and cleared for release under the USRDS data use agreement.

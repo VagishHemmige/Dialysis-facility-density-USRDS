@@ -267,13 +267,24 @@ variance_shares <- function(model) {
 # Classify codes with one model, in batches. `ask` is that provider's function:
 # it takes a batch of codes (code, description) and returns one row per code
 # with code, category and reason. Codes the model skipped are asked once more.
-classify_codes <- function(codes, ask, batch_size) {
-  ask_in_batches <- function(codes) {
-    codes |>
+# With a `label` (the provider's name), each batch reports its progress, since
+# a batch can take a minute or more.
+classify_codes <- function(codes, ask, batch_size, label = NULL) {
+  report <- function(...) {
+    if (!is.null(label)) message(label, ": ", ...)
+  }
+
+  ask_in_batches <- function(codes, round) {
+    batches <- codes |>
       select(code, description) |>
       mutate(batch = (row_number() - 1) %/% batch_size) |>
-      group_split(batch, .keep = FALSE) |>
-      map(ask) |>
+      group_split(batch, .keep = FALSE)
+
+    batches |>
+      imap(\(batch, i) {
+        report(str_glue("{round}batch {i} of {length(batches)} ({nrow(batch)} codes)"))
+        ask(batch)
+      }) |>
       list_rbind() |>
       transmute(
         code = as.character(code),
@@ -282,13 +293,19 @@ classify_codes <- function(codes, ask, batch_size) {
       )
   }
 
-  answers <- ask_in_batches(codes)
+  started <- Sys.time()
+  answers <- ask_in_batches(codes, round = "")
   skipped <- anti_join(codes, answers, by = "code")
 
   if (nrow(skipped) > 0) {
-    answers <- bind_rows(answers, ask_in_batches(skipped))
+    report(str_glue("{nrow(skipped)} code(s) skipped; asking once more"))
+    answers <- bind_rows(answers, ask_in_batches(skipped, round = "second try, "))
   }
 
+  report(str_glue(
+    "{nrow(answers)} answers in ",
+    "{round(as.numeric(difftime(Sys.time(), started, units = 'mins')), 1)} minutes"
+  ))
   answers
 }
 
@@ -321,12 +338,15 @@ check_votes <- function(votes, codes, categories, provider) {
 # answers (check_votes()) whether they are new or read back.
 cached_votes <- function(path, classify) {
   if (file.exists(path)) {
+    message("Reading saved answers: ", path)
     return(read_csv(path, col_types = cols(.default = col_character())))
   }
 
+  message("No saved answers; asking the model: ", basename(path))
   votes <- classify()
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   write_csv(votes, path, na = "")
+  message("Saved: ", path)
   votes
 }
 

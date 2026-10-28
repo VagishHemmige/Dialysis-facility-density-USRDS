@@ -156,21 +156,36 @@ esrd_cause_mapping_file <- "references/esrd-cause-categories.csv"
 # One row: how many codes the models agreed on, and Fleiss' kappa
 esrd_cause_agreement_file <- "references/esrd-cause-agreement.csv"
 
-# Models used by R/classify_esrd_causes.R: one from each of three providers
-# (OpenAI, Anthropic, Google), each provider's current general-purpose model as
-# of October 2026, as in an earlier ensemble by the same team that used
-# gpt-5.1, claude-sonnet-4-5 and gemini-2.5-flash. The models used are
-# recorded in the output file.
+# Models used by R/classify_esrd_causes.R: five models (decided by Vagish
+# Hemmige, 28 October 2026). Three cloud models, each provider's current
+# general-purpose model as of October 2026, as in an earlier ensemble by the
+# same team (gpt-5.1, claude-sonnet-4-5, gemini-2.5-flash); and two local
+# models run through Ollama on the analyst's own computer, which send nothing
+# over the internet: Alibaba's Qwen and IBM's Granite, so that the five come
+# from five unrelated companies. (Ollama's medical models are all Google's
+# MedGemma, which would overlap with Gemini, or older models built on Llama 2.)
+# Change a name here to use another model; the models used are recorded in
+# the output.
 esrd_classifier_models <- list(
   openai = "gpt-6.1-terra",
   anthropic = "claude-sonnet-5-5",
-  google = "gemini-3.8-flash"
+  google = "gemini-3.8-flash",
+  ollama_qwen = "qwen3.5:9b",
+  ollama_granite = "granite4.2:8b"
 )
-esrd_classifier_batch_size <- 100
-# A category is accepted when at least this many of the three models give it
-# (2 of 3; decided by Vagish Hemmige, 27 October 2026). Other codes go to the
-# deciders.
-esrd_classifier_min_agreement <- 2
+# Codes sent per call. Gemini timed out on batches of 100, and local models
+# are slower and handle less text at once, so they get smaller batches
+esrd_classifier_batch_sizes <- list(
+  openai = 100,
+  anthropic = 100,
+  google = 25,
+  ollama_qwen = 25,
+  ollama_granite = 25
+)
+# A category is accepted when at least this many of the five models give it:
+# 3 of 5, a majority (decided by Vagish Hemmige, 28 October 2026; the rule was
+# 2 of 3 while there were three models). Other codes go to the deciders.
+esrd_classifier_min_agreement <- 3
 esrd_classifier_prompt_file <- "prompts/esrd-cause-classification.md"
 # Output limit for Claude. ellmer 0.5.0 caps Claude's answers at 4,096 tokens
 # unless told otherwise, too few for a batch of 100 codes with reasons; the

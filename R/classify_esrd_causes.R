@@ -1,9 +1,10 @@
 # Purpose: draft the mapping of every primary-cause code (USRDS format
-#   $PD96DET) to the six cause categories, by an ensemble of three large
+#   $PD96DET) to the six cause categories, by an ensemble of five large
 #   language models, for review by the deciders (open decision #D4).
 # Needs: setup.R and functions.R sourced first; the irr package (Fleiss'
-#   kappa); API keys for the three providers in .Renviron (OPENAI_API_KEY,
-#   ANTHROPIC_API_KEY, GEMINI_API_KEY).
+#   kappa); API keys for the three cloud providers in .Renviron
+#   (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY); Ollama running on this
+#   computer with the two local models in setup.R pulled (ollama pull <model>).
 # Produces: one file of checked answers per provider in esrd_votes_dir
 #   (data-raw/, gitignored); esrd_cause_mapping_file (references/), with each
 #   model's category and reason, how the models agreed, and final_category
@@ -11,8 +12,10 @@
 #   deciders fill the rest and their initials in `reviewer`);
 #   esrd_cause_agreement_file, a one-row summary of agreement.
 # Run once, by hand, outside main.R: it makes paid API calls.
-# Only the public code list from the USRDS Researcher's Guide is sent. No
-#   patient data are sent, and the code list is not filtered by patient data.
+# Only the public code list from the USRDS Researcher's Guide is sent to the
+#   cloud models; the local models receive the same list and send nothing
+#   anywhere. No patient data are used, and the code list is not filtered by
+#   patient data.
 
 ## ---- check-ellmer-version
 # ellmer sends Claude a native structured-output request only for model names
@@ -120,8 +123,8 @@ classification_type <- ellmer::type_array(
 )
 
 ## ---- define-providers
-# One function per provider. Each takes a batch of codes and returns one row
-# per code with code, category and reason, through ellmer's structured output.
+# One function per model. Each takes a batch of codes and returns one row per
+# code with code, category and reason, through ellmer's structured output.
 # Each call starts a new chat, so no batch sees another batch's answers.
 ask_openai <- function(batch) {
   chat <- ellmer::chat_openai(model = esrd_classifier_models$openai, echo = "none")
@@ -142,38 +145,74 @@ ask_anthropic <- function(batch) {
   chat$chat_structured(classification_prompt(batch), type = classification_type)
 }
 
+# The two local models run through Ollama (http://localhost:11434), in the
+# same way; ask_ollama() returns the function for one of them
+ask_ollama <- function(model) {
+  function(batch) {
+    chat <- ellmer::chat_ollama(model = model, echo = "none")
+    chat$chat_structured(classification_prompt(batch), type = classification_type)
+  }
+}
+
 providers <- list(
   openai = ask_openai,
   anthropic = ask_anthropic,
-  google = ask_google
+  google = ask_google,
+  ollama_qwen = ask_ollama(esrd_classifier_models$ollama_qwen),
+  ollama_granite = ask_ollama(esrd_classifier_models$ollama_granite)
 )
 
 ## ---- classify-with-ensemble
-# Each provider's answers are saved in esrd_votes_dir under the provider, model
-# and prompt version, so a rerun after a failure asks only the providers with
-# no saved file. Saved answers are checked again on every run (check_votes()),
+# Each model's answers are saved in esrd_votes_dir under the provider, model
+# and prompt version, so a rerun after a failure asks only the models with no
+# saved file. Saved answers are checked again on every run (check_votes()),
 # so a file that no longer matches the code list, for example after a usRds
 # update, stops the script instead of being used; delete that file to ask
-# the provider again.
+# the model again.
+votes_path <- function(provider) {
+  # Ollama names contain ":", which Windows does not allow in file names
+  model <- str_replace_all(esrd_classifier_models[[provider]], "[^A-Za-z0-9._-]", "-")
+  file.path(esrd_votes_dir, str_glue("{provider}-{model}-{prompt_version}.csv"))
+}
+
+# Before asking any model, check that Ollama is running and has the local
+# models that still need to be asked
+local_to_ask <- names(providers) |>
+  keep(\(provider) str_starts(provider, "ollama_")) |>
+  discard(\(provider) file.exists(votes_path(provider)))
+
+if (length(local_to_ask) > 0) {
+  installed <- tryCatch(
+    ellmer::models_ollama()$id,
+    error = function(e) {
+      stop("Ollama is not running on this computer. Start it, then rerun.", call. = FALSE)
+    }
+  )
+  not_pulled <- setdiff(unlist(esrd_classifier_models[local_to_ask]), installed)
+  if (length(not_pulled) > 0) {
+    stop(str_glue(
+      "Ollama does not have {str_flatten_comma(not_pulled)}. ",
+      "Run in a terminal: {str_flatten(str_c('ollama pull ', not_pulled), '; ')}"
+    ), call. = FALSE)
+  }
+}
+
 message(str_glue(
-  "Classifying {nrow(cause_codes)} codes with {length(providers)} models, ",
-  "in batches of {esrd_classifier_batch_size}. Saved answers are reused; ",
-  "a model that has to be asked can take a minute or more per batch."
+  "Classifying {nrow(cause_codes)} codes with {length(providers)} models. ",
+  "Saved answers are reused; a model that has to be asked can take a minute ",
+  "or more per batch."
 ))
 
 votes <- providers |>
   imap(function(ask, provider) {
     message("\n", provider, " (", esrd_classifier_models[[provider]], ")")
     cached_votes(
-      path = file.path(
-        esrd_votes_dir,
-        str_glue("{provider}-{esrd_classifier_models[[provider]]}-{prompt_version}.csv")
-      ),
+      path = votes_path(provider),
       classify = function() {
         classify_codes(
           cause_codes,
           ask,
-          batch_size = esrd_classifier_batch_size,
+          batch_size = esrd_classifier_batch_sizes[[provider]],
           label = provider
         )
       }
@@ -200,7 +239,7 @@ mapping <- ensemble_agreement(votes, cause_codes, min_agreement = esrd_classifie
     mapping_written_on = as.character(Sys.Date())
   )
 
-# Fleiss' kappa describes how far the three models agree beyond chance
+# Fleiss' kappa describes how far the models agree beyond chance
 # (1 = perfect, 0 = chance). It is reported, not used to accept codes.
 kappa <- mapping |>
   select(starts_with("category_")) |>

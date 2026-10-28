@@ -50,7 +50,7 @@ includes `add_dialysis_facility_counts()`.
     `tidycensus::census_api_key("<key>", install = TRUE)`.
 3.  Create and review `references/esrd-cause-categories.csv` by running
     `R/classify_esrd_causes.R` once (needs OpenAI, Anthropic and Google
-    API keys).
+    API keys, and Ollama with the two local models).
 4.  Run `R/main.R` from the project root.
 
 Public area data are downloaded to `data-raw/` on the first run. Tables

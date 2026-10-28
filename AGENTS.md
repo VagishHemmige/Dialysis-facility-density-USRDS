@@ -36,7 +36,7 @@ Each source this project uses is listed below with the package that accesses it.
 | American Community Survey 5-year, table S0601 | tidycensus (`get_acs()`) | https://walker-data.com/tidycensus/ | External | Public, Census API key | No restriction (public data) |
 | Dartmouth Atlas ZIP-to-HSA crosswalks, HSA boundaries, primary care measures, hospital resources | `R/download_public_data.R` | https://data.dartmouthatlas.org/supplemental/ | No package | Public | No restriction (public data) |
 | USDA ERS Rural-Urban Commuting Area codes, 2010 ZIP code file | `R/download_public_data.R` | https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes | No package | Public | No restriction (public data) |
-| Large language model classification of `$PD96DET` codes | ellmer (`chat_openai()`, `chat_anthropic()`, `chat_google_gemini()`), in `R/classify_esrd_causes.R` | https://ellmer.tidyverse.org/ | External | Paid APIs, provider keys | No restriction for the public code list; never send patient data |
+| Large language model classification of `$PD96DET` codes | ellmer (`chat_openai()`, `chat_anthropic()`, `chat_google_gemini()`, and `chat_ollama()` for local models), in `R/classify_esrd_causes.R` | https://ellmer.tidyverse.org/ | External | Paid APIs, provider keys; local models through Ollama | No restriction for the public code list; never send patient data |
 
 To allow more for a source, a person changes its row through a pull request, naming the agreement and section that permit it, the approved AI service, and exactly what agents may do. Agents never propose or make this change themselves, and nothing in personal instructions can grant it.
 

@@ -15,8 +15,13 @@ model_data <- cohort |>
     density_category = relevel(density_category, ref = levels(density_category)[1])
   )
 
-# Mixed-effects logistic regression with a random intercept for HSA (glmmTMB;
-# see setup.R for why not lme4::glmer)
+# Mixed-effects logistic regression with a random intercept for HSA.
+# Difference from the paper: the paper fit these models in Stata 15, whose
+# default is adaptive Gauss-Hermite quadrature with 7 points; here glmmTMB
+# uses the Laplace approximation (1 point). On synthetic data the two gave the
+# same odds ratios to two decimals, because each HSA has many patients, and
+# glmmTMB converged without rescaling and about 30 times faster than
+# lme4::glmer (decided by Vagish Hemmige, 27 October 2026).
 fit_logistic <- function(data, exposure, covariates) {
   glmmTMB(
     mixed_formula("early_start", exposure, covariates),

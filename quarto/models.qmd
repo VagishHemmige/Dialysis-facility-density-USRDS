@@ -94,6 +94,39 @@ Each distinct model is fit once and its density terms extracted: odds ratios for
 #| eval: false
 ```
 
+### One model written out
+
+The code above builds every model from the list rather than writing each one out, so no single model appears in it. As an example, this is what it fits for Table 2, Model 3, with albumin and hemoglobin, the paper's fully adjusted model. Each row of the list becomes a call like this one; the other models drop or add covariates, change the patients, or swap the outcome or exposure.
+
+```r
+# Table 2, block "With albumin and hemoglobin", Model 3:
+# outcome early_start, exposure density_category, patients "All", labs TRUE
+fit <- glmmTMB(
+  early_start ~ density_category +
+    # Model 1: demographics and year (model_1_covariates)
+    age + sex + race + hispanic + dialysis_year +
+    # Model 2 adds comorbidities, access and cause (model_2_covariates)
+    heart_failure + coronary_disease + diabetes + cerebrovascular_disease +
+    alcohol_or_drug + immobility + institutionalized + access_type + esrd_cause +
+    # Model 3 adds insurance, nephrology care and area measures (model_3_covariates)
+    insurance + nephrology_care + rural_urban + zip_percent_poverty +
+    zip_percent_black + hsa_ambulatory_sensitive_discharges +
+    hsa_percent_eye_exam + hsa_percent_hba1c +
+    # labs = TRUE adds the laboratory values (model_2_laboratory)
+    albumin + hemoglobin +
+    # random intercept for HSA
+    (1 | hsanum),
+  data = patient_groups[["All"]],   # model_data: the whole cohort
+  family = binomial
+)
+
+# The rows reported: odds ratios for the four density categories against
+# HSAs with no facility, with 95% CIs, p values and the patients used
+density_effects(fit, "^density_category", exponentiate = TRUE)
+```
+
+In the code, `model_covariates("Model 3", labs = TRUE, patients = "All")` returns these 24 covariates, and `mixed_formula()` turns them into the formula. A test (`tests/test-model-example.R`) checks that the formula on this page is the one the code builds, so the example cannot drift from the code.
+
 ## Variance decomposition
 
 How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model leaves out patients with no dialysis facility ID, so the two models are fit on slightly different sets of patients; whether to fit both on the same patients is for the deciders.

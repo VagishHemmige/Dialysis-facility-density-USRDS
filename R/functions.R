@@ -414,6 +414,60 @@ ensemble_agreement <- function(votes, codes, min_agreement) {
     left_join(agreement, by = "code", relationship = "one-to-one")
 }
 
+## ---- fn-local-model-report
+# One row per model whose answers are reported but do not vote: how many
+# codes it answered once with a code from the list, how many it left
+# unanswered, how many answers carried text that is not a code in the list,
+# how many codes it answered more than once, and, among codes it answered
+# once that have an accepted category, how often it gave that category.
+# `accepted` has one row per code with `code` and `model_category`.
+local_model_report <- function(votes, codes, accepted) {
+  valid <- semi_join(votes, codes, by = "code")
+  answered_once <- valid |>
+    filter(n() == 1, .by = c(provider, code))
+
+  compared <- answered_once |>
+    inner_join(
+      filter(accepted, !is.na(model_category)) |> select(code, model_category),
+      by = "code",
+      relationship = "many-to-one"
+    )
+
+  votes |>
+    distinct(provider) |>
+    left_join(count(answered_once, provider, name = "codes_answered"), by = "provider") |>
+    left_join(
+      valid |> distinct(provider, code) |> count(provider, name = "codes_with_any_answer"),
+      by = "provider"
+    ) |>
+    left_join(
+      anti_join(votes, codes, by = "code") |> count(provider, name = "answers_not_in_list"),
+      by = "provider"
+    ) |>
+    left_join(
+      valid |> count(provider, code) |> filter(n > 1) |> count(provider, name = "codes_repeated"),
+      by = "provider"
+    ) |>
+    left_join(
+      compared |>
+        summarize(
+          compared_with_accepted = n(),
+          agrees_with_accepted = sum(category == model_category),
+          .by = provider
+        ),
+      by = "provider"
+    ) |>
+    mutate(
+      across(-provider, \(n) replace_na(n, 0L)),
+      codes_missing = nrow(codes) - codes_with_any_answer,
+      share_agreeing = agrees_with_accepted / compared_with_accepted
+    ) |>
+    select(
+      provider, codes_answered, codes_missing, answers_not_in_list, codes_repeated,
+      compared_with_accepted, agrees_with_accepted, share_agreeing
+    )
+}
+
 ## ---- fn-hsa-population
 # HSA population from ZCTA populations. Several ZIP codes can share one ZCTA,
 # so each ZCTA is counted once per HSA and year; summing over ZIP codes would

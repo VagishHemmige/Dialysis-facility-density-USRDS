@@ -3,7 +3,7 @@ title: "2. Cause of kidney failure"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using five large language models: three cloud models and two that run on the analyst's own computer. Codes on which at least three of the five agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three cloud large language models. Codes on which at least two of the three agree are accepted without being read by a person; the deciders review the rest. Two smaller models that run on the analyst's own computer answer the same question and are reported for comparison, but do not vote: neither produced a complete, valid set of answers (see [What the local models showed](#what-the-local-models-showed)). Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -36,7 +36,7 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 -   ellmer 0.5.0 or later [@ellmer_pkg], and the irr package for Fleiss' kappa.
 -   An API key for each cloud provider in `.Renviron`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`.
 -   [Ollama](https://ollama.com) running on the same computer, with the two local models pulled (`ollama pull qwen3.5:9b` and `ollama pull llama3.1:8b` in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see [Setting up Ollama](#setting-up-ollama) before the first run.
--   The models, batch sizes and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google) in the cloud, and locally `qwen3.5:9b` (Alibaba's Qwen) and `llama3.1:8b` (Meta's Llama).
+-   The models, batch sizes and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google) in the cloud, and locally, reported without voting, `qwen3.5:9b` (Alibaba's Qwen) and `llama3.1:8b` (Meta's Llama).
 
 **It sends** only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), of 25 to Gemini and Qwen (about eighteen calls each), and of 5 to Llama (89 calls), plus more calls for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once: on the analyst's laptop, Llama 3.1 answered only 7 codes of a batch of 25, but every code of a batch of 5. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.
 
@@ -45,6 +45,7 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 -   One file of checked answers per model, in the gitignored `data-raw/` folder.
 -   `references/esrd-cause-categories.csv`: one row per code, with each model's category and reason, how the models agreed (`agreement`), the accepted category (`final_category`), the decider's initials (`reviewer`), and the prompt version, ellmer version, models and date.
 -   `references/esrd-cause-agreement.csv`: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.
+-   `references/esrd-cause-local-models.csv`: one row per local model, with how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category.
 
 **How the analysis uses it**: [Linking area data](link_area_data.qmd) reads only `code` and `final_category`. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.
 
@@ -80,7 +81,7 @@ The original mapping spreadsheet is lost. Its replacement starts from a public l
 
 ## The prompt
 
-All five models receive the same prompt, word for word. It is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md), so that it can be read and edited on its own and shown here exactly as sent:
+All five models, voting or not, receive the same prompt, word for word. It is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md), so that it can be read and edited on its own and shown here exactly as sent:
 
 ```{verbatim}
 #| file: ../prompts/esrd-cause-classification.md
@@ -140,9 +141,9 @@ The structured output schema restricts each answer to the six category names. Th
 
 ## One function per model
 
-Five models, set in `setup.R` and all called through `ellmer` [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`).
+Five models, set in `setup.R`, three voting and two reported, all called through `ellmer` [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`).
 
-The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and Meta's Llama, chosen so that the five models come from five unrelated companies and are less likely to make the same mistakes. Llama 3.1 replaced IBM's Granite (`granite4.2:8b`) on 29 October 2026 (decided by Vagish Hemmige): on the analyst's laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They also show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed as well.
+The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and Meta's Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its "thinking" turned off (`reasoning_effort = "none"`): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM's Granite (`granite4.2:8b`) on 29 October 2026 (decided by Vagish Hemmige): on the analyst's laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.
 
 ```{r}
 #| label: define-providers
@@ -196,7 +197,7 @@ In a terminal, `powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server
 
 ## Running, checking and saving each model
 
-Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
+Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models' answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). The local models' answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (`esrd_classifier_timeout_s`); ellmer's default of 5 minutes was too short on a laptop processor. Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
 
 ```{r}
 #| label: classify-with-ensemble
@@ -205,12 +206,29 @@ Before asking any model, the script checks that Ollama is running and has the lo
 
 ## Agreement
 
-A code is accepted when at least three of the five models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 28 October 2026, replacing two of three when the two local models were added). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "3 of 5 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
+A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
 
 Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.
 
 ```{r}
 #| label: measure-agreement
+#| eval: false
+```
+
+## What the local models showed {#what-the-local-models-showed}
+
+The two local models were meant to vote, and were run on the analyst's laptop (processor only, 32 GB of memory) on 28 and 29 October 2026. Neither produced a complete, valid set of answers, so neither votes (decided by Vagish Hemmige, 29 October 2026); their answers are kept and reported, because what they did is itself a finding of this demonstration.
+
+-   **They dropped codes in longer batches.** Both answered every code of a 5-code test. In batches of 25, Qwen left 150 of the 445 codes unanswered even after asking a second time, and Llama answered 7 of a 25-code test. Even in batches of 5, Llama left 124 codes unanswered on its first pass, and 28 after asking a second time.
+-   **They returned text that is not a code.** Qwen put 25 codes in quotation marks and returned one answer with no code. Llama returned codes with `</code>` attached, the placeholders `{code}` and `What is the code?`, four invented web addresses, and codes not in the list (for example `Z88.0`, and `D1022` for `E1022`). In all, 20 of its answers carried text that is not a code in the list, and it answered 6 codes more than once, some with different categories.
+-   **Some categories contradict the model's own reason or are clinically wrong.** Qwen put AIDS nephropathy (429) under Diabetes, with the reason that it "falls under viral/glomerular causes … not diabetes". Llama put lupus nephritis (7100) and membranous nephropathy (5831) under Diabetes, and malignant hypertension (4010) under Diabetes with the reason "No indication of diabetes".
+-   **They were slow.** Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.
+-   **A third model did not run at all.** IBM's Granite (`granite4.2:8b`) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.
+
+These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. `references/esrd-cause-local-models.csv` records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (`local_model_report()`, on the [functions page](functions.qmd)).
+
+```{r}
+#| label: report-local-models
 #| eval: false
 ```
 

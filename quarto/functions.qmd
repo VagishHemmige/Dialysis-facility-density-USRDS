@@ -204,6 +204,15 @@ One row per code with each model's category and reason; a category is accepted w
 #| eval: false
 ```
 
+## Reporting the local models
+
+For each model that answers but does not vote: how many codes it answered once with a code from the list, how many it left unanswered, how many answers carried text that is not a code in the list, how many codes it answered more than once, and how often it gave the category the voting models accepted. Tested on synthetic answers with a known count of each.
+
+```{r}
+#| label: fn-local-model-report
+#| eval: false
+```
+
 ## HSA population
 
 Builds the exposure's denominator from ZCTA populations, counting each ZCTA once per HSA and year even when several of the HSA's ZIP codes share it.

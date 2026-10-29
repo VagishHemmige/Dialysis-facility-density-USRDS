@@ -1,9 +1,9 @@
 ---
-title: "Classifying codes with an LLM ensemble"
+title: "2. Cause of kidney failure"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using five large language models: three cloud models and two that run on the analyst's own computer. Codes on which at least three of the five agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). The script is run once, by hand, because it calls paid APIs and needs the local models; the file it writes to `references/` is what the analysis reads.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using five large language models: three cloud models and two that run on the analyst's own computer. Codes on which at least three of the five agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an [open decision (D4)](differences.qmd#open-decisions). This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

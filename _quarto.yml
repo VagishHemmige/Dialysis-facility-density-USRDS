@@ -47,16 +47,18 @@ website:
         contents:
           - href: quarto/download_public_data.qmd
             text: 1. Public area data
+          - href: quarto/classify_esrd_causes.qmd
+            text: 2. Cause of kidney failure
           - href: quarto/prepare_patients.qmd
-            text: 2. USRDS patient data
+            text: 3. USRDS patient data
           - href: quarto/link_area_data.qmd
-            text: 3. Linking area data
+            text: 4. Linking area data
           - href: quarto/create_cohort.qmd
-            text: 4. Cohort flowchart
+            text: 5. Cohort flowchart
           - href: quarto/define_exposure.qmd
-            text: 5. Density categories
+            text: 6. Density categories
           - href: quarto/models.qmd
-            text: 6. Models
+            text: 7. Models
 
       - section: Tables and figures
         contents:
@@ -71,11 +73,6 @@ website:
             text: Published figures and tables
           - href: quarto/supplement.qmd
             text: Published supplement
-
-      - section: Cause of kidney failure
-        contents:
-          - href: quarto/classify_esrd_causes.qmd
-            text: Classifying codes with an LLM ensemble
 
       - href: quarto/about.qmd
         text: About

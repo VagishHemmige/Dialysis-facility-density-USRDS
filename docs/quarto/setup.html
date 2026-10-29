@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../quarto/functions.html" rel="next">
-<link href="../quarto/original.html" rel="prev">
+<link href="../quarto/differences.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -186,14 +186,14 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Differences from the original code</span></a>
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The original R Markdown file</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The original R Markdown file</span></a>
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differences from the original code</span></a>
   </div>
 </li>
       </ul>
@@ -238,32 +238,38 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. USRDS patient data</span></a>
+ <span class="menu-text">3. USRDS patient data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Linking area data</span></a>
+ <span class="menu-text">4. Linking area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Cohort flowchart</span></a>
+ <span class="menu-text">5. Cohort flowchart</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. Density categories</span></a>
+ <span class="menu-text">6. Density categories</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Models</span></a>
+ <span class="menu-text">7. Models</span></a>
   </div>
 </li>
       </ul>
@@ -317,7 +323,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cause of kidney failure</span></a>
+ <span class="menu-text">Project documents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -325,8 +331,26 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Classifying codes with an LLM ensemble</span></a>
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repository blueprint</span></a>
   </div>
 </li>
       </ul>
@@ -586,7 +610,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="cause-of-kidney-failure" class="level2">
 <h2 class="anchored" data-anchor-id="cause-of-kidney-failure">Cause of kidney failure</h2>
-<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by five models: one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026, and two run locally through Ollama (Alibaba’s Qwen and IBM’s Granite). Codes on which at least three agree are accepted, and the deciders review the rest. Gemini and the local models get batches of 25 codes rather than 100 (see <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>; <a href="../quarto/differences.html#open-decisions">open decision D4</a>). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
+<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>; <a href="../quarto/differences.html#open-decisions">open decision D4</a>). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -603,45 +627,66 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>esrd_cause_mapping_file <span class="ot">&lt;-</span> <span class="st">"references/esrd-cause-categories.csv"</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># One row: how many codes the models agreed on, and Fleiss' kappa</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>esrd_cause_agreement_file <span class="ot">&lt;-</span> <span class="st">"references/esrd-cause-agreement.csv"</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Models used by R/classify_esrd_causes.R: five models (decided by Vagish</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Hemmige, 28 October 2026). Three cloud models, each provider's current</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># general-purpose model as of October 2026, as in an earlier ensemble by the</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># same team (gpt-5.1, claude-sonnet-4-5, gemini-2.5-flash); and two local</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># models run through Ollama on the analyst's own computer, which send nothing</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># over the internet: Alibaba's Qwen and IBM's Granite, so that the five come</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># from five unrelated companies. (Ollama's medical models are all Google's</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># MedGemma, which would overlap with Gemini, or older models built on Llama 2.)</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Change a name here to use another model; the models used are recorded in</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># the output.</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>esrd_classifier_models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> <span class="st">"gpt-6.1-terra"</span>,</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> <span class="st">"claude-sonnet-5-5"</span>,</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> <span class="st">"gemini-3.8-flash"</span>,</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="st">"qwen3.5:9b"</span>,</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_granite =</span> <span class="st">"granite4.2:8b"</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Codes sent per call. Gemini timed out on batches of 100, and local models</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># are slower and handle less text at once, so they get smaller batches</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>esrd_classifier_batch_sizes <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> <span class="dv">100</span>,</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> <span class="dv">100</span>,</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> <span class="dv">25</span>,</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="dv">25</span>,</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_granite =</span> <span class="dv">25</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co"># A category is accepted when at least this many of the five models give it:</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 of 5, a majority (decided by Vagish Hemmige, 28 October 2026; the rule was</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 of 3 while there were three models). Other codes go to the deciders.</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>esrd_classifier_min_agreement <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>esrd_classifier_prompt_file <span class="ot">&lt;-</span> <span class="st">"prompts/esrd-cause-classification.md"</span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Output limit for Claude. ellmer 0.5.0 caps Claude's answers at 4,096 tokens</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co"># unless told otherwise, too few for a batch of 100 codes with reasons; the</span></span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co"># other providers have no default cap in ellmer.</span></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>esrd_classifier_claude_max_tokens <span class="ot">&lt;-</span> <span class="dv">16000</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Each provider's checked answers are saved here (gitignored), so a rerun does</span></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co"># not pay for a provider that already finished</span></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>esrd_votes_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(public_data_dir, <span class="st">"esrd-cause-votes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># One row per local model: how complete and valid its answers were, and how</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># often it agreed with the accepted category (reported, not used to accept)</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>esrd_local_model_file <span class="ot">&lt;-</span> <span class="st">"references/esrd-cause-local-models.csv"</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Models used by R/classify_esrd_causes.R. Three cloud models, each</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># provider's current general-purpose model as of October 2026, as in an</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># earlier ensemble by the same team (gpt-5.1, claude-sonnet-4-5,</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># gemini-2.5-flash); and two local models run through Ollama on the analyst's</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># own computer, which send nothing over the internet: Alibaba's Qwen and</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Meta's Llama, from two further companies (decided by Vagish Hemmige, 28 and</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 29 October 2026). Llama 3.1 replaced IBM's Granite (granite4.2:8b) on 29</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># October 2026: on the analyst's laptop Granite returned no answers for 5</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># codes in 15 minutes. Qwen answers with its "thinking" turned off: with it</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># on, its reasoning filled Ollama's working space before the answer was</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># written. (Ollama's medical models are all Google's MedGemma, which would</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># overlap with Gemini, or older models built on Llama 2.) Change a name here</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># to use another model; the models used are recorded in the output.</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Only the three cloud models vote. The local models are run and reported</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># for comparison, but do not vote (decided by Vagish Hemmige, 29 October</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 2026): on the analyst's laptop neither produced a complete, valid set of</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># answers. Both left codes unanswered, returned text that is not a code (a</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># code in quotation marks, "&lt;/code&gt;" fragments, web addresses, codes not in</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># the list) and gave categories that contradict their own reasons.</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>esrd_classifier_models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> <span class="st">"gpt-6.1-terra"</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> <span class="st">"claude-sonnet-5-5"</span>,</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> <span class="st">"gemini-3.8-flash"</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="st">"qwen3.5:9b"</span>,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_llama =</span> <span class="st">"llama3.1:8b"</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>esrd_classifier_voting <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"openai"</span>, <span class="st">"anthropic"</span>, <span class="st">"google"</span>)</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Codes sent per call. Gemini timed out on batches of 100, and local models</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co"># are slower and handle less text at once, so they get smaller batches. On the</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co"># analyst's laptop, Llama 3.1 answered only 7 of a batch of 25 codes but all of</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co"># a batch of 5 (29 October 2026)</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>esrd_classifier_batch_sizes <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> <span class="dv">100</span>,</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> <span class="dv">100</span>,</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> <span class="dv">25</span>,</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="dv">25</span>,</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_llama =</span> <span class="dv">5</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co"># A category is accepted when at least this many of the three voting models</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co"># give it: 2 of 3, a majority (decided by Vagish Hemmige, 29 October 2026,</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="co"># when the local models stopped voting; the rule had been 3 of 5). Other codes</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="co"># go to the deciders.</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>esrd_classifier_min_agreement <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>esrd_classifier_prompt_file <span class="ot">&lt;-</span> <span class="st">"prompts/esrd-cause-classification.md"</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Output limit for Claude. ellmer 0.5.0 caps Claude's answers at 4,096 tokens</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co"># unless told otherwise, too few for a batch of 100 codes with reasons; the</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="co"># other providers have no default cap in ellmer.</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>esrd_classifier_claude_max_tokens <span class="ot">&lt;-</span> <span class="dv">16000</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Seconds to wait for one answer. ellmer's default, 5 minutes, is too short</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co"># for a local model on a laptop processor; the cloud models answer well within</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="co"># either limit.</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>esrd_classifier_timeout_s <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="sc">*</span> <span class="dv">60</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Each provider's checked answers are saved here (gitignored), so a rerun does</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="co"># not pay for a provider that already finished</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>esrd_votes_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(public_data_dir, <span class="st">"esrd-cause-votes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1148,8 +1193,8 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../quarto/original.html" class="pagination-link" aria-label="The original R Markdown file">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">The original R Markdown file</span>
+      <a href="../quarto/differences.html" class="pagination-link" aria-label="Differences from the original code">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Differences from the original code</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1227,7 +1272,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cause of kidney failure</span></span>
 <span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by five models: one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026, and two run locally through Ollama (Alibaba's Qwen and IBM's Granite). Codes on which at least three agree are accepted, and the deciders review the rest. Gemini and the local models get batches of 25 codes rather than 100 (see <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>; <span class="co">[</span><span class="ot">open decision D4</span><span class="co">](differences.qmd#open-decisions)</span>). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>; <span class="co">[</span><span class="ot">open decision D4</span><span class="co">](differences.qmd#open-decisions)</span>). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-cause-constants</span></span>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>Classifying codes with an LLM ensemble – Dialysis facility density: a replication</title>
+<title>2. Cause of kidney failure – Dialysis facility density: a replication</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -91,8 +91,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../quarto/about.html" rel="next">
-<link href="../quarto/supplement.html" rel="prev">
+<link href="../quarto/prepare_patients.html" rel="next">
+<link href="../quarto/download_public_data.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -157,7 +157,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">Cause of kidney failure</a></li><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">Classifying codes with an LLM ensemble</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/download_public_data.html">Data processing and analysis</a></li><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">2. Cause of kidney failure</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -205,14 +205,14 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Differences from the original code</span></a>
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The original R Markdown file</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The original R Markdown file</span></a>
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differences from the original code</span></a>
   </div>
 </li>
       </ul>
@@ -257,32 +257,38 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2. Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. USRDS patient data</span></a>
+ <span class="menu-text">3. USRDS patient data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Linking area data</span></a>
+ <span class="menu-text">4. Linking area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Cohort flowchart</span></a>
+ <span class="menu-text">5. Cohort flowchart</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. Density categories</span></a>
+ <span class="menu-text">6. Density categories</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Models</span></a>
+ <span class="menu-text">7. Models</span></a>
   </div>
 </li>
       </ul>
@@ -336,7 +342,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cause of kidney failure</span></a>
+ <span class="menu-text">Project documents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -344,8 +350,26 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Classifying codes with an LLM ensemble</span></a>
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repository blueprint</span></a>
   </div>
 </li>
       </ul>
@@ -380,6 +404,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   </ul></li>
   <li><a href="#running-checking-and-saving-each-model" id="toc-running-checking-and-saving-each-model" class="nav-link" data-scroll-target="#running-checking-and-saving-each-model">Running, checking and saving each model</a></li>
   <li><a href="#agreement" id="toc-agreement" class="nav-link" data-scroll-target="#agreement">Agreement</a></li>
+  <li><a href="#what-the-local-models-showed" id="toc-what-the-local-models-showed" class="nav-link" data-scroll-target="#what-the-local-models-showed">What the local models showed</a></li>
   <li><a href="#how-the-mapping-is-checked" id="toc-how-the-mapping-is-checked" class="nav-link" data-scroll-target="#how-the-mapping-is-checked">How the mapping is checked</a></li>
   <li><a href="#writing-the-mapping" id="toc-writing-the-mapping" class="nav-link" data-scroll-target="#writing-the-mapping">Writing the mapping</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -389,9 +414,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">Cause of kidney failure</a></li><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">Classifying codes with an LLM ensemble</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/download_public_data.html">Data processing and analysis</a></li><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">2. Cause of kidney failure</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Classifying codes with an LLM ensemble</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">2. Cause of kidney failure</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -421,7 +446,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>Drafts the mapping of every USRDS primary-cause code to the six categories of the paper’s Table 1, using five large language models: three cloud models and two that run on the analyst’s own computer. Codes on which at least three of the five agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an <a href="../quarto/differences.html#open-decisions">open decision (D4)</a>. The script is run once, by hand, because it calls paid APIs and needs the local models; the file it writes to <code>references/</code> is what the analysis reads.</p>
+<p>Drafts the mapping of every USRDS primary-cause code to the six categories of the paper’s Table 1, using three cloud large language models. Codes on which at least two of the three agree are accepted without being read by a person; the deciders review the rest. Two smaller models that run on the analyst’s own computer answer the same question and are reported for comparison, but do not vote: neither produced a complete, valid set of answers (see <a href="#what-the-local-models-showed">What the local models showed</a>). Whether a model-drafted mapping is acceptable for the replication at all is still an <a href="../quarto/differences.html#open-decisions">open decision (D4)</a>. This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in <code>R/main.R</code> is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to <code>references/</code> is what the analysis reads once the deciders have reviewed it.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -460,15 +485,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <ul>
 <li>ellmer 0.5.0 or later <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span>, and the irr package for Fleiss’ kappa.</li>
 <li>An API key for each cloud provider in <code>.Renviron</code>: <code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code> and <code>GEMINI_API_KEY</code>.</li>
-<li><a href="https://ollama.com">Ollama</a> running on the same computer, with the two local models pulled (<code>ollama pull qwen3.5:9b</code> and <code>ollama pull granite4.2:8b</code> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <a href="#setting-up-ollama">Setting up Ollama</a> before the first run.</li>
-<li>The models, batch sizes and agreement rule set in <code>setup.R</code> (see <a href="../quarto/setup.html#cause-of-kidney-failure">Setup</a>): <code>gpt-6.1-terra</code> (OpenAI), <code>claude-sonnet-5-5</code> (Anthropic) and <code>gemini-3.8-flash</code> (Google) in the cloud, and locally <code>qwen3.5:9b</code> (Alibaba’s Qwen) and <code>granite4.2:8b</code> (IBM’s Granite).</li>
+<li><a href="https://ollama.com">Ollama</a> running on the same computer, with the two local models pulled (<code>ollama pull qwen3.5:9b</code> and <code>ollama pull llama3.1:8b</code> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <a href="#setting-up-ollama">Setting up Ollama</a> before the first run.</li>
+<li>The models, batch sizes and agreement rule set in <code>setup.R</code> (see <a href="../quarto/setup.html#cause-of-kidney-failure">Setup</a>): <code>gpt-6.1-terra</code> (OpenAI), <code>claude-sonnet-5-5</code> (Anthropic) and <code>gemini-3.8-flash</code> (Google) in the cloud, and locally, reported without voting, <code>qwen3.5:9b</code> (Alibaba’s Qwen) and <code>llama3.1:8b</code> (Meta’s Llama).</li>
 </ul>
-<p><strong>It sends</strong> only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), and of 25 to Gemini and the local models (about eighteen calls each), plus one more call for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.</p>
+<p><strong>It sends</strong> only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), of 25 to Gemini and Qwen (about eighteen calls each), and of 5 to Llama (89 calls), plus more calls for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once: on the analyst’s laptop, Llama 3.1 answered only 7 codes of a batch of 25, but every code of a batch of 5. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.</p>
 <p><strong>It produces</strong></p>
 <ul>
 <li>One file of checked answers per model, in the gitignored <code>data-raw/</code> folder.</li>
 <li><code>references/esrd-cause-categories.csv</code>: one row per code, with each model’s category and reason, how the models agreed (<code>agreement</code>), the accepted category (<code>final_category</code>), the decider’s initials (<code>reviewer</code>), and the prompt version, ellmer version, models and date.</li>
 <li><code>references/esrd-cause-agreement.csv</code>: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss’ kappa.</li>
+<li><code>references/esrd-cause-local-models.csv</code>: one row per local model, with how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category.</li>
 </ul>
 <p><strong>How the analysis uses it</strong>: <a href="../quarto/link_area_data.html">Linking area data</a> reads only <code>code</code> and <code>final_category</code>. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.</p>
 <p><strong>Editing the file</strong>: the deciders fill <code>final_category</code> and <code>reviewer</code> for the codes with no majority, and for any accepted code they change. Edit it as text (in Positron, or another text editor), not in Excel: 11 codes start with a zero, which Excel would strip, and those patients would silently become Other.</p>
@@ -561,7 +587,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="the-prompt" class="level2">
 <h2 class="anchored" data-anchor-id="the-prompt">The prompt</h2>
-<p>All five models receive the same prompt, word for word. It is kept as a text file, <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md"><code>prompts/esrd-cause-classification.md</code></a>, so that it can be read and edited on its own and shown here exactly as sent:</p>
+<p>All five models, voting or not, receive the same prompt, word for word. It is kept as a text file, <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md"><code>prompts/esrd-cause-classification.md</code></a>, so that it can be read and edited on its own and shown here exactly as sent:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>You are a nephrologist classifying the primary cause of kidney failure recorded on the CMS-2728 Medical Evidence form, using the USRDS code list.</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Assign each code to exactly one of these categories:</span>
@@ -716,8 +742,8 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="one-function-per-model" class="level2">
 <h2 class="anchored" data-anchor-id="one-function-per-model">One function per model</h2>
-<p>Five models, set in <code>setup.R</code> and all called through <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude’s answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<code>esrd_classifier_claude_max_tokens</code>).</p>
-<p>The three cloud models are each provider’s current general-purpose model. The two local models run through Ollama on the analyst’s computer (decided by Vagish Hemmige, 28 October 2026): Alibaba’s Qwen and IBM’s Granite, chosen so that the five models come from five unrelated companies and are less likely to make the same mistakes. Ollama’s models trained for medicine were considered, but they are all Google’s MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They also show the approach that would be needed if a classification ever involved patient data: a model on the analyst’s own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed as well.</p>
+<p>Five models, set in <code>setup.R</code>, three voting and two reported, all called through <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude’s answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<code>esrd_classifier_claude_max_tokens</code>).</p>
+<p>The three cloud models are each provider’s current general-purpose model. The two local models run through Ollama on the analyst’s computer (decided by Vagish Hemmige, 28 October 2026): Alibaba’s Qwen and Meta’s Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its “thinking” turned off (<code>reasoning_effort = "none"</code>): with it on, its reasoning filled Ollama’s working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM’s Granite (<code>granite4.2:8b</code>) on 29 October 2026 (decided by Vagish Hemmige): on the analyst’s laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama’s models trained for medicine were considered, but they are all Google’s MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst’s own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -744,21 +770,27 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The two local models run through Ollama (http://localhost:11434), in the</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># same way; ask_ollama() returns the function for one of them</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>ask_ollama <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(batch) {</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    chat <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">chat_ollama</span>(<span class="at">model =</span> model, <span class="at">echo =</span> <span class="st">"none"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    chat<span class="sc">$</span><span class="fu">chat_structured</span>(<span class="fu">classification_prompt</span>(batch), <span class="at">type =</span> classification_type)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>providers <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> ask_openai,</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> ask_anthropic,</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> ask_google,</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="fu">ask_ollama</span>(esrd_classifier_models<span class="sc">$</span>ollama_qwen),</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_granite =</span> <span class="fu">ask_ollama</span>(esrd_classifier_models<span class="sc">$</span>ollama_granite)</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># same way; ask_ollama() returns the function for one of them, with any</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># settings it needs (passed to ellmer::params())</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>ask_ollama <span class="ot">&lt;-</span> <span class="cf">function</span>(model, ...) {</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(batch) {</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    chat <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">chat_ollama</span>(<span class="at">model =</span> model, <span class="at">params =</span> ellmer<span class="sc">::</span><span class="fu">params</span>(...), <span class="at">echo =</span> <span class="st">"none"</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    chat<span class="sc">$</span><span class="fu">chat_structured</span>(<span class="fu">classification_prompt</span>(batch), <span class="at">type =</span> classification_type)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>providers <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> ask_openai,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> ask_anthropic,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> ask_google,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Qwen's "thinking" off (see setup.R)</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="fu">ask_ollama</span>(esrd_classifier_models<span class="sc">$</span>ollama_qwen, <span class="at">reasoning_effort =</span> <span class="st">"none"</span>),</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_llama =</span> <span class="fu">ask_ollama</span>(esrd_classifier_models<span class="sc">$</span>ollama_llama)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># A local model on a laptop processor can take longer than ellmer's default</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># wait of 5 minutes per answer</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ellmer_timeout_s =</span> esrd_classifier_timeout_s)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -775,7 +807,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <h3 class="anchored" data-anchor-id="steps">Steps</h3>
 <ol type="1">
 <li><strong>Install Ollama</strong> from <a href="https://ollama.com/download">ollama.com/download</a>. The <a href="https://docs.ollama.com/windows">Windows notes</a> give the requirements and where Ollama keeps its files.</li>
-<li><strong>Download the two models</strong> in a terminal: <code>ollama pull qwen3.5:9b</code> and <code>ollama pull granite4.2:8b</code> (<a href="https://ollama.com/library/qwen3.5">Qwen 3.5</a>, <a href="https://ollama.com/library/granite4.2">Granite 4.2</a>). On a computer with less memory, <code>qwen3.5:4b</code> (3–4 GB) is a smaller choice; change its name in <code>setup.R</code>.</li>
+<li><strong>Download the two models</strong> in a terminal: <code>ollama pull qwen3.5:9b</code> and <code>ollama pull llama3.1:8b</code> (<a href="https://ollama.com/library/qwen3.5">Qwen 3.5</a>, <a href="https://ollama.com/library/llama3.1">Llama 3.1</a>). On a computer with less memory, <code>qwen3.5:4b</code> (3–4 GB) is a smaller choice; change its name in <code>setup.R</code>.</li>
 <li><strong>Test each model in the terminal before running the script</strong>: <code>ollama run qwen3.5:9b "Say hello"</code>. A model that cannot answer this will not answer the script either, and the terminal shows the error directly.</li>
 <li><strong>Measure the speed</strong>: <code>ollama run qwen3.5:9b --verbose "Say hello"</code> prints, after the answer, an <code>eval rate</code> in tokens per second. A batch of 25 codes needs roughly 1,000 tokens of answer, so at 5 tokens per second a batch takes about 3 minutes and the 18 batches about an hour, per model. The first request after starting Ollama also loads the model from disk, which takes up to a minute. Qwen 3.5 “thinks” before it answers, which adds to the time (<a href="https://docs.ollama.com/capabilities/thinking">Ollama: thinking</a>).</li>
 </ol>
@@ -804,75 +836,81 @@ setx OLLAMA_VULKAN 0</code></pre>
 </section>
 <section id="running-checking-and-saving-each-model" class="level2">
 <h2 class="anchored" data-anchor-id="running-checking-and-saving-each-model">Running, checking and saving each model</h2>
-<p>Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. Each provider’s answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (<code>check_votes()</code>, on the <a href="../quarto/functions.html">functions page</a>). Each batch’s answers are saved as soon as the batch finishes, in a partial file beside the provider’s answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a <code>usRds</code> update, stops the script; deleting that file asks the provider again.</p>
+<p>Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models’ answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (<code>check_votes()</code>, on the <a href="../quarto/functions.html">functions page</a>). The local models’ answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (<code>esrd_classifier_timeout_s</code>); ellmer’s default of 5 minutes was too short on a laptop processor. Each batch’s answers are saved as soon as the batch finishes, in a partial file beside the provider’s answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a <code>usRds</code> update, stops the script; deleting that file asks the provider again.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Each model's answers are saved in esrd_votes_dir under the provider, model</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and prompt version, so a rerun after a failure asks only the models with no</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># saved file. Saved answers are checked again on every run (check_votes()),</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># so a file that no longer matches the code list, for example after a usRds</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># update, stops the script instead of being used; delete that file to ask</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># the model again.</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>votes_path <span class="ot">&lt;-</span> <span class="cf">function</span>(provider) {</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ollama names contain ":", which Windows does not allow in file names</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(esrd_classifier_models[[provider]], <span class="st">"[^A-Za-z0-9._-]"</span>, <span class="st">"-"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(esrd_votes_dir, <span class="fu">str_glue</span>(<span class="st">"{provider}-{model}-{prompt_version}.csv"</span>))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Before asking any model, check that Ollama is running and has the local</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># models that still need to be asked</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>local_to_ask <span class="ot">&lt;-</span> <span class="fu">names</span>(providers) <span class="sc">|&gt;</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(\(provider) <span class="fu">str_starts</span>(provider, <span class="st">"ollama_"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discard</span>(\(provider) <span class="fu">file.exists</span>(<span class="fu">votes_path</span>(provider)))</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(local_to_ask) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  installed <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    ellmer<span class="sc">::</span><span class="fu">models_ollama</span>()<span class="sc">$</span>id,</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"Ollama is not running on this computer. Start it, then rerun."</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  not_pulled <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">unlist</span>(esrd_classifier_models[local_to_ask]), installed)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(not_pulled) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Ollama does not have {str_flatten_comma(not_pulled)}. "</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Run in a terminal: {str_flatten(str_c('ollama pull ', not_pulled), '; ')}"</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">str_glue</span>(</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Classifying {nrow(cause_codes)} codes with {length(providers)} models. "</span>,</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Saved answers are reused; a model that has to be asked can take a minute "</span>,</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"or more per batch."</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">&lt;-</span> providers <span class="sc">|&gt;</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="cf">function</span>(ask, provider) {</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, provider, <span class="st">" ("</span>, esrd_classifier_models[[provider]], <span class="st">")"</span>)</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cached_votes</span>(</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">path =</span> <span class="fu">votes_path</span>(provider),</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">classify =</span> <span class="cf">function</span>(partial_path) {</span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        <span class="fu">classify_codes</span>(</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>          cause_codes,</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>          ask,</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>          <span class="at">batch_size =</span> esrd_classifier_batch_sizes[[provider]],</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> provider,</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>          <span class="at">partial_path =</span> partial_path</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>      <span class="fu">check_votes</span>(cause_codes, esrd_cause_categories, provider) <span class="sc">|&gt;</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">provider =</span> provider)</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># saved file. The voting models' answers are checked again on every run</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (check_votes()), so a file that no longer matches the code list, for</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># example after a usRds update, stops the script instead of being used;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># delete that file to ask the model again. The local models' answers are kept</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># as they came back and reported (local_model_report()), not checked.</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>votes_path <span class="ot">&lt;-</span> <span class="cf">function</span>(provider) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ollama names contain ":", which Windows does not allow in file names</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(esrd_classifier_models[[provider]], <span class="st">"[^A-Za-z0-9._-]"</span>, <span class="st">"-"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(esrd_votes_dir, <span class="fu">str_glue</span>(<span class="st">"{provider}-{model}-{prompt_version}.csv"</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Before asking any model, check that Ollama is running and has the local</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># models that still need to be asked</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>local_to_ask <span class="ot">&lt;-</span> <span class="fu">names</span>(providers) <span class="sc">|&gt;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(\(provider) <span class="fu">str_starts</span>(provider, <span class="st">"ollama_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discard</span>(\(provider) <span class="fu">file.exists</span>(<span class="fu">votes_path</span>(provider)))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(local_to_ask) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  installed <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    ellmer<span class="sc">::</span><span class="fu">models_ollama</span>()<span class="sc">$</span>id,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"Ollama is not running on this computer. Start it, then rerun."</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  not_pulled <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">unlist</span>(esrd_classifier_models[local_to_ask]), installed)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(not_pulled) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Ollama does not have {str_flatten_comma(not_pulled)}. "</span>,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Run in a terminal: {str_flatten(str_c('ollama pull ', not_pulled), '; ')}"</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Classifying {nrow(cause_codes)} codes with {length(providers)} models. "</span>,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Saved answers are reused; a model that has to be asked can take a minute "</span>,</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"or more per batch."</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>all_votes <span class="ot">&lt;-</span> providers <span class="sc">|&gt;</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="cf">function</span>(ask, provider) {</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, provider, <span class="st">" ("</span>, esrd_classifier_models[[provider]], <span class="st">")"</span>)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    answers <span class="ot">&lt;-</span> <span class="fu">cached_votes</span>(</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">path =</span> <span class="fu">votes_path</span>(provider),</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">classify =</span> <span class="cf">function</span>(partial_path) {</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        <span class="fu">classify_codes</span>(</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>          cause_codes,</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>          ask,</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>          <span class="at">batch_size =</span> esrd_classifier_batch_sizes[[provider]],</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> provider,</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>          <span class="at">partial_path =</span> partial_path</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (provider <span class="sc">%in%</span> esrd_classifier_voting) {</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>      <span class="fu">check_votes</span>(answers, cause_codes, esrd_cause_categories, provider)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(answers, <span class="at">provider =</span> provider)</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Only the voting models decide the mapping</span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">&lt;-</span> <span class="fu">filter</span>(all_votes, provider <span class="sc">%in%</span> esrd_classifier_voting)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 <section id="agreement" class="level2">
 <h2 class="anchored" data-anchor-id="agreement">Agreement</h2>
-<p>A code is accepted when at least three of the five models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 28 October 2026, replacing two of three when the two local models were added). Accepted codes are not read by a person. <code>agreement</code> says, for each code, whether the models were unanimous, how many agreed (for example “3 of 5 models”), or that no category had a majority. For codes with no majority, the deciders fill <code>final_category</code> and their initials in <code>reviewer</code>.</p>
+<p>A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. <code>agreement</code> says, for each code, whether the models were unanimous, how many agreed (for example “2 of 3 models”), or that no category had a majority. For codes with no majority, the deciders fill <code>final_category</code> and their initials in <code>reviewer</code>.</p>
 <p>Fleiss’ kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</p>
 <div class="cell">
 <details class="code-fold">
@@ -889,7 +927,7 @@ setx OLLAMA_VULKAN 0</code></pre>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">reviewer =</span> <span class="cn">NA_character_</span>,</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">prompt_version =</span> prompt_version,</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ellmer_version =</span> <span class="fu">as.character</span>(<span class="fu">packageVersion</span>(<span class="st">"ellmer"</span>)),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">models =</span> <span class="fu">str_flatten</span>(<span class="fu">unlist</span>(esrd_classifier_models), <span class="st">"; "</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">models =</span> <span class="fu">str_flatten</span>(<span class="fu">unlist</span>(esrd_classifier_models[esrd_classifier_voting]), <span class="st">"; "</span>),</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping_written_on =</span> <span class="fu">as.character</span>(<span class="fu">Sys.Date</span>())</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -922,6 +960,41 @@ setx OLLAMA_VULKAN 0</code></pre>
 </details>
 </div>
 </section>
+<section id="what-the-local-models-showed" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-local-models-showed">What the local models showed</h2>
+<p>The two local models were meant to vote, and were run on the analyst’s laptop (processor only, 32 GB of memory) on 28 and 29 October 2026. Neither produced a complete, valid set of answers, so neither votes (decided by Vagish Hemmige, 29 October 2026); their answers are kept and reported, because what they did is itself a finding of this demonstration.</p>
+<ul>
+<li><strong>They dropped codes in longer batches.</strong> Both answered every code of a 5-code test. In batches of 25, Qwen left 150 of the 445 codes unanswered even after asking a second time, and Llama answered 7 of a 25-code test. Even in batches of 5, Llama left 124 codes unanswered on its first pass, and 28 after asking a second time.</li>
+<li><strong>They returned text that is not a code.</strong> Qwen put 25 codes in quotation marks and returned one answer with no code. Llama returned codes with <code>&lt;/code&gt;</code> attached, the placeholders <code>{code}</code> and <code>What is the code?</code>, four invented web addresses, and codes not in the list (for example <code>Z88.0</code>, and <code>D1022</code> for <code>E1022</code>). In all, 20 of its answers carried text that is not a code in the list, and it answered 6 codes more than once, some with different categories.</li>
+<li><strong>Some categories contradict the model’s own reason or are clinically wrong.</strong> Qwen put AIDS nephropathy (429) under Diabetes, with the reason that it “falls under viral/glomerular causes … not diabetes”. Llama put lupus nephritis (7100) and membranous nephropathy (5831) under Diabetes, and malignant hypertension (4010) under Diabetes with the reason “No indication of diabetes”.</li>
+<li><strong>They were slow.</strong> Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.</li>
+<li><strong>A third model did not run at all.</strong> IBM’s Granite (<code>granite4.2:8b</code>) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.</li>
+</ul>
+<p>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. <code>references/esrd-cause-local-models.csv</code> records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (<code>local_model_report()</code>, on the <a href="../quarto/functions.html">functions page</a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How complete and valid each local model's answers were, and how often it</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># agreed with the category the voting models accepted</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>local_report <span class="ot">&lt;-</span> all_votes <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>provider <span class="sc">%in%</span> esrd_classifier_voting) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">local_model_report</span>(cause_codes, <span class="at">accepted =</span> mapping) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">unlist</span>(esrd_classifier_models[provider]),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">prompt_version =</span> prompt_version,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">written_on =</span> <span class="fu">as.character</span>(<span class="fu">Sys.Date</span>()),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.after =</span> provider</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">str_glue_data</span>(</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  local_report,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{provider}: {codes_answered} of {nrow(cause_codes)} codes answered once, "</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{codes_missing} missing, {answers_not_in_list} answers not in the list; "</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"agreed with {agrees_with_accepted} of {compared_with_accepted} accepted categories."</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
 <section id="how-the-mapping-is-checked" class="level2">
 <h2 class="anchored" data-anchor-id="how-the-mapping-is-checked">How the mapping is checked</h2>
 <p>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</p>
@@ -936,12 +1009,13 @@ setx OLLAMA_VULKAN 0</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Both files hold only public codes, descriptions and model answers. Git keeps</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># no empty folders, so references/ does not exist in a fresh copy until the</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># first mapping is written and committed.</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">dirname</span>(esrd_cause_mapping_file), <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(mapping, esrd_cause_mapping_file, <span class="at">na =</span> <span class="st">""</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(agreement_summary, esrd_cause_agreement_file, <span class="at">na =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The three files hold only public codes, descriptions and model answers. Git keeps</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># no empty folders, so references/ does not exist in a fresh copy until the</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># first mapping is written and committed.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">dirname</span>(esrd_cause_mapping_file), <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(mapping, esrd_cause_mapping_file, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(agreement_summary, esrd_cause_agreement_file, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(local_report, esrd_local_model_file, <span class="at">na =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1427,252 +1501,270 @@ Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerk
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../quarto/supplement.html" class="pagination-link" aria-label="Published supplement">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Published supplement</span>
+      <a href="../quarto/download_public_data.html" class="pagination-link" aria-label="1. Public area data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1. Public area data</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../quarto/about.html" class="pagination-link" aria-label="About">
-        <span class="nav-page-text">About</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../quarto/prepare_patients.html" class="pagination-link" aria-label="3. USRDS patient data">
+        <span class="nav-page-text">3. USRDS patient data</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Classifying codes with an LLM ensemble"</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using five large language models: three cloud models and two that run on the analyst's own computer. Codes on which at least three of the five agree are accepted without being read by a person; the deciders review the rest. Whether a model-drafted mapping is acceptable for the replication at all is still an <span class="co">[</span><span class="ot">open decision (D4)</span><span class="co">](differences.qmd#open-decisions)</span>. The script is run once, by hand, because it calls paid APIs and needs the local models; the file it writes to <span class="in">`references/`</span> is what the analysis reads.</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/classify_esrd_causes.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/classify_esrd_causes.R)</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>This R script file is itself reliant on the following files:</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/setup.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`prompts/esrd-cause-classification.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>The code sections below are imported directly from that script when this page is rendered.</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">read_chunk</span>(<span class="st">"../R/classify_esrd_causes.R"</span>)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this step needs and produces</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>**To run it**, from the project root: <span class="in">`source("R/setup.R")`</span>, <span class="in">`source("R/functions.R")`</span>, then <span class="in">`source("R/classify_esrd_causes.R")`</span>. It is not part of <span class="in">`main.R`</span>.</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>**It needs**</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ellmer 0.5.0 or later <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span>, and the irr package for Fleiss' kappa.</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>An API key for each cloud provider in <span class="in">`.Renviron`</span>: <span class="in">`OPENAI_API_KEY`</span>, <span class="in">`ANTHROPIC_API_KEY`</span> and <span class="in">`GEMINI_API_KEY`</span>.</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> running on the same computer, with the two local models pulled (<span class="in">`ollama pull qwen3.5:9b`</span> and <span class="in">`ollama pull granite4.2:8b`</span> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <span class="co">[</span><span class="ot">Setting up Ollama</span><span class="co">](#setting-up-ollama)</span> before the first run.</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The models, batch sizes and agreement rule set in <span class="in">`setup.R`</span> (see <span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.qmd#cause-of-kidney-failure)</span>): <span class="in">`gpt-6.1-terra`</span> (OpenAI), <span class="in">`claude-sonnet-5-5`</span> (Anthropic) and <span class="in">`gemini-3.8-flash`</span> (Google) in the cloud, and locally <span class="in">`qwen3.5:9b`</span> (Alibaba's Qwen) and <span class="in">`granite4.2:8b`</span> (IBM's Granite).</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>**It sends** only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), and of 25 to Gemini and the local models (about eighteen calls each), plus one more call for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>**It produces**</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>One file of checked answers per model, in the gitignored <span class="in">`data-raw/`</span> folder.</span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-categories.csv`</span>: one row per code, with each model's category and reason, how the models agreed (<span class="in">`agreement`</span>), the accepted category (<span class="in">`final_category`</span>), the decider's initials (<span class="in">`reviewer`</span>), and the prompt version, ellmer version, models and date.</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-agreement.csv`</span>: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>**How the analysis uses it**: <span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd)</span> reads only <span class="in">`code`</span> and <span class="in">`final_category`</span>. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>**Editing the file**: the deciders fill <span class="in">`final_category`</span> and <span class="in">`reviewer`</span> for the codes with no majority, and for any accepted code they change. Edit it as text (in Positron, or another text editor), not in Excel: 11 codes start with a zero, which Excel would strip, and those patients would silently become Other.</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## ellmer version</span></span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>ellmer asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as <span class="in">`claude-sonnet-5-5`</span> from version 0.5.0 (the function <span class="in">`has_claude_structured_output()`</span> in ellmer's source). Older versions force a tool call instead, which current Claude models reject with the error "tool_choice ... not supported for this model".</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-ellmer-version</span></span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Protecting the deciders' review</span></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>Rerunning the script rewrites the mapping file. If the deciders have already reviewed any code in it, the script stops before calling any model, so their review cannot be overwritten; the existing file has to be renamed or moved first, and the reviewed rows copied into the new one.</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: protect-reviewed-mapping</span></span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## The code list</span></span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format <span class="in">`$PD96DET`</span> with its description, from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, which <span class="in">`usRds`</span> already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.) The script stops if a code is listed twice.</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-cause-codes</span></span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## The prompt</span></span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>All five models receive the same prompt, word for word. It is kept as a text file, <span class="co">[</span><span class="ot">`prompts/esrd-cause-classification.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)</span>, so that it can be read and edited on its own and shown here exactly as sent:</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{verbatim}</span></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a><span class="in">#| file: ../prompts/esrd-cause-classification.md</span></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a><span class="in">#| lang: markdown</span></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>For each batch, <span class="in">`{code_list}`</span> becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, <span class="in">`4464Z: WEGENERS GRANULOMATOSIS`</span>). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in <span class="in">`setup.R`</span>, because the structured output can only return those names.</span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>The prompt makes three rules:</span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**One category per code**, from the six in the paper's Table 1, each defined in words.</span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable. This is an assumption: the original spreadsheet had a sheet named "Other", but what it contained is not known.</span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**No inference beyond the description.** The model classifies from the code and its description only, which keeps it from inventing context.</span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## The six categories</span></span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>The original analysis took the six categories from a spreadsheet with one sheet per category ("Diabetes", "Hypertensive and Cardiac", "Glomerulonephritis", "HereditaryPCKD", "Transplant", "Other"), which no longer exists. Only the categories' names survive, in the sheet names and in the paper's Table 1, which labels the transplant category "solid organ and bone marrow" <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the 12 headings of the 2015 CMS-2728 list of primary causes <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span> and depart from them where the clinical definition differs:</span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CMS-2728 heading (2015) <span class="pp">|</span> Category here <span class="pp">|</span></span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Diabetes <span class="pp">|</span> Diabetes <span class="pp">|</span></span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Glomerulonephritis <span class="pp">|</span> Glomerulonephritis <span class="pp">|</span></span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Secondary Glomerulonephritis/Vasculitis <span class="pp">|</span> Glomerulonephritis for lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura; Other for thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura) and scleroderma <span class="pp">|</span></span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Interstitial Nephritis/Pyelonephritis <span class="pp">|</span> Other <span class="pp">|</span></span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Transplant Complications <span class="pp">|</span> Transplant failure or complications <span class="pp">|</span></span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Hypertension/Large Vessel Disease <span class="pp">|</span> Hypertension and cardiac disease <span class="pp">|</span></span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Cystic/Hereditary/Congenital/Other Diseases <span class="pp">|</span> Hereditary or polycystic kidney disease for cystic and inherited disease; Other for congenital anomalies not described as inherited <span class="pp">|</span></span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Neoplasms/Tumors <span class="pp">|</span> Other <span class="pp">|</span></span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Disorders of Mineral Metabolism <span class="pp">|</span> Other <span class="pp">|</span></span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Genitourinary System <span class="pp">|</span> Other <span class="pp">|</span></span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Acute Kidney Failure <span class="pp">|</span> Other <span class="pp">|</span></span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Miscellaneous Conditions <span class="pp">|</span> Other, except heart failure (Hypertension and cardiac disease) and HIV disease (Glomerulonephritis) <span class="pp">|</span></span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>The 2015 list covers only the ICD-10-CM codes. The older ICD-9-CM codes in <span class="in">`$PD96DET`</span> are placed by the same definitions; anti-GBM disease (Goodpasture's syndrome), for example, appears only among them and counts as glomerulonephritis.</span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>Four departures need a reason:</span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Secondary glomerulonephritis is glomerulonephritis.** The CMS list keeps it apart, but lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura are glomerular inflammation. Lupus described as tubulointerstitial disease is not, and goes to Other. Thrombotic microangiopathies and scleroderma kidney disease, in the same CMS heading, are injury to the small vessels and endothelium rather than glomerular inflammation, so they also go to Other.</span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Infection-related glomerular disease is glomerulonephritis**: post-infectious glomerulonephritis, glomerulonephritis with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other.</span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**HIV-associated nephropathy is glomerulonephritis.** The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span>. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis <span class="co">[</span><span class="ot">@rosenberg2015hivan</span><span class="co">]</span>, so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository's history, and each saved answer file names the prompt version it answered.</span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Heart failure is cardiac disease.** The sheet name "Hypertensive and Cardiac" suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.</span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.</span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.</span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prompt and schema in code</span></span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file.</span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-classification-prompt</span></span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## One function per model</span></span>
-<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>Five models, set in <span class="in">`setup.R`</span> and all called through <span class="in">`ellmer`</span> <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<span class="in">`esrd_classifier_claude_max_tokens`</span>).</span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a>The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and IBM's Granite, chosen so that the five models come from five unrelated companies and are less likely to make the same mistakes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They also show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed as well.</span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-providers</span></span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting up Ollama {#setting-up-ollama}</span></span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> runs open-weight models on the analyst's own computer, and ellmer talks to it with <span class="co">[</span><span class="ot">`chat_ollama()`</span><span class="co">](https://ellmer.tidyverse.org/reference/chat_ollama.html)</span>. Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" (<span class="co">[</span><span class="ot">Ollama FAQ</span><span class="co">](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)</span>). A cloud model, by contrast, receives every prompt on the provider's servers. This step sends only the public code list, so the cloud models are allowed here, and the local models are a demonstration of the approach that text containing patient information would need. Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.</span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>Two cautions about the privacy claim:</span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable <span class="in">`OLLAMA_NO_CLOUD=1`</span> and restart Ollama; its log then shows <span class="in">`Ollama cloud disabled: true`</span> (<span class="co">[</span><span class="ot">Ollama FAQ: disabling cloud features</span><span class="co">](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)</span>).</span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**The models are downloaded from the internet** (<span class="in">`ollama pull`</span>), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.</span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.</span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Steps</span></span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Install Ollama** from <span class="co">[</span><span class="ot">ollama.com/download</span><span class="co">](https://ollama.com/download)</span>. The <span class="co">[</span><span class="ot">Windows notes</span><span class="co">](https://docs.ollama.com/windows)</span> give the requirements and where Ollama keeps its files.</span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Download the two models** in a terminal: <span class="in">`ollama pull qwen3.5:9b`</span> and <span class="in">`ollama pull granite4.2:8b`</span> (<span class="co">[</span><span class="ot">Qwen 3.5</span><span class="co">](https://ollama.com/library/qwen3.5)</span>, <span class="co">[</span><span class="ot">Granite 4.2</span><span class="co">](https://ollama.com/library/granite4.2)</span>). On a computer with less memory, <span class="in">`qwen3.5:4b`</span> (3–4 GB) is a smaller choice; change its name in <span class="in">`setup.R`</span>.</span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Test each model in the terminal before running the script**: <span class="in">`ollama run qwen3.5:9b "Say hello"`</span>. A model that cannot answer this will not answer the script either, and the terminal shows the error directly.</span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Measure the speed**: <span class="in">`ollama run qwen3.5:9b --verbose "Say hello"`</span> prints, after the answer, an <span class="in">`eval rate`</span> in tokens per second. A batch of 25 codes needs roughly 1,000 tokens of answer, so at 5 tokens per second a batch takes about 3 minutes and the 18 batches about an hour, per model. The first request after starting Ollama also loads the model from disk, which takes up to a minute. Qwen 3.5 "thinks" before it answers, which adds to the time (<span class="co">[</span><span class="ot">Ollama: thinking</span><span class="co">](https://docs.ollama.com/capabilities/thinking)</span>).</span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### If a model crashes: the graphics card</span></span>
-<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>Ollama looks for a graphics card and puts as much of the model on it as fits. If the card or its driver is not up to it, the model crashes while loading, and every model fails, including the smallest. This happened on the computer used for this project on 28 October 2026, a Windows laptop with an Intel Core i7-8850H, 32 GB of memory and a small NVIDIA Quadro P1000 graphics card (4 GB) beside the processor's built-in graphics:</span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>With Ollama 0.40.4 and 0.40.12, every model crashed with <span class="in">`exit status 0xc0000005`</span>. The log showed the model being loaded onto <span class="in">`CUDA0`</span>, the NVIDIA card.</span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hiding the card from CUDA (below) made a different error appear, <span class="in">`exit status 0xe06d7363`</span>. The log showed Ollama then using the same card through Vulkan, another way of reaching graphics cards, and <span class="in">`ggml_vulkan: device lost on Vulkan0`</span>.</span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Turning off both made every model run, on the processor only.</span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>Ollama's <span class="co">[</span><span class="ot">hardware page</span><span class="co">](https://docs.ollama.com/gpu)</span> says that NVIDIA cards of this generation (compute capability 5.0 to 6.2) need driver version 570 or newer, and the log reported a driver supporting CUDA 12.2, which points to an older driver. Updating the driver was not tried; the 4 GB card would hold only a small part of these models in any case.</span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a>**To run on the processor only** (Windows; type in a terminal, then quit Ollama from its icon by the clock, start it again, and open a new terminal):</span>
-<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="in">setx CUDA_VISIBLE_DEVICES -1</span></span>
-<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a><span class="in">setx OLLAMA_VULKAN 0</span></span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a>Both come from Ollama's <span class="co">[</span><span class="ot">hardware page</span><span class="co">](https://docs.ollama.com/gpu)</span>: an invalid card number such as <span class="in">`-1`</span> makes Ollama ignore NVIDIA cards, and <span class="in">`OLLAMA_VULKAN=0`</span> turns off Vulkan. <span class="in">`CUDA_VISIBLE_DEVICES`</span> also hides the NVIDIA card from any other program that uses CUDA (machine-learning software, for example), though not from the screen, video or games. To undo either, delete it under "Edit environment variables for your account" in Windows (<span class="co">[</span><span class="ot">Ollama FAQ: environment variables on Windows</span><span class="co">](https://docs.ollama.com/faq#setting-environment-variables-on-windows)</span>).</span>
-<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>**Reading Ollama's log.** On Windows the logs are in <span class="in">`%LOCALAPPDATA%\Ollama`</span> (paste that into the Windows Run box, Windows key + R); <span class="in">`server.log`</span> is the newest and <span class="in">`server-1.log`</span> and so on are older (<span class="co">[</span><span class="ot">Ollama troubleshooting</span><span class="co">](https://docs.ollama.com/troubleshooting)</span>). The lines that matter:</span>
-<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`inference compute`</span>, near the start: what Ollama will use. <span class="in">`library=cpu`</span> means the processor; <span class="in">`library=CUDA`</span> or <span class="in">`Vulkan`</span> means a graphics card.</span>
-<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`load_tensors: ... model buffer size`</span>, when a model loads: where it was put (<span class="in">`CPU`</span>, <span class="in">`CUDA0`</span>, <span class="in">`Vulkan0`</span>).</span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The last lines before <span class="in">`Load failed`</span>: the actual error.</span>
-<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>In a terminal, <span class="in">`powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server.log -Tail 60"`</span> shows the end of the log.</span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running, checking and saving each model</span></span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a>Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. Each provider's answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (<span class="in">`check_votes()`</span>, on the <span class="co">[</span><span class="ot">functions page</span><span class="co">](functions.qmd)</span>). Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a <span class="in">`usRds`</span> update, stops the script; deleting that file asks the provider again.</span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: classify-with-ensemble</span></span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agreement</span></span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a>A code is accepted when at least three of the five models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 28 October 2026, replacing two of three when the two local models were added). Accepted codes are not read by a person. <span class="in">`agreement`</span> says, for each code, whether the models were unanimous, how many agreed (for example "3 of 5 models"), or that no category had a majority. For codes with no majority, the deciders fill <span class="in">`final_category`</span> and their initials in <span class="in">`reviewer`</span>.</span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: measure-agreement</span></span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## How the mapping is checked</span></span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (<span class="in">`DISGRPC`</span>). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.</span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.</span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing the mapping</span></span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a>The two files the repository tracks as data. They hold only public codes, descriptions and the models' answers. The script creates the <span class="in">`references/`</span> folder if it does not exist yet, as in a fresh copy of the repository, where Git keeps no empty folders.</span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: write-mapping</span></span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a>:::</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2. Cause of kidney failure"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three cloud large language models. Codes on which at least two of the three agree are accepted without being read by a person; the deciders review the rest. Two smaller models that run on the analyst's own computer answer the same question and are reported for comparison, but do not vote: neither produced a complete, valid set of answers (see <span class="co">[</span><span class="ot">What the local models showed</span><span class="co">](#what-the-local-models-showed)</span>). Whether a model-drafted mapping is acceptable for the replication at all is still an <span class="co">[</span><span class="ot">open decision (D4)</span><span class="co">](differences.qmd#open-decisions)</span>. This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in <span class="in">`R/main.R`</span> is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to <span class="in">`references/`</span> is what the analysis reads once the deciders have reviewed it.</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/classify_esrd_causes.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/classify_esrd_causes.R)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>This R script file is itself reliant on the following files:</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/setup.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`prompts/esrd-cause-classification.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>The code sections below are imported directly from that script when this page is rendered.</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">read_chunk</span>(<span class="st">"../R/classify_esrd_causes.R"</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this step needs and produces</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>**To run it**, from the project root: <span class="in">`source("R/setup.R")`</span>, <span class="in">`source("R/functions.R")`</span>, then <span class="in">`source("R/classify_esrd_causes.R")`</span>. It is not part of <span class="in">`main.R`</span>.</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>**It needs**</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ellmer 0.5.0 or later <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span>, and the irr package for Fleiss' kappa.</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>An API key for each cloud provider in <span class="in">`.Renviron`</span>: <span class="in">`OPENAI_API_KEY`</span>, <span class="in">`ANTHROPIC_API_KEY`</span> and <span class="in">`GEMINI_API_KEY`</span>.</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> running on the same computer, with the two local models pulled (<span class="in">`ollama pull qwen3.5:9b`</span> and <span class="in">`ollama pull llama3.1:8b`</span> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <span class="co">[</span><span class="ot">Setting up Ollama</span><span class="co">](#setting-up-ollama)</span> before the first run.</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The models, batch sizes and agreement rule set in <span class="in">`setup.R`</span> (see <span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.qmd#cause-of-kidney-failure)</span>): <span class="in">`gpt-6.1-terra`</span> (OpenAI), <span class="in">`claude-sonnet-5-5`</span> (Anthropic) and <span class="in">`gemini-3.8-flash`</span> (Google) in the cloud, and locally, reported without voting, <span class="in">`qwen3.5:9b`</span> (Alibaba's Qwen) and <span class="in">`llama3.1:8b`</span> (Meta's Llama).</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>**It sends** only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), of 25 to Gemini and Qwen (about eighteen calls each), and of 5 to Llama (89 calls), plus more calls for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once: on the analyst's laptop, Llama 3.1 answered only 7 codes of a batch of 25, but every code of a batch of 5. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>**It produces**</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>One file of checked answers per model, in the gitignored <span class="in">`data-raw/`</span> folder.</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-categories.csv`</span>: one row per code, with each model's category and reason, how the models agreed (<span class="in">`agreement`</span>), the accepted category (<span class="in">`final_category`</span>), the decider's initials (<span class="in">`reviewer`</span>), and the prompt version, ellmer version, models and date.</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-agreement.csv`</span>: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-local-models.csv`</span>: one row per local model, with how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category.</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>**How the analysis uses it**: <span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd)</span> reads only <span class="in">`code`</span> and <span class="in">`final_category`</span>. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>**Editing the file**: the deciders fill <span class="in">`final_category`</span> and <span class="in">`reviewer`</span> for the codes with no majority, and for any accepted code they change. Edit it as text (in Positron, or another text editor), not in Excel: 11 codes start with a zero, which Excel would strip, and those patients would silently become Other.</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## ellmer version</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>ellmer asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as <span class="in">`claude-sonnet-5-5`</span> from version 0.5.0 (the function <span class="in">`has_claude_structured_output()`</span> in ellmer's source). Older versions force a tool call instead, which current Claude models reject with the error "tool_choice ... not supported for this model".</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-ellmer-version</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Protecting the deciders' review</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>Rerunning the script rewrites the mapping file. If the deciders have already reviewed any code in it, the script stops before calling any model, so their review cannot be overwritten; the existing file has to be renamed or moved first, and the reviewed rows copied into the new one.</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: protect-reviewed-mapping</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## The code list</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format <span class="in">`$PD96DET`</span> with its description, from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, which <span class="in">`usRds`</span> already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.) The script stops if a code is listed twice.</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-cause-codes</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## The prompt</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>All five models, voting or not, receive the same prompt, word for word. It is kept as a text file, <span class="co">[</span><span class="ot">`prompts/esrd-cause-classification.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)</span>, so that it can be read and edited on its own and shown here exactly as sent:</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{verbatim}</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="in">#| file: ../prompts/esrd-cause-classification.md</span></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="in">#| lang: markdown</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>For each batch, <span class="in">`{code_list}`</span> becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, <span class="in">`4464Z: WEGENERS GRANULOMATOSIS`</span>). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in <span class="in">`setup.R`</span>, because the structured output can only return those names.</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>The prompt makes three rules:</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**One category per code**, from the six in the paper's Table 1, each defined in words.</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable. This is an assumption: the original spreadsheet had a sheet named "Other", but what it contained is not known.</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**No inference beyond the description.** The model classifies from the code and its description only, which keeps it from inventing context.</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## The six categories</span></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>The original analysis took the six categories from a spreadsheet with one sheet per category ("Diabetes", "Hypertensive and Cardiac", "Glomerulonephritis", "HereditaryPCKD", "Transplant", "Other"), which no longer exists. Only the categories' names survive, in the sheet names and in the paper's Table 1, which labels the transplant category "solid organ and bone marrow" <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the 12 headings of the 2015 CMS-2728 list of primary causes <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span> and depart from them where the clinical definition differs:</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CMS-2728 heading (2015) <span class="pp">|</span> Category here <span class="pp">|</span></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Diabetes <span class="pp">|</span> Diabetes <span class="pp">|</span></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Glomerulonephritis <span class="pp">|</span> Glomerulonephritis <span class="pp">|</span></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Secondary Glomerulonephritis/Vasculitis <span class="pp">|</span> Glomerulonephritis for lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura; Other for thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura) and scleroderma <span class="pp">|</span></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Interstitial Nephritis/Pyelonephritis <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Transplant Complications <span class="pp">|</span> Transplant failure or complications <span class="pp">|</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Hypertension/Large Vessel Disease <span class="pp">|</span> Hypertension and cardiac disease <span class="pp">|</span></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Cystic/Hereditary/Congenital/Other Diseases <span class="pp">|</span> Hereditary or polycystic kidney disease for cystic and inherited disease; Other for congenital anomalies not described as inherited <span class="pp">|</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Neoplasms/Tumors <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Disorders of Mineral Metabolism <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Genitourinary System <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Acute Kidney Failure <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Miscellaneous Conditions <span class="pp">|</span> Other, except heart failure (Hypertension and cardiac disease) and HIV disease (Glomerulonephritis) <span class="pp">|</span></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>The 2015 list covers only the ICD-10-CM codes. The older ICD-9-CM codes in <span class="in">`$PD96DET`</span> are placed by the same definitions; anti-GBM disease (Goodpasture's syndrome), for example, appears only among them and counts as glomerulonephritis.</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>Four departures need a reason:</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Secondary glomerulonephritis is glomerulonephritis.** The CMS list keeps it apart, but lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura are glomerular inflammation. Lupus described as tubulointerstitial disease is not, and goes to Other. Thrombotic microangiopathies and scleroderma kidney disease, in the same CMS heading, are injury to the small vessels and endothelium rather than glomerular inflammation, so they also go to Other.</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Infection-related glomerular disease is glomerulonephritis**: post-infectious glomerulonephritis, glomerulonephritis with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other.</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**HIV-associated nephropathy is glomerulonephritis.** The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span>. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis <span class="co">[</span><span class="ot">@rosenberg2015hivan</span><span class="co">]</span>, so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository's history, and each saved answer file names the prompt version it answered.</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Heart failure is cardiac disease.** The sheet name "Hypertensive and Cardiac" suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.</span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prompt and schema in code</span></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file.</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-classification-prompt</span></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## One function per model</span></span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>Five models, set in <span class="in">`setup.R`</span>, three voting and two reported, all called through <span class="in">`ellmer`</span> <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<span class="in">`esrd_classifier_claude_max_tokens`</span>).</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and Meta's Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its "thinking" turned off (<span class="in">`reasoning_effort = "none"`</span>): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM's Granite (<span class="in">`granite4.2:8b`</span>) on 29 October 2026 (decided by Vagish Hemmige): on the analyst's laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.</span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-providers</span></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting up Ollama {#setting-up-ollama}</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> runs open-weight models on the analyst's own computer, and ellmer talks to it with <span class="co">[</span><span class="ot">`chat_ollama()`</span><span class="co">](https://ellmer.tidyverse.org/reference/chat_ollama.html)</span>. Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" (<span class="co">[</span><span class="ot">Ollama FAQ</span><span class="co">](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)</span>). A cloud model, by contrast, receives every prompt on the provider's servers. This step sends only the public code list, so the cloud models are allowed here, and the local models are a demonstration of the approach that text containing patient information would need. Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.</span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>Two cautions about the privacy claim:</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable <span class="in">`OLLAMA_NO_CLOUD=1`</span> and restart Ollama; its log then shows <span class="in">`Ollama cloud disabled: true`</span> (<span class="co">[</span><span class="ot">Ollama FAQ: disabling cloud features</span><span class="co">](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)</span>).</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**The models are downloaded from the internet** (<span class="in">`ollama pull`</span>), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.</span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.</span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Steps</span></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Install Ollama** from <span class="co">[</span><span class="ot">ollama.com/download</span><span class="co">](https://ollama.com/download)</span>. The <span class="co">[</span><span class="ot">Windows notes</span><span class="co">](https://docs.ollama.com/windows)</span> give the requirements and where Ollama keeps its files.</span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Download the two models** in a terminal: <span class="in">`ollama pull qwen3.5:9b`</span> and <span class="in">`ollama pull llama3.1:8b`</span> (<span class="co">[</span><span class="ot">Qwen 3.5</span><span class="co">](https://ollama.com/library/qwen3.5)</span>, <span class="co">[</span><span class="ot">Llama 3.1</span><span class="co">](https://ollama.com/library/llama3.1)</span>). On a computer with less memory, <span class="in">`qwen3.5:4b`</span> (3–4 GB) is a smaller choice; change its name in <span class="in">`setup.R`</span>.</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Test each model in the terminal before running the script**: <span class="in">`ollama run qwen3.5:9b "Say hello"`</span>. A model that cannot answer this will not answer the script either, and the terminal shows the error directly.</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Measure the speed**: <span class="in">`ollama run qwen3.5:9b --verbose "Say hello"`</span> prints, after the answer, an <span class="in">`eval rate`</span> in tokens per second. A batch of 25 codes needs roughly 1,000 tokens of answer, so at 5 tokens per second a batch takes about 3 minutes and the 18 batches about an hour, per model. The first request after starting Ollama also loads the model from disk, which takes up to a minute. Qwen 3.5 "thinks" before it answers, which adds to the time (<span class="co">[</span><span class="ot">Ollama: thinking</span><span class="co">](https://docs.ollama.com/capabilities/thinking)</span>).</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### If a model crashes: the graphics card</span></span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>Ollama looks for a graphics card and puts as much of the model on it as fits. If the card or its driver is not up to it, the model crashes while loading, and every model fails, including the smallest. This happened on the computer used for this project on 28 October 2026, a Windows laptop with an Intel Core i7-8850H, 32 GB of memory and a small NVIDIA Quadro P1000 graphics card (4 GB) beside the processor's built-in graphics:</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>With Ollama 0.40.4 and 0.40.12, every model crashed with <span class="in">`exit status 0xc0000005`</span>. The log showed the model being loaded onto <span class="in">`CUDA0`</span>, the NVIDIA card.</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hiding the card from CUDA (below) made a different error appear, <span class="in">`exit status 0xe06d7363`</span>. The log showed Ollama then using the same card through Vulkan, another way of reaching graphics cards, and <span class="in">`ggml_vulkan: device lost on Vulkan0`</span>.</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Turning off both made every model run, on the processor only.</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>Ollama's <span class="co">[</span><span class="ot">hardware page</span><span class="co">](https://docs.ollama.com/gpu)</span> says that NVIDIA cards of this generation (compute capability 5.0 to 6.2) need driver version 570 or newer, and the log reported a driver supporting CUDA 12.2, which points to an older driver. Updating the driver was not tried; the 4 GB card would hold only a small part of these models in any case.</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>**To run on the processor only** (Windows; type in a terminal, then quit Ollama from its icon by the clock, start it again, and open a new terminal):</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="in">setx CUDA_VISIBLE_DEVICES -1</span></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="in">setx OLLAMA_VULKAN 0</span></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>Both come from Ollama's <span class="co">[</span><span class="ot">hardware page</span><span class="co">](https://docs.ollama.com/gpu)</span>: an invalid card number such as <span class="in">`-1`</span> makes Ollama ignore NVIDIA cards, and <span class="in">`OLLAMA_VULKAN=0`</span> turns off Vulkan. <span class="in">`CUDA_VISIBLE_DEVICES`</span> also hides the NVIDIA card from any other program that uses CUDA (machine-learning software, for example), though not from the screen, video or games. To undo either, delete it under "Edit environment variables for your account" in Windows (<span class="co">[</span><span class="ot">Ollama FAQ: environment variables on Windows</span><span class="co">](https://docs.ollama.com/faq#setting-environment-variables-on-windows)</span>).</span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>**Reading Ollama's log.** On Windows the logs are in <span class="in">`%LOCALAPPDATA%\Ollama`</span> (paste that into the Windows Run box, Windows key + R); <span class="in">`server.log`</span> is the newest and <span class="in">`server-1.log`</span> and so on are older (<span class="co">[</span><span class="ot">Ollama troubleshooting</span><span class="co">](https://docs.ollama.com/troubleshooting)</span>). The lines that matter:</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`inference compute`</span>, near the start: what Ollama will use. <span class="in">`library=cpu`</span> means the processor; <span class="in">`library=CUDA`</span> or <span class="in">`Vulkan`</span> means a graphics card.</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`load_tensors: ... model buffer size`</span>, when a model loads: where it was put (<span class="in">`CPU`</span>, <span class="in">`CUDA0`</span>, <span class="in">`Vulkan0`</span>).</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The last lines before <span class="in">`Load failed`</span>: the actual error.</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>In a terminal, <span class="in">`powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server.log -Tail 60"`</span> shows the end of the log.</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running, checking and saving each model</span></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models' answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (<span class="in">`check_votes()`</span>, on the <span class="co">[</span><span class="ot">functions page</span><span class="co">](functions.qmd)</span>). The local models' answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (<span class="in">`esrd_classifier_timeout_s`</span>); ellmer's default of 5 minutes was too short on a laptop processor. Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a <span class="in">`usRds`</span> update, stops the script; deleting that file asks the provider again.</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: classify-with-ensemble</span></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agreement</span></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. <span class="in">`agreement`</span> says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill <span class="in">`final_category`</span> and their initials in <span class="in">`reviewer`</span>.</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: measure-agreement</span></span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## What the local models showed {#what-the-local-models-showed}</span></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>The two local models were meant to vote, and were run on the analyst's laptop (processor only, 32 GB of memory) on 28 and 29 October 2026. Neither produced a complete, valid set of answers, so neither votes (decided by Vagish Hemmige, 29 October 2026); their answers are kept and reported, because what they did is itself a finding of this demonstration.</span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They dropped codes in longer batches.** Both answered every code of a 5-code test. In batches of 25, Qwen left 150 of the 445 codes unanswered even after asking a second time, and Llama answered 7 of a 25-code test. Even in batches of 5, Llama left 124 codes unanswered on its first pass, and 28 after asking a second time.</span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They returned text that is not a code.** Qwen put 25 codes in quotation marks and returned one answer with no code. Llama returned codes with <span class="in">`&lt;/code&gt;`</span> attached, the placeholders <span class="in">`{code}`</span> and <span class="in">`What is the code?`</span>, four invented web addresses, and codes not in the list (for example <span class="in">`Z88.0`</span>, and <span class="in">`D1022`</span> for <span class="in">`E1022`</span>). In all, 20 of its answers carried text that is not a code in the list, and it answered 6 codes more than once, some with different categories.</span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Some categories contradict the model's own reason or are clinically wrong.** Qwen put AIDS nephropathy (429) under Diabetes, with the reason that it "falls under viral/glomerular causes … not diabetes". Llama put lupus nephritis (7100) and membranous nephropathy (5831) under Diabetes, and malignant hypertension (4010) under Diabetes with the reason "No indication of diabetes".</span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They were slow.** Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.</span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**A third model did not run at all.** IBM's Granite (<span class="in">`granite4.2:8b`</span>) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.</span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. <span class="in">`references/esrd-cause-local-models.csv`</span> records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (<span class="in">`local_model_report()`</span>, on the <span class="co">[</span><span class="ot">functions page</span><span class="co">](functions.qmd)</span>).</span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: report-local-models</span></span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## How the mapping is checked</span></span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (<span class="in">`DISGRPC`</span>). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.</span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing the mapping</span></span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>The two files the repository tracks as data. They hold only public codes, descriptions and the models' answers. The script creates the <span class="in">`references/`</span> folder if it does not exist yet, as in a fresh copy of the repository, where Git keeps no empty folders.</span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: write-mapping</span></span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

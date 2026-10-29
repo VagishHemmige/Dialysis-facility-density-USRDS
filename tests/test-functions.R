@@ -144,7 +144,7 @@ test_that("check_votes stops on missing, unknown, repeated or invalid answers", 
 test_that("cached_votes asks once and then reads the saved file", {
   path <- file.path(tempfile(), "fake.csv")
   calls <- 0
-  classify <- function() {
+  classify <- function(partial_path) {
     calls <<- calls + 1
     tibble(code = "A", category = "Other", reason = "r")
   }
@@ -152,6 +152,39 @@ test_that("cached_votes asks once and then reads the saved file", {
   second <- cached_votes(path, classify)
   expect_equal(calls, 1)
   expect_equal(second$code, first$code)
+})
+
+test_that("an interrupted classification resumes from the batches already saved", {
+  dir <- tempfile()
+  path <- file.path(dir, "fake.csv")
+  partial_path <- file.path(dir, "fake.partial.csv")
+  codes <- tibble(code = sprintf("C%02d", 1:7), description = "synthetic")
+  asked <- character()
+  answer <- function(batch) {
+    asked <<- c(asked, batch$code)
+    transmute(batch, code, category = "Other", reason = "synthetic")
+  }
+  # A fake provider that fails on its third batch, as a timeout would
+  failing_ask <- function(batch) {
+    if ("C05" %in% batch$code) stop("synthetic timeout")
+    answer(batch)
+  }
+  classify_with <- function(ask) {
+    function(partial_path) classify_codes(codes, ask, batch_size = 2, partial_path = partial_path)
+  }
+
+  expect_error(cached_votes(path, classify_with(failing_ask)), "synthetic timeout")
+  expect_false(file.exists(path))
+  expect_equal(read_csv(partial_path, col_types = cols(.default = col_character()))$code,
+               sprintf("C%02d", 1:4))
+
+  asked <- character()
+  out <- cached_votes(path, classify_with(answer))
+  expect_equal(asked, sprintf("C%02d", 5:7))
+  expect_setequal(out$code, codes$code)
+  expect_equal(nrow(out), 7)
+  expect_true(file.exists(path))
+  expect_false(file.exists(partial_path))
 })
 
 test_that("ensemble_agreement accepts a category given by enough providers", {

@@ -268,10 +268,20 @@ variance_shares <- function(model) {
 # it takes a batch of codes (code, description) and returns one row per code
 # with code, category and reason. Codes the model skipped are asked once more.
 # With a `label` (the provider's name), each batch reports its progress, since
-# a batch can take a minute or more.
-classify_codes <- function(codes, ask, batch_size, label = NULL) {
+# a batch can take a minute or more. With a `partial_path`, each batch's
+# answers are added to that file as soon as the batch finishes, and a rerun
+# after an interruption reads them back and asks only the codes not yet
+# answered.
+classify_codes <- function(codes, ask, batch_size, label = NULL, partial_path = NULL) {
   report <- function(...) {
     if (!is.null(label)) message(label, ": ", ...)
+  }
+
+  save_batch <- function(answer) {
+    if (is.null(partial_path)) {
+      return(invisible(answer))
+    }
+    write_csv(answer, partial_path, na = "", append = file.exists(partial_path))
   }
 
   ask_in_batches <- function(codes, round) {
@@ -283,18 +293,37 @@ classify_codes <- function(codes, ask, batch_size, label = NULL) {
     batches |>
       imap(\(batch, i) {
         report(str_glue("{round}batch {i} of {length(batches)} ({nrow(batch)} codes)"))
-        ask(batch)
+        answer <- ask(batch) |>
+          transmute(
+            code = as.character(code),
+            category = as.character(category),
+            reason = as.character(reason)
+          )
+        save_batch(answer)
+        answer
       }) |>
-      list_rbind() |>
-      transmute(
-        code = as.character(code),
-        category = as.character(category),
-        reason = as.character(reason)
-      )
+      list_rbind()
   }
 
   started <- Sys.time()
-  answers <- ask_in_batches(codes, round = "")
+  answered_before <- if (!is.null(partial_path) && file.exists(partial_path)) {
+    read_csv(partial_path, col_types = cols(.default = col_character())) |>
+      as_tibble()
+  } else {
+    tibble(code = character(), category = character(), reason = character())
+  }
+
+  if (nrow(answered_before) > 0) {
+    report(str_glue(
+      "{n_distinct(answered_before$code)} code(s) already answered in an earlier run; ",
+      "asking the rest"
+    ))
+  }
+
+  answers <- bind_rows(
+    answered_before,
+    ask_in_batches(anti_join(codes, answered_before, by = "code"), round = "")
+  )
   skipped <- anti_join(codes, answers, by = "code")
 
   if (nrow(skipped) > 0) {
@@ -334,18 +363,24 @@ check_votes <- function(votes, codes, categories, provider) {
 ## ---- fn-cached-votes
 # One provider's answers, saved to `path` the first time so that a rerun does
 # not pay for them again. `classify` is called only when the file does not
-# exist; delete the file to ask that provider again. The caller checks the
-# answers (check_votes()) whether they are new or read back.
+# exist; delete the file to ask that provider again. `classify` is given the
+# path of a file for answers saved batch by batch (`path` with .partial before
+# .csv), which is deleted once the complete answers are saved. The caller
+# checks the answers (check_votes()) whether they are new or read back.
 cached_votes <- function(path, classify) {
   if (file.exists(path)) {
     message("Reading saved answers: ", path)
     return(read_csv(path, col_types = cols(.default = col_character())))
   }
 
-  message("No saved answers; asking the model: ", basename(path))
-  votes <- classify()
+  partial_path <- str_replace(path, "\\.csv$", ".partial.csv")
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+  message("No saved answers; asking the model: ", basename(path))
+  votes <- classify(partial_path)
   write_csv(votes, path, na = "")
+  if (file.exists(partial_path)) {
+    file.remove(partial_path)
+  }
   message("Saved: ", path)
   votes
 }

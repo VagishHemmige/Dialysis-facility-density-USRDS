@@ -11,7 +11,8 @@
 #   (filled when at least esrd_classifier_min_agreement models agree; the
 #   deciders fill the rest and their initials in `reviewer`);
 #   esrd_cause_agreement_file, a one-row summary of agreement.
-# Run once, by hand, outside main.R: it makes paid API calls.
+# Run once, by hand: it makes paid API calls, so its line in main.R (after
+#   download_public_data.R) is commented out.
 # Only the public code list from the USRDS Researcher's Guide is sent to the
 #   cloud models; the local models receive the same list and send nothing
 #   anywhere. No patient data are used, and the code list is not filtered by

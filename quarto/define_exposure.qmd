@@ -1,5 +1,5 @@
 ---
-title: "5. Density categories"
+title: "6. Density categories"
 format: html
 ---
 

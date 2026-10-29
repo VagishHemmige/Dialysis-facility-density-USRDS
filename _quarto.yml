@@ -8,7 +8,7 @@ project:
 author:
   - name: Vagish Hemmige
     affiliations:
-      - Montefiore Medical Center/Albert Einstein College of Medicine
+      - MAHV
 
 bibliography: references.bib
 
@@ -96,6 +96,14 @@ custom-callout:
 
 filters:
   - custom-callout
+  - issue-comments
+
+issue-comments:
+  endpoint: https://script.google.com/macros/s/AKfycbyE8fNBvy3vfuAnuQqdjpCTR8i2zYI-KSvGzhkGlQRYevI1I6auqq9H-mIk2yrXCaIROA/exec
+  owner: Vagish Hemmige
+  contact: mailto:vagish.hemmige@gmail.com
+
+  
 
 format:
   html:

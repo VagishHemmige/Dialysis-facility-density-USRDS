@@ -5,17 +5,25 @@ format: html
 
 This is the analysis file from October 2023 that produced the published cohort and Table 1 [@hemmige2024density]. It is kept for comparison: the [differences page](differences.qmd) lists each place where the replication departs from it, and why.
 
-The file is unchanged except that file locations on the analyst's computer are replaced by `<data folder>/`. It is shown as text and is never run.
+The file is unchanged except that file locations on the analyst's computer are replaced by `<data folder>/`. It is shown below as it would read when knitted, with its prose formatted, but nothing in it is run. Each code chunk is folded under a header giving its number, its label and options from the file (some chunks were set to `eval=FALSE` in 2023 and did not run then either), and its line numbers in the file, so a line cited elsewhere can be found. Click a header to open that chunk, or use **Show All Code** in the **Code** menu at the top of the page to open them all.
 
 ::: {.Rcode title="Source file"}
 -   [`original/original-analysis-2023-10-20.Rmd`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/original/original-analysis-2023-10-20.Rmd)
 :::
 
 ```{r}
-#| file: "../original/original-analysis-2023-10-20.Rmd"
-#| eval: false
-#| code-fold: true
-#| code-summary: "Click to show/hide the original file (about 3,000 lines)"
+#| include: false
+#| eval: true
+source("_site_functions.R")
+```
+
+## The file
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: asis
+cat(rmd_as_markdown("../original/original-analysis-2023-10-20.Rmd"))
 ```
 
 ## References

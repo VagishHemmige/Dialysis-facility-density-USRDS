@@ -31,10 +31,10 @@ website:
         contents:
           - href: quarto/background.qmd
             text: Clinical background
-          - href: quarto/differences.qmd
-            text: Differences from the original code
           - href: quarto/original.qmd
             text: The original R Markdown file
+          - href: quarto/differences.qmd
+            text: Differences from the original code
 
       - section: Setup and helper functions
         contents:

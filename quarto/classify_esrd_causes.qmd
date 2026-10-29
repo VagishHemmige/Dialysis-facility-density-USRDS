@@ -35,7 +35,7 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 
 -   ellmer 0.5.0 or later [@ellmer_pkg], and the irr package for Fleiss' kappa.
 -   An API key for each cloud provider in `.Renviron`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`.
--   [Ollama](https://ollama.com) running on the same computer, with the two local models pulled (`ollama pull qwen3.5:9b` and `ollama pull granite4.2:8b` in a terminal). The script checks both before asking any model, and says what to do if either is missing.
+-   [Ollama](https://ollama.com) running on the same computer, with the two local models pulled (`ollama pull qwen3.5:9b` and `ollama pull granite4.2:8b` in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see [Setting up Ollama](#setting-up-ollama) before the first run.
 -   The models, batch sizes and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google) in the cloud, and locally `qwen3.5:9b` (Alibaba's Qwen) and `granite4.2:8b` (IBM's Granite).
 
 **It sends** only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), and of 25 to Gemini and the local models (about eighteen calls each), plus one more call for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.
@@ -148,6 +148,51 @@ The three cloud models are each provider's current general-purpose model. The tw
 #| label: define-providers
 #| eval: false
 ```
+
+## Setting up Ollama {#setting-up-ollama}
+
+[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" ([Ollama FAQ](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)). A cloud model, by contrast, receives every prompt on the provider's servers. This step sends only the public code list, so the cloud models are allowed here, and the local models are a demonstration of the approach that text containing patient information would need. Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.
+
+Two cautions about the privacy claim:
+
+-   **Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable `OLLAMA_NO_CLOUD=1` and restart Ollama; its log then shows `Ollama cloud disabled: true` ([Ollama FAQ: disabling cloud features](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)).
+-   **The models are downloaded from the internet** (`ollama pull`), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.
+
+The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.
+
+### Steps
+
+1.  **Install Ollama** from [ollama.com/download](https://ollama.com/download). The [Windows notes](https://docs.ollama.com/windows) give the requirements and where Ollama keeps its files.
+2.  **Download the two models** in a terminal: `ollama pull qwen3.5:9b` and `ollama pull granite4.2:8b` ([Qwen 3.5](https://ollama.com/library/qwen3.5), [Granite 4.2](https://ollama.com/library/granite4.2)). On a computer with less memory, `qwen3.5:4b` (3–4 GB) is a smaller choice; change its name in `setup.R`.
+3.  **Test each model in the terminal before running the script**: `ollama run qwen3.5:9b "Say hello"`. A model that cannot answer this will not answer the script either, and the terminal shows the error directly.
+4.  **Measure the speed**: `ollama run qwen3.5:9b --verbose "Say hello"` prints, after the answer, an `eval rate` in tokens per second. A batch of 25 codes needs roughly 1,000 tokens of answer, so at 5 tokens per second a batch takes about 3 minutes and the 18 batches about an hour, per model. The first request after starting Ollama also loads the model from disk, which takes up to a minute. Qwen 3.5 "thinks" before it answers, which adds to the time ([Ollama: thinking](https://docs.ollama.com/capabilities/thinking)).
+
+### If a model crashes: the graphics card
+
+Ollama looks for a graphics card and puts as much of the model on it as fits. If the card or its driver is not up to it, the model crashes while loading, and every model fails, including the smallest. This happened on the computer used for this project on 28 October 2026, a Windows laptop with an Intel Core i7-8850H, 32 GB of memory and a small NVIDIA Quadro P1000 graphics card (4 GB) beside the processor's built-in graphics:
+
+-   With Ollama 0.40.4 and 0.40.12, every model crashed with `exit status 0xc0000005`. The log showed the model being loaded onto `CUDA0`, the NVIDIA card.
+-   Hiding the card from CUDA (below) made a different error appear, `exit status 0xe06d7363`. The log showed Ollama then using the same card through Vulkan, another way of reaching graphics cards, and `ggml_vulkan: device lost on Vulkan0`.
+-   Turning off both made every model run, on the processor only.
+
+Ollama's [hardware page](https://docs.ollama.com/gpu) says that NVIDIA cards of this generation (compute capability 5.0 to 6.2) need driver version 570 or newer, and the log reported a driver supporting CUDA 12.2, which points to an older driver. Updating the driver was not tried; the 4 GB card would hold only a small part of these models in any case.
+
+**To run on the processor only** (Windows; type in a terminal, then quit Ollama from its icon by the clock, start it again, and open a new terminal):
+
+```
+setx CUDA_VISIBLE_DEVICES -1
+setx OLLAMA_VULKAN 0
+```
+
+Both come from Ollama's [hardware page](https://docs.ollama.com/gpu): an invalid card number such as `-1` makes Ollama ignore NVIDIA cards, and `OLLAMA_VULKAN=0` turns off Vulkan. `CUDA_VISIBLE_DEVICES` also hides the NVIDIA card from any other program that uses CUDA (machine-learning software, for example), though not from the screen, video or games. To undo either, delete it under "Edit environment variables for your account" in Windows ([Ollama FAQ: environment variables on Windows](https://docs.ollama.com/faq#setting-environment-variables-on-windows)).
+
+**Reading Ollama's log.** On Windows the logs are in `%LOCALAPPDATA%\Ollama` (paste that into the Windows Run box, Windows key + R); `server.log` is the newest and `server-1.log` and so on are older ([Ollama troubleshooting](https://docs.ollama.com/troubleshooting)). The lines that matter:
+
+-   `inference compute`, near the start: what Ollama will use. `library=cpu` means the processor; `library=CUDA` or `Vulkan` means a graphics card.
+-   `load_tensors: ... model buffer size`, when a model loads: where it was put (`CPU`, `CUDA0`, `Vulkan0`).
+-   The last lines before `Load failed`: the actual error.
+
+In a terminal, `powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server.log -Tail 60"` shows the end of the log.
 
 ## Running, checking and saving each model
 

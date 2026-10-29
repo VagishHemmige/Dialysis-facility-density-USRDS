@@ -77,6 +77,17 @@ website:
           - href: quarto/classify_esrd_causes.qmd
             text: Classifying codes with an LLM ensemble
 
+      - section: Project documents
+        contents:
+          - href: quarto/analysis-plan.qmd
+            text: Analysis plan
+          - href: quarto/architecture.qmd
+            text: Architecture
+          - href: quarto/agents.qmd
+            text: AGENTS.md
+          - href: quarto/repository-blueprint.qmd
+            text: Repository blueprint
+
       - href: quarto/about.qmd
         text: About
 

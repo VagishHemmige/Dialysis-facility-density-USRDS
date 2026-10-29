@@ -16,7 +16,20 @@ Scientific decisions for the replication are made by Vagish Hemmige and Ladan Go
 
 This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by `R/main.R`, using `usRds`, `flowchart` and `tidycensus`. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through `usRds` on the computer of an authorized analyst.
 
-Contributions follow the rules in [`AGENTS.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/AGENTS.md); open decisions and known issues are tracked in [Issues](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues).
+Contributions follow the rules in [`AGENTS.md`](agents.qmd); open decisions and known issues are tracked in [Issues](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues).
+
+## How this website was created
+
+The site is built with [Quarto](https://quarto.org) from the analysis scripts themselves. Each page imports the labelled sections of its script from `R/` and shows them with an explanation; the site never runs the analysis, so it is built without the restricted USRDS data.
+
+The repository was set up, and is maintained, with the [R Analysis Workflow](https://github.com/VagishHemmige/r-analysis-workflow) plugin for AI coding assistants (Claude and ChatGPT), written by Vagish Hemmige. The plugin provides the repository layout, the conventions for the analysis plan and `AGENTS.md`, the format of these pages, and independent reviews; the architecture document is generated with Posit's describe-design skill. AI assistants (Claude and ChatGPT) drafted code, documentation and suggestions under the rules in `AGENTS.md`: they work only with code, documentation and synthetic data, never with USRDS data, and every scientific decision is made by the investigators and recorded in a GitHub issue.
+
+Four documents describe the project. In short: the plan is the scientific intent, the architecture is the workflow as implemented, and `AGENTS.md` holds the rules for working together.
+
+-   [**Analysis plan**](analysis-plan.qmd): *what the analysis is meant to do, and why.* The question, the study population, the variables, the statistical methods, and the choices that need the investigators' judgment, with each open choice linked to its decision issue. It is written and decided by the investigators; code implements it and does not redefine it.
+-   [**Architecture**](architecture.qmd): *how the code does it.* The scripts, the order they run in, what each needs and produces, and how data flow between them. It describes only what is implemented, so a collaborator can find a step without reading every script.
+-   [**AGENTS.md**](agents.qmd): *how people and AI assistants work on the project.* Rules for restricted data, coding, testing, proposing changes and getting a person's approval.
+-   [**Repository blueprint**](repository-blueprint.qmd): *the layout every project of this kind starts from*, which the architecture document then describes as built.
 
 ## Pages
 

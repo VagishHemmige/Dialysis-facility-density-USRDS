@@ -97,3 +97,87 @@ side_by_side_diff <- function(old, new, old_title = "Before", new_title = "After
     "</tbody></table></div>"
   ))
 }
+
+# An R Markdown file as page content, without running it: the prose is
+# formatted as it would be in the knitted file, and each code chunk becomes a
+# syntax-highlighted code block headed by its number, label, options and line
+# numbers in the file (every chunk is shown, including eval = FALSE and
+# include = FALSE ones). The YAML header is shown as a code block. Inline R
+# code is never evaluated; it can only appear as text. `path` is the .Rmd
+# file. `fold` sets how the blocks start: "closed" or "open" makes each one
+# foldable under its header, in the same element Quarto uses for code-fold,
+# so the page's "Show All Code" and "Hide All Code" menu items act on them;
+# "none" shows them as plain blocks. Use the result in a chunk with
+# `output: asis`.
+rmd_as_markdown <- function(path, fold = c("closed", "open", "none")) {
+  fold <- match.arg(fold)
+  lines <- readLines(path, warn = FALSE, encoding = "UTF-8")
+  starts <- stringr::str_detect(lines, "^\\s*```+\\s*\\{r")
+  ends <- stringr::str_detect(lines, "^\\s*```+\\s*$")
+
+  # A code block fenced by more backticks than any run inside it, without
+  # blank lines at either end, under its title
+  block <- function(code, language, title) {
+    runs <- stringr::str_extract_all(code, "`+") |> unlist() |> nchar()
+    fence <- strrep("`", max(c(3, runs + 1)))
+    code <- code[cumsum(code != "") > 0]
+    code <- rev(rev(code)[cumsum(rev(code) != "") > 0])
+    if (fold == "none") {
+      title <- stringr::str_replace_all(title, '"', "'")
+      return(c("", stringr::str_glue('{fence}{{.{language} filename="{title}"}}'), code, fence, ""))
+    }
+    c(
+      "",
+      stringr::str_glue('<details class="code-fold"{if (fold == "open") " open" else ""}>'),
+      stringr::str_glue("<summary>{htmltools::htmlEscape(title)}</summary>"),
+      "",
+      stringr::str_glue("{fence}{{.{language}}}"),
+      code,
+      fence,
+      "",
+      "</details>",
+      ""
+    )
+  }
+
+  out <- character()
+  i <- 1
+  # The YAML header, if the file starts with one
+  if (length(lines) > 0 && lines[1] == "---") {
+    close <- which(lines[-1] %in% c("---", "..."))[1] + 1
+    if (is.na(close)) stop("The YAML header in ", path, " is never closed.")
+    out <- block(lines[2:(close - 1)], "yaml", stringr::str_glue("YAML header (lines 1-{close})"))
+    i <- close + 1
+  }
+
+  chunk <- 0
+  while (i <= length(lines)) {
+    if (!starts[i]) {
+      out <- c(out, lines[i])
+      i <- i + 1
+      next
+    }
+    close <- which(ends & seq_along(lines) > i)[1]
+    if (is.na(close)) stop("The chunk starting on line ", i, " of ", path, " is never closed.")
+    chunk <- chunk + 1
+    header <- lines[i] |>
+      stringr::str_remove("^\\s*```+\\s*\\{r[ ,]*") |>
+      stringr::str_remove("\\}\\s*$") |>
+      stringr::str_squish()
+    # The label is the first option if it has no "="; spaces are allowed
+    parts <- stringr::str_split_1(header, "\\s*,\\s*") |> purrr::discard(\(x) x == "")
+    label <- if (length(parts) > 0 && !stringr::str_detect(parts[1], "=")) parts[1] else NA
+    options <- if (is.na(label)) parts else parts[-1]
+    # For example "Chunk 21: models1, eval=FALSE (lines 1737-2131)"; plain
+    # ASCII, so it shows the same under any locale
+    title <- stringr::str_glue(
+      "Chunk {chunk}",
+      if (length(parts) > 0) ": " else "",
+      stringr::str_flatten(c(if (!is.na(label)) label, options), ", "),
+      " (lines {i}-{close})"
+    )
+    out <- c(out, block(lines[seq_len(close - i - 1) + i], "r", title))
+    i <- close + 1
+  }
+  stringr::str_flatten(out, "\n")
+}

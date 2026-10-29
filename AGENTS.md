@@ -64,7 +64,7 @@ To allow more for a source, a person changes its row through a pull request, nam
 
 Exploration is welcome on branches or forks. Experimental scripts need not be sourced from `R/main.R` or have Quarto pages, and their findings are labelled preliminary. A script becomes part of the definitive analysis when it is sourced from `R/main.R`; from then on every rule below applies to it.
 
-`R/classify_esrd_causes.R` is run once by an authorized person, outside `main.R`, because it calls paid APIs; its reviewed output in `references/` is what the analysis reads. It has a Quarto page because the mapping is part of the definitive analysis.
+`R/classify_esrd_causes.R` has its place in `main.R`, after the public data, but its line there is commented out: it is run once, by hand, by an authorized person, because it calls paid APIs; its reviewed output in `references/` is what the analysis reads. It has a Quarto page because the mapping is part of the definitive analysis.
 
 ## R scripts
 

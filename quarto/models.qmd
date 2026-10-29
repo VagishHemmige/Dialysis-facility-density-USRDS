@@ -129,7 +129,7 @@ In the code, `model_covariates("Model 3", labs = TRUE, patients = "All")` return
 
 ## Variance decomposition
 
-How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model leaves out patients with no dialysis facility ID, so the two models are fit on slightly different sets of patients; whether to fit both on the same patients is for the deciders.
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).
 
 ```{r}
 #| label: fit-variance-decomposition

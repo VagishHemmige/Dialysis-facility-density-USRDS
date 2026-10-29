@@ -91,8 +91,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../quarto/original.html" rel="next">
-<link href="../quarto/background.html" rel="prev">
+<link href="../quarto/setup.html" rel="next">
+<link href="../quarto/original.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -205,14 +205,14 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Differences from the original code</span></a>
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The original R Markdown file</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The original R Markdown file</span></a>
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Differences from the original code</span></a>
   </div>
 </li>
       </ul>
@@ -257,32 +257,38 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. USRDS patient data</span></a>
+ <span class="menu-text">3. USRDS patient data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Linking area data</span></a>
+ <span class="menu-text">4. Linking area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Cohort flowchart</span></a>
+ <span class="menu-text">5. Cohort flowchart</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. Density categories</span></a>
+ <span class="menu-text">6. Density categories</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Models</span></a>
+ <span class="menu-text">7. Models</span></a>
   </div>
 </li>
       </ul>
@@ -336,7 +342,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cause of kidney failure</span></a>
+ <span class="menu-text">Project documents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -344,8 +350,26 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Classifying codes with an LLM ensemble</span></a>
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repository blueprint</span></a>
   </div>
 </li>
       </ul>
@@ -723,7 +747,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available.</td>
 <td>Rebuilt, <a href="#open-decisions">open decision D4</a></td>
-<td>Five language models (three cloud, two run locally) classify the public USRDS code list; a code is accepted when three of the five agree, and the deciders review the rest. See <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>.</td>
+<td>Three cloud language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. Two local models are reported for comparison without voting. See <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>.</td>
 <td>Table 1 cause rows; Models 2 and 3</td>
 </tr>
 <tr class="odd">
@@ -1438,13 +1462,13 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../quarto/background.html" class="pagination-link" aria-label="Clinical background">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Clinical background</span>
+      <a href="../quarto/original.html" class="pagination-link" aria-label="The original R Markdown file">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">The original R Markdown file</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../quarto/original.html" class="pagination-link" aria-label="The original R Markdown file">
-        <span class="nav-page-text">The original R Markdown file</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../quarto/setup.html" class="pagination-link" aria-label="Setup">
+        <span class="nav-page-text">Setup</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1544,7 +1568,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`usRds::load_usrds_file()`</span> applies the USRDS value labels. <span class="pp">|</span> None intended <span class="pp">|</span></span>
 <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Nephrology care was coded twice: access (<span class="in">`NEPHCARE`</span>, coded yes, no or unknown: no, some or unknown nephrology care) and duration (<span class="in">`NEPHCARERANGE`</span>), with unknown duration left missing. The exploratory R models used the duration; the paper's Discussion mentions duration, while its Methods, Table 1 and the Model 3 footnote say access. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Access, with unknown as its own level, so Model 3 keeps every patient, as the published n = 844,466 implies (decided 27 October 2026). <span class="pp">|</span> Model 3, if Stata used another coding <span class="pp">|</span></span>
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The outcome <span class="in">`GFR_DICH`</span> counted eGFR of 10 or above as early. The paper describes the outcome as eGFR "greater than 10" vs "less than or equal to 10". <span class="pp">|</span> Paper differs from code <span class="pp">|</span> The code's rule: 10 or above is early (decided 27 October 2026). <span class="pp">|</span> None, if Stata used <span class="in">`GFR_DICH`</span>; otherwise patients at exactly 10 <span class="pp">|</span></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. <span class="pp">|</span> Rebuilt, <span class="co">[</span><span class="ot">open decision D4</span><span class="co">](#open-decisions)</span> <span class="pp">|</span> Five language models (three cloud, two run locally) classify the public USRDS code list; a code is accepted when three of the five agree, and the deciders review the rest. See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>. <span class="pp">|</span> Table 1 cause rows; Models 2 and 3 <span class="pp">|</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. <span class="pp">|</span> Rebuilt, <span class="co">[</span><span class="ot">open decision D4</span><span class="co">](#open-decisions)</span> <span class="pp">|</span> Three cloud language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. Two local models are reported for comparison without voting. See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>. <span class="pp">|</span> Table 1 cause rows; Models 2 and 3 <span class="pp">|</span></span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A primary-cause code listed on two category sheets would have joined twice and duplicated those patients. The sheets were built from the codes that appeared in the data. <span class="pp">|</span> Corrected error <span class="pp">|</span> The mapping is built from the full public code list, one row per code, and the join stops if a code appears twice. <span class="pp">|</span> None, unless the original sheets had such a code <span class="pp">|</span></span>
 <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis. <span class="pp">|</span> Rebuilt <span class="pp">|</span> See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd#the-six-categories)</span> (decided 27 October 2026). <span class="pp">|</span> Table 1 cause rows; Models 2 and 3, slightly <span class="pp">|</span></span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Access type had the arteriovenous fistula as its first level, and so as the reference in the exploratory R models. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Catheter, the most common access, is the reference. <span class="pp">|</span> None on the density estimates; only the access-type coefficients change <span class="pp">|</span></span>

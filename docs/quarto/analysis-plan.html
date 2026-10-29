@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vagish Hemmige">
+
+<title>Analysis plan – Dialysis facility density: a replication</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../quarto/architecture.html" rel="next">
+<link href="../quarto/supplement.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-261e60fdf64a0e003ec2340fd2db30d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Project documents</a></li><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Analysis plan</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Dialysis facility density: a replication</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clinical background</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The original R Markdown file</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differences from the original code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data processing and analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Public area data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. USRDS patient data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Linking area data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Cohort flowchart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Density categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tables and figures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Published results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Published figures and tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Published supplement</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project documents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repository blueprint</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation" id="toc-analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation" class="nav-link active" data-scroll-target="#analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation">Analysis plan: Replication of “Geographic Dialysis Facility Density and Early Dialysis Initiation”</a>
+  <ul class="collapse">
+  <li><a href="#scope-and-reporting-framework" id="toc-scope-and-reporting-framework" class="nav-link" data-scroll-target="#scope-and-reporting-framework">Scope and reporting framework</a></li>
+  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective">1. Objective</a></li>
+  <li><a href="#design" id="toc-design" class="nav-link" data-scroll-target="#design">2. Design</a></li>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">3. Data source</a></li>
+  <li><a href="#study-population" id="toc-study-population" class="nav-link" data-scroll-target="#study-population">4. Study population</a></li>
+  <li><a href="#exposure" id="toc-exposure" class="nav-link" data-scroll-target="#exposure">5. Exposure</a></li>
+  <li><a href="#covariates" id="toc-covariates" class="nav-link" data-scroll-target="#covariates">6. Covariates</a></li>
+  <li><a href="#outcome" id="toc-outcome" class="nav-link" data-scroll-target="#outcome">7. Outcome</a></li>
+  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">8. Statistical analysis</a></li>
+  <li><a href="#sensitivity-analyses" id="toc-sensitivity-analyses" class="nav-link" data-scroll-target="#sensitivity-analyses">9. Sensitivity analyses</a></li>
+  <li><a href="#disclosure-control" id="toc-disclosure-control" class="nav-link" data-scroll-target="#disclosure-control">10. Disclosure control</a></li>
+  <li><a href="#limitations-to-address-in-reporting" id="toc-limitations-to-address-in-reporting" class="nav-link" data-scroll-target="#limitations-to-address-in-reporting">11. Limitations to address in reporting</a></li>
+  <li><a href="#corrections-to-the-original-code" id="toc-corrections-to-the-original-code" class="nav-link" data-scroll-target="#corrections-to-the-original-code">12. Corrections to the original code</a></li>
+  <li><a href="#open-decisions" id="toc-open-decisions" class="nav-link" data-scroll-target="#open-decisions">Open decisions</a></li>
+  <li><a href="#reporting-map" id="toc-reporting-map" class="nav-link" data-scroll-target="#reporting-map">Reporting map</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/edit/main/quarto/analysis-plan.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content"><div class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Project documents</a></li><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Analysis plan</a></li></ol></nav><div class="quarto-title-tools-only"><h1></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+<div class="quarto-title-meta-author column-body">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Vagish Hemmige </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Montefiore Medical Center/Albert Einstein College of Medicine
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta column-body">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!--
+This page only shows analysis-plan.md from the repository root, which is the one source:
+edit that file, not this page. Its first heading is the page title.
+-->
+<section id="analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation" class="level1">
+<h1>Analysis plan: Replication of “Geographic Dialysis Facility Density and Early Dialysis Initiation”</h1>
+<p>Status: draft.</p>
+<section id="scope-and-reporting-framework" class="level2">
+<h2 class="anchored" data-anchor-id="scope-and-reporting-framework">Scope and reporting framework</h2>
+<p>This document is the authoritative specification of the study’s scientific objectives, population, definitions, estimands and statistical methods. <code>ARCHITECTURE.md</code> documents the implementation, <code>AGENTS.md</code> the working conventions, and GitHub Issues the open decisions and implementation status. Neither file supersedes this plan.</p>
+<p>This is a replication. The design is the one published in JAMA Network Open <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>, and every choice the paper states is treated as decided and cited to it. The original analysis code (an R Markdown file from October 2023, kept in <code>original/</code>) is the second source: where it makes a choice the paper does not state, the plan adopts the code’s choice and says so. Where the code and the paper disagree, or the code contains an error, the point is marked <strong>Open</strong> and linked to a decision issue for the deciders. Each such point is also listed on the website’s “Differences from the original code” page.</p>
+<p>Reporting will follow STROBE <span class="citation" data-cites="vonelm2007strobe">(<a href="#ref-vonelm2007strobe" role="doc-biblioref"><span class="nocase">Elm et al.</span> 2007</a>)</span> and RECORD <span class="citation" data-cites="benchimol2015record">(<a href="#ref-benchimol2015record" role="doc-biblioref"><span class="nocase">Benchimol et al.</span> 2015</a>)</span>. The reporting map below links each checklist item to a section of this plan.</p>
+</section>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">1. Objective</h2>
+<p>To test whether the density of dialysis facilities in a patient’s Hospital Service Area (HSA; the paper calls it a health service area) is associated with starting in-center hemodialysis early, defined as an estimated glomerular filtration rate (eGFR) of 10 mL/min/1.73 m² or above at initiation (section 7) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
+<ul>
+<li><strong>Primary hypothesis (stated in advance by the paper):</strong> patients in HSAs with higher facility density have higher odds of initiating hemodialysis at eGFR &gt; 10 mL/min/1.73 m².</li>
+<li><strong>Secondary:</strong> the same association with eGFR as a continuous outcome; with density as a continuous exposure; within strata of race (White, Black).</li>
+<li><strong>Exploratory:</strong> the share of variation in eGFR at initiation explained by HSA and by dialysis facility.</li>
+<li><strong>Replication objective:</strong> to reproduce the paper’s Figure 1 (cohort flow), Table 1, Table 2 and eTables 1 to 3 from public code, using <code>usRds</code> and <code>flowchart</code>, and to quantify the effect of each correction to the original code.</li>
+</ul>
+</section>
+<section id="design" class="level2">
+<h2 class="anchored" data-anchor-id="design">2. Design</h2>
+<p>Cross-sectional study of incident hemodialysis patients linked to area-level data <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The question is associational; no causal estimand or target-trial emulation is used.</p>
+</section>
+<section id="data-source" class="level2">
+<h2 class="anchored" data-anchor-id="data-source">3. Data source</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Content used</th>
+<th>Release or year</th>
+<th>Linkage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>USRDS Medical Evidence file (MEDEVID)</td>
+<td>CMS-2728 form: demographics, comorbidities, laboratory values, access, insurance, primary cause of kidney failure, eGFR</td>
+<td>Release held by the investigators, covering forms dated 2011 to 2019; variable definitions from the 2024 Researcher’s Guide <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span></td>
+<td><code>USRDS_ID</code></td>
+</tr>
+<tr class="even">
+<td>USRDS Residence file (RESIDENC)</td>
+<td>Residential ZIP code and state over time</td>
+<td>Same release</td>
+<td><code>USRDS_ID</code>, date of dialysis start within the residence period</td>
+</tr>
+<tr class="odd">
+<td>CMS Dialysis Facility Compare archives</td>
+<td>Facility ZIP code, stations, ownership, by release</td>
+<td>December 2005 to April 2025, via <code>usRds::dialysis_facility_snapshots</code> <span class="citation" data-cites="cms2025dfc">(<a href="#ref-cms2025dfc" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2025</a>)</span></td>
+<td>ZIP code and date of dialysis start</td>
+</tr>
+<tr class="even">
+<td>UDS Mapper ZIP-to-ZCTA crosswalk</td>
+<td>ZCTA of each ZIP code</td>
+<td>2011 to 2019, matched to the year dialysis started, via <code>zippeR</code> <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al., n.d.</a>)</span></td>
+<td>ZIP code and year</td>
+</tr>
+<tr class="odd">
+<td>American Community Survey (ACS) 5-year, subject table S0601</td>
+<td>ZCTA population, % female, % White, % Black, % Asian, % Hispanic, median income, % below poverty</td>
+<td>Each year 2011 to 2019, matched to the year dialysis started <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span></td>
+<td>ZCTA (from the crosswalk) and year</td>
+</tr>
+<tr class="even">
+<td>Dartmouth Atlas ZIP-to-HSA crosswalks</td>
+<td>HSA of each ZIP code</td>
+<td>2011 to 2019, matched to the year <span class="citation" data-cites="dartmouth_crosswalks">(<a href="#ref-dartmouth_crosswalks" role="doc-biblioref">The Dartmouth Atlas of Health Care, n.d.-c</a>)</span></td>
+<td>ZIP code and year</td>
+</tr>
+<tr class="odd">
+<td>Dartmouth Atlas primary care measures</td>
+<td>HSA ambulatory-sensitive discharges, leg amputations, diabetic eye exams, HbA1c testing, mammography</td>
+<td>2015 <span class="citation" data-cites="dartmouth_primarycare">(<a href="#ref-dartmouth_primarycare" role="doc-biblioref">The Dartmouth Atlas of Health Care, n.d.-b</a>)</span></td>
+<td>HSA</td>
+</tr>
+<tr class="even">
+<td>Dartmouth Atlas hospital resources</td>
+<td>HSA acute care beds and hospital FTE employees per 1,000</td>
+<td>2012 <span class="citation" data-cites="dartmouth_capacity">(<a href="#ref-dartmouth_capacity" role="doc-biblioref">The Dartmouth Atlas of Health Care, n.d.-a</a>)</span></td>
+<td>HSA</td>
+</tr>
+<tr class="odd">
+<td>USDA ERS Rural-Urban Commuting Area codes</td>
+<td>Primary RUCA code of each ZIP code</td>
+<td>2010 ZIP code file <span class="citation" data-cites="ers2020ruca">(<a href="#ref-ers2020ruca" role="doc-biblioref">USDA Economic Research Service 2020</a>)</span></td>
+<td>ZIP code</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Secondary-data declaration.</strong> The investigators have analyzed this USRDS release before: it is the release used for the published paper, and the published results are known. Every result of this replication is therefore a reproduction, not a new test of the hypothesis.</p>
+<p><strong>Data currency.</strong> The facility snapshot current on each patient’s date of dialysis start is used; a snapshot describes facilities from its CMS release date until the day before the next release.</p>
+</section>
+<section id="study-population" class="level2">
+<h2 class="anchored" data-anchor-id="study-population">4. Study population</h2>
+<p><strong>Source population:</strong> every patient with a CMS-2728 Medical Evidence form in the USRDS.</p>
+<p><strong>Index event:</strong> start of regular chronic dialysis (<code>DIALDAT</code>) on the patient’s first Medical Evidence form.</p>
+<p><strong>Eligibility, in order.</strong> Each step is one box of the cohort flowchart. Steps 1 to 9 come from the paper and the original code; steps 10 to 16 are linkage and completeness requirements from the original code.</p>
+<ol type="1">
+<li>First Medical Evidence form per patient (earliest <code>MEFDATE</code>); later forms describe a second or later dialysis episode.</li>
+<li>Dialysis started (<code>DIALDAT</code>) 2011 to 2019, as the paper states. The paper starts in 2011 because of the IDEAL trial <span class="citation" data-cites="cooper2010ideal">(<a href="#ref-cooper2010ideal" role="doc-biblioref"><span class="nocase">Cooper et al.</span> 2010</a>)</span>. The original code used the year of the form (<code>MEFDATE</code>), applying the lower bound explicitly and the upper bound only implicitly, through the ACS linkage (decided by Vagish Hemmige, 27 October 2026).</li>
+<li>Age 18 or older at incidence (<code>INC_AGE</code>).</li>
+<li>Hemodialysis as the primary type of dialysis (<code>DIALTYP</code> = hemodialysis).</li>
+<li>In-center dialysis: <code>DIALSET</code> “Dialysis facility/center”. The paper excludes patients who began home dialysis. The original code kept codes 1 and 2, which excluded home dialysis in the coding of the time (Appendix C format <code>$MESET_CUR</code>: 1 hospital inpatient, 2 dialysis facility/center, 3 home; 14,380 patients excluded in the published Figure 1). The current coding (format <code>$MESET</code>, 2024 Researcher’s Guide) has 1 = home and 2 = dialysis facility/center, so the replication keeps code 2 only, the same intent in the current coding (decided by Vagish Hemmige, 27 October 2026).</li>
+<li>Insurance status recorded (at least one coverage field marked yes).</li>
+<li>Vascular access type at first outpatient dialysis recorded (<code>ACCESSTYPE</code> not unknown).</li>
+<li>Sex recorded.</li>
+<li>eGFR at initiation recorded and no higher than 20 mL/min/1.73 m², as in the original code (decided by Vagish Hemmige, 27 October 2026, in a working session: “Use the code”). The paper says “less than 20”, and its Figure 1 labels the 38,708 excluded patients “eGFR &lt;20”. As in the original code, missing eGFR is removed in the same step.</li>
+<li>A residential ZIP code in effect on the date of dialysis start (RESIDENC period containing <code>DIALDAT</code>), unique per patient.</li>
+<li>The ZIP code has a ZCTA in the UDS Mapper crosswalk for the year dialysis started, and ACS data are available for that ZCTA and year. The original code intended this crosswalk but never applied it, matching ZIP codes to ZCTAs directly; the replication applies it (decided by Vagish Hemmige, 27 October 2026, in a working session: “I intended at some point to cross-walk this but never did”).</li>
+<li>A facility snapshot current on the date of dialysis start. The original code’s facility join also required the year of the form to match the year dialysis started; the replication drops that requirement (see “Year of linkage” below).</li>
+<li>An HSA for the ZIP code in the crosswalk for the year dialysis started.</li>
+<li>Residence in the 48 contiguous states or the District of Columbia (excludes Alaska, Hawaii, territories, and states not assigned a Census region).</li>
+<li>Race recorded (not unknown) and Hispanic ethnicity recorded (not unknown).</li>
+<li>ZIP code has a RUCA code other than 99 (zero-population ZIP code) and complete ACS covariates.</li>
+</ol>
+<p>The original code applied several of these filters outside its CONSORT table, and its table misreported others; see section 12. In this replication every exclusion is a flowchart step, so the diagram reproduces the cohort exactly.</p>
+<p><strong>Year of linkage.</strong> All area data (ZCTA crosswalk, ACS, HSA, HSA population) are matched to the year dialysis started (<code>DIALDAT</code>), the same year as the facility counts. The original code matched area data to the year of the Medical Evidence form (<code>MEFDATE</code>) and its facility join silently required the two years to be equal; the replication corrects this (decided by Vagish Hemmige, 27 October 2026).</p>
+</section>
+<section id="exposure" class="level2">
+<h2 class="anchored" data-anchor-id="exposure">5. Exposure</h2>
+<p><strong>HSA dialysis facility density:</strong> the number of dialysis facilities in the patient’s HSA on the date of dialysis start, divided by the HSA’s population, times 100,000 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
+<ul>
+<li><strong>Facilities:</strong> every facility listed in the CMS release current on the date of dialysis start (<code>usRds::add_dialysis_facility_counts()</code>), assigned to an HSA by its ZIP code and the crosswalk for that calendar year. Facilities whose ZIP code has no HSA are not counted.</li>
+<li><strong>HSA population:</strong> the ACS total population of the ZCTAs of the ZIP codes in the HSA, using the Dartmouth and ZCTA crosswalks and ACS for the year dialysis started. Each ZCTA is counted once per HSA, because several ZIP codes can share a ZCTA. ZCTAs without ACS data contribute nothing.</li>
+<li><strong>Categories:</strong> 0 facilities; then cut at the 25th, 50th and 75th percentiles of density among all patients in the final cohort (zeros included), each category including its upper bound. The paper reports cut points of 1.36, 1.95 and 2.76 per 100,000 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</li>
+<li><strong>Continuous version:</strong> density per 100,000, for sensitivity analyses.</li>
+<li><strong>Also described:</strong> facility stations per 100,000, and for-profit and non-profit facility counts.</li>
+</ul>
+</section>
+<section id="covariates" class="level2">
+<h2 class="anchored" data-anchor-id="covariates">6. Covariates</h2>
+<p>All patient covariates are measured on the first Medical Evidence form, at initiation. Area covariates are fixed for the patient’s ZIP code or HSA as described in section 3.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Covariate</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age</td>
+<td><code>INC_AGE</code>, years</td>
+</tr>
+<tr class="even">
+<td>Sex</td>
+<td><code>SEX</code></td>
+</tr>
+<tr class="odd">
+<td>Race</td>
+<td><code>RACE</code> (format <code>$MERACE</code>), reported in the paper’s five groups: White, Black, Asian, Native American, Pacific Islander. The five published counts sum to each column’s total, so the form’s Middle Eastern, South Asian and Other/multiracial codes were merged into those groups in the Stata analysis; how is not recorded. Here Middle Eastern counts as White and South Asian as Asian (1997 OMB race standard), and Other/multiracial as White, the largest group (chosen for this demonstration at Vagish Hemmige’s request, 27 October 2026).</td>
+</tr>
+<tr class="even">
+<td>Hispanic ethnicity</td>
+<td><code>ETHN</code>: Hispanic (codes 1, 2, 5) vs non-Hispanic (code 3)</td>
+</tr>
+<tr class="odd">
+<td>Year</td>
+<td>Year dialysis started (<code>DIALDAT</code>), “year of hemodialysis initiation” in the paper; the original R code used the year of <code>MEFDATE</code> (decided by Vagish Hemmige, 27 October 2026)</td>
+</tr>
+<tr class="even">
+<td>Comorbidities</td>
+<td>Heart failure (<code>COMO_CHF</code>); coronary disease (<code>COMO_ASHD</code>); diabetes (any of <code>COMO_DM_INS</code>, <code>COMO_DM_ORAL</code>, <code>COMO_DM_NOMEDS</code>, <code>COMO_DM_RET</code>); cerebrovascular disease (<code>COMO_CVATIA</code>); cancer (<code>COMO_CANC</code>); alcohol or drug dependence (<code>COMO_ALCHO</code>, <code>COMO_DRUG</code>); immobility (<code>COMO_INAMB</code>, <code>COMO_NEEDASST</code>, <code>COMO_INTRANS</code>); institutionalized (<code>COMO_INST</code>, <code>COMO_INST_AL</code>, <code>COMO_INST_NURS</code>, <code>COMO_INST_OTH</code>). Each is “yes” when any listed field is yes</td>
+</tr>
+<tr class="odd">
+<td>Access type</td>
+<td><code>ACCESSTYPE</code>: AV fistula, AV graft, catheter, other</td>
+</tr>
+<tr class="even">
+<td>Access to pre-kidney-failure nephrology care</td>
+<td><code>NEPHCARE</code>: none, some, unknown (unknown or blank kept as its own level), as in the paper’s Table 1 and the Model 3 footnote (decided by Vagish Hemmige, 27 October 2026, in a working session). The duration (<code>NEPHCARERANGE</code>) is not used.</td>
+</tr>
+<tr class="odd">
+<td>Insurance</td>
+<td>Hierarchy as in the original code: none; else Medicaid (including dual eligibility); else Medicare or Medicare Advantage; else employer group; else other (including VA)</td>
+</tr>
+<tr class="even">
+<td>Serum albumin, hemoglobin</td>
+<td><code>ALBUM</code> (g/dL), <code>HEGLB</code> (g/dL)</td>
+</tr>
+<tr class="odd">
+<td>Primary cause of kidney failure</td>
+<td><code>PDIS</code> mapped to six categories: diabetes; hypertension and cardiac disease; glomerulonephritis; hereditary or polycystic kidney disease; transplant failure or complications; other (including unknown and unmapped codes). <strong>Open:</strong> D4, the mapping (see below and “Open decisions”)</td>
+</tr>
+<tr class="even">
+<td>ZIP code poverty, % Black residents</td>
+<td>ACS S0601, for the ZIP code’s ZCTA and the year dialysis started</td>
+</tr>
+<tr class="odd">
+<td>Rural-urban type</td>
+<td>Primary RUCA code grouped as metropolitan (1 to 3), micropolitan (4 to 6), small town (7 to 9) and rural (10) <span class="citation" data-cites="ers2020ruca">(<a href="#ref-ers2020ruca" role="doc-biblioref">USDA Economic Research Service 2020</a>)</span>, the four groups in the paper’s Table 1</td>
+</tr>
+<tr class="even">
+<td>Census region</td>
+<td>From the residence state</td>
+</tr>
+<tr class="odd">
+<td>HSA quality benchmarks</td>
+<td>Ambulatory-sensitive discharges per 1,000 enrollees; percentage of diabetic enrollees with an eye exam (2015) and with HbA1c testing (2015); percentage of women with a mammogram in 2 years; leg amputations per 1,000 <span class="citation" data-cites="dartmouth_primarycare">(<a href="#ref-dartmouth_primarycare" role="doc-biblioref">The Dartmouth Atlas of Health Care, n.d.-b</a>)</span>. Hospital beds and FTE employees per 1,000 <span class="citation" data-cites="dartmouth_capacity">(<a href="#ref-dartmouth_capacity" role="doc-biblioref">The Dartmouth Atlas of Health Care, n.d.-a</a>)</span> are described but not in the models. Dartmouth codes -88888 and -99999 are set to missing; the original code turned them into positive values (decided by Vagish Hemmige, 27 October 2026, in a working session).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cause of kidney failure mapping.</strong> The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format <code>$PD96DET</code> <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three cloud large language models, called through <code>ellmer</code> (0.5.0 or later, the first version that sends current Claude models a native structured-output request) <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same prompt and a structured output schema, each classify every code, and every model’s answers pass the same check: one each from OpenAI, Anthropic and Google. Two models run locally through Ollama, Alibaba’s Qwen and Meta’s Llama, receive the same prompt and are reported for comparison, but do not vote (decided by Vagish Hemmige, 29 October 2026): on the analyst’s laptop neither produced a complete, valid set of answers, and IBM’s Granite, tried first, returned none. A code is accepted when at least two of the three cloud models agree (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted, and was chosen because the classification demonstrates the method rather than being the main analysis); codes so accepted are not read by a person, and every other code is reviewed by the deciders, who record the category and their initials (<code>reviewer</code>). Agreement among the models is reported with Fleiss’ kappa in a one-row public summary (<code>references/esrd-cause-agreement.csv</code>), together with the number of codes accepted unanimously, by majority only and not at all; kappa is descriptive and plays no part in accepting codes. A second public file (<code>references/esrd-cause-local-models.csv</code>) reports, for each local model, how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category. The reviewed mapping is committed to <code>references/</code> and is the only version the analysis reads. No patient data are given to any model; the local models send nothing over the internet. Patient-level cross-checks against USRDS’s own disease group (<code>DISGRPC</code>, PATIENTS file) and against the published Table 1 counts are run by an authorized person. The prompt defines each category in words, starting from the 12 groups of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and the original spreadsheet’s sheet names: glomerulonephritis includes secondary glomerulonephritis (lupus nephritis, ANCA vasculitis, anti-GBM disease, Henoch-Schönlein purpura) and infection-related glomerular disease (post-infectious glomerulonephritis, HIV-associated nephropathy, hepatitis-associated and cryoglobulinemic glomerulonephritis), while other infections are in Other (decided by Vagish Hemmige, 27 October 2026). HIV-associated nephropathy is thereby counted as glomerulonephritis, unlike in the CMS-2728 grouping, where HIV disease is a miscellaneous condition. The definitions are shown on the website. <strong>Open:</strong> D4, whether a model-drafted, clinician-reviewed mapping is acceptable for the replication.</p>
+</section>
+<section id="outcome" class="level2">
+<h2 class="anchored" data-anchor-id="outcome">7. Outcome</h2>
+<p><strong>Primary:</strong> eGFR at initiation (<code>GFR_EPI</code>, CKD-EPI creatinine equation <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span> as calculated by USRDS, with the race coefficient) of 10 or above vs below 10 mL/min/1.73 m², as in the original code’s <code>GFR_DICH</code> (decided by Vagish Hemmige, 27 October 2026, in a working session: “Use the code”). The paper describes the outcome as greater than 10 vs at most 10 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>; the two differ only for patients at exactly 10.</p>
+<p><strong>Secondary:</strong> eGFR as a continuous variable.</p>
+<p>There is no follow-up; the outcome is measured at the index event.</p>
+</section>
+<section id="statistical-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-analysis">8. Statistical analysis</h2>
+<p><strong>Descriptive analysis.</strong> Table 1 by the five density categories: means (SD) for continuous variables and counts (%) for categorical ones, with classical one-way ANOVA for continuous variables, as the paper says (R’s <code>oneway.test()</code> with <code>var.equal = TRUE</code>; its default is Welch’s test; decided by Vagish Hemmige, 28 October 2026), and chi-squared tests for categorical variables. The paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>; Kruskal-Wallis is not used here. Missing data are reported for each variable.</p>
+<p><strong>Primary model.</strong> Mixed-effects logistic regression of eGFR ≥ 10 on the density category (reference: 0 facilities), with a random intercept for HSA, progressively adjusted <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>:</p>
+<ul>
+<li><strong>Model 1:</strong> age, sex, race, Hispanic ethnicity, year.</li>
+<li><strong>Model 2:</strong> Model 1 plus heart failure, coronary disease, diabetes, cerebrovascular disease, alcohol or drug dependence, immobility, institutionalized, access type, primary cause of kidney failure, and (in the first version) serum albumin and hemoglobin.</li>
+<li><strong>Model 3:</strong> Model 2 plus insurance, access to nephrology care (none, some, unknown), rural-urban type, ZIP code poverty, ZIP code % Black, and HSA quality benchmarks.</li>
+</ul>
+<p>Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them, the analysis uses complete cases (the paper reports 533,375 patients). The paper used Stata; its exact covariate coding and estimation options are not available, so these models are rebuilt from the paper’s text and Table 2 footnotes. Census region is not a covariate: the original code’s exploratory models adjusted for it, but the footnotes do not list it (decided by Vagish Hemmige, 28 October 2026, to follow the footnotes). The “HSA quality benchmarks” in Model 3 are taken to be the three the Methods give as examples (“such as”): HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges. Estimation uses <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span> with the Laplace approximation; on synthetic data it matched a fully converged <code>lme4::glmer</code> about thirty times faster, and 7-point quadrature (Stata’s default) changed estimates only in the third decimal (decided by Vagish Hemmige, 27 October 2026). The linear models of eTable 3 also use <code>glmmTMB</code>; the variance decomposition uses <code>lme4::lmer</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span>.</p>
+<p><strong>Variance decomposition.</strong> Null mixed linear models of continuous eGFR with a random intercept for HSA, and with HSA and dialysis facility (<code>PROVUSRD</code>) nested, report the share of variance at each level. Both models are fit on the same patients, those with a facility ID, so the shares are comparable (decided by Vagish Hemmige, 28 October 2026).</p>
+<p><strong>Effect modification.</strong> Models stratified by race (White, Black) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
+<p><strong>Multiplicity.</strong> None; a single primary comparison is reported, as in the paper.</p>
+<p><strong>Missing data.</strong> Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as “a multiple imputation technique with chained predictive analytics (10 imputations)” (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin’s rules. This imputation model was confirmed by Vagish Hemmige, 28 October 2026 (D7).</p>
+<p><strong>Software.</strong> R, with <code>usRds</code> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span>, <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>, <code>tidycensus</code> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span>, <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>, <code>lme4</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> and <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span>. The <code>usRds</code> version or commit is recorded with every result.</p>
+</section>
+<section id="sensitivity-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="sensitivity-analyses">9. Sensitivity analyses</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analysis</th>
+<th>Assumption it tests</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exclude HSAs with 0 facilities (reference: category 2); Table 2, Models 1–3 without albumin and hemoglobin</td>
+<td>That distance to care in HSAs without facilities does not drive the association</td>
+</tr>
+<tr class="even">
+<td>Stratified by race, White and Black; eTable 1, Models 1–3 with albumin and hemoglobin</td>
+<td>That the association holds within each race group</td>
+</tr>
+<tr class="odd">
+<td>Density as a continuous exposure; eTable 2, Models 1–3 with and without albumin and hemoglobin, with them imputed, and by race</td>
+<td>That the association does not depend on the choice of cut points</td>
+</tr>
+<tr class="even">
+<td>Continuous eGFR as the outcome (linear mixed model); eTable 3, Models 1–3 with albumin and hemoglobin, with and without HSAs with 0 facilities</td>
+<td>That the association does not depend on the threshold of 10</td>
+</tr>
+<tr class="odd">
+<td>Multiple imputation of albumin and hemoglobin (eTable 2)</td>
+<td>That complete-case results are not biased by missing laboratory values</td>
+</tr>
+<tr class="even">
+<td>Excluding eGFR of 5 or below (from the original R code; not in the paper)</td>
+<td>That results are not driven by implausibly low eGFR values</td>
+</tr>
+<tr class="odd">
+<td>Each correction listed in section 12, applied one at a time</td>
+<td>How much each correction to the original code changes the published estimates</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="disclosure-control" class="level2">
+<h2 class="anchored" data-anchor-id="disclosure-control">10. Disclosure control</h2>
+<p>USRDS data are used under the investigators’ data use agreement. No cell, flowchart box or table entry with a count from 1 to 10 is published, including counts recoverable by subtraction. Tables and figures from USRDS data stay out of the repository until they have been checked for errors and cleared for release.</p>
+</section>
+<section id="limitations-to-address-in-reporting" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-to-address-in-reporting">11. Limitations to address in reporting</h2>
+<p>The limitations in the paper apply <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Specific to the replication: the cause-of-kidney-failure mapping is rebuilt rather than recovered; Stata models are re-estimated in R; and public source files (CMS, Dartmouth, ERS, ACS) are re-downloaded and may have been revised since the original analysis.</p>
+</section>
+<section id="corrections-to-the-original-code" class="level2">
+<h2 class="anchored" data-anchor-id="corrections-to-the-original-code">12. Corrections to the original code</h2>
+<p>Each is applied in the replication and its effect is reported (section 9). Decisions that belong to the deciders are linked.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Original behavior</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A patient with two residence periods covering the dialysis start date would have been duplicated (a uniqueness check was printed but not enforced)</td>
+<td>A patient with no matching period, or more than one, has no residence and is excluded at that flowchart step</td>
+</tr>
+<tr class="even">
+<td>CONSORT table counted the RUCA exclusion as 0 (compared a labelled factor to <code>11</code>) while the next line removed patients</td>
+<td>Every exclusion is an <code>fc_filter()</code> step</td>
+</tr>
+<tr class="odd">
+<td>Exclusions for the facility linkage, a second sex check, ZIP population, % White, % Black, % Asian, % Hispanic and region were applied outside the CONSORT table; the income and poverty rows were labelled “ZIPPercentageFemale”</td>
+<td>As above</td>
+</tr>
+<tr class="even">
+<td>A ZIP-to-ZCTA step was counted (224 patients in the published Figure 1) but never applied; ZIP codes were matched to ZCTAs directly</td>
+<td>The intended crosswalk is applied (UDS Mapper, by year), with its own flowchart step; HSA population counts each ZCTA once</td>
+</tr>
+<tr class="odd">
+<td>Oct 2017 and Jan 2018 CMS files code ownership as 1/2; for-profit counts were 0 for dialysis starts from October 2017 to March 2018</td>
+<td>Ownership harmonized in <code>usRds</code></td>
+</tr>
+<tr class="even">
+<td>A ZIP code with any facility of unknown ownership or stations had all its for-profit, non-profit or station counts set to 0</td>
+<td>Counts ignore only the record with the missing value</td>
+</tr>
+<tr class="odd">
+<td>Facility files expanded to one row per ZIP code per day</td>
+<td>Interval join on each release’s validity period</td>
+</tr>
+<tr class="even">
+<td>Dartmouth suppression codes made positive</td>
+<td>Set to missing</td>
+</tr>
+<tr class="odd">
+<td><code>DIALSET</code> codes 1 and 2 kept to exclude home dialysis, correct for the earlier coding (<code>$MESET_CUR</code>) but not the current one (<code>$MESET</code>, where 1 = home)</td>
+<td>Keep “Dialysis facility/center” only, named rather than numbered</td>
+</tr>
+<tr class="even">
+<td>Area data matched to the form year and facility counts to the dialysis start year; patients whose years differed were silently dropped</td>
+<td>All area data matched to the year dialysis started; no one dropped for a year mismatch</td>
+</tr>
+<tr class="odd">
+<td>Study period and the year covariate defined by the form date (<code>MEFDATE</code>); the paper defines both by the start of hemodialysis</td>
+<td>Both use the year dialysis started (<code>DIALDAT</code>)</td>
+</tr>
+<tr class="even">
+<td>ACS subject-table variable codes assumed to be the same every year</td>
+<td>Each year’s variable labels are checked against the expected text before use</td>
+</tr>
+<tr class="odd">
+<td>A one-year lagged station count was missing, not 0, where a ZIP code had no facility a year earlier (not used in the published models)</td>
+<td><code>usRds</code> returns 0</td>
+</tr>
+<tr class="even">
+<td>Two interactive maps saved the center-density map under the station-density file names</td>
+<td>One function draws each map, saved under its own name</td>
+</tr>
+<tr class="odd">
+<td>The patient-level analysis file was written to Stata and RDS files next to the code</td>
+<td>Nothing patient-level is written to the project</td>
+</tr>
+<tr class="even">
+<td>A blank comorbidity field became missing, which would drop the patient from a model; the published sample sizes show the paper kept them</td>
+<td>Blank or unknown counts as not present, as on the form</td>
+</tr>
+<tr class="odd">
+<td>A primary-cause code listed on two category sheets would have joined twice and duplicated those patients</td>
+<td>One row per code in the mapping; the join stops if a code appears twice</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="open-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="open-decisions">Open decisions</h2>
+<p>The deciders (Vagish Hemmige and Ladan Golestaneh) settle these; until then the replication does what the sections above describe.</p>
+<ul>
+<li><strong>D4, cause-of-kidney-failure mapping (section 6).</strong> Whether a mapping drafted by language models and checked by the deciders is acceptable for the replication, and whether the mapping is right.</li>
+</ul>
+</section>
+<section id="reporting-map" class="level2">
+<h2 class="anchored" data-anchor-id="reporting-map">Reporting map</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Checklist item</th>
+<th>Topic</th>
+<th>Plan section</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>STROBE 4</td>
+<td>Study design</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>STROBE 5</td>
+<td>Setting, dates</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>STROBE 6 / RECORD 6.1–6.3</td>
+<td>Eligibility, codes and algorithms, linkage</td>
+<td>4, 6</td>
+</tr>
+<tr class="even">
+<td>STROBE 7 / RECORD 7.1</td>
+<td>Variables, codes and algorithms</td>
+<td>5, 6, 7</td>
+</tr>
+<tr class="odd">
+<td>STROBE 8</td>
+<td>Data sources and measurement</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>STROBE 9</td>
+<td>Bias</td>
+<td>9, 11</td>
+</tr>
+<tr class="odd">
+<td>STROBE 10</td>
+<td>Study size</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>STROBE 11</td>
+<td>Quantitative variables</td>
+<td>5, 6</td>
+</tr>
+<tr class="odd">
+<td>STROBE 12 / RECORD 12.1–12.3</td>
+<td>Statistical methods, data cleaning, linkage</td>
+<td>8, 9, 12</td>
+</tr>
+<tr class="even">
+<td>STROBE 13 / RECORD 13.1</td>
+<td>Participants, flow diagram</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>STROBE 14</td>
+<td>Descriptive data, missingness</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>STROBE 16</td>
+<td>Main results</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>STROBE 17</td>
+<td>Other analyses</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>STROBE 19 / RECORD 19.1</td>
+<td>Limitations</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>RECORD 22.1</td>
+<td>Access to data and code</td>
+<td>3, 10</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Rendered from <code>references.bib</code>.</p>
+
+
+<!-- -->
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-lme4_pkg" class="csl-entry" role="listitem">
+Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. <span>“Fitting Linear Mixed-Effects Models Using <span class="nocase">lme4</span>.”</span> <em>Journal of Statistical Software</em> 67 (1): 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>.
+</div>
+<div id="ref-benchimol2015record" class="csl-entry" role="listitem">
+<span class="nocase">Benchimol, Eric I, Liam Smeeth, Astrid Guttmann, et al.</span> 2015. <span>“The <span>REporting</span> of Studies <span>Conducted</span> Using <span class="nocase">Observational Routinely-collected</span> Health <span>Data</span> (<span>RECORD</span>) Statement.”</span> <em>PLoS Medicine</em> 12 (10): e1001885. <a href="https://doi.org/10.1371/journal.pmed.1001885">https://doi.org/10.1371/journal.pmed.1001885</a>.
+</div>
+<div id="ref-glmmtmb" class="csl-entry" role="listitem">
+Brooks, Mollie E., Kasper Kristensen, Koen J. van Benthem, et al. 2017. <span>“<span class="nocase">glmmTMB</span> Balances Speed and Flexibility Among Packages for Zero-Inflated Generalized Linear Mixed Modeling.”</span> <em>The R Journal</em> 9 (2): 378–400. <a href="https://doi.org/10.32614/RJ-2017-066">https://doi.org/10.32614/RJ-2017-066</a>.
+</div>
+<div id="ref-cms2728_causes" class="csl-entry" role="listitem">
+Centers for Medicare &amp; Medicaid Services. 2015. <em>List of Primary Causes of Renal Failure: <span>ICD-10-CM</span> Codes for Field 15 of the <span>CMS-2728</span> End Stage Renal Disease Medical Evidence Report (08/15)</em>. <a href="https://www.nwkidney.org/wp-content/uploads/2014/11/ICD-10-CM-LIST-OF-PRIMARY-CAUSES-OF-END-STAGE-RENAL-DISEASE.pdf">https://www.nwkidney.org/wp-content/uploads/2014/11/ICD-10-CM-LIST-OF-PRIMARY-CAUSES-OF-END-STAGE-RENAL-DISEASE.pdf</a>.
+</div>
+<div id="ref-cms2025dfc" class="csl-entry" role="listitem">
+Centers for Medicare &amp; Medicaid Services. 2025. <em>Dialysis Facility Compare: Archived Facility Data</em>. <a href="https://data.cms.gov/provider-data/archived-data/dialysis-facilities">https://data.cms.gov/provider-data/archived-data/dialysis-facilities</a>.
+</div>
+<div id="ref-cooper2010ideal" class="csl-entry" role="listitem">
+<span class="nocase">Cooper, Bruce A, Pauline Branley, Liliana Bulfone, et al.</span> 2010. <span>“A Randomized, Controlled Trial of Early Versus Late Initiation of Dialysis.”</span> <em>New England Journal of Medicine</em> 363 (7): 609–19. <a href="https://doi.org/10.1056/NEJMoa1000552">https://doi.org/10.1056/NEJMoa1000552</a>.
+</div>
+<div id="ref-vonelm2007strobe" class="csl-entry" role="listitem">
+<span class="nocase">Elm, Erik von, Douglas G Altman, Matthias Egger, et al.</span> 2007. <span>“The <span class="nocase">Strengthening the Reporting of Observational Studies in Epidemiology (STROBE)</span> Statement: Guidelines for Reporting Observational Studies.”</span> <em>Lancet</em> 370 (9596): 1453–57. <a href="https://doi.org/10.1016/S0140-6736(07)61602-X">https://doi.org/10.1016/S0140-6736(07)61602-X</a>.
+</div>
+<div id="ref-usrds_pkg" class="csl-entry" role="listitem">
+Hemmige, Vagish. 2026. <em>usRds: A Package to Automate Processing and Access to the <span>USRDS</span></em>. <a href="https://vagishhemmige.github.io/usRds/">https://vagishhemmige.github.io/usRds/</a>.
+</div>
+<div id="ref-hemmige2024density" class="csl-entry" role="listitem">
+Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geographic Dialysis Facility Density and Early Dialysis Initiation.”</span> <em>JAMA Network Open</em> 7 (1): e2350009. <a href="https://doi.org/10.1001/jamanetworkopen.2023.50009">https://doi.org/10.1001/jamanetworkopen.2023.50009</a>.
+</div>
+<div id="ref-levey2009ckdepi" class="csl-entry" role="listitem">
+<span class="nocase">Levey, Andrew S, Lesley A Stevens, Christopher H Schmid, et al.</span> 2009. <span>“A New Equation to Estimate Glomerular Filtration Rate.”</span> <em>Annals of Internal Medicine</em> 150 (9): 604–12. <a href="https://doi.org/10.7326/0003-4819-150-9-200905050-00006">https://doi.org/10.7326/0003-4819-150-9-200905050-00006</a>.
+</div>
+<div id="ref-zipper_pkg" class="csl-entry" role="listitem">
+Prener, Christopher, Timothy Wiemken, and Angela Cook. n.d. <em>zippeR: Working with United States <span>ZIP</span> Code and <span>ZIP</span> Code Tabulation Area Data</em>. <a href="https://github.com/pfizer-opensource/zippeR">https://github.com/pfizer-opensource/zippeR</a>.
+</div>
+<div id="ref-flowchart_pkg" class="csl-entry" role="listitem">
+Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristian Tebé. 2026. <span>“Flowchart: An <span>R</span> Package for Data Flowchart Generation.”</span> <em>Journal of Open Research Software</em> 14 (1): 20. <a href="https://doi.org/10.5334/jors.649">https://doi.org/10.5334/jors.649</a>.
+</div>
+<div id="ref-dartmouth_capacity" class="csl-entry" role="listitem">
+The Dartmouth Atlas of Health Care. n.d.-a. <em>Hospital and Physician Capacity: Hospital Resources by <span>HSA</span>, 2012</em>. <a href="https://data.dartmouthatlas.org/capacity/">https://data.dartmouthatlas.org/capacity/</a>.
+</div>
+<div id="ref-dartmouth_primarycare" class="csl-entry" role="listitem">
+The Dartmouth Atlas of Health Care. n.d.-b. <em>Selected Primary Care Access and Quality Measures, <span>HSA</span> Level, 2015</em>. <a href="https://data.dartmouthatlas.org/primary-care/">https://data.dartmouthatlas.org/primary-care/</a>.
+</div>
+<div id="ref-dartmouth_crosswalks" class="csl-entry" role="listitem">
+The Dartmouth Atlas of Health Care. n.d.-c. <em><span>ZIP</span> Code to Hospital Service Area and Hospital Referral Region Crosswalks, 2011–2019, and <span>HSA</span> Boundary Files</em>. <a href="https://data.dartmouthatlas.org/supplemental/">https://data.dartmouthatlas.org/supplemental/</a>.
+</div>
+<div id="ref-uds_crosswalk" class="csl-entry" role="listitem">
+UDS Mapper. n.d. <em><span>ZIP</span> Code to <span>ZCTA</span> Crosswalk, 2011–2019</em>. American Academy of Family Physicians; UDS Mapper sunset in 2024. Annual files as bundled in zippeR. <a href="https://github.com/pfizer-opensource/zippeR">https://github.com/pfizer-opensource/zippeR</a>.
+</div>
+<div id="ref-usrds2024guide" class="csl-entry" role="listitem">
+United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USRDS</span> Database, Appendix b (Data File Descriptions) and Appendix c (Data Formats)</em>. National Institute of Diabetes and Digestive and Kidney Diseases. <a href="https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide">https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide</a>.
+</div>
+<div id="ref-ers2020ruca" class="csl-entry" role="listitem">
+USDA Economic Research Service. 2020. <em>Rural-Urban Commuting Area Codes, 2010, <span>ZIP</span> Code File</em>. <a href="https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes">https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes</a>.
+</div>
+<div id="ref-tidycensus" class="csl-entry" role="listitem">
+Walker, Kyle, and Matt Herman. n.d. <em>Tidycensus: Load <span>US</span> Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
+</div>
+<div id="ref-ellmer_pkg" class="csl-entry" role="listitem">
+Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. n.d. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vagishhemmige\.github\.io\/Dialysis-facility-density-USRDS");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../quarto/supplement.html" class="pagination-link" aria-label="Published supplement">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Published supplement</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../quarto/architecture.html" class="pagination-link" aria-label="Architecture">
+        <span class="nav-page-text">Architecture</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">pagetitle:</span><span class="co"> "Analysis plan"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows analysis-plan.md from the repository root, which is the one source:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../analysis-plan.md &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/edit/main/quarto/analysis-plan.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

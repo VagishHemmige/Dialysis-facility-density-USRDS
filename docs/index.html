@@ -204,14 +204,14 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto/differences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Differences from the original code</span></a>
+  <a href="./quarto/original.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The original R Markdown file</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto/original.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The original R Markdown file</span></a>
+  <a href="./quarto/differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differences from the original code</span></a>
   </div>
 </li>
       </ul>
@@ -256,32 +256,38 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. USRDS patient data</span></a>
+ <span class="menu-text">3. USRDS patient data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Linking area data</span></a>
+ <span class="menu-text">4. Linking area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. Cohort flowchart</span></a>
+ <span class="menu-text">5. Cohort flowchart</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. Density categories</span></a>
+ <span class="menu-text">6. Density categories</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto/models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Models</span></a>
+ <span class="menu-text">7. Models</span></a>
   </div>
 </li>
       </ul>
@@ -335,7 +341,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Cause of kidney failure</span></a>
+ <span class="menu-text">Project documents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -343,8 +349,26 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Classifying codes with an LLM ensemble</span></a>
+  <a href="./quarto/analysis-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto/agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repository blueprint</span></a>
   </div>
 </li>
       </ul>
@@ -429,7 +453,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="status" class="level2">
 <h2 class="anchored" data-anchor-id="status">Status</h2>
 <p>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Open decisions are listed on the <a href="./quarto/differences.html#open-decisions">differences page</a> and tracked as <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues">GitHub issues</a>.</p>
-<p>The replication also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when three of five language models agree, and the grouping of race into the paper’s five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked “chosen for this demonstration” where it is described.</p>
+<p>The replication also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when two of three language models agree, and the grouping of race into the paper’s five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked “chosen for this demonstration” where it is described.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -947,7 +971,7 @@ Walker, Kyle, and Matt Herman. n.d. <em>Tidycensus: Load <span>US</span> Census 
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Open decisions are listed on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd#open-decisions)</span> and tracked as <span class="co">[</span><span class="ot">GitHub issues</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues)</span>.</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>The replication also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when three of five language models agree, and the grouping of race into the paper's five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked "chosen for this demonstration" where it is described.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>The replication also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when two of three language models agree, and the grouping of race into the paper's five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked "chosen for this demonstration" where it is described.</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>

@@ -155,20 +155,30 @@ esrd_cause_categories <- c(
 esrd_cause_mapping_file <- "references/esrd-cause-categories.csv"
 # One row: how many codes the models agreed on, and Fleiss' kappa
 esrd_cause_agreement_file <- "references/esrd-cause-agreement.csv"
+# One row per local model: how complete and valid its answers were, and how
+# often it agreed with the accepted category (reported, not used to accept)
+esrd_local_model_file <- "references/esrd-cause-local-models.csv"
 
-# Models used by R/classify_esrd_causes.R: five models (decided by Vagish
-# Hemmige, 28 October 2026). Three cloud models, each provider's current
-# general-purpose model as of October 2026, as in an earlier ensemble by the
-# same team (gpt-5.1, claude-sonnet-4-5, gemini-2.5-flash); and two local
-# models run through Ollama on the analyst's own computer, which send nothing
-# over the internet: Alibaba's Qwen and Meta's Llama, so that the five come
-# from five unrelated companies. Llama 3.1 replaced IBM's Granite
-# (granite4.2:8b) on 29 October 2026 (decided by Vagish Hemmige): on the
-# analyst's laptop Granite returned no answers for 5 codes in 15 minutes.
-# (Ollama's medical models are all Google's
-# MedGemma, which would overlap with Gemini, or older models built on Llama 2.)
-# Change a name here to use another model; the models used are recorded in
-# the output.
+# Models used by R/classify_esrd_causes.R. Three cloud models, each
+# provider's current general-purpose model as of October 2026, as in an
+# earlier ensemble by the same team (gpt-5.1, claude-sonnet-4-5,
+# gemini-2.5-flash); and two local models run through Ollama on the analyst's
+# own computer, which send nothing over the internet: Alibaba's Qwen and
+# Meta's Llama, from two further companies (decided by Vagish Hemmige, 28 and
+# 29 October 2026). Llama 3.1 replaced IBM's Granite (granite4.2:8b) on 29
+# October 2026: on the analyst's laptop Granite returned no answers for 5
+# codes in 15 minutes. Qwen answers with its "thinking" turned off: with it
+# on, its reasoning filled Ollama's working space before the answer was
+# written. (Ollama's medical models are all Google's MedGemma, which would
+# overlap with Gemini, or older models built on Llama 2.) Change a name here
+# to use another model; the models used are recorded in the output.
+#
+# Only the three cloud models vote. The local models are run and reported
+# for comparison, but do not vote (decided by Vagish Hemmige, 29 October
+# 2026): on the analyst's laptop neither produced a complete, valid set of
+# answers. Both left codes unanswered, returned text that is not a code (a
+# code in quotation marks, "</code>" fragments, web addresses, codes not in
+# the list) and gave categories that contradict their own reasons.
 esrd_classifier_models <- list(
   openai = "gpt-6.1-terra",
   anthropic = "claude-sonnet-5-5",
@@ -176,6 +186,7 @@ esrd_classifier_models <- list(
   ollama_qwen = "qwen3.5:9b",
   ollama_llama = "llama3.1:8b"
 )
+esrd_classifier_voting <- c("openai", "anthropic", "google")
 # Codes sent per call. Gemini timed out on batches of 100, and local models
 # are slower and handle less text at once, so they get smaller batches. On the
 # analyst's laptop, Llama 3.1 answered only 7 of a batch of 25 codes but all of
@@ -187,15 +198,20 @@ esrd_classifier_batch_sizes <- list(
   ollama_qwen = 25,
   ollama_llama = 5
 )
-# A category is accepted when at least this many of the five models give it:
-# 3 of 5, a majority (decided by Vagish Hemmige, 28 October 2026; the rule was
-# 2 of 3 while there were three models). Other codes go to the deciders.
-esrd_classifier_min_agreement <- 3
+# A category is accepted when at least this many of the three voting models
+# give it: 2 of 3, a majority (decided by Vagish Hemmige, 29 October 2026,
+# when the local models stopped voting; the rule had been 3 of 5). Other codes
+# go to the deciders.
+esrd_classifier_min_agreement <- 2
 esrd_classifier_prompt_file <- "prompts/esrd-cause-classification.md"
 # Output limit for Claude. ellmer 0.5.0 caps Claude's answers at 4,096 tokens
 # unless told otherwise, too few for a batch of 100 codes with reasons; the
 # other providers have no default cap in ellmer.
 esrd_classifier_claude_max_tokens <- 16000
+# Seconds to wait for one answer. ellmer's default, 5 minutes, is too short
+# for a local model on a laptop processor; the cloud models answer well within
+# either limit.
+esrd_classifier_timeout_s <- 30 * 60
 # Each provider's checked answers are saved here (gitignored), so a rerun does
 # not pay for a provider that already finished
 esrd_votes_dir <- file.path(public_data_dir, "esrd-cause-votes")

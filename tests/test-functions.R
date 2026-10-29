@@ -205,6 +205,28 @@ test_that("ensemble_agreement accepts a category given by enough providers", {
   expect_equal(all_three$model_category, c("Diabetes", NA, NA, NA))
 })
 
+test_that("local_model_report counts valid, missing, invalid and repeated answers", {
+  codes <- tibble(code = c("A", "B", "C", "D"))
+  accepted <- tibble(code = c("A", "B", "C", "D"),
+                     model_category = c("Diabetes", "Other", NA, "Other"))
+  votes <- tribble(
+    ~provider, ~code, ~category,
+    # p1: A right, B wrong, C has no accepted category, D twice, plus junk
+    "p1", "A", "Diabetes", "p1", "B", "Diabetes", "p1", "C", "Other",
+    "p1", "D", "Other", "p1", "D", "Diabetes", "p1", "\"A\"", "Other", "p1", "{code}", "Other",
+    # p2: answers only A, correctly
+    "p2", "A", "Diabetes"
+  )
+  out <- local_model_report(votes, codes, accepted) |> arrange(provider)
+  expect_equal(out$codes_answered, c(3L, 1L))
+  expect_equal(out$codes_missing, c(0L, 3L))
+  expect_equal(out$answers_not_in_list, c(2L, 0L))
+  expect_equal(out$codes_repeated, c(1L, 0L))
+  expect_equal(out$compared_with_accepted, c(2L, 1L))
+  expect_equal(out$agrees_with_accepted, c(1L, 1L))
+  expect_equal(out$share_agreeing, c(0.5, 1))
+})
+
 test_that("HSA population counts a shared ZCTA once", {
   hsa <- tibble(zip = c("00501", "00544", "11742", "10467"), year = 2015L,
                 hsanum = c(1L, 1L, 1L, 2L))

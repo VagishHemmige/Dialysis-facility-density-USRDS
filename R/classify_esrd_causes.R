@@ -1,6 +1,7 @@
 # Purpose: draft the mapping of every primary-cause code (USRDS format
-#   $PD96DET) to the six cause categories, by an ensemble of five large
-#   language models, for review by the deciders (open decision #D4).
+#   $PD96DET) to the six cause categories, by an ensemble of three cloud
+#   language models, for review by the deciders (open decision #D4); two local
+#   models answer too and are reported for comparison, without voting.
 # Needs: setup.R and functions.R sourced first; the irr package (Fleiss'
 #   kappa); API keys for the three cloud providers in .Renviron
 #   (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY); Ollama running on this
@@ -10,7 +11,8 @@
 #   model's category and reason, how the models agreed, and final_category
 #   (filled when at least esrd_classifier_min_agreement models agree; the
 #   deciders fill the rest and their initials in `reviewer`);
-#   esrd_cause_agreement_file, a one-row summary of agreement.
+#   esrd_cause_agreement_file, a one-row summary of agreement;
+#   esrd_local_model_file, one row per local model.
 # Run once, by hand: it makes paid API calls, so its line in main.R (after
 #   download_public_data.R) is commented out.
 # Only the public code list from the USRDS Researcher's Guide is sent to the
@@ -147,10 +149,11 @@ ask_anthropic <- function(batch) {
 }
 
 # The two local models run through Ollama (http://localhost:11434), in the
-# same way; ask_ollama() returns the function for one of them
-ask_ollama <- function(model) {
+# same way; ask_ollama() returns the function for one of them, with any
+# settings it needs (passed to ellmer::params())
+ask_ollama <- function(model, ...) {
   function(batch) {
-    chat <- ellmer::chat_ollama(model = model, echo = "none")
+    chat <- ellmer::chat_ollama(model = model, params = ellmer::params(...), echo = "none")
     chat$chat_structured(classification_prompt(batch), type = classification_type)
   }
 }
@@ -159,17 +162,23 @@ providers <- list(
   openai = ask_openai,
   anthropic = ask_anthropic,
   google = ask_google,
-  ollama_qwen = ask_ollama(esrd_classifier_models$ollama_qwen),
+  # Qwen's "thinking" off (see setup.R)
+  ollama_qwen = ask_ollama(esrd_classifier_models$ollama_qwen, reasoning_effort = "none"),
   ollama_llama = ask_ollama(esrd_classifier_models$ollama_llama)
 )
+
+# A local model on a laptop processor can take longer than ellmer's default
+# wait of 5 minutes per answer
+options(ellmer_timeout_s = esrd_classifier_timeout_s)
 
 ## ---- classify-with-ensemble
 # Each model's answers are saved in esrd_votes_dir under the provider, model
 # and prompt version, so a rerun after a failure asks only the models with no
-# saved file. Saved answers are checked again on every run (check_votes()),
-# so a file that no longer matches the code list, for example after a usRds
-# update, stops the script instead of being used; delete that file to ask
-# the model again.
+# saved file. The voting models' answers are checked again on every run
+# (check_votes()), so a file that no longer matches the code list, for
+# example after a usRds update, stops the script instead of being used;
+# delete that file to ask the model again. The local models' answers are kept
+# as they came back and reported (local_model_report()), not checked.
 votes_path <- function(provider) {
   # Ollama names contain ":", which Windows does not allow in file names
   model <- str_replace_all(esrd_classifier_models[[provider]], "[^A-Za-z0-9._-]", "-")
@@ -204,10 +213,10 @@ message(str_glue(
   "or more per batch."
 ))
 
-votes <- providers |>
+all_votes <- providers |>
   imap(function(ask, provider) {
     message("\n", provider, " (", esrd_classifier_models[[provider]], ")")
-    cached_votes(
+    answers <- cached_votes(
       path = votes_path(provider),
       classify = function(partial_path) {
         classify_codes(
@@ -218,11 +227,16 @@ votes <- providers |>
           partial_path = partial_path
         )
       }
-    ) |>
-      check_votes(cause_codes, esrd_cause_categories, provider) |>
-      mutate(provider = provider)
+    )
+    if (provider %in% esrd_classifier_voting) {
+      check_votes(answers, cause_codes, esrd_cause_categories, provider)
+    }
+    mutate(answers, provider = provider)
   }) |>
   list_rbind()
+
+# Only the voting models decide the mapping
+votes <- filter(all_votes, provider %in% esrd_classifier_voting)
 
 ## ---- measure-agreement
 mapping <- ensemble_agreement(votes, cause_codes, min_agreement = esrd_classifier_min_agreement) |>
@@ -237,7 +251,7 @@ mapping <- ensemble_agreement(votes, cause_codes, min_agreement = esrd_classifie
     reviewer = NA_character_,
     prompt_version = prompt_version,
     ellmer_version = as.character(packageVersion("ellmer")),
-    models = str_flatten(unlist(esrd_classifier_models), "; "),
+    models = str_flatten(unlist(esrd_classifier_models[esrd_classifier_voting]), "; "),
     mapping_written_on = as.character(Sys.Date())
   )
 
@@ -268,10 +282,31 @@ message(str_glue(
   "Review the codes with no majority before running main.R."
 ))
 
+## ---- report-local-models
+# How complete and valid each local model's answers were, and how often it
+# agreed with the category the voting models accepted
+local_report <- all_votes |>
+  filter(!provider %in% esrd_classifier_voting) |>
+  local_model_report(cause_codes, accepted = mapping) |>
+  mutate(
+    model = unlist(esrd_classifier_models[provider]),
+    prompt_version = prompt_version,
+    written_on = as.character(Sys.Date()),
+    .after = provider
+  )
+
+message(str_glue_data(
+  local_report,
+  "{provider}: {codes_answered} of {nrow(cause_codes)} codes answered once, ",
+  "{codes_missing} missing, {answers_not_in_list} answers not in the list; ",
+  "agreed with {agrees_with_accepted} of {compared_with_accepted} accepted categories."
+))
+
 ## ---- write-mapping
-# Both files hold only public codes, descriptions and model answers. Git keeps
+# The three files hold only public codes, descriptions and model answers. Git keeps
 # no empty folders, so references/ does not exist in a fresh copy until the
 # first mapping is written and committed.
 dir.create(dirname(esrd_cause_mapping_file), recursive = TRUE, showWarnings = FALSE)
 write_csv(mapping, esrd_cause_mapping_file, na = "")
 write_csv(agreement_summary, esrd_cause_agreement_file, na = "")
+write_csv(local_report, esrd_local_model_file, na = "")

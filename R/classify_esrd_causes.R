@@ -159,7 +159,7 @@ providers <- list(
   anthropic = ask_anthropic,
   google = ask_google,
   ollama_qwen = ask_ollama(esrd_classifier_models$ollama_qwen),
-  ollama_granite = ask_ollama(esrd_classifier_models$ollama_granite)
+  ollama_llama = ask_ollama(esrd_classifier_models$ollama_llama)
 )
 
 ## ---- classify-with-ensemble

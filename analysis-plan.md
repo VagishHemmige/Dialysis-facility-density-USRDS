@@ -130,7 +130,7 @@ Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them
 
 **Multiplicity.** None; a single primary comparison is reported, as in the paper.
 
-**Missing data.** Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as "a multiple imputation technique with chained predictive analytics (10 imputations)" (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin's rules. **Open:** D7, confirmation of this imputation model.
+**Missing data.** Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as "a multiple imputation technique with chained predictive analytics (10 imputations)" (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin's rules. This imputation model was confirmed by Vagish Hemmige, 28 October 2026 (D7).
 
 **Software.** R, with `usRds` [@usrds_pkg], `flowchart` [@flowchart_pkg], `tidycensus` [@tidycensus], `glmmTMB` [@glmmtmb], `lme4` [@lme4_pkg] and `ellmer` [@ellmer_pkg]. The `usRds` version or commit is recorded with every result.
 
@@ -183,7 +183,6 @@ Each is applied in the replication and its effect is reported (section 9). Decis
 The deciders (Vagish Hemmige and Ladan Golestaneh) settle these; until then the replication does what the sections above describe.
 
 - **D4, cause-of-kidney-failure mapping (section 6).** Whether a mapping drafted by language models and checked by the deciders is acceptable for the replication, and whether the mapping is right.
-- **D7, imputation model (section 8).** Confirmation of the imputation model for eTable 2.
 
 ## Reporting map
 

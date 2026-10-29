@@ -1,6 +1,6 @@
 # Architecture
 
-The current implementation: scripts, data flow, and the objects passed between them. Checked by hand against every script in `R/` on 27 October 2026, in the same commit as the last change to this file (`git log -1 -- ARCHITECTURE.md` gives the commit). Regenerate with the Posit describe-design skill when the structure changes.
+The current implementation: scripts, data flow, and the objects passed between them. Refreshed with the Posit describe-design skill on 29 October 2026 against every script in `R/` on branch `classification-in-flow` at commit 85ce4c8, with no uncommitted changes. Regenerate it with the same skill when the structure changes.
 
 ## Running order
 
@@ -11,6 +11,7 @@ The current implementation: scripts, data flow, and the objects passed between t
 | 1 | `R/setup.R` | — | Attached packages; every constant | — |
 | 2 | `R/functions.R` | Packages | Helper functions | — |
 | 3 | `R/download_public_data.R` | Constants, helpers | `zcta_crosswalk`, `acs_zcta`, `hsa_crosswalk`, `hsa_population`, `ruca_zip`, `hsa_benchmarks`, `hsa_boundaries` | Public; cached in `data-raw/` |
+| — | `R/classify_esrd_causes.R` (commented out in `main.R`; run once by hand) | Constants, helpers; the public `$PD96DET` code list (usRds); API keys and Ollama | `references/esrd-cause-categories.csv`, `references/esrd-cause-agreement.csv` | Public code list only |
 | 4 | `R/prepare_patients.R` | Constants, helpers | `medevid_forms` (one row per Medical Evidence form, with derived variables and residence on the dialysis date) | USRDS, through usRds |
 | 5 | `R/link_area_data.R` | 3, 4; `references/esrd-cause-categories.csv`; usRds facility snapshots | `linked_forms` (area variables, facility counts, density, availability flags) | USRDS + public |
 | 6 | `R/create_cohort.R` | 5 | `cohort_fc` (flowchart), `cohort` (one row per patient) | USRDS |
@@ -19,7 +20,7 @@ The current implementation: scripts, data flow, and the objects passed between t
 | 9 | `R/tables.R` | 7, 8 (or the saved estimates) | `table_1`, `published_tables`; HTML files in `tables/` | Outputs, gitignored |
 | 10 | `R/figures.R` | 3, 6; usRds facility snapshots (`summarize_dialysis_facilities()`) | PNG files in `figures/` | Outputs, gitignored |
 
-`R/classify_esrd_causes.R` is not sourced by `main.R`. It is run once by hand, after `setup.R` and `functions.R`, and needs ellmer 0.5.0 or later, the irr package, an API key for each of three cloud providers, and Ollama running locally with the two local models in `setup.R`. From the public `$PD96DET` code list it writes `references/esrd-cause-categories.csv` (the mapping the analysis reads) and `references/esrd-cause-agreement.csv` (a one-row agreement summary). It sends no patient data, and the prompt is `prompts/esrd-cause-classification.md`. Each of the five models' answers are saved in `data-raw/esrd-cause-votes/` (gitignored), named by provider, model and a fingerprint of the prompt, so a rerun asks only models that have not finished with the current prompt; each batch is also saved as it finishes (a `.partial.csv` file, deleted once the model finishes), so a model interrupted partway resumes from its last finished batch; saved answers are checked against the code list on every run. A rerun stops before any API call if the deciders have already reviewed codes in the mapping file, so their review cannot be overwritten.
+`R/classify_esrd_causes.R` has its place in `main.R`, after `download_public_data.R`, as a commented-out line, so it does not run with the rest. It is run once by hand, after `setup.R` and `functions.R`, and needs ellmer 0.5.0 or later, the irr package, an API key for each of three cloud providers, and Ollama running locally with the two local models in `setup.R`. From the public `$PD96DET` code list it writes `references/esrd-cause-categories.csv` (the mapping the analysis reads) and `references/esrd-cause-agreement.csv` (a one-row agreement summary). It sends no patient data, and the prompt is `prompts/esrd-cause-classification.md`. Each of the five models' answers are saved in `data-raw/esrd-cause-votes/` (gitignored), named by provider, model and a fingerprint of the prompt, so a rerun asks only models that have not finished with the current prompt; each batch is also saved as it finishes (a `.partial.csv` file, deleted once the model finishes), so a model interrupted partway resumes from its last finished batch; saved answers are checked against the code list on every run. A rerun stops before any API call if the deciders have already reviewed codes in the mapping file, so their review cannot be overwritten.
 
 ## Data flow
 
@@ -31,8 +32,8 @@ Dartmouth Atlas, RUCA (publisher URLs) ── download_public_data.R ── area
                                                                          │
 CMS facility snapshots (usRds) ──────────────────────────────────────────┤
                                                                          │
-references/esrd-cause-categories.csv ────────────────────────────────────┤
-  (written once by classify_esrd_causes.R, reviewed by the deciders)     │
+$PD96DET code list (usRds) ── classify_esrd_causes.R (by hand, once)     │
+  └── references/esrd-cause-categories.csv, reviewed by the deciders ────┤
                                                                          ▼
                                               link_area_data.R ── linked_forms
                                                                          │
@@ -54,7 +55,7 @@ references/esrd-cause-categories.csv ──────────────�
 - **ZIP codes reach ACS through ZCTAs.** Each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year dialysis started (`zippeR`); HSA population counts each ZCTA once (`hsa_population_from_zcta()`).
 - **Public inputs are checked.** ACS labels are checked for every year (`check_acs_labels()`); Dartmouth columns are found by pattern and must match exactly one column (`select_by_pattern()`).
 - **Cause codes.** `link_area_data.R` reads `code` and `final_category` from the mapping, stops if a code lacks one of the six categories, and warns with the share of first forms whose cause code is not in the mapping; those count as Other.
-- **Published models from one list.** `models.R` builds `published_models`, one row per published table, block and model; models shared between blocks are fit once (by a hash of their specification) with `glmmTMB`, and imputed models are pooled across the completed data sets.
+- **Published models from one list.** `models.R` builds `published_models`, one row per published table, block and model; models shared between blocks are fit once (by a hash of their specification) with `glmmTMB`, and imputed models are pooled across the completed data sets. The variance decomposition fits two null linear mixed models of eGFR with `lme4::lmer()` (HSA, and facility nested in HSA) on the same patients, those with a facility ID, and `variance_shares()` turns each into shares of variance.
 
 ## Dependencies outside this repository
 
@@ -68,5 +69,4 @@ references/esrd-cause-categories.csv ──────────────�
 
 ## Tests
 
-`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `density_category_labels()` and `map_panel()`; the last is checked by the synthetic run of `figures.R`. `format_estimates_table()` is tested only where gt is installed. `tests/test-site-functions.R` tests the site helpers.
-`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `density_category_labels()` and `map_panel()`; the last is checked by the synthetic run of `figures.R`. `format_estimates_table()` is tested only where gt is installed. `tests/test-model-example.R` checks that the model written out on the models page is the one the code fits.
+`tests/test-functions.R` tests the helpers in `R/functions.R` on synthetic data with known answers, including the classification helpers with fake provider functions in place of the models. Three helpers are not tested there: `read_header_table()`, `map_panel()` (checked by the synthetic run of `figures.R`), and `density_category_labels()`, which no script or page calls. `format_estimates_table()` is tested only where gt is installed. `tests/test-model-example.R` checks that the model written out on the models page is the one the code fits for Table 2, Model 3, using only constants from `setup.R`. `tests/test-site-functions.R` tests the site helpers.

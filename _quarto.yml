@@ -74,6 +74,17 @@ website:
           - href: quarto/supplement.qmd
             text: Published supplement
 
+      - section: Project documents
+        contents:
+          - href: quarto/analysis-plan.qmd
+            text: Analysis plan
+          - href: quarto/architecture.qmd
+            text: Architecture
+          - href: quarto/agents.qmd
+            text: AGENTS.md
+          - href: quarto/repository-blueprint.qmd
+            text: Repository blueprint
+
       - href: quarto/about.qmd
         text: About
 

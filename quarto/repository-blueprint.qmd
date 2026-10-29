@@ -1,0 +1,11 @@
+---
+pagetitle: "Repository blueprint"
+format: html
+---
+
+<!--
+This page only shows REPOSITORY-BLUEPRINT.md from the repository root, which is the one source:
+edit that file, not this page. Its first heading is the page title.
+-->
+
+{{< include ../REPOSITORY-BLUEPRINT.md >}}

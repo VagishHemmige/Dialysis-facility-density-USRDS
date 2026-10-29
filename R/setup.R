@@ -161,8 +161,11 @@ esrd_cause_agreement_file <- "references/esrd-cause-agreement.csv"
 # general-purpose model as of October 2026, as in an earlier ensemble by the
 # same team (gpt-5.1, claude-sonnet-4-5, gemini-2.5-flash); and two local
 # models run through Ollama on the analyst's own computer, which send nothing
-# over the internet: Alibaba's Qwen and IBM's Granite, so that the five come
-# from five unrelated companies. (Ollama's medical models are all Google's
+# over the internet: Alibaba's Qwen and Meta's Llama, so that the five come
+# from five unrelated companies. Llama 3.1 replaced IBM's Granite
+# (granite4.2:8b) on 29 October 2026 (decided by Vagish Hemmige): on the
+# analyst's laptop Granite returned no answers for 5 codes in 15 minutes.
+# (Ollama's medical models are all Google's
 # MedGemma, which would overlap with Gemini, or older models built on Llama 2.)
 # Change a name here to use another model; the models used are recorded in
 # the output.
@@ -171,16 +174,18 @@ esrd_classifier_models <- list(
   anthropic = "claude-sonnet-5-5",
   google = "gemini-3.8-flash",
   ollama_qwen = "qwen3.5:9b",
-  ollama_granite = "granite4.2:8b"
+  ollama_llama = "llama3.1:8b"
 )
 # Codes sent per call. Gemini timed out on batches of 100, and local models
-# are slower and handle less text at once, so they get smaller batches
+# are slower and handle less text at once, so they get smaller batches. On the
+# analyst's laptop, Llama 3.1 answered only 7 of a batch of 25 codes but all of
+# a batch of 5 (29 October 2026)
 esrd_classifier_batch_sizes <- list(
   openai = 100,
   anthropic = 100,
   google = 25,
   ollama_qwen = 25,
-  ollama_granite = 25
+  ollama_llama = 5
 )
 # A category is accepted when at least this many of the five models give it:
 # 3 of 5, a majority (decided by Vagish Hemmige, 28 October 2026; the rule was

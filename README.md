@@ -10,9 +10,9 @@
 
 This repository replicates the analysis of a published cross-sectional
 study of 844,466 incident hemodialysis patients in the US Renal Data
-System (USRDS), which found that patients in Health Service Areas with
-more dialysis facilities per resident started hemodialysis at a higher
-eGFR:
+System (USRDS), which found that patients in Hospital Service Areas
+(HSAs, which the paper calls health service areas) with more dialysis
+facilities per resident started hemodialysis at a higher eGFR:
 
 > Hemmige V, Deshpande P, Norris KC, Shen JI, Erickson KF, Johansen KL,
 > Golestaneh L. Geographic dialysis facility density and early dialysis

@@ -23,7 +23,12 @@ table_1 <- cohort |>
     digits = list(all_continuous() ~ 1),
     missing = "ifany"
   ) |>
-  add_p(test = list(all_continuous() ~ "oneway.test", all_categorical() ~ "chisq.test")) |>
+  # Classical one-way ANOVA, as the paper says (var.equal = TRUE; the default
+  # of oneway.test() is Welch's test). Decided by Vagish Hemmige, 28 October 2026.
+  add_p(
+    test = list(all_continuous() ~ "oneway.test", all_categorical() ~ "chisq.test"),
+    test.args = all_continuous() ~ list(var.equal = TRUE)
+  ) |>
   modify_spanning_header(all_stat_cols() ~ "**HSA facility density per 100,000 population**")
 
 ## ---- build-regression-tables

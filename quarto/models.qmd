@@ -78,7 +78,7 @@ The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same 
 
 ## Multiple imputation
 
-The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model awaits the deciders' confirmation ([open decision D7](differences.qmd#open-decisions)).
+The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).
 
 ```{r}
 #| label: impute-albumin-hemoglobin
@@ -129,7 +129,7 @@ In the code, `model_covariates("Model 3", labs = TRUE, patients = "All")` return
 
 ## Variance decomposition
 
-How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model leaves out patients with no dialysis facility ID, so the two models are fit on slightly different sets of patients; whether to fit both on the same patients is for the deciders.
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).
 
 ```{r}
 #| label: fit-variance-decomposition

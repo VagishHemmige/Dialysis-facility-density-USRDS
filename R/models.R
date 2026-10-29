@@ -202,13 +202,17 @@ published_estimates <- published_models |>
 
 ## ---- fit-variance-decomposition
 # Share of the variance of eGFR at the HSA and facility levels (null models).
-hsa_variance <- lmer(egfr ~ 1 + (1 | hsanum), data = model_data) |>
+# Both models use the same patients, those with a dialysis facility ID, so the
+# shares are comparable (decided by Vagish Hemmige, 28 October 2026).
+variance_data <- filter(model_data, !is.na(dialysis_provider))
+
+hsa_variance <- lmer(egfr ~ 1 + (1 | hsanum), data = variance_data) |>
   variance_shares() |>
   mutate(model = "HSA")
 
 facility_variance <- lmer(
   egfr ~ 1 + (1 | hsanum / dialysis_provider),
-  data = filter(model_data, !is.na(dialysis_provider))
+  data = variance_data
 ) |>
   variance_shares() |>
   mutate(model = "HSA and facility (nested)")

@@ -416,7 +416,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>Attaches facility counts, ACS, HSA, benchmarks, RUCA and the cause of kidney failure to each patient’s first form, and computes the exposure. Nobody is excluded here.</p>
+<p>For each patient’s first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA’s population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study’s exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the <a href="../quarto/create_cohort.html">cohort flowchart</a>.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1079,7 +1079,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Attaches facility counts, ACS, HSA, benchmarks, RUCA and the cause of kidney failure to each patient's first form, and computes the exposure. Nobody is excluded here.</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>For each patient's first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA's population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study's exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>.</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>

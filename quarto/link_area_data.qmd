@@ -3,7 +3,7 @@ title: "4. Linking area data"
 format: html
 ---
 
-Attaches facility counts, ACS, HSA, benchmarks, RUCA and the cause of kidney failure to each patient's first form, and computes the exposure. Nobody is excluded here.
+For each patient's first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA's population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study's exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the [cohort flowchart](create_cohort.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

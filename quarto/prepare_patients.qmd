@@ -3,7 +3,7 @@ title: "3. USRDS patient data"
 format: html
 ---
 
-Loads the Medical Evidence and Residence files through `usRds` and derives the patient-level variables. Nobody is excluded here; every exclusion is a flowchart step in [script 4](create_cohort.qmd).
+Loads the Medical Evidence and Residence files through `usRds` and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the [cohort flowchart](create_cohort.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

@@ -208,12 +208,13 @@ votes <- providers |>
     message("\n", provider, " (", esrd_classifier_models[[provider]], ")")
     cached_votes(
       path = votes_path(provider),
-      classify = function() {
+      classify = function(partial_path) {
         classify_codes(
           cause_codes,
           ask,
           batch_size = esrd_classifier_batch_sizes[[provider]],
-          label = provider
+          label = provider,
+          partial_path = partial_path
         )
       }
     ) |>

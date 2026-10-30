@@ -143,7 +143,7 @@ dartmouth_capacity_measures <- c(
 
 ## ---- define-cause-constants
 # Primary cause of kidney failure (section 6). The mapping of every $PD96DET code
-# is in references/esrd-cause-categories.csv (open decision #D4).
+# is in references/esrd-cause-categories.csv (decision D4, settled 30 October 2026).
 esrd_cause_categories <- c(
   "Diabetes",
   "Hypertension and cardiac disease",

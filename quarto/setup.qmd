@@ -67,7 +67,7 @@ Every public file is downloaded from its publisher, so no file needs to come fro
 
 ## Cause of kidney failure
 
-The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (`esrd_classifier_voting` lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see [Classifying codes](classify_esrd_causes.qmd); [open decision D4](differences.qmd#open-decisions)). The models used, the prompt version and the ellmer version are recorded in the output file.
+The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (`esrd_classifier_voting` lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see [Classifying codes](classify_esrd_causes.qmd); the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.
 
 ```{r}
 #| label: define-cause-constants

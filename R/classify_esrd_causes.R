@@ -1,7 +1,8 @@
 # Purpose: draft the mapping of every primary-cause code (USRDS format
 #   $PD96DET) to the six cause categories, by an ensemble of three cloud
-#   language models, for review by the deciders (open decision #D4); two local
-#   models answer too and are reported for comparison, without voting.
+#   language models, reviewed by the deciders (decision D4, settled 30 October
+#   2026); two local models answer too and are reported for comparison,
+#   without voting.
 # Needs: setup.R and functions.R sourced first; the irr package (Fleiss'
 #   kappa); API keys for the three cloud providers in .Renviron
 #   (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY); Ollama running on this

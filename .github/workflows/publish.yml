@@ -30,7 +30,9 @@ concurrency:
 
 jobs:
   render:
-    runs-on: ubuntu-latest
+    # Ubuntu 24.04 rather than ubuntu-latest: Quarto's installer failed on the
+    # Ubuntu 26 image that ubuntu-latest moved to in October 2026
+    runs-on: ubuntu-24.04
     env:
       # The original R Markdown page contains non-ASCII characters such as ≤
       LANG: C.UTF-8
@@ -72,7 +74,7 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request'
     needs: render
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       pages: write
       id-token: write

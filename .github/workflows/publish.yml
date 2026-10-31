@@ -47,7 +47,8 @@ jobs:
           use-public-rspm: true
 
       # Only what the pages run: knitr and rmarkdown for the R chunks, and the
-      # packages quarto/_site_functions.R calls with ::. Current CRAN versions.
+      # packages quarto/_site_functions.R calls with ::, plus yaml for the
+      # cross-reference check. Current CRAN versions.
       - name: Install the R packages the pages use
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -60,6 +61,12 @@ jobs:
             any::purrr
             any::stringr
             any::tibble
+            any::yaml
+
+      # The functions page and the method pages must link each other as the
+      # code says (AGENTS.md, "Quarto website"); see the script for how to fix
+      - name: Check function cross-references
+        run: Rscript tests/check-crosslinks.R check
 
       - name: Render (pull requests only)
         if: github.event_name == 'pull_request'

@@ -5,6 +5,8 @@ format: html
 
 Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in [`tests/test-functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R).
 
+Each section names the function under its heading, explains what it does, and then links to where it is used: the steps of the analysis that call it, and any function on this page that calls it.
+
 ::: {.Rcode title="Source code"}
 The full R script is available at:
 
@@ -26,9 +28,13 @@ knitr::read_chunk("../R/functions.R")
 
 ## Yes/no fields
 
+`any_yes()`
+
 The CMS-2728 form records comorbidities and insurance as yes, no or unknown. A condition counts as present only when a field is "YES"; missing or unknown counts as not present. The original code returned missing for missing fields, which would drop patients from the models; the published sample sizes show the paper's models did not.
 
-**Used in:** 3. USRDS patient data ([Patient variables](prepare_patients.qmd#patient-variables)); [Insurance](#insurance) on this page.
+**Used in the analysis:** 3. USRDS patient data: [Patient variables](prepare_patients.qmd#patient-variables).
+
+**Called by:** [`derive_insurance()`](#insurance).
 
 ```{r}
 #| label: fn-any-yes
@@ -37,9 +43,11 @@ The CMS-2728 form records comorbidities and insurance as yes, no or unknown. A c
 
 ## Insurance
 
+`derive_insurance()`
+
 The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medicare (including Medicare Advantage), then employer group, then other (including VA).
 
-**Used in:** 3. USRDS patient data ([Patient variables](prepare_patients.qmd#patient-variables)).
+**Used in the analysis:** 3. USRDS patient data: [Patient variables](prepare_patients.qmd#patient-variables).
 
 ```{r}
 #| label: fn-derive-insurance
@@ -48,9 +56,11 @@ The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medi
 
 ## Nephrology care
 
+`derive_nephrology_care()`
+
 Whether the patient saw a nephrologist before kidney failure: none, some or unknown, as in the paper's Table 1 and Model 3. Unknown is its own level, so the models keep the patients the paper kept.
 
-**Used in:** 3. USRDS patient data ([Patient variables](prepare_patients.qmd#patient-variables)).
+**Used in the analysis:** 3. USRDS patient data: [Patient variables](prepare_patients.qmd#patient-variables).
 
 ```{r}
 #| label: fn-derive-nephrology-care
@@ -59,9 +69,11 @@ Whether the patient saw a nephrologist before kidney failure: none, some or unkn
 
 ## Census region
 
+`assign_region()`
+
 Regions by state name, because usRds labels the residence state with its name (format `$STATFIP`). This replaces the original code's state-label spreadsheet.
 
-**Used in:** 3. USRDS patient data ([Residence on the dialysis date](prepare_patients.qmd#residence-on-the-dialysis-date)).
+**Used in the analysis:** 3. USRDS patient data: [Residence on the dialysis date](prepare_patients.qmd#residence-on-the-dialysis-date).
 
 ```{r}
 #| label: fn-assign-region
@@ -70,9 +82,11 @@ Regions by state name, because usRds labels the residence state with its name (f
 
 ## Dartmouth codes
 
+`clean_dartmouth_codes()`
+
 Sets Dartmouth's -88888 and -99999 to missing. The original code turned every negative value positive, which would have entered suppressed HSAs as 88,888 or 99,999.
 
-**Used in:** 1. Public area data ([HSA benchmarks](download_public_data.qmd#hsa-benchmarks)).
+**Used in the analysis:** 1. Public area data: [HSA benchmarks](download_public_data.qmd#hsa-benchmarks).
 
 ```{r}
 #| label: fn-clean-dartmouth-codes
@@ -81,9 +95,11 @@ Sets Dartmouth's -88888 and -99999 to missing. The original code turned every ne
 
 ## Finding spreadsheet columns
 
+`select_by_pattern()`
+
 Finds exactly one column for each measure, or stops and lists the candidates.
 
-**Used in:** 1. Public area data ([HSA benchmarks](download_public_data.qmd#hsa-benchmarks)).
+**Used in the analysis:** 1. Public area data: [HSA benchmarks](download_public_data.qmd#hsa-benchmarks).
 
 ```{r}
 #| label: fn-select-by-pattern
@@ -92,9 +108,11 @@ Finds exactly one column for each measure, or stops and lists the candidates.
 
 ## Spreadsheets with title rows
 
+`read_header_table()`
+
 Dartmouth spreadsheets put titles above the header; this finds the header row.
 
-**Used in:** 1. Public area data ([HSA benchmarks](download_public_data.qmd#hsa-benchmarks)).
+**Used in the analysis:** 1. Public area data: [HSA benchmarks](download_public_data.qmd#hsa-benchmarks).
 
 ```{r}
 #| label: fn-read-header-table
@@ -103,9 +121,14 @@ Dartmouth spreadsheets put titles above the header; this finds the header row.
 
 ## ZIP codes
 
+`standardize_zip()`
+
 Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).
 
-**Used in:** 1. Public area data ([ZIP code to HSA](download_public_data.qmd#zip-code-to-hsa), [ZIP code to ZCTA](download_public_data.qmd#zip-code-to-zcta), [Rural-urban type](download_public_data.qmd#rural-urban-type)); 3. USRDS patient data ([Loading the Residence file](prepare_patients.qmd#loading-the-residence-file)).
+**Used in the analysis:**
+
+-   1\. Public area data: [ZIP code to HSA](download_public_data.qmd#zip-code-to-hsa), [ZIP code to ZCTA](download_public_data.qmd#zip-code-to-zcta), [Rural-urban type](download_public_data.qmd#rural-urban-type)
+-   3\. USRDS patient data: [Loading the Residence file](prepare_patients.qmd#loading-the-residence-file)
 
 ```{r}
 #| label: fn-standardize-zip
@@ -114,9 +137,11 @@ Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).
 
 ## Alternative columns
 
+`first_non_missing()`
+
 Takes, row by row, the first value present across several columns. A release of the Medical Evidence file has the provider ID as `PROVUSRD_DIAL` or as `PROVUSRD`, and this picks whichever is there.
 
-**Used in:** 3. USRDS patient data ([Patient variables](prepare_patients.qmd#patient-variables)).
+**Used in the analysis:** 3. USRDS patient data: [Patient variables](prepare_patients.qmd#patient-variables).
 
 ```{r}
 #| label: fn-first-non-missing
@@ -125,9 +150,15 @@ Takes, row by row, the first value present across several columns. A release of 
 
 ## Unique keys
 
+`assert_unique()`
+
 Stops if any key appears more than once, and otherwise passes the data on, so it can end a pipeline. Every lookup table is checked this way before it is joined to patients.
 
-**Used in:** 1. Public area data ([ZIP code to HSA](download_public_data.qmd#zip-code-to-hsa), [ZIP code to ZCTA](download_public_data.qmd#zip-code-to-zcta), [American Community Survey](download_public_data.qmd#american-community-survey), [Rural-urban type](download_public_data.qmd#rural-urban-type)); 4. Linking area data ([Cause of kidney failure mapping](link_area_data.qmd#cause-of-kidney-failure-mapping)); 5. Cohort flowchart ([The cohort](create_cohort.qmd#the-cohort)).
+**Used in the analysis:**
+
+-   1\. Public area data: [ZIP code to HSA](download_public_data.qmd#zip-code-to-hsa), [ZIP code to ZCTA](download_public_data.qmd#zip-code-to-zcta), [American Community Survey](download_public_data.qmd#american-community-survey), [Rural-urban type](download_public_data.qmd#rural-urban-type)
+-   4\. Linking area data: [Cause of kidney failure mapping](link_area_data.qmd#cause-of-kidney-failure-mapping)
+-   5\. Cohort flowchart: [The cohort](create_cohort.qmd#the-cohort)
 
 ```{r}
 #| label: fn-assert-unique
@@ -136,9 +167,11 @@ Stops if any key appears more than once, and otherwise passes the data on, so it
 
 ## Checking ACS variables
 
+`check_acs_labels()`
+
 Compares each year's ACS label with the expected pattern and stops on any mismatch or absent variable.
 
-**Used in:** 1. Public area data ([American Community Survey](download_public_data.qmd#american-community-survey)).
+**Used in the analysis:** 1. Public area data: [American Community Survey](download_public_data.qmd#american-community-survey).
 
 ```{r}
 #| label: fn-check-acs-labels
@@ -147,9 +180,11 @@ Compares each year's ACS label with the expected pattern and stops on any mismat
 
 ## Category labels
 
+`density_category_labels()`
+
 The labels of the five categories, built from the three cut points rounded to two decimals: 0, then >0 to the first cut point, the two middle ranges, and above the third cut point.
 
-**Used in:** [Density categories](#density-categories) on this page.
+**Called by:** [`categorize_density()`](#density-categories).
 
 ```{r}
 #| label: fn-density-category-labels
@@ -158,9 +193,11 @@ The labels of the five categories, built from the three cut points rounded to tw
 
 ## Density categories
 
+`categorize_density()`
+
 Zero facilities is its own category; the other four are cut at the quartiles, each including its upper bound, as in the original code. It stops unless there are exactly three cut points in increasing order.
 
-**Used in:** 6. Density categories ([Categories](define_exposure.qmd#categories)).
+**Used in the analysis:** 6. Density categories: [Categories](define_exposure.qmd#categories).
 
 ```{r}
 #| label: fn-density-categories
@@ -169,9 +206,13 @@ Zero facilities is its own category; the other four are cut at the quartiles, ea
 
 ## Density effects
 
+`density_effects()`
+
 Extracts the density terms of a fitted model with Wald confidence intervals and the number of patients the model used: odds ratios for logistic models, differences for linear ones.
 
-**Used in:** 7. Models ([Fitting](models.qmd#fitting)); [Odds ratios](#odds-ratios) on this page.
+**Used in the analysis:** 7. Models: [Fitting](models.qmd#fitting).
+
+**Called by:** [`density_odds_ratios()`](#odds-ratios).
 
 ```{r}
 #| label: fn-density-effects
@@ -180,9 +221,11 @@ Extracts the density terms of a fitted model with Wald confidence intervals and 
 
 ## Odds ratios
 
+`density_odds_ratios()`
+
 The same for a logistic model, with the estimate named `odds_ratio`.
 
-**Used in:** 7. Models ([eGFR range](models.qmd#egfr-range)).
+**Used in the analysis:** 7. Models: [eGFR range](models.qmd#egfr-range).
 
 ```{r}
 #| label: fn-density-odds-ratios
@@ -191,9 +234,11 @@ The same for a logistic model, with the estimate named `odds_ratio`.
 
 ## Estimate tables
 
+`format_estimates_table()`
+
 Turns those estimates into a gt table, grouped by block, with one row per model and density term, for each published regression table.
 
-**Used in:** Tables ([Regression tables](tables.qmd#regression-tables)).
+**Used in the analysis:** Tables: [Regression tables](tables.qmd#regression-tables).
 
 ```{r}
 #| label: fn-format-estimates-table
@@ -202,9 +247,11 @@ Turns those estimates into a gt table, grouped by block, with one row per model 
 
 ## Model formulas
 
+`mixed_formula()`
+
 Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model's covariates are a list in `setup.R`.
 
-**Used in:** 7. Models ([Model data](models.qmd#model-data), [Fitting](models.qmd#fitting)).
+**Used in the analysis:** 7. Models: [Model data](models.qmd#model-data), [Fitting](models.qmd#fitting).
 
 ```{r}
 #| label: fn-model-formula
@@ -213,9 +260,11 @@ Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model's c
 
 ## Variance shares
 
+`variance_shares()`
+
 The share of the variance of eGFR at each level of a null mixed model.
 
-**Used in:** 7. Models ([Variance decomposition](models.qmd#variance-decomposition)).
+**Used in the analysis:** 7. Models: [Variance decomposition](models.qmd#variance-decomposition).
 
 ```{r}
 #| label: fn-variance-share
@@ -224,9 +273,11 @@ The share of the variance of eGFR at each level of a null mixed model.
 
 ## Classifying codes
 
+`classify_codes()`
+
 Sends the codes to one provider in batches, through that provider's own function, and asks once more for any codes the model skipped.
 
-**Used in:** 2. Cause of kidney failure ([Running, checking and saving each model](classify_esrd_causes.qmd#running-checking-and-saving-each-model)).
+**Used in the analysis:** 2. Cause of kidney failure: [Running, checking and saving each model](classify_esrd_causes.qmd#running-checking-and-saving-each-model).
 
 ```{r}
 #| label: fn-classify-codes
@@ -235,9 +286,11 @@ Sends the codes to one provider in batches, through that provider's own function
 
 ## Checking a provider's answers
 
+`check_votes()`
+
 Stops unless the model answered every code exactly once, invented no code, and used only the six category names.
 
-**Used in:** 2. Cause of kidney failure ([Running, checking and saving each model](classify_esrd_causes.qmd#running-checking-and-saving-each-model)).
+**Used in the analysis:** 2. Cause of kidney failure: [Running, checking and saving each model](classify_esrd_causes.qmd#running-checking-and-saving-each-model).
 
 ```{r}
 #| label: fn-check-votes
@@ -246,9 +299,11 @@ Stops unless the model answered every code exactly once, invented no code, and u
 
 ## Saving each provider's answers
 
+`cached_votes()`
+
 Saves a provider's checked answers the first time and reads them back on a rerun, so a failure in one provider never means paying the others again.
 
-**Used in:** 2. Cause of kidney failure ([Running, checking and saving each model](classify_esrd_causes.qmd#running-checking-and-saving-each-model)).
+**Used in the analysis:** 2. Cause of kidney failure: [Running, checking and saving each model](classify_esrd_causes.qmd#running-checking-and-saving-each-model).
 
 ```{r}
 #| label: fn-cached-votes
@@ -257,9 +312,11 @@ Saves a provider's checked answers the first time and reads them back on a rerun
 
 ## Combining the models
 
+`ensemble_agreement()`
+
 One row per code with each model's category and reason; a category is accepted when at least `min_agreement` models give it (two of three in this project).
 
-**Used in:** 2. Cause of kidney failure ([Agreement](classify_esrd_causes.qmd#agreement)).
+**Used in the analysis:** 2. Cause of kidney failure: [Agreement](classify_esrd_causes.qmd#agreement).
 
 ```{r}
 #| label: fn-ensemble-agreement
@@ -268,9 +325,11 @@ One row per code with each model's category and reason; a category is accepted w
 
 ## Reporting the local models
 
+`local_model_report()`
+
 For each model that answers but does not vote: how many codes it answered once with a code from the list, how many it left unanswered, how many answers carried text that is not a code in the list, how many codes it answered more than once, and how often it gave the category the voting models accepted. Tested on synthetic answers with a known count of each.
 
-**Used in:** 2. Cause of kidney failure ([What the local models showed](classify_esrd_causes.qmd#what-the-local-models-showed)).
+**Used in the analysis:** 2. Cause of kidney failure: [What the local models showed](classify_esrd_causes.qmd#what-the-local-models-showed).
 
 ```{r}
 #| label: fn-local-model-report
@@ -279,9 +338,11 @@ For each model that answers but does not vote: how many codes it answered once w
 
 ## HSA population
 
+`hsa_population_from_zcta()`
+
 Builds the exposure's denominator from ZCTA populations, counting each ZCTA once per HSA and year even when several of the HSA's ZIP codes share it.
 
-**Used in:** 1. Public area data ([HSA population](download_public_data.qmd#hsa-population)).
+**Used in the analysis:** 1. Public area data: [HSA population](download_public_data.qmd#hsa-population).
 
 ```{r}
 #| label: fn-hsa-population
@@ -290,9 +351,11 @@ Builds the exposure's denominator from ZCTA populations, counting each ZCTA once
 
 ## Map panels
 
+`map_panel()`
+
 Draws one panel of Figure 2: HSAs filled by a numeric column, in the Albers equal-area projection (EPSG 5070), with HSAs that have no value in grey.
 
-**Used in:** Figures ([Figure 2](figures.qmd#figure-2)).
+**Used in the analysis:** Figures: [Figure 2](figures.qmd#figure-2).
 
 ```{r}
 #| label: fn-map-panel

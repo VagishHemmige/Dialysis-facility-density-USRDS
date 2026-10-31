@@ -199,6 +199,8 @@ In a terminal, `powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server
 
 Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models' answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). The local models' answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (`esrd_classifier_timeout_s`); ellmer's default of 5 minutes was too short on a laptop processor. Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
 
+**Functions used:** [`classify_codes()`](functions.qmd#classifying-codes), [`check_votes()`](functions.qmd#checking-a-providers-answers), [`cached_votes()`](functions.qmd#saving-each-providers-answers).
+
 ```{r}
 #| label: classify-with-ensemble
 #| eval: false
@@ -209,6 +211,8 @@ Before asking any model, the script checks that Ollama is running and has the lo
 A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
 
 Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.
+
+**Functions used:** [`ensemble_agreement()`](functions.qmd#combining-the-models).
 
 ```{r}
 #| label: measure-agreement
@@ -226,6 +230,8 @@ The two local models were meant to vote, and were run on the analyst's laptop (p
 -   **A third model did not run at all.** IBM's Granite (`granite4.2:8b`) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.
 
 These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. `references/esrd-cause-local-models.csv` records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (`local_model_report()`, on the [functions page](functions.qmd)).
+
+**Functions used:** [`local_model_report()`](functions.qmd#reporting-the-local-models).
 
 ```{r}
 #| label: report-local-models

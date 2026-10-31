@@ -165,7 +165,7 @@ check_acs_labels <- function(labels, expected) {
   invisible(checked)
 }
 
-## ---- fn-density-categories
+## ---- fn-density-category-labels
 # Five exposure categories: 0, then (0, q1], (q1, q2], (q2, q3], above q3.
 density_category_labels <- function(cutpoints, digits = 2) {
   q <- format(round(cutpoints, digits), nsmall = digits, trim = TRUE)
@@ -179,6 +179,7 @@ density_category_labels <- function(cutpoints, digits = 2) {
   )
 }
 
+## ---- fn-density-categories
 categorize_density <- function(density, cutpoints, digits = 2) {
   if (length(cutpoints) != 3 || is.unsorted(cutpoints)) {
     stop("Density cut points must be three values in increasing order.", call. = FALSE)
@@ -196,7 +197,7 @@ categorize_density <- function(density, cutpoints, digits = 2) {
   factor(category, levels = 1:5, labels = density_category_labels(cutpoints, digits))
 }
 
-## ---- fn-density-odds-ratios
+## ---- fn-density-effects
 # The density terms of a fitted model, with 95% Wald confidence intervals, p
 # values and the number of patients the model used. Logistic models report
 # odds ratios (exponentiate = TRUE); linear models report differences.
@@ -218,6 +219,7 @@ density_effects <- function(model, term_pattern = "^density_category",
     )
 }
 
+## ---- fn-density-odds-ratios
 density_odds_ratios <- function(model, term_pattern = "^density_category",
                                 model_name = NA_character_) {
   density_effects(model, term_pattern, model_name, exponentiate = TRUE) |>

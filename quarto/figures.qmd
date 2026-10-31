@@ -46,7 +46,9 @@ HSA facility and station density on 1 January 2019, from public data only (CMS f
 
 ## Figure 2
 
-Three maps of the contiguous US. The original code saved some interactive maps under the wrong file names; here each panel is drawn by one function, `map_panel()` (on the [functions page](functions.qmd#map-panels)), and saved under its own name.
+Three maps of the contiguous US. The original code saved some interactive maps under the wrong file names; here each panel is drawn by one function, `map_panel()`, and saved under its own name.
+
+**Functions used:** [`map_panel()`](functions.qmd#map-panels).
 
 ```{r}
 #| label: draw-hsa-maps

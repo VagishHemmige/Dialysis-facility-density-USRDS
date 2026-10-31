@@ -31,6 +31,8 @@ knitr::read_chunk("../R/link_area_data.R")
 
 The reviewed mapping, written by [Classifying codes](classify_esrd_causes.qmd), must exist and give every code one of the six categories; otherwise the run stops with instructions. Only `code` and `final_category` are read.
 
+**Functions used:** [`assert_unique()`](functions.qmd#unique-keys).
+
 ```{r}
 #| label: read-cause-mapping
 #| eval: false

@@ -30,6 +30,8 @@ knitr::read_chunk("../R/models.R")
 
 Year enters as a factor and the reference category is zero facilities, as in the paper.
 
+**Functions used:** [`mixed_formula()`](functions.qmd#model-formulas).
+
 ```{r}
 #| label: prepare-model-data
 #| eval: false
@@ -89,6 +91,8 @@ The paper reports "a multiple imputation technique with chained predictive analy
 
 Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules, whose intervals combine the variation within and between the imputed data sets.
 
+**Functions used:** [`density_effects()`](functions.qmd#density-effects), [`mixed_formula()`](functions.qmd#model-formulas).
+
 ```{r}
 #| label: fit-published-models
 #| eval: false
@@ -131,6 +135,8 @@ In the code, `model_covariates("Model 3", labs = TRUE, patients = "All")` return
 
 How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).
 
+**Functions used:** [`variance_shares()`](functions.qmd#variance-shares).
+
 ```{r}
 #| label: fit-variance-decomposition
 #| eval: false
@@ -139,6 +145,8 @@ How much of the variation in eGFR at initiation lies between HSAs, and between f
 ## eGFR range
 
 A sensitivity analysis from the original R code that is not in the paper: Model 3 among patients with eGFR above 5 and below 25. Because the cohort already has eGFR of 20 or below, it in effect excludes patients with eGFR of 5 or below, and it is labelled that way.
+
+**Functions used:** [`density_odds_ratios()`](functions.qmd#odds-ratios).
 
 ```{r}
 #| label: fit-egfr-range-sensitivity

@@ -94,7 +94,7 @@ HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
 | Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. | Rebuilt | `usRds::load_usrds_file()` applies the USRDS value labels. | None intended |
 | Nephrology care was coded twice: access (`NEPHCARE`, coded yes, no or unknown: no, some or unknown nephrology care) and duration (`NEPHCARERANGE`), with unknown duration left missing. The exploratory R models used the duration; the paper's Discussion mentions duration, while its Methods, Table 1 and the Model 3 footnote say access. | Rebuilt | Access, with unknown as its own level, so Model 3 keeps every patient, as the published n = 844,466 implies (decided 27 October 2026). | Model 3, if Stata used another coding |
 | The outcome `GFR_DICH` counted eGFR of 10 or above as early. The paper describes the outcome as eGFR "greater than 10" vs "less than or equal to 10". | Paper differs from code | The code's rule: 10 or above is early (decided 27 October 2026). | None, if Stata used `GFR_DICH`; otherwise patients at exactly 10 |
-| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt, [open decision D4](#open-decisions) | Three cloud language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. Two local models are reported for comparison without voting. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
+| The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. | Rebuilt (D4, decided 30 October 2026) | Three cloud language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. Two local models are reported for comparison without voting. See [Classifying codes](classify_esrd_causes.qmd). | Table 1 cause rows; Models 2 and 3 |
 | A primary-cause code listed on two category sheets would have joined twice and duplicated those patients. The sheets were built from the codes that appeared in the data. | Corrected error | The mapping is built from the full public code list, one row per code, and the join stops if a code appears twice. | None, unless the original sheets had such a code |
 | Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis. | Rebuilt | See [Classifying codes](classify_esrd_causes.qmd#the-six-categories) (decided 27 October 2026). | Table 1 cause rows; Models 2 and 3, slightly |
 | Access type had the arteriovenous fistula as its first level, and so as the reference in the exploratory R models. | Rebuilt | Catheter, the most common access, is the reference. | None on the density estimates; only the access-type coefficients change |
@@ -129,9 +129,7 @@ The original file's data preparation, up to the analysis file, is 880 lines of c
 
 ## Open decisions
 
-One choice is still open for the deciders, Vagish Hemmige and Ladan Golestaneh:
-
--   **D4, the cause-of-kidney-failure mapping.** Is a mapping drafted by language models and checked by the deciders acceptable for the replication, and is the mapping itself right? See [Classifying codes](classify_esrd_causes.qmd).
+No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for the replication as drafted (decided by Vagish Hemmige, 30 October 2026). See [Classifying codes](classify_esrd_causes.qmd).
 
 ## Glossary
 

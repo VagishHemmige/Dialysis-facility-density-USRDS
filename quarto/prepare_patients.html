@@ -497,13 +497,14 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="patient-variables" class="level2">
 <h2 class="anchored" data-anchor-id="patient-variables">Patient variables</h2>
 <p>Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper’s five groups. How the Stata analysis merged the form’s other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard <span class="citation" data-cites="omb1997race">(<a href="#ref-omb1997race" role="doc-biblioref">Office of Management and Budget 1997</a>)</span>, and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as <code>race_detailed</code>.</p>
-<p>The clinical variables are derived as follows (the helper functions are on the <a href="../quarto/functions.html">functions page</a>):</p>
+<p>The clinical variables are derived as follows:</p>
 <ul>
 <li><strong>Comorbidities</strong> are present when any of their form fields is marked yes; blank or unknown counts as not present, as on the form. Diabetes combines four fields (insulin, oral medication, no medication, retinopathy), alcohol or drug dependence two, immobility three (inability to ambulate, needing assistance, inability to transfer) and institutionalized four (any type of institution).</li>
 <li><strong>Insurance</strong> follows the original code’s order: no insurance, then Medicaid, then Medicare or managed Medicare, then commercial (employer group), then other, including the VA.</li>
 <li><strong>Nephrology care before kidney failure</strong> is no, some or unknown (<code>NEPHCARE</code>), with unknown kept as its own level.</li>
 <li><strong>Early start</strong> is an eGFR of 10 or above at initiation. The facility ID is <code>PROVUSRD</code> in older releases and <code>PROVUSRD_DIAL</code> in the 2024 guide.</li>
 </ul>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#yesno-fields"><code>any_yes()</code></a>, <a href="../quarto/functions.html#insurance"><code>derive_insurance()</code></a>, <a href="../quarto/functions.html#nephrology-care"><code>derive_nephrology_care()</code></a>, <a href="../quarto/functions.html#alternative-columns"><code>first_non_missing()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -585,6 +586,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="loading-the-residence-file" class="level2">
 <h2 class="anchored" data-anchor-id="loading-the-residence-file">Loading the Residence file</h2>
 <p>Residence periods with ZIP code and state, again with USRDS labels.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#zip-codes"><code>standardize_zip()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -600,6 +602,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="residence-on-the-dialysis-date" class="level2">
 <h2 class="anchored" data-anchor-id="residence-on-the-dialysis-date">Residence on the dialysis date</h2>
 <p>An interval join picks the residence period that contains the date of dialysis start. A patient with no such period, or with more than one, gets no residence and is excluded in the flowchart, where the count is shown.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#census-region"><code>assign_region()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1188,44 +1191,50 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard <span class="co">[</span><span class="ot">@omb1997race</span><span class="co">]</span>, and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as <span class="in">`race_detailed`</span>.</span>
 <span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>The clinical variables are derived as follows (the helper functions are on the <span class="co">[</span><span class="ot">functions page</span><span class="co">](functions.qmd)</span>):</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>The clinical variables are derived as follows:</span>
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Comorbidities** are present when any of their form fields is marked yes; blank or unknown counts as not present, as on the form. Diabetes combines four fields (insulin, oral medication, no medication, retinopathy), alcohol or drug dependence two, immobility three (inability to ambulate, needing assistance, inability to transfer) and institutionalized four (any type of institution).</span>
 <span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Insurance** follows the original code's order: no insurance, then Medicaid, then Medicare or managed Medicare, then commercial (employer group), then other, including the VA.</span>
 <span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Nephrology care before kidney failure** is no, some or unknown (<span class="in">`NEPHCARE`</span>), with unknown kept as its own level.</span>
 <span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Early start** is an eGFR of 10 or above at initiation. The facility ID is <span class="in">`PROVUSRD`</span> in older releases and <span class="in">`PROVUSRD_DIAL`</span> in the 2024 guide.</span>
 <span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: derive-patient-variables</span></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading the Residence file</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`any_yes()`</span><span class="co">](functions.qmd#yesno-fields)</span>, <span class="co">[</span><span class="ot">`derive_insurance()`</span><span class="co">](functions.qmd#insurance)</span>, <span class="co">[</span><span class="ot">`derive_nephrology_care()`</span><span class="co">](functions.qmd#nephrology-care)</span>, <span class="co">[</span><span class="ot">`first_non_missing()`</span><span class="co">](functions.qmd#alternative-columns)</span>.</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: derive-patient-variables</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>Residence periods with ZIP code and state, again with USRDS labels.</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading the Residence file</span></span>
 <span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-residence</span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Residence on the dialysis date</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>An interval join picks the residence period that contains the date of dialysis start. A patient with no such period, or with more than one, gets no residence and is excluded in the flowchart, where the count is shown.</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>Residence periods with ZIP code and state, again with USRDS labels.</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`standardize_zip()`</span><span class="co">](functions.qmd#zip-codes)</span>.</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-residence</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: match-residence-to-dialysis-date</span></span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Labels</span></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>Each derived variable is labelled with its definition and units.</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: label-patient-variables</span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## Residence on the dialysis date</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>An interval join picks the residence period that contains the date of dialysis start. A patient with no such period, or with more than one, gets no residence and is excluded in the flowchart, where the count is shown.</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`assign_region()`</span><span class="co">](functions.qmd#census-region)</span>.</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: match-residence-to-dialysis-date</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Labels</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>Each derived variable is labelled with its definition and units.</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: label-patient-variables</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

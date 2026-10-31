@@ -472,6 +472,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="model-data" class="level2">
 <h2 class="anchored" data-anchor-id="model-data">Model data</h2>
 <p>Year enters as a factor and the reference category is zero facilities, as in the paper.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#model-formulas"><code>mixed_formula()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -711,6 +712,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="fitting" class="level2">
 <h2 class="anchored" data-anchor-id="fitting">Fitting</h2>
 <p>Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin’s rules, whose intervals combine the variation within and between the imputed data sets.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#density-effects"><code>density_effects()</code></a>, <a href="../quarto/functions.html#model-formulas"><code>mixed_formula()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -814,6 +816,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="variance-decomposition" class="level2">
 <h2 class="anchored" data-anchor-id="variance-decomposition">Variance decomposition</h2>
 <p>How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by <code>lme4::lmer</code> with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#variance-shares"><code>variance_shares()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -840,6 +843,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="egfr-range" class="level2">
 <h2 class="anchored" data-anchor-id="egfr-range">eGFR range</h2>
 <p>A sensitivity analysis from the original R code that is not in the paper: Model 3 among patients with eGFR above 5 and below 25. Because the cohort already has eGFR of 20 or below, it in effect excludes patients with eGFR of 5 or below, and it is labelled that way.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#odds-ratios"><code>density_odds_ratios()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1394,129 +1398,137 @@ StataCorp. n.d. <em>Melogit: Multilevel Mixed-Effects Logistic Regression</em>. 
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>Year enters as a factor and the reference category is zero facilities, as in the paper.</span>
 <span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prepare-model-data</span></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Every published model</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`mixed_formula()`</span><span class="co">](functions.qmd#model-formulas)</span>.</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: prepare-model-data</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>The paper's models were fit in Stata, and several of them were never in the original R code: the R file had exploratory models only. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026):</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Every published model</span></span>
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table <span class="pp">|</span> Blocks <span class="pp">|</span> Outcome and exposure <span class="pp">|</span></span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table 2 <span class="pp">|</span> With and without albumin and hemoglobin; without HSAs with 0 facilities <span class="pp">|</span> Early start, density category <span class="pp">|</span></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eTable 1 <span class="pp">|</span> Black and White individuals <span class="pp">|</span> Early start, density category <span class="pp">|</span></span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eTable 2 <span class="pp">|</span> With and without albumin and hemoglobin; albumin and hemoglobin multiply imputed; Black and White individuals <span class="pp">|</span> Early start, continuous density <span class="pp">|</span></span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eTable 3 <span class="pp">|</span> With albumin and hemoglobin; without HSAs with 0 facilities <span class="pp">|</span> eGFR (linear), density category <span class="pp">|</span></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>Each block has Models 1 to 3. The models are listed in one table, one row per published column, so nothing reported is missed and a model that appears in two blocks (Model 1 in both blocks of Table 2) is fit once. Model 1 never includes albumin or hemoglobin and uses all patients of its group, as in Table 2, where it is identical in both blocks. Within a race group, race is not a covariate. The eTable 1 headings disagree on whether albumin and hemoglobin are included (see the <span class="co">[</span><span class="ot">supplement</span><span class="co">](supplement.qmd)</span>); both of its sample sizes match the complete-case models, so they are included.</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>The paper's models were fit in Stata, and several of them were never in the original R code: the R file had exploratory models only. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026):</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table <span class="pp">|</span> Blocks <span class="pp">|</span> Outcome and exposure <span class="pp">|</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table 2 <span class="pp">|</span> With and without albumin and hemoglobin; without HSAs with 0 facilities <span class="pp">|</span> Early start, density category <span class="pp">|</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eTable 1 <span class="pp">|</span> Black and White individuals <span class="pp">|</span> Early start, density category <span class="pp">|</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eTable 2 <span class="pp">|</span> With and without albumin and hemoglobin; albumin and hemoglobin multiply imputed; Black and White individuals <span class="pp">|</span> Early start, continuous density <span class="pp">|</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eTable 3 <span class="pp">|</span> With albumin and hemoglobin; without HSAs with 0 facilities <span class="pp">|</span> eGFR (linear), density category <span class="pp">|</span></span>
 <span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-published-models</span></span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>Each block has Models 1 to 3. The models are listed in one table, one row per published column, so nothing reported is missed and a model that appears in two blocks (Model 1 in both blocks of Table 2) is fit once. Model 1 never includes albumin or hemoglobin and uses all patients of its group, as in Table 2, where it is identical in both blocks. Within a race group, race is not a covariate. The eTable 1 headings disagree on whether albumin and hemoglobin are included (see the <span class="co">[</span><span class="ot">supplement</span><span class="co">](supplement.qmd)</span>); both of its sample sizes match the complete-case models, so they are included.</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-published-models</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span>: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models</span></span>
 <span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### Choosing the model-fitting package</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span>: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).</span>
 <span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with <span class="in">`melogit`</span>, Stata's default is adaptive Gauss-Hermite quadrature with 7 points <span class="co">[</span><span class="ot">@stata_melogit</span><span class="co">]</span>.</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Choosing the model-fitting package</span></span>
 <span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. When each HSA has many patients, as here, the two give practically the same answer. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with <span class="in">`melogit`</span>, Stata's default is adaptive Gauss-Hermite quadrature with 7 points <span class="co">[</span><span class="ot">@stata_melogit</span><span class="co">]</span>.</span>
 <span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fit <span class="pp">|</span> Time <span class="pp">|</span> Convergence warnings <span class="pp">|</span> Odds ratio, highest vs zero density <span class="pp">|</span></span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span> <span class="co">[</span><span class="ot">@lme4_pkg</span><span class="co">]</span>, default settings <span class="pp">|</span> 117 s <span class="pp">|</span> 4 <span class="pp">|</span> 10.08 (not converged) <span class="pp">|</span></span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, rescaled covariates, higher iteration limit <span class="pp">|</span> 111 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.62 <span class="pp">|</span></span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, 7-point quadrature (Stata's default) <span class="pp">|</span> 119 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span> <span class="pp">|</span> 4 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>The numbers are synthetic; only the comparison matters. <span class="in">`glmmTMB`</span> gave the same estimates as a fully converged <span class="in">`glmer`</span> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses <span class="in">`glmmTMB`</span> (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. When each HSA has many patients, as here, the two give practically the same answer. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fit <span class="pp">|</span> Time <span class="pp">|</span> Convergence warnings <span class="pp">|</span> Odds ratio, highest vs zero density <span class="pp">|</span></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span> <span class="co">[</span><span class="ot">@lme4_pkg</span><span class="co">]</span>, default settings <span class="pp">|</span> 117 s <span class="pp">|</span> 4 <span class="pp">|</span> 10.08 (not converged) <span class="pp">|</span></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, rescaled covariates, higher iteration limit <span class="pp">|</span> 111 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.62 <span class="pp">|</span></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, 7-point quadrature (Stata's default) <span class="pp">|</span> 119 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span> <span class="pp">|</span> 4 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
 <span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.</span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`MixedModels.jl`** <span class="co">[</span><span class="ot">@mixedmodels_jl</span><span class="co">]</span>, a Julia package by Douglas Bates, the original author of <span class="in">`lme4`</span>, and Phillip Alday, is designed for very large models and can be called from R with the <span class="in">`jlme`</span> package <span class="co">[</span><span class="ot">@jlme</span><span class="co">]</span>. It needs a Julia installation, and <span class="in">`jlme`</span> is a young, single-maintainer package with little recent activity, so it was not used.</span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Stata itself**, called from R. The <span class="in">`RStata`</span> package <span class="co">[</span><span class="ot">@rstata</span><span class="co">]</span> runs Stata commands or a do-file from R and passes a data frame in and out, for example <span class="in">`stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`</span>; Stata 17 and later also offer <span class="in">`pystata`</span>, Stata's own interface, which R can reach through <span class="in">`reticulate`</span>. This would keep the paper's estimation method, if the paper used <span class="in">`melogit`</span> with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor <span class="in">`MixedModels.jl`</span> was timed here, so how their speed compares with each other or with <span class="in">`glmmTMB`</span> on these data is not known.</span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiple imputation</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>The numbers are synthetic; only the comparison matters. <span class="in">`glmmTMB`</span> gave the same estimates as a fully converged <span class="in">`glmer`</span> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses <span class="in">`glmmTMB`</span> (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`MixedModels.jl`** <span class="co">[</span><span class="ot">@mixedmodels_jl</span><span class="co">]</span>, a Julia package by Douglas Bates, the original author of <span class="in">`lme4`</span>, and Phillip Alday, is designed for very large models and can be called from R with the <span class="in">`jlme`</span> package <span class="co">[</span><span class="ot">@jlme</span><span class="co">]</span>. It needs a Julia installation, and <span class="in">`jlme`</span> is a young, single-maintainer package with little recent activity, so it was not used.</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Stata itself**, called from R. The <span class="in">`RStata`</span> package <span class="co">[</span><span class="ot">@rstata</span><span class="co">]</span> runs Stata commands or a do-file from R and passes a data frame in and out, for example <span class="in">`stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`</span>; Stata 17 and later also offer <span class="in">`pystata`</span>, Stata's own interface, which R can reach through <span class="in">`reticulate`</span>. This would keep the paper's estimation method, if the paper used <span class="in">`melogit`</span> with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor <span class="in">`MixedModels.jl`</span> was timed here, so how their speed compares with each other or with <span class="in">`glmmTMB`</span> on these data is not known.</span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the <span class="in">`mice`</span> default for numeric variables <span class="co">[</span><span class="ot">@vanbuuren2011mice</span><span class="co">]</span>), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiple imputation</span></span>
 <span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: impute-albumin-hemoglobin</span></span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting</span></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the <span class="in">`mice`</span> default for numeric variables <span class="co">[</span><span class="ot">@vanbuuren2011mice</span><span class="co">]</span>), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: impute-albumin-hemoglobin</span></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules, whose intervals combine the variation within and between the imputed data sets.</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting</span></span>
 <span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fit-published-models</span></span>
-<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="fu">### One model written out</span></span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>The code above builds every model from the list rather than writing each one out, so no single model appears in it. As an example, this is what it fits for Table 2, Model 3, with albumin and hemoglobin, the paper's fully adjusted model. Each row of the list becomes a call like this one; the other models drop or add covariates, change the patients, or swap the outcome or exposure.</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules, whose intervals combine the variation within and between the imputed data sets.</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`density_effects()`</span><span class="co">](functions.qmd#density-effects)</span>, <span class="co">[</span><span class="ot">`mixed_formula()`</span><span class="co">](functions.qmd#model-formulas)</span>.</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fit-published-models</span></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 2, block "With albumin and hemoglobin", Model 3:</span></span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="co"># outcome early_start, exposure density_category, patients "All", labs TRUE</span></span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>  early_start <span class="sc">~</span> density_category <span class="sc">+</span></span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model 1: demographics and year (model_1_covariates)</span></span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">+</span> sex <span class="sc">+</span> race <span class="sc">+</span> hispanic <span class="sc">+</span> dialysis_year <span class="sc">+</span></span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model 2 adds comorbidities, access and cause (model_2_covariates)</span></span>
-<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>    heart_failure <span class="sc">+</span> coronary_disease <span class="sc">+</span> diabetes <span class="sc">+</span> cerebrovascular_disease <span class="sc">+</span></span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>    alcohol_or_drug <span class="sc">+</span> immobility <span class="sc">+</span> institutionalized <span class="sc">+</span> access_type <span class="sc">+</span> esrd_cause <span class="sc">+</span></span>
-<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model 3 adds insurance, nephrology care and area measures (model_3_covariates)</span></span>
-<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>    insurance <span class="sc">+</span> nephrology_care <span class="sc">+</span> rural_urban <span class="sc">+</span> zip_percent_poverty <span class="sc">+</span></span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>    zip_percent_black <span class="sc">+</span> hsa_ambulatory_sensitive_discharges <span class="sc">+</span></span>
-<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>    hsa_percent_eye_exam <span class="sc">+</span> hsa_percent_hba1c <span class="sc">+</span></span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    <span class="co"># labs = TRUE adds the laboratory values (model_2_laboratory)</span></span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>    albumin <span class="sc">+</span> hemoglobin <span class="sc">+</span></span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    <span class="co"># random intercept for HSA</span></span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> hsanum),</span>
-<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> patient_groups[[<span class="st">"All"</span>]],   <span class="co"># model_data: the whole cohort</span></span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="co"># The rows reported: odds ratios for the four density categories against</span></span>
-<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a><span class="co"># HSAs with no facility, with 95% CIs, p values and the patients used</span></span>
-<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a><span class="fu">density_effects</span>(fit, <span class="st">"^density_category"</span>, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a>In the code, <span class="in">`model_covariates("Model 3", labs = TRUE, patients = "All")`</span> returns these 24 covariates, and <span class="in">`mixed_formula()`</span> turns them into the formula. A test (<span class="in">`tests/test-model-example.R`</span>) checks that the formula on this page is the one the code builds, so the example cannot drift from the code.</span>
-<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variance decomposition</span></span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### One model written out</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>The code above builds every model from the list rather than writing each one out, so no single model appears in it. As an example, this is what it fits for Table 2, Model 3, with albumin and hemoglobin, the paper's fully adjusted model. Each row of the list becomes a call like this one; the other models drop or add covariates, change the patients, or swap the outcome or exposure.</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 2, block "With albumin and hemoglobin", Model 3:</span></span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="co"># outcome early_start, exposure density_category, patients "All", labs TRUE</span></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>  early_start <span class="sc">~</span> density_category <span class="sc">+</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model 1: demographics and year (model_1_covariates)</span></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">+</span> sex <span class="sc">+</span> race <span class="sc">+</span> hispanic <span class="sc">+</span> dialysis_year <span class="sc">+</span></span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model 2 adds comorbidities, access and cause (model_2_covariates)</span></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>    heart_failure <span class="sc">+</span> coronary_disease <span class="sc">+</span> diabetes <span class="sc">+</span> cerebrovascular_disease <span class="sc">+</span></span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>    alcohol_or_drug <span class="sc">+</span> immobility <span class="sc">+</span> institutionalized <span class="sc">+</span> access_type <span class="sc">+</span> esrd_cause <span class="sc">+</span></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model 3 adds insurance, nephrology care and area measures (model_3_covariates)</span></span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>    insurance <span class="sc">+</span> nephrology_care <span class="sc">+</span> rural_urban <span class="sc">+</span> zip_percent_poverty <span class="sc">+</span></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    zip_percent_black <span class="sc">+</span> hsa_ambulatory_sensitive_discharges <span class="sc">+</span></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>    hsa_percent_eye_exam <span class="sc">+</span> hsa_percent_hba1c <span class="sc">+</span></span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>    <span class="co"># labs = TRUE adds the laboratory values (model_2_laboratory)</span></span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>    albumin <span class="sc">+</span> hemoglobin <span class="sc">+</span></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>    <span class="co"># random intercept for HSA</span></span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> hsanum),</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> patient_groups[[<span class="st">"All"</span>]],   <span class="co"># model_data: the whole cohort</span></span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a><span class="co"># The rows reported: odds ratios for the four density categories against</span></span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="co"># HSAs with no facility, with 95% CIs, p values and the patients used</span></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="fu">density_effects</span>(fit, <span class="st">"^density_category"</span>, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by <span class="in">`lme4::lmer`</span> with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).</span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>In the code, <span class="in">`model_covariates("Model 3", labs = TRUE, patients = "All")`</span> returns these 24 covariates, and <span class="in">`mixed_formula()`</span> turns them into the formula. A test (<span class="in">`tests/test-model-example.R`</span>) checks that the formula on this page is the one the code builds, so the example cannot drift from the code.</span>
 <span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fit-variance-decomposition</span></span>
-<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## eGFR range</span></span>
-<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>A sensitivity analysis from the original R code that is not in the paper: Model 3 among patients with eGFR above 5 and below 25. Because the cohort already has eGFR of 20 or below, it in effect excludes patients with eGFR of 5 or below, and it is labelled that way.</span>
-<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fit-egfr-range-sensitivity</span></span>
-<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving</span></span>
-<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a>Estimates are saved in the gitignored <span class="in">`models/`</span> folder with the <span class="in">`usRds`</span> version, so tables can be rebuilt without refitting.</span>
-<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: save-models</span></span>
-<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variance decomposition</span></span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by <span class="in">`lme4::lmer`</span> with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).</span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`variance_shares()`</span><span class="co">](functions.qmd#variance-shares)</span>.</span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fit-variance-decomposition</span></span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## eGFR range</span></span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>A sensitivity analysis from the original R code that is not in the paper: Model 3 among patients with eGFR above 5 and below 25. Because the cohort already has eGFR of 20 or below, it in effect excludes patients with eGFR of 5 or below, and it is labelled that way.</span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`density_odds_ratios()`</span><span class="co">](functions.qmd#odds-ratios)</span>.</span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fit-egfr-range-sensitivity</span></span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving</span></span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>Estimates are saved in the gitignored <span class="in">`models/`</span> folder with the <span class="in">`usRds`</span> version, so tables can be rebuilt without refitting.</span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: save-models</span></span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

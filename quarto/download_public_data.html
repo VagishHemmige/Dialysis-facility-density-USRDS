@@ -491,6 +491,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="zip-code-to-hsa" class="level2">
 <h2 class="anchored" data-anchor-id="zip-code-to-hsa">ZIP code to HSA</h2>
 <p>One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are published as zipped CSV rather than Excel; the original reader only looked for Excel files. Each ZIP code and year must appear once.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#zip-codes"><code>standardize_zip()</code></a>, <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -525,6 +526,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="zip-code-to-zcta" class="level2">
 <h2 class="anchored" data-anchor-id="zip-code-to-zcta">ZIP code to ZCTA</h2>
 <p>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. About a fifth of ZIP codes, mostly PO box and large-volume ZIP codes, have no ZCTA of their own and belong to a surrounding ZCTA with a different number. The UDS Mapper crosswalk for each year, bundled in <code>zippeR</code> <span class="citation" data-cites="zipper_pkg uds_crosswalk">(<a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al., n.d.</a>; <a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>)</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#zip-codes"><code>standardize_zip()</code></a>, <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -547,6 +549,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="american-community-survey" class="level2">
 <h2 class="anchored" data-anchor-id="american-community-survey">American Community Survey</h2>
 <p>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year’s variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<code>GEOID</code>), because <code>tidycensus</code> removes the two-digit state prefix only for 2013 and later <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span>; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>, <a href="../quarto/functions.html#checking-acs-variables"><code>check_acs_labels()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -585,6 +588,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="hsa-population" class="level2">
 <h2 class="anchored" data-anchor-id="hsa-population">HSA population</h2>
 <p>The denominator of the exposure: the population of the ZCTAs of the ZIP codes in each HSA that year. Because several ZIP codes can share a ZCTA, each ZCTA is counted once per HSA (<code>hsa_population_from_zcta()</code>); summing over ZIP codes would count a shared ZCTA’s population several times.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#hsa-population"><code>hsa_population_from_zcta()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -601,6 +605,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="rural-urban-type" class="level2">
 <h2 class="anchored" data-anchor-id="rural-urban-type">Rural-urban type</h2>
 <p>The 2010 ERS ZIP code file, grouped into metropolitan, micropolitan, small town and rural by primary RUCA code.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#zip-codes"><code>standardize_zip()</code></a>, <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -617,6 +622,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="hsa-benchmarks" class="level2">
 <h2 class="anchored" data-anchor-id="hsa-benchmarks">HSA benchmarks</h2>
 <p>Primary care measures (2015) and hospital resources (2012). These are the published spreadsheets the original analysis’s Stata files were very likely made from; the code finds each measure’s column by pattern and sets suppression codes to missing.</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#dartmouth-codes"><code>clean_dartmouth_codes()</code></a>, <a href="../quarto/functions.html#finding-spreadsheet-columns"><code>select_by_pattern()</code></a>, <a href="../quarto/functions.html#spreadsheets-with-title-rows"><code>read_header_table()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1217,73 +1223,85 @@ Walker, Kyle, and Matt Herman. n.d. <em>Tidycensus: Load <span>US</span> Census 
 <span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are published as zipped CSV rather than Excel; the original reader only looked for Excel files. Each ZIP code and year must appear once.</span>
 <span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-hsa-crosswalk</span></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## ZIP code to ZCTA</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`standardize_zip()`</span><span class="co">](functions.qmd#zip-codes)</span>, <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-hsa-crosswalk</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. About a fifth of ZIP codes, mostly PO box and large-volume ZIP codes, have no ZCTA of their own and belong to a surrounding ZCTA with a different number. The UDS Mapper crosswalk for each year, bundled in <span class="in">`zippeR`</span> <span class="co">[</span><span class="ot">@zipper_pkg; @uds_crosswalk</span><span class="co">]</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## ZIP code to ZCTA</span></span>
 <span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-zcta-crosswalk</span></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## American Community Survey</span></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<span class="in">`GEOID`</span>), because <span class="in">`tidycensus`</span> removes the two-digit state prefix only for 2013 and later <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. About a fifth of ZIP codes, mostly PO box and large-volume ZIP codes, have no ZCTA of their own and belong to a surrounding ZCTA with a different number. The UDS Mapper crosswalk for each year, bundled in <span class="in">`zippeR`</span> <span class="co">[</span><span class="ot">@zipper_pkg; @uds_crosswalk</span><span class="co">]</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`standardize_zip()`</span><span class="co">](functions.qmd#zip-codes)</span>, <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-zcta-crosswalk</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: download-acs</span></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA population</span></span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>The denominator of the exposure: the population of the ZCTAs of the ZIP codes in each HSA that year. Because several ZIP codes can share a ZCTA, each ZCTA is counted once per HSA (<span class="in">`hsa_population_from_zcta()`</span>); summing over ZIP codes would count a shared ZCTA's population several times.</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: compute-hsa-population</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rural-urban type</span></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>The 2010 ERS ZIP code file, grouped into metropolitan, micropolitan, small town and rural by primary RUCA code.</span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-ruca</span></span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA benchmarks</span></span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>Primary care measures (2015) and hospital resources (2012). These are the published spreadsheets the original analysis's Stata files were very likely made from; the code finds each measure's column by pattern and sets suppression codes to missing.</span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-dartmouth-benchmarks</span></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA boundaries</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>Used only for the maps in Figure 2.</span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-hsa-boundaries</span></span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## Labels</span></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>Each area variable is labelled with its source and year.</span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: label-area-variables</span></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## American Community Survey</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<span class="in">`GEOID`</span>), because <span class="in">`tidycensus`</span> removes the two-digit state prefix only for 2013 and later <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>, <span class="co">[</span><span class="ot">`check_acs_labels()`</span><span class="co">](functions.qmd#checking-acs-variables)</span>.</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: download-acs</span></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA population</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>The denominator of the exposure: the population of the ZCTAs of the ZIP codes in each HSA that year. Because several ZIP codes can share a ZCTA, each ZCTA is counted once per HSA (<span class="in">`hsa_population_from_zcta()`</span>); summing over ZIP codes would count a shared ZCTA's population several times.</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`hsa_population_from_zcta()`</span><span class="co">](functions.qmd#hsa-population)</span>.</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: compute-hsa-population</span></span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rural-urban type</span></span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>The 2010 ERS ZIP code file, grouped into metropolitan, micropolitan, small town and rural by primary RUCA code.</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`standardize_zip()`</span><span class="co">](functions.qmd#zip-codes)</span>, <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-ruca</span></span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA benchmarks</span></span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>Primary care measures (2015) and hospital resources (2012). These are the published spreadsheets the original analysis's Stata files were very likely made from; the code finds each measure's column by pattern and sets suppression codes to missing.</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`clean_dartmouth_codes()`</span><span class="co">](functions.qmd#dartmouth-codes)</span>, <span class="co">[</span><span class="ot">`select_by_pattern()`</span><span class="co">](functions.qmd#finding-spreadsheet-columns)</span>, <span class="co">[</span><span class="ot">`read_header_table()`</span><span class="co">](functions.qmd#spreadsheets-with-title-rows)</span>.</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-dartmouth-benchmarks</span></span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA boundaries</span></span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>Used only for the maps in Figure 2.</span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: read-hsa-boundaries</span></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="fu">## Labels</span></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>Each area variable is labelled with its source and year.</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: label-area-variables</span></span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

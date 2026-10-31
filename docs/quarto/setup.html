@@ -84,8 +84,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-261e60fdf64a0e003ec2340fd2db30d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/issue-comments-0.2.0/issue-comments.js"></script>
-<link href="../site_libs/quarto-contrib/issue-comments-0.2.0/issue-comments.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
+<link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -126,7 +126,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   background-image: none;
 }
 </style>
-<script>window.ISSUE_COMMENTS = {"contact":"mailto:vagish.hemmige@gmail.com","endpoint":"https://script.google.com/macros/s/AKfycbyE8fNBvy3vfuAnuQqdjpCTR8i2zYI-KSvGzhkGlQRYevI1I6auqq9H-mIk2yrXCaIROA/exec","owner":"Vagish Hemmige","pageButton":false,"passcode":false,"preview":true};</script>
+<script>window.ISSUE_COMMENTS = {"contact":"mailto:vagish.hemmige@gmail.com","endpoint":"https://script.google.com/macros/s/AKfycbyE8fNBvy3vfuAnuQqdjpCTR8i2zYI-KSvGzhkGlQRYevI1I6auqq9H-mIk2yrXCaIROA/exec","owner":"Vagish Hemmige","pageButton":false,"passcode":true,"preview":true};</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -613,12 +613,12 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="cause-of-kidney-failure" class="level2">
 <h2 class="anchored" data-anchor-id="cause-of-kidney-failure">Cause of kidney failure</h2>
-<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>; <a href="../quarto/differences.html#open-decisions">open decision D4</a>). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
+<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primary cause of kidney failure (section 6). The mapping of every $PD96DET code</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is in references/esrd-cause-categories.csv (open decision #D4).</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is in references/esrd-cause-categories.csv (decision D4, settled 30 October 2026).</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>esrd_cause_categories <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Diabetes"</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Hypertension and cardiac disease"</span>,</span>
@@ -1275,7 +1275,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cause of kidney failure</span></span>
 <span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>; <span class="co">[</span><span class="ot">open decision D4</span><span class="co">](differences.qmd#open-decisions)</span>). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-cause-constants</span></span>

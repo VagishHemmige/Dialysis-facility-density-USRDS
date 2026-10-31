@@ -8,6 +8,9 @@
 --   preview: true                # show the exact issue before posting
 --   passcode: false              # ask readers for a shared passcode
 --   page-button: false           # also show "Comment on this page"
+--   text:                        # optional: replace any wording readers see
+--     heading: Comment on the draft
+--     notice: "Comments go to {owner}'s team as GitHub issues. {contact}."
 
 local function str(v)
   if v == nil then return nil end
@@ -21,6 +24,35 @@ local function bool(v, default)
   if type(v) == "boolean" then return v end
   local s = pandoc.utils.stringify(v)
   return s == "true" or s == "yes"
+end
+
+-- Keys of `text:` the browser script uses; see DEFAULT_TEXT in issue-comments.js.
+local TEXT_KEYS = {
+  "button", "page-button", "heading", "preview-heading", "section",
+  "name-label", "comment-label", "passcode-label", "notice", "contact-link",
+  "preview-intro", "cancel", "edit", "close", "preview", "post", "posting",
+  "thanks", "issue-link",
+}
+
+-- `text:` as a map of plain strings, warning about keys that do nothing.
+local function text_settings(t)
+  if t == nil then return nil end
+  if type(t) ~= "table" then
+    quarto.log.warning("issue-comments: `text` should be a map of wording to replace.")
+    return nil
+  end
+  local known = {}
+  for _, k in ipairs(TEXT_KEYS) do known[k] = true end
+  local out, any = {}, false
+  for k, v in pairs(t) do
+    if not known[k] then
+      quarto.log.warning("issue-comments: unknown `text` key `" .. tostring(k) .. "`; it is ignored.")
+    else
+      local s = str(v)
+      if s ~= nil then out[k] = s; any = true end
+    end
+  end
+  return any and out or nil
 end
 
 -- `author` may be a string, a list, or a list of maps with `name`.
@@ -58,6 +90,7 @@ function Meta(meta)
     preview = bool(cfg["preview"], true),
     passcode = bool(cfg["passcode"], false),
     pageButton = bool(cfg["page-button"], false),
+    text = text_settings(cfg["text"]),
   }
   if settings.contact == nil then
     quarto.log.warning("issue-comments: no `contact` set; readers won't see how to reach you.")
@@ -65,7 +98,7 @@ function Meta(meta)
 
   quarto.doc.add_html_dependency({
     name = "issue-comments",
-    version = "0.2.0",
+    version = "0.3.0",
     scripts = { "issue-comments.js" },
     stylesheets = { "issue-comments.css" },
   })

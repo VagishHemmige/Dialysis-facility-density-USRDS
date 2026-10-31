@@ -6,6 +6,34 @@
   const MAX_QUOTE = 1500;
   const NAME_KEY = "issue-comments:name";
 
+  // Every string readers see. A site can replace any of them with `text:`.
+  // A {placeholder} is filled in where it appears.
+  const DEFAULT_TEXT = {
+    "button": "💬 Comment",
+    "page-button": "💬 Comment on this page",
+    "heading": "Leave a comment",
+    "preview-heading": "Check before posting",
+    "section": "Section: {section}",
+    "name-label": "Your name",
+    "comment-label": "Comment",
+    "passcode-label": "Passcode",
+    "notice":
+      "Comments are posted publicly as GitHub issues on behalf of {owner}, together with " +
+      "your name, the highlighted text and a link to this section. You can't edit or delete " +
+      "a comment after posting; to change or remove one, {contact}. Your name is saved in " +
+      "this browser so you don't have to retype it.",
+    "contact-link": "contact {owner}",
+    "preview-intro": "This is exactly what will be posted publicly on GitHub on behalf of {owner}:",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "close": "Close",
+    "preview": "Preview",
+    "post": "Post publicly",
+    "posting": "Posting…",
+    "thanks": "Thanks! Posted as {issue}.",
+    "issue-link": "issue #{number}",
+  };
+
   function store(key, value) {
     try {
       if (value === undefined) return window.localStorage.getItem(key) || "";
@@ -32,6 +60,15 @@
     return /^(https?:|mailto:|\/|\.\/|\.\.\/)/i.test(url || "") ? url : null;
   }
 
+  // Splits a string on its {placeholders} and puts in each value, which may
+  // be text or an element. A placeholder with no value stays as written.
+  function fill(template, values) {
+    return String(template).split(/(\{[a-z-]+\})/).filter(Boolean).map((part) => {
+      const key = part.slice(1, -1);
+      return part[0] === "{" && Object.prototype.hasOwnProperty.call(values, key) ? values[key] : part;
+    });
+  }
+
   // Must match buildIssue_ in apps-script/Code.gs.
   function issueTitle(section, comment) {
     const flat = comment.replace(/\s+/g, " ");
@@ -45,6 +82,8 @@
 
     const owner = cfg.owner || "the site owner";
     const contact = safeLink(cfg.contact);
+    const T = Object.assign({}, DEFAULT_TEXT, cfg.text || {});
+    const say = (key, values) => fill(T[key], Object.assign({ owner }, values)).join("");
 
     const root =
       document.querySelector("main#quarto-document-content") ||
@@ -58,7 +97,7 @@
       type: "button",
       class: "ic-select-btn",
       "aria-label": "Comment on the selected text",
-      text: "💬 Comment",
+      text: say("button"),
     });
     selBtn.hidden = true;
     selBtn.addEventListener("mousedown", (e) => e.preventDefault()); // keep the selection
@@ -66,7 +105,7 @@
     document.body.appendChild(selBtn);
 
     if (cfg.pageButton) {
-      const pageBtn = el("button", { type: "button", class: "ic-page-btn", text: "💬 Comment on this page" });
+      const pageBtn = el("button", { type: "button", class: "ic-page-btn", text: say("page-button") });
       pageBtn.addEventListener("click", () =>
         openDialog({ quote: "", section: document.title, anchor: "" })
       );
@@ -84,24 +123,18 @@
 
     const contactText = () =>
       contact
-        ? el("a", { href: contact, target: "_blank", rel: "noopener", text: "contact " + owner })
-        : document.createTextNode("contact " + owner);
+        ? el("a", { href: contact, target: "_blank", rel: "noopener", text: say("contact-link") })
+        : document.createTextNode(say("contact-link"));
 
-    const notice = el("p", { class: "ic-note" }, [
-      "Comments are posted publicly as GitHub issues by " + owner +
-        ", together with your name, the highlighted text and a link to this section. " +
-        "You can't edit or delete a comment after posting; to change or remove one, ",
-      contactText(),
-      ".",
-    ]);
+    const notice = el("p", { class: "ic-note" }, fill(T.notice, { owner, contact: contactText() }));
 
     const editStage = el("div", {}, [
       sectionLine,
       quoteBox,
-      el("label", {}, ["Your name", nameInput]),
-      el("label", {}, ["Comment", commentInput]),
+      el("label", {}, [say("name-label"), nameInput]),
+      el("label", {}, [say("comment-label"), commentInput]),
     ]);
-    if (cfg.passcode) editStage.appendChild(el("label", {}, ["Passcode", passInput]));
+    if (cfg.passcode) editStage.appendChild(el("label", {}, [say("passcode-label"), passInput]));
     editStage.appendChild(trap);
     editStage.appendChild(notice);
 
@@ -109,15 +142,15 @@
     const pvTitle = el("p", { class: "ic-pv-title" });
     const pvBody = el("div", { class: "ic-pv-body" });
     const previewStage = el("div", { class: "ic-preview" }, [
-      el("p", { class: "ic-section", text: "This is exactly what will be posted publicly on GitHub by " + owner + ":" }),
+      el("p", { class: "ic-section", text: say("preview-intro") }),
       el("div", { class: "ic-pv-card" }, [pvTitle, pvBody]),
     ]);
 
     const status = el("p", { class: "ic-status", role: "status" });
-    const backBtn = el("button", { type: "button", text: "Cancel" });
+    const backBtn = el("button", { type: "button" });
     const goBtn = el("button", { type: "submit", class: "ic-primary" });
 
-    const heading = el("h2", { text: "Leave a comment" });
+    const heading = el("h2");
     const form = el("form", { method: "dialog" }, [
       heading, editStage, previewStage, status,
       el("div", { class: "ic-actions" }, [backBtn, goBtn]),
@@ -133,9 +166,9 @@
       previewStage.hidden = s !== "preview";
       goBtn.hidden = s === "done";
       goBtn.disabled = false;
-      heading.textContent = s === "preview" ? "Check before posting" : "Leave a comment";
-      backBtn.textContent = s === "edit" ? "Cancel" : s === "preview" ? "Edit" : "Close";
-      goBtn.textContent = s === "edit" && cfg.preview ? "Preview" : "Post publicly";
+      heading.textContent = say(s === "preview" ? "preview-heading" : "heading");
+      backBtn.textContent = say(s === "edit" ? "cancel" : s === "preview" ? "edit" : "close");
+      goBtn.textContent = say(s === "edit" && cfg.preview ? "preview" : "post");
       if (s !== "done") { status.textContent = ""; status.className = "ic-status"; }
     }
 
@@ -149,7 +182,7 @@
       selBtn.hidden = true;
       quoteBox.textContent = ctx.quote;
       quoteBox.hidden = !ctx.quote;
-      sectionLine.textContent = ctx.section ? "Section: " + ctx.section : "";
+      sectionLine.textContent = ctx.section ? say("section", { section: ctx.section }) : "";
       nameInput.value = store(NAME_KEY);
       commentInput.value = "";
       setStage("edit");
@@ -180,7 +213,7 @@
       };
       goBtn.disabled = true;
       backBtn.disabled = true;
-      status.textContent = "Posting…";
+      status.textContent = say("posting");
       status.className = "ic-status";
       try {
         // text/plain avoids a CORS preflight, which Apps Script cannot answer.
@@ -193,13 +226,12 @@
         if (!data.ok) throw new Error(data.error || "The comment was not posted.");
         setStage("done");
         status.className = "ic-status ic-ok";
-        status.replaceChildren(
-          "Thanks! Posted as ",
-          data.url
-            ? el("a", { href: data.url, target: "_blank", rel: "noopener", text: "issue #" + data.number })
-            : "an issue",
-          "."
-        );
+        const issueText = say("issue-link", { number: String(data.number) });
+        status.replaceChildren(...fill(T.thanks, {
+          issue: data.url
+            ? el("a", { href: data.url, target: "_blank", rel: "noopener", text: issueText })
+            : issueText,
+        }));
         window.getSelection().removeAllRanges();
       } catch (err) {
         status.textContent = err.message || "Something went wrong. Please try again.";

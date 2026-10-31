@@ -102,7 +102,7 @@ The site documents the code. It does not run the analysis.
 - **Never evaluate analysis code in the site.** Pages render without restricted data.
 - **Site-only helpers** live in `quarto/_site_functions.R`, which pages source and `main.R` never does. They read only code or text given to them, never data, and are tested in `tests/test-site-functions.R`. A chunk calling them (for example `side_by_side_diff()`, which shows two versions of some code side by side) is the only other kind of chunk a page may run. Helpers the analysis needs stay in `R/functions.R`.
 - The original R Markdown file is shown on its own page as code only, with machine-specific paths removed.
-- The site renders to `docs/` and is served by GitHub Pages. When you add a script, add its page and sidebar entry in the same pull request, and re-render.
+- The site renders to `docs/`, which is not committed. `.github/workflows/publish.yml` renders it on every pull request as a check and publishes it to GitHub Pages on each push to `main`. When you add a script, add its page and sidebar entry in the same pull request; render locally to preview, but do not commit the output.
 - **Prose must match the code.** If a change alters what a section does, update its explanation in the same pull request.
 
 ## Outputs

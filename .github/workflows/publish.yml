@@ -1,0 +1,84 @@
+# Renders the Quarto website and publishes it to GitHub Pages.
+#
+# Every pull request renders the site as a check, so a page that fails to
+# render shows up before merging. Each push to main renders the site again and
+# publishes it. A failed render publishes nothing, so the last good site stays
+# live.
+#
+# The pages never run analysis code (AGENTS.md, "Quarto website"): they only
+# import code with knitr::read_chunk() and call the helpers in
+# quarto/_site_functions.R. This machine has no USRDS data, and needs only the
+# packages those helpers use.
+
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One run at a time per branch. A new push to a pull request cancels the
+# check still running; a publish in progress is left to finish.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    env:
+      # The original R Markdown page contains non-ASCII characters such as ≤
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      # The packages quarto/_site_functions.R calls with ::, plus knitr and
+      # rmarkdown to render the R chunks. Current CRAN versions, not pinned.
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::knitr
+            any::rmarkdown
+            any::diffobj
+            any::dplyr
+            any::htmltools
+            any::purrr
+            any::stringr
+            any::tibble
+
+      # The version used to render the site locally; update it here when you
+      # update Quarto in Positron
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.10.18
+
+      - uses: quarto-dev/quarto-actions/render@v2
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: docs
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: render
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

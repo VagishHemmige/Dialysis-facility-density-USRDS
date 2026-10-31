@@ -6,8 +6,8 @@
 .httr-oauth
 .DS_Store
 
-# Quarto. docs/ is the local render; GitHub Actions renders and publishes the
-# site (.github/workflows/publish.yml)
+# Quarto. docs/ is the local render; GitHub Actions renders the site and
+# publishes it to the gh-pages branch (.github/workflows/publish.yml)
 /docs/
 /.quarto/
 **/*.quarto_ipynb

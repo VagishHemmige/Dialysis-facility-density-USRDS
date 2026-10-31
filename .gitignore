@@ -6,7 +6,9 @@
 .httr-oauth
 .DS_Store
 
-# Quarto (docs/ is NOT ignored: it is the published site)
+# Quarto. docs/ is the local render; GitHub Actions renders the site and
+# publishes it to the gh-pages branch (.github/workflows/publish.yml)
+/docs/
 /.quarto/
 **/*.quarto_ipynb
 /_freeze/

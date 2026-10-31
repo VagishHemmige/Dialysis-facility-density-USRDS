@@ -39,6 +39,8 @@ The 25th, 50th and 75th percentiles of density among all patients, zeros include
 
 Zero facilities, then four categories each including its upper bound. The script stops if any patient in the cohort has no category.
 
+**Functions used:** [`categorize_density()`](functions.qmd#density-categories).
+
 ```{r}
 #| label: categorize-density
 #| eval: false

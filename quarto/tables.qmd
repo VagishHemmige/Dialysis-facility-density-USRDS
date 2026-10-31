@@ -40,6 +40,8 @@ Patient and HSA characteristics by density category: the same 25 characteristics
 
 One table for each published regression table (Table 2 and eTables 1–3), and one for the analysis excluding eGFR of 5 or below, which was in the original R code but not the paper. Each table has one row per model and density term, grouped as the paper groups them. Logistic models give odds ratios; eTable 3 gives differences in eGFR. The formatting function, `format_estimates_table()`, is shown on the [functions page](functions.qmd#estimate-tables).
 
+**Functions used:** [`format_estimates_table()`](functions.qmd#estimate-tables).
+
 ```{r}
 #| label: build-regression-tables
 #| eval: false

@@ -38,6 +38,8 @@ Files are cached in the gitignored `data-raw/` folder, so later runs do not down
 
 One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are published as zipped CSV rather than Excel; the original reader only looked for Excel files. Each ZIP code and year must appear once.
 
+**Functions used:** [`standardize_zip()`](functions.qmd#zip-codes), [`assert_unique()`](functions.qmd#unique-keys).
+
 ```{r}
 #| label: read-hsa-crosswalk
 #| eval: false
@@ -46,6 +48,8 @@ One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are publ
 ## ZIP code to ZCTA
 
 ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. About a fifth of ZIP codes, mostly PO box and large-volume ZIP codes, have no ZCTA of their own and belong to a surrounding ZCTA with a different number. The UDS Mapper crosswalk for each year, bundled in `zippeR` [@zipper_pkg; @uds_crosswalk], maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.
+
+**Functions used:** [`standardize_zip()`](functions.qmd#zip-codes), [`assert_unique()`](functions.qmd#unique-keys).
 
 ```{r}
 #| label: read-zcta-crosswalk
@@ -56,6 +60,8 @@ ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Abou
 
 ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (`GEOID`), because `tidycensus` removes the two-digit state prefix only for 2013 and later [@tidycensus]; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.
 
+**Functions used:** [`assert_unique()`](functions.qmd#unique-keys), [`check_acs_labels()`](functions.qmd#checking-acs-variables).
+
 ```{r}
 #| label: download-acs
 #| eval: false
@@ -64,6 +70,8 @@ ZCTA estimates from the 5-year subject table S0601 for each study year. Every ye
 ## HSA population
 
 The denominator of the exposure: the population of the ZCTAs of the ZIP codes in each HSA that year. Because several ZIP codes can share a ZCTA, each ZCTA is counted once per HSA (`hsa_population_from_zcta()`); summing over ZIP codes would count a shared ZCTA's population several times.
+
+**Functions used:** [`hsa_population_from_zcta()`](functions.qmd#hsa-population).
 
 ```{r}
 #| label: compute-hsa-population
@@ -74,6 +82,8 @@ The denominator of the exposure: the population of the ZCTAs of the ZIP codes in
 
 The 2010 ERS ZIP code file, grouped into metropolitan, micropolitan, small town and rural by primary RUCA code.
 
+**Functions used:** [`standardize_zip()`](functions.qmd#zip-codes), [`assert_unique()`](functions.qmd#unique-keys).
+
 ```{r}
 #| label: read-ruca
 #| eval: false
@@ -82,6 +92,8 @@ The 2010 ERS ZIP code file, grouped into metropolitan, micropolitan, small town 
 ## HSA benchmarks
 
 Primary care measures (2015) and hospital resources (2012). These are the published spreadsheets the original analysis's Stata files were very likely made from; the code finds each measure's column by pattern and sets suppression codes to missing.
+
+**Functions used:** [`clean_dartmouth_codes()`](functions.qmd#dartmouth-codes), [`select_by_pattern()`](functions.qmd#finding-spreadsheet-columns), [`read_header_table()`](functions.qmd#spreadsheets-with-title-rows).
 
 ```{r}
 #| label: read-dartmouth-benchmarks

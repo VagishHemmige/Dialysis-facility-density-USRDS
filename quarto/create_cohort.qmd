@@ -73,6 +73,8 @@ In the original code the cohort was filtered in about 27 separate places, and a 
 
 The data from the final step, one row per patient. The HSA used for facility counts and the HSA used for population are checked to be the same.
 
+**Functions used:** [`assert_unique()`](functions.qmd#unique-keys).
+
 ```{r}
 #| label: extract-cohort
 #| eval: false

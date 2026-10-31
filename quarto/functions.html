@@ -438,6 +438,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 
 
 <p>Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R"><code>tests/test-functions.R</code></a>.</p>
+<p>Each section names the function under its heading, explains what it does, and then links to where it is used: the steps of the analysis that call it, and any function on this page that calls it.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -461,8 +462,10 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </div>
 <section id="yesno-fields" class="level2">
 <h2 class="anchored" data-anchor-id="yesno-fields">Yes/no fields</h2>
+<p><code>any_yes()</code></p>
 <p>The CMS-2728 form records comorbidities and insurance as yes, no or unknown. A condition counts as present only when a field is “YES”; missing or unknown counts as not present. The original code returned missing for missing fields, which would drop patients from the models; the published sample sizes show the paper’s models did not.</p>
-<p><strong>Used in:</strong> 3. USRDS patient data (<a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>); <a href="#insurance">Insurance</a> on this page.</p>
+<p><strong>Used in the analysis:</strong> 3. USRDS patient data: <a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>.</p>
+<p><strong>Called by:</strong> <a href="#insurance"><code>derive_insurance()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -478,8 +481,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="insurance" class="level2">
 <h2 class="anchored" data-anchor-id="insurance">Insurance</h2>
+<p><code>derive_insurance()</code></p>
 <p>The original code’s hierarchy, unchanged: no insurance, then Medicaid, then Medicare (including Medicare Advantage), then employer group, then other (including VA).</p>
-<p><strong>Used in:</strong> 3. USRDS patient data (<a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>).</p>
+<p><strong>Used in the analysis:</strong> 3. USRDS patient data: <a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -501,8 +505,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="nephrology-care" class="level2">
 <h2 class="anchored" data-anchor-id="nephrology-care">Nephrology care</h2>
+<p><code>derive_nephrology_care()</code></p>
 <p>Whether the patient saw a nephrologist before kidney failure: none, some or unknown, as in the paper’s Table 1 and Model 3. Unknown is its own level, so the models keep the patients the paper kept.</p>
-<p><strong>Used in:</strong> 3. USRDS patient data (<a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>).</p>
+<p><strong>Used in the analysis:</strong> 3. USRDS patient data: <a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -524,8 +529,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="census-region" class="level2">
 <h2 class="anchored" data-anchor-id="census-region">Census region</h2>
+<p><code>assign_region()</code></p>
 <p>Regions by state name, because usRds labels the residence state with its name (format <code>$STATFIP</code>). This replaces the original code’s state-label spreadsheet.</p>
-<p><strong>Used in:</strong> 3. USRDS patient data (<a href="../quarto/prepare_patients.html#residence-on-the-dialysis-date">Residence on the dialysis date</a>).</p>
+<p><strong>Used in the analysis:</strong> 3. USRDS patient data: <a href="../quarto/prepare_patients.html#residence-on-the-dialysis-date">Residence on the dialysis date</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -544,8 +550,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="dartmouth-codes" class="level2">
 <h2 class="anchored" data-anchor-id="dartmouth-codes">Dartmouth codes</h2>
+<p><code>clean_dartmouth_codes()</code></p>
 <p>Sets Dartmouth’s -88888 and -99999 to missing. The original code turned every negative value positive, which would have entered suppressed HSAs as 88,888 or 99,999.</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#hsa-benchmarks">HSA benchmarks</a>).</p>
+<p><strong>Used in the analysis:</strong> 1. Public area data: <a href="../quarto/download_public_data.html#hsa-benchmarks">HSA benchmarks</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -560,8 +567,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="finding-spreadsheet-columns" class="level2">
 <h2 class="anchored" data-anchor-id="finding-spreadsheet-columns">Finding spreadsheet columns</h2>
+<p><code>select_by_pattern()</code></p>
 <p>Finds exactly one column for each measure, or stops and lists the candidates.</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#hsa-benchmarks">HSA benchmarks</a>).</p>
+<p><strong>Used in the analysis:</strong> 1. Public area data: <a href="../quarto/download_public_data.html#hsa-benchmarks">HSA benchmarks</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -588,8 +596,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="spreadsheets-with-title-rows" class="level2">
 <h2 class="anchored" data-anchor-id="spreadsheets-with-title-rows">Spreadsheets with title rows</h2>
+<p><code>read_header_table()</code></p>
 <p>Dartmouth spreadsheets put titles above the header; this finds the header row.</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#hsa-benchmarks">HSA benchmarks</a>).</p>
+<p><strong>Used in the analysis:</strong> 1. Public area data: <a href="../quarto/download_public_data.html#hsa-benchmarks">HSA benchmarks</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -615,8 +624,13 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="zip-codes" class="level2">
 <h2 class="anchored" data-anchor-id="zip-codes">ZIP codes</h2>
+<p><code>standardize_zip()</code></p>
 <p>Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#zip-code-to-hsa">ZIP code to HSA</a>, <a href="../quarto/download_public_data.html#zip-code-to-zcta">ZIP code to ZCTA</a>, <a href="../quarto/download_public_data.html#rural-urban-type">Rural-urban type</a>); 3. USRDS patient data (<a href="../quarto/prepare_patients.html#loading-the-residence-file">Loading the Residence file</a>).</p>
+<p><strong>Used in the analysis:</strong></p>
+<ul>
+<li>1. Public area data: <a href="../quarto/download_public_data.html#zip-code-to-hsa">ZIP code to HSA</a>, <a href="../quarto/download_public_data.html#zip-code-to-zcta">ZIP code to ZCTA</a>, <a href="../quarto/download_public_data.html#rural-urban-type">Rural-urban type</a></li>
+<li>3. USRDS patient data: <a href="../quarto/prepare_patients.html#loading-the-residence-file">Loading the Residence file</a></li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -636,8 +650,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="alternative-columns" class="level2">
 <h2 class="anchored" data-anchor-id="alternative-columns">Alternative columns</h2>
+<p><code>first_non_missing()</code></p>
 <p>Takes, row by row, the first value present across several columns. A release of the Medical Evidence file has the provider ID as <code>PROVUSRD_DIAL</code> or as <code>PROVUSRD</code>, and this picks whichever is there.</p>
-<p><strong>Used in:</strong> 3. USRDS patient data (<a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>).</p>
+<p><strong>Used in the analysis:</strong> 3. USRDS patient data: <a href="../quarto/prepare_patients.html#patient-variables">Patient variables</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -654,8 +669,14 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="unique-keys" class="level2">
 <h2 class="anchored" data-anchor-id="unique-keys">Unique keys</h2>
+<p><code>assert_unique()</code></p>
 <p>Stops if any key appears more than once, and otherwise passes the data on, so it can end a pipeline. Every lookup table is checked this way before it is joined to patients.</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#zip-code-to-hsa">ZIP code to HSA</a>, <a href="../quarto/download_public_data.html#zip-code-to-zcta">ZIP code to ZCTA</a>, <a href="../quarto/download_public_data.html#american-community-survey">American Community Survey</a>, <a href="../quarto/download_public_data.html#rural-urban-type">Rural-urban type</a>); 4. Linking area data (<a href="../quarto/link_area_data.html#cause-of-kidney-failure-mapping">Cause of kidney failure mapping</a>); 5. Cohort flowchart (<a href="../quarto/create_cohort.html#the-cohort">The cohort</a>).</p>
+<p><strong>Used in the analysis:</strong></p>
+<ul>
+<li>1. Public area data: <a href="../quarto/download_public_data.html#zip-code-to-hsa">ZIP code to HSA</a>, <a href="../quarto/download_public_data.html#zip-code-to-zcta">ZIP code to ZCTA</a>, <a href="../quarto/download_public_data.html#american-community-survey">American Community Survey</a>, <a href="../quarto/download_public_data.html#rural-urban-type">Rural-urban type</a></li>
+<li>4. Linking area data: <a href="../quarto/link_area_data.html#cause-of-kidney-failure-mapping">Cause of kidney failure mapping</a></li>
+<li>5. Cohort flowchart: <a href="../quarto/create_cohort.html#the-cohort">The cohort</a></li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -677,8 +698,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="checking-acs-variables" class="level2">
 <h2 class="anchored" data-anchor-id="checking-acs-variables">Checking ACS variables</h2>
+<p><code>check_acs_labels()</code></p>
 <p>Compares each year’s ACS label with the expected pattern and stops on any mismatch or absent variable.</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#american-community-survey">American Community Survey</a>).</p>
+<p><strong>Used in the analysis:</strong> 1. Public area data: <a href="../quarto/download_public_data.html#american-community-survey">American Community Survey</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -712,8 +734,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="category-labels" class="level2">
 <h2 class="anchored" data-anchor-id="category-labels">Category labels</h2>
+<p><code>density_category_labels()</code></p>
 <p>The labels of the five categories, built from the three cut points rounded to two decimals: 0, then &gt;0 to the first cut point, the two middle ranges, and above the third cut point.</p>
-<p><strong>Used in:</strong> <a href="#density-categories">Density categories</a> on this page.</p>
+<p><strong>Called by:</strong> <a href="#density-categories"><code>categorize_density()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -734,8 +757,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="density-categories" class="level2">
 <h2 class="anchored" data-anchor-id="density-categories">Density categories</h2>
+<p><code>categorize_density()</code></p>
 <p>Zero facilities is its own category; the other four are cut at the quartiles, each including its upper bound, as in the original code. It stops unless there are exactly three cut points in increasing order.</p>
-<p><strong>Used in:</strong> 6. Density categories (<a href="../quarto/define_exposure.html#categories">Categories</a>).</p>
+<p><strong>Used in the analysis:</strong> 6. Density categories: <a href="../quarto/define_exposure.html#categories">Categories</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -760,8 +784,10 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="density-effects" class="level2">
 <h2 class="anchored" data-anchor-id="density-effects">Density effects</h2>
+<p><code>density_effects()</code></p>
 <p>Extracts the density terms of a fitted model with Wald confidence intervals and the number of patients the model used: odds ratios for logistic models, differences for linear ones.</p>
-<p><strong>Used in:</strong> 7. Models (<a href="../quarto/models.html#fitting">Fitting</a>); <a href="#odds-ratios">Odds ratios</a> on this page.</p>
+<p><strong>Used in the analysis:</strong> 7. Models: <a href="../quarto/models.html#fitting">Fitting</a>.</p>
+<p><strong>Called by:</strong> <a href="#odds-ratios"><code>density_odds_ratios()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -790,8 +816,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="odds-ratios" class="level2">
 <h2 class="anchored" data-anchor-id="odds-ratios">Odds ratios</h2>
+<p><code>density_odds_ratios()</code></p>
 <p>The same for a logistic model, with the estimate named <code>odds_ratio</code>.</p>
-<p><strong>Used in:</strong> 7. Models (<a href="../quarto/models.html#egfr-range">eGFR range</a>).</p>
+<p><strong>Used in the analysis:</strong> 7. Models: <a href="../quarto/models.html#egfr-range">eGFR range</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -805,8 +832,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="estimate-tables" class="level2">
 <h2 class="anchored" data-anchor-id="estimate-tables">Estimate tables</h2>
+<p><code>format_estimates_table()</code></p>
 <p>Turns those estimates into a gt table, grouped by block, with one row per model and density term, for each published regression table.</p>
-<p><strong>Used in:</strong> Tables (<a href="../quarto/tables.html#regression-tables">Regression tables</a>).</p>
+<p><strong>Used in the analysis:</strong> Tables: <a href="../quarto/tables.html#regression-tables">Regression tables</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -836,8 +864,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="model-formulas" class="level2">
 <h2 class="anchored" data-anchor-id="model-formulas">Model formulas</h2>
+<p><code>mixed_formula()</code></p>
 <p>Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model’s covariates are a list in <code>setup.R</code>.</p>
-<p><strong>Used in:</strong> 7. Models (<a href="../quarto/models.html#model-data">Model data</a>, <a href="../quarto/models.html#fitting">Fitting</a>).</p>
+<p><strong>Used in the analysis:</strong> 7. Models: <a href="../quarto/models.html#model-data">Model data</a>, <a href="../quarto/models.html#fitting">Fitting</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -851,8 +880,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="variance-shares" class="level2">
 <h2 class="anchored" data-anchor-id="variance-shares">Variance shares</h2>
+<p><code>variance_shares()</code></p>
 <p>The share of the variance of eGFR at each level of a null mixed model.</p>
-<p><strong>Used in:</strong> 7. Models (<a href="../quarto/models.html#variance-decomposition">Variance decomposition</a>).</p>
+<p><strong>Used in the analysis:</strong> 7. Models: <a href="../quarto/models.html#variance-decomposition">Variance decomposition</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -868,8 +898,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="classifying-codes" class="level2">
 <h2 class="anchored" data-anchor-id="classifying-codes">Classifying codes</h2>
+<p><code>classify_codes()</code></p>
 <p>Sends the codes to one provider in batches, through that provider’s own function, and asks once more for any codes the model skipped.</p>
-<p><strong>Used in:</strong> 2. Cause of kidney failure (<a href="../quarto/classify_esrd_causes.html#running-checking-and-saving-each-model">Running, checking and saving each model</a>).</p>
+<p><strong>Used in the analysis:</strong> 2. Cause of kidney failure: <a href="../quarto/classify_esrd_causes.html#running-checking-and-saving-each-model">Running, checking and saving each model</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -951,8 +982,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="checking-a-providers-answers" class="level2">
 <h2 class="anchored" data-anchor-id="checking-a-providers-answers">Checking a provider’s answers</h2>
+<p><code>check_votes()</code></p>
 <p>Stops unless the model answered every code exactly once, invented no code, and used only the six category names.</p>
-<p><strong>Used in:</strong> 2. Cause of kidney failure (<a href="../quarto/classify_esrd_causes.html#running-checking-and-saving-each-model">Running, checking and saving each model</a>).</p>
+<p><strong>Used in the analysis:</strong> 2. Cause of kidney failure: <a href="../quarto/classify_esrd_causes.html#running-checking-and-saving-each-model">Running, checking and saving each model</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -981,8 +1013,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="saving-each-providers-answers" class="level2">
 <h2 class="anchored" data-anchor-id="saving-each-providers-answers">Saving each provider’s answers</h2>
+<p><code>cached_votes()</code></p>
 <p>Saves a provider’s checked answers the first time and reads them back on a rerun, so a failure in one provider never means paying the others again.</p>
-<p><strong>Used in:</strong> 2. Cause of kidney failure (<a href="../quarto/classify_esrd_causes.html#running-checking-and-saving-each-model">Running, checking and saving each model</a>).</p>
+<p><strong>Used in the analysis:</strong> 2. Cause of kidney failure: <a href="../quarto/classify_esrd_causes.html#running-checking-and-saving-each-model">Running, checking and saving each model</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1014,8 +1047,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="combining-the-models" class="level2">
 <h2 class="anchored" data-anchor-id="combining-the-models">Combining the models</h2>
+<p><code>ensemble_agreement()</code></p>
 <p>One row per code with each model’s category and reason; a category is accepted when at least <code>min_agreement</code> models give it (two of three in this project).</p>
-<p><strong>Used in:</strong> 2. Cause of kidney failure (<a href="../quarto/classify_esrd_causes.html#agreement">Agreement</a>).</p>
+<p><strong>Used in the analysis:</strong> 2. Cause of kidney failure: <a href="../quarto/classify_esrd_causes.html#agreement">Agreement</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1051,8 +1085,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="reporting-the-local-models" class="level2">
 <h2 class="anchored" data-anchor-id="reporting-the-local-models">Reporting the local models</h2>
+<p><code>local_model_report()</code></p>
 <p>For each model that answers but does not vote: how many codes it answered once with a code from the list, how many it left unanswered, how many answers carried text that is not a code in the list, how many codes it answered more than once, and how often it gave the category the voting models accepted. Tested on synthetic answers with a known count of each.</p>
-<p><strong>Used in:</strong> 2. Cause of kidney failure (<a href="../quarto/classify_esrd_causes.html#what-the-local-models-showed">What the local models showed</a>).</p>
+<p><strong>Used in the analysis:</strong> 2. Cause of kidney failure: <a href="../quarto/classify_esrd_causes.html#what-the-local-models-showed">What the local models showed</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1113,8 +1148,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="hsa-population" class="level2">
 <h2 class="anchored" data-anchor-id="hsa-population">HSA population</h2>
+<p><code>hsa_population_from_zcta()</code></p>
 <p>Builds the exposure’s denominator from ZCTA populations, counting each ZCTA once per HSA and year even when several of the HSA’s ZIP codes share it.</p>
-<p><strong>Used in:</strong> 1. Public area data (<a href="../quarto/download_public_data.html#hsa-population">HSA population</a>).</p>
+<p><strong>Used in the analysis:</strong> 1. Public area data: <a href="../quarto/download_public_data.html#hsa-population">HSA population</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1135,8 +1171,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="map-panels" class="level2">
 <h2 class="anchored" data-anchor-id="map-panels">Map panels</h2>
+<p><code>map_panel()</code></p>
 <p>Draws one panel of Figure 2: HSAs filled by a numeric column, in the Albers equal-area projection (EPSG 5070), with HSAs that have no value in grey.</p>
-<p><strong>Used in:</strong> Figures (<a href="../quarto/figures.html#figure-2">Figure 2</a>).</p>
+<p><strong>Used in the analysis:</strong> Figures: <a href="../quarto/figures.html#figure-2">Figure 2</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1628,299 +1665,362 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in <span class="co">[</span><span class="ot">`tests/test-functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R)</span>.</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>Each section names the function under its heading, explains what it does, and then links to where it is used: the steps of the analysis that call it, and any function on this page that calls it.</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>This R script file is itself reliant on the following files:</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)</span></span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/setup.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>This R script file is itself reliant on the following files:</span>
 <span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>The code sections below are imported directly from that script when this page is rendered.</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">read_chunk</span>(<span class="st">"../R/functions.R"</span>)</span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Yes/no fields</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/setup.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>The code sections below are imported directly from that script when this page is rendered.</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">read_chunk</span>(<span class="st">"../R/functions.R"</span>)</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>The CMS-2728 form records comorbidities and insurance as yes, no or unknown. A condition counts as present only when a field is "YES"; missing or unknown counts as not present. The original code returned missing for missing fields, which would drop patients from the models; the published sample sizes show the paper's models did not.</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Yes/no fields</span></span>
 <span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>**Used in:** 3. USRDS patient data (<span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>); <span class="co">[</span><span class="ot">Insurance</span><span class="co">](#insurance)</span> on this page.</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a><span class="in">`any_yes()`</span></span>
 <span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-any-yes</span></span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Insurance</span></span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medicare (including Medicare Advantage), then employer group, then other (including VA).</span>
-<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>**Used in:** 3. USRDS patient data (<span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>).</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>The CMS-2728 form records comorbidities and insurance as yes, no or unknown. A condition counts as present only when a field is "YES"; missing or unknown counts as not present. The original code returned missing for missing fields, which would drop patients from the models; the published sample sizes show the paper's models did not.</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 3. USRDS patient data: <span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>.</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>**Called by:** <span class="co">[</span><span class="ot">`derive_insurance()`</span><span class="co">](#insurance)</span>.</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-any-yes</span></span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-derive-insurance</span></span>
-<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nephrology care</span></span>
-<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>Whether the patient saw a nephrologist before kidney failure: none, some or unknown, as in the paper's Table 1 and Model 3. Unknown is its own level, so the models keep the patients the paper kept.</span>
-<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a>**Used in:** 3. USRDS patient data (<span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>).</span>
-<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-derive-nephrology-care</span></span>
-<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-66"><a href="#cb26-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-67"><a href="#cb26-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Census region</span></span>
-<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a>Regions by state name, because usRds labels the residence state with its name (format <span class="in">`$STATFIP`</span>). This replaces the original code's state-label spreadsheet.</span>
-<span id="cb26-71"><a href="#cb26-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-72"><a href="#cb26-72" aria-hidden="true" tabindex="-1"></a>**Used in:** 3. USRDS patient data (<span class="co">[</span><span class="ot">Residence on the dialysis date</span><span class="co">](prepare_patients.qmd#residence-on-the-dialysis-date)</span>).</span>
-<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-assign-region</span></span>
-<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-80"><a href="#cb26-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-81"><a href="#cb26-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dartmouth codes</span></span>
-<span id="cb26-82"><a href="#cb26-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-83"><a href="#cb26-83" aria-hidden="true" tabindex="-1"></a>Sets Dartmouth's -88888 and -99999 to missing. The original code turned every negative value positive, which would have entered suppressed HSAs as 88,888 or 99,999.</span>
-<span id="cb26-84"><a href="#cb26-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-85"><a href="#cb26-85" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">HSA benchmarks</span><span class="co">](download_public_data.qmd#hsa-benchmarks)</span>).</span>
-<span id="cb26-86"><a href="#cb26-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-89"><a href="#cb26-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-90"><a href="#cb26-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-clean-dartmouth-codes</span></span>
-<span id="cb26-91"><a href="#cb26-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-92"><a href="#cb26-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-93"><a href="#cb26-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-94"><a href="#cb26-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Finding spreadsheet columns</span></span>
-<span id="cb26-95"><a href="#cb26-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-96"><a href="#cb26-96" aria-hidden="true" tabindex="-1"></a>Finds exactly one column for each measure, or stops and lists the candidates.</span>
-<span id="cb26-97"><a href="#cb26-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-98"><a href="#cb26-98" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">HSA benchmarks</span><span class="co">](download_public_data.qmd#hsa-benchmarks)</span>).</span>
-<span id="cb26-99"><a href="#cb26-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-102"><a href="#cb26-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-103"><a href="#cb26-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-select-by-pattern</span></span>
-<span id="cb26-104"><a href="#cb26-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-105"><a href="#cb26-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-106"><a href="#cb26-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-107"><a href="#cb26-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spreadsheets with title rows</span></span>
-<span id="cb26-108"><a href="#cb26-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-109"><a href="#cb26-109" aria-hidden="true" tabindex="-1"></a>Dartmouth spreadsheets put titles above the header; this finds the header row.</span>
-<span id="cb26-110"><a href="#cb26-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-111"><a href="#cb26-111" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">HSA benchmarks</span><span class="co">](download_public_data.qmd#hsa-benchmarks)</span>).</span>
-<span id="cb26-112"><a href="#cb26-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-115"><a href="#cb26-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-116"><a href="#cb26-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-read-header-table</span></span>
-<span id="cb26-117"><a href="#cb26-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-118"><a href="#cb26-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-119"><a href="#cb26-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-120"><a href="#cb26-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## ZIP codes</span></span>
-<span id="cb26-121"><a href="#cb26-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-122"><a href="#cb26-122" aria-hidden="true" tabindex="-1"></a>Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).</span>
-<span id="cb26-123"><a href="#cb26-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-124"><a href="#cb26-124" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">ZIP code to HSA</span><span class="co">](download_public_data.qmd#zip-code-to-hsa)</span>, <span class="co">[</span><span class="ot">ZIP code to ZCTA</span><span class="co">](download_public_data.qmd#zip-code-to-zcta)</span>, <span class="co">[</span><span class="ot">Rural-urban type</span><span class="co">](download_public_data.qmd#rural-urban-type)</span>); 3. USRDS patient data (<span class="co">[</span><span class="ot">Loading the Residence file</span><span class="co">](prepare_patients.qmd#loading-the-residence-file)</span>).</span>
-<span id="cb26-125"><a href="#cb26-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-128"><a href="#cb26-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-129"><a href="#cb26-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-standardize-zip</span></span>
-<span id="cb26-130"><a href="#cb26-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-131"><a href="#cb26-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-132"><a href="#cb26-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-133"><a href="#cb26-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## Alternative columns</span></span>
-<span id="cb26-134"><a href="#cb26-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-135"><a href="#cb26-135" aria-hidden="true" tabindex="-1"></a>Takes, row by row, the first value present across several columns. A release of the Medical Evidence file has the provider ID as <span class="in">`PROVUSRD_DIAL`</span> or as <span class="in">`PROVUSRD`</span>, and this picks whichever is there.</span>
-<span id="cb26-136"><a href="#cb26-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-137"><a href="#cb26-137" aria-hidden="true" tabindex="-1"></a>**Used in:** 3. USRDS patient data (<span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>).</span>
-<span id="cb26-138"><a href="#cb26-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-141"><a href="#cb26-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-142"><a href="#cb26-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-first-non-missing</span></span>
-<span id="cb26-143"><a href="#cb26-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-144"><a href="#cb26-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Insurance</span></span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a><span class="in">`derive_insurance()`</span></span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>The original code's hierarchy, unchanged: no insurance, then Medicaid, then Medicare (including Medicare Advantage), then employer group, then other (including VA).</span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 3. USRDS patient data: <span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>.</span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-derive-insurance</span></span>
+<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nephrology care</span></span>
+<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a><span class="in">`derive_nephrology_care()`</span></span>
+<span id="cb26-66"><a href="#cb26-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-67"><a href="#cb26-67" aria-hidden="true" tabindex="-1"></a>Whether the patient saw a nephrologist before kidney failure: none, some or unknown, as in the paper's Table 1 and Model 3. Unknown is its own level, so the models keep the patients the paper kept.</span>
+<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 3. USRDS patient data: <span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>.</span>
+<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-74"><a href="#cb26-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-derive-nephrology-care</span></span>
+<span id="cb26-75"><a href="#cb26-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Census region</span></span>
+<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-80"><a href="#cb26-80" aria-hidden="true" tabindex="-1"></a><span class="in">`assign_region()`</span></span>
+<span id="cb26-81"><a href="#cb26-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-82"><a href="#cb26-82" aria-hidden="true" tabindex="-1"></a>Regions by state name, because usRds labels the residence state with its name (format <span class="in">`$STATFIP`</span>). This replaces the original code's state-label spreadsheet.</span>
+<span id="cb26-83"><a href="#cb26-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-84"><a href="#cb26-84" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 3. USRDS patient data: <span class="co">[</span><span class="ot">Residence on the dialysis date</span><span class="co">](prepare_patients.qmd#residence-on-the-dialysis-date)</span>.</span>
+<span id="cb26-85"><a href="#cb26-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-88"><a href="#cb26-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-89"><a href="#cb26-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-assign-region</span></span>
+<span id="cb26-90"><a href="#cb26-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-91"><a href="#cb26-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-92"><a href="#cb26-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-93"><a href="#cb26-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dartmouth codes</span></span>
+<span id="cb26-94"><a href="#cb26-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-95"><a href="#cb26-95" aria-hidden="true" tabindex="-1"></a><span class="in">`clean_dartmouth_codes()`</span></span>
+<span id="cb26-96"><a href="#cb26-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-97"><a href="#cb26-97" aria-hidden="true" tabindex="-1"></a>Sets Dartmouth's -88888 and -99999 to missing. The original code turned every negative value positive, which would have entered suppressed HSAs as 88,888 or 99,999.</span>
+<span id="cb26-98"><a href="#cb26-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-99"><a href="#cb26-99" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 1. Public area data: <span class="co">[</span><span class="ot">HSA benchmarks</span><span class="co">](download_public_data.qmd#hsa-benchmarks)</span>.</span>
+<span id="cb26-100"><a href="#cb26-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-103"><a href="#cb26-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-104"><a href="#cb26-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-clean-dartmouth-codes</span></span>
+<span id="cb26-105"><a href="#cb26-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-106"><a href="#cb26-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-107"><a href="#cb26-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-108"><a href="#cb26-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Finding spreadsheet columns</span></span>
+<span id="cb26-109"><a href="#cb26-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-110"><a href="#cb26-110" aria-hidden="true" tabindex="-1"></a><span class="in">`select_by_pattern()`</span></span>
+<span id="cb26-111"><a href="#cb26-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-112"><a href="#cb26-112" aria-hidden="true" tabindex="-1"></a>Finds exactly one column for each measure, or stops and lists the candidates.</span>
+<span id="cb26-113"><a href="#cb26-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-114"><a href="#cb26-114" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 1. Public area data: <span class="co">[</span><span class="ot">HSA benchmarks</span><span class="co">](download_public_data.qmd#hsa-benchmarks)</span>.</span>
+<span id="cb26-115"><a href="#cb26-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-118"><a href="#cb26-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-119"><a href="#cb26-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-select-by-pattern</span></span>
+<span id="cb26-120"><a href="#cb26-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-121"><a href="#cb26-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-122"><a href="#cb26-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-123"><a href="#cb26-123" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spreadsheets with title rows</span></span>
+<span id="cb26-124"><a href="#cb26-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-125"><a href="#cb26-125" aria-hidden="true" tabindex="-1"></a><span class="in">`read_header_table()`</span></span>
+<span id="cb26-126"><a href="#cb26-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-127"><a href="#cb26-127" aria-hidden="true" tabindex="-1"></a>Dartmouth spreadsheets put titles above the header; this finds the header row.</span>
+<span id="cb26-128"><a href="#cb26-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-129"><a href="#cb26-129" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 1. Public area data: <span class="co">[</span><span class="ot">HSA benchmarks</span><span class="co">](download_public_data.qmd#hsa-benchmarks)</span>.</span>
+<span id="cb26-130"><a href="#cb26-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-133"><a href="#cb26-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-134"><a href="#cb26-134" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-read-header-table</span></span>
+<span id="cb26-135"><a href="#cb26-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-136"><a href="#cb26-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-137"><a href="#cb26-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-138"><a href="#cb26-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## ZIP codes</span></span>
+<span id="cb26-139"><a href="#cb26-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-140"><a href="#cb26-140" aria-hidden="true" tabindex="-1"></a><span class="in">`standardize_zip()`</span></span>
+<span id="cb26-141"><a href="#cb26-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-142"><a href="#cb26-142" aria-hidden="true" tabindex="-1"></a>Restores leading zeros that spreadsheets drop (for example 501 becomes 00501).</span>
+<span id="cb26-143"><a href="#cb26-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-144"><a href="#cb26-144" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:**</span>
 <span id="cb26-145"><a href="#cb26-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-146"><a href="#cb26-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unique keys</span></span>
-<span id="cb26-147"><a href="#cb26-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-148"><a href="#cb26-148" aria-hidden="true" tabindex="-1"></a>Stops if any key appears more than once, and otherwise passes the data on, so it can end a pipeline. Every lookup table is checked this way before it is joined to patients.</span>
-<span id="cb26-149"><a href="#cb26-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-150"><a href="#cb26-150" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">ZIP code to HSA</span><span class="co">](download_public_data.qmd#zip-code-to-hsa)</span>, <span class="co">[</span><span class="ot">ZIP code to ZCTA</span><span class="co">](download_public_data.qmd#zip-code-to-zcta)</span>, <span class="co">[</span><span class="ot">American Community Survey</span><span class="co">](download_public_data.qmd#american-community-survey)</span>, <span class="co">[</span><span class="ot">Rural-urban type</span><span class="co">](download_public_data.qmd#rural-urban-type)</span>); 4. Linking area data (<span class="co">[</span><span class="ot">Cause of kidney failure mapping</span><span class="co">](link_area_data.qmd#cause-of-kidney-failure-mapping)</span>); 5. Cohort flowchart (<span class="co">[</span><span class="ot">The cohort</span><span class="co">](create_cohort.qmd#the-cohort)</span>).</span>
-<span id="cb26-151"><a href="#cb26-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-154"><a href="#cb26-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-155"><a href="#cb26-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-assert-unique</span></span>
-<span id="cb26-156"><a href="#cb26-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-157"><a href="#cb26-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-158"><a href="#cb26-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-159"><a href="#cb26-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking ACS variables</span></span>
-<span id="cb26-160"><a href="#cb26-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-161"><a href="#cb26-161" aria-hidden="true" tabindex="-1"></a>Compares each year's ACS label with the expected pattern and stops on any mismatch or absent variable.</span>
-<span id="cb26-162"><a href="#cb26-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-163"><a href="#cb26-163" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">American Community Survey</span><span class="co">](download_public_data.qmd#american-community-survey)</span>).</span>
-<span id="cb26-164"><a href="#cb26-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-167"><a href="#cb26-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-check-acs-labels</span></span>
-<span id="cb26-169"><a href="#cb26-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-170"><a href="#cb26-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-171"><a href="#cb26-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-172"><a href="#cb26-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## Category labels</span></span>
-<span id="cb26-173"><a href="#cb26-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-174"><a href="#cb26-174" aria-hidden="true" tabindex="-1"></a>The labels of the five categories, built from the three cut points rounded to two decimals: 0, then &gt;0 to the first cut point, the two middle ranges, and above the third cut point.</span>
-<span id="cb26-175"><a href="#cb26-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-176"><a href="#cb26-176" aria-hidden="true" tabindex="-1"></a>**Used in:** <span class="co">[</span><span class="ot">Density categories</span><span class="co">](#density-categories)</span> on this page.</span>
-<span id="cb26-177"><a href="#cb26-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-180"><a href="#cb26-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-181"><a href="#cb26-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-category-labels</span></span>
-<span id="cb26-182"><a href="#cb26-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-183"><a href="#cb26-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-184"><a href="#cb26-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-185"><a href="#cb26-185" aria-hidden="true" tabindex="-1"></a><span class="fu">## Density categories</span></span>
-<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-187"><a href="#cb26-187" aria-hidden="true" tabindex="-1"></a>Zero facilities is its own category; the other four are cut at the quartiles, each including its upper bound, as in the original code. It stops unless there are exactly three cut points in increasing order.</span>
-<span id="cb26-188"><a href="#cb26-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-189"><a href="#cb26-189" aria-hidden="true" tabindex="-1"></a>**Used in:** 6. Density categories (<span class="co">[</span><span class="ot">Categories</span><span class="co">](define_exposure.qmd#categories)</span>).</span>
-<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-193"><a href="#cb26-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-categories</span></span>
-<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-146"><a href="#cb26-146" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>1<span class="sc">\.</span> Public area data: <span class="co">[</span><span class="ot">ZIP code to HSA</span><span class="co">](download_public_data.qmd#zip-code-to-hsa)</span>, <span class="co">[</span><span class="ot">ZIP code to ZCTA</span><span class="co">](download_public_data.qmd#zip-code-to-zcta)</span>, <span class="co">[</span><span class="ot">Rural-urban type</span><span class="co">](download_public_data.qmd#rural-urban-type)</span></span>
+<span id="cb26-147"><a href="#cb26-147" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>3<span class="sc">\.</span> USRDS patient data: <span class="co">[</span><span class="ot">Loading the Residence file</span><span class="co">](prepare_patients.qmd#loading-the-residence-file)</span></span>
+<span id="cb26-148"><a href="#cb26-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-151"><a href="#cb26-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-152"><a href="#cb26-152" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-standardize-zip</span></span>
+<span id="cb26-153"><a href="#cb26-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-154"><a href="#cb26-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-155"><a href="#cb26-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-156"><a href="#cb26-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## Alternative columns</span></span>
+<span id="cb26-157"><a href="#cb26-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-158"><a href="#cb26-158" aria-hidden="true" tabindex="-1"></a><span class="in">`first_non_missing()`</span></span>
+<span id="cb26-159"><a href="#cb26-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-160"><a href="#cb26-160" aria-hidden="true" tabindex="-1"></a>Takes, row by row, the first value present across several columns. A release of the Medical Evidence file has the provider ID as <span class="in">`PROVUSRD_DIAL`</span> or as <span class="in">`PROVUSRD`</span>, and this picks whichever is there.</span>
+<span id="cb26-161"><a href="#cb26-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-162"><a href="#cb26-162" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 3. USRDS patient data: <span class="co">[</span><span class="ot">Patient variables</span><span class="co">](prepare_patients.qmd#patient-variables)</span>.</span>
+<span id="cb26-163"><a href="#cb26-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-166"><a href="#cb26-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-167"><a href="#cb26-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-first-non-missing</span></span>
+<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-169"><a href="#cb26-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-170"><a href="#cb26-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-171"><a href="#cb26-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unique keys</span></span>
+<span id="cb26-172"><a href="#cb26-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-173"><a href="#cb26-173" aria-hidden="true" tabindex="-1"></a><span class="in">`assert_unique()`</span></span>
+<span id="cb26-174"><a href="#cb26-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-175"><a href="#cb26-175" aria-hidden="true" tabindex="-1"></a>Stops if any key appears more than once, and otherwise passes the data on, so it can end a pipeline. Every lookup table is checked this way before it is joined to patients.</span>
+<span id="cb26-176"><a href="#cb26-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-177"><a href="#cb26-177" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:**</span>
+<span id="cb26-178"><a href="#cb26-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-179"><a href="#cb26-179" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>1<span class="sc">\.</span> Public area data: <span class="co">[</span><span class="ot">ZIP code to HSA</span><span class="co">](download_public_data.qmd#zip-code-to-hsa)</span>, <span class="co">[</span><span class="ot">ZIP code to ZCTA</span><span class="co">](download_public_data.qmd#zip-code-to-zcta)</span>, <span class="co">[</span><span class="ot">American Community Survey</span><span class="co">](download_public_data.qmd#american-community-survey)</span>, <span class="co">[</span><span class="ot">Rural-urban type</span><span class="co">](download_public_data.qmd#rural-urban-type)</span></span>
+<span id="cb26-180"><a href="#cb26-180" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>4<span class="sc">\.</span> Linking area data: <span class="co">[</span><span class="ot">Cause of kidney failure mapping</span><span class="co">](link_area_data.qmd#cause-of-kidney-failure-mapping)</span></span>
+<span id="cb26-181"><a href="#cb26-181" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>5<span class="sc">\.</span> Cohort flowchart: <span class="co">[</span><span class="ot">The cohort</span><span class="co">](create_cohort.qmd#the-cohort)</span></span>
+<span id="cb26-182"><a href="#cb26-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-185"><a href="#cb26-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-assert-unique</span></span>
+<span id="cb26-187"><a href="#cb26-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-188"><a href="#cb26-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-189"><a href="#cb26-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking ACS variables</span></span>
+<span id="cb26-191"><a href="#cb26-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-192"><a href="#cb26-192" aria-hidden="true" tabindex="-1"></a><span class="in">`check_acs_labels()`</span></span>
+<span id="cb26-193"><a href="#cb26-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a>Compares each year's ACS label with the expected pattern and stops on any mismatch or absent variable.</span>
+<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 1. Public area data: <span class="co">[</span><span class="ot">American Community Survey</span><span class="co">](download_public_data.qmd#american-community-survey)</span>.</span>
 <span id="cb26-197"><a href="#cb26-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-198"><a href="#cb26-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## Density effects</span></span>
-<span id="cb26-199"><a href="#cb26-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-200"><a href="#cb26-200" aria-hidden="true" tabindex="-1"></a>Extracts the density terms of a fitted model with Wald confidence intervals and the number of patients the model used: odds ratios for logistic models, differences for linear ones.</span>
-<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a>**Used in:** 7. Models (<span class="co">[</span><span class="ot">Fitting</span><span class="co">](models.qmd#fitting)</span>); <span class="co">[</span><span class="ot">Odds ratios</span><span class="co">](#odds-ratios)</span> on this page.</span>
-<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-206"><a href="#cb26-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-effects</span></span>
-<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-200"><a href="#cb26-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-check-acs-labels</span></span>
+<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-204"><a href="#cb26-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-205"><a href="#cb26-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Category labels</span></span>
+<span id="cb26-206"><a href="#cb26-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a><span class="in">`density_category_labels()`</span></span>
+<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a>The labels of the five categories, built from the three cut points rounded to two decimals: 0, then &gt;0 to the first cut point, the two middle ranges, and above the third cut point.</span>
 <span id="cb26-210"><a href="#cb26-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-211"><a href="#cb26-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Odds ratios</span></span>
+<span id="cb26-211"><a href="#cb26-211" aria-hidden="true" tabindex="-1"></a>**Called by:** <span class="co">[</span><span class="ot">`categorize_density()`</span><span class="co">](#density-categories)</span>.</span>
 <span id="cb26-212"><a href="#cb26-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-213"><a href="#cb26-213" aria-hidden="true" tabindex="-1"></a>The same for a logistic model, with the estimate named <span class="in">`odds_ratio`</span>.</span>
-<span id="cb26-214"><a href="#cb26-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-215"><a href="#cb26-215" aria-hidden="true" tabindex="-1"></a>**Used in:** 7. Models (<span class="co">[</span><span class="ot">eGFR range</span><span class="co">](models.qmd#egfr-range)</span>).</span>
-<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-odds-ratios</span></span>
-<span id="cb26-221"><a href="#cb26-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-222"><a href="#cb26-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-215"><a href="#cb26-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-category-labels</span></span>
+<span id="cb26-217"><a href="#cb26-217" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-218"><a href="#cb26-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Density categories</span></span>
+<span id="cb26-221"><a href="#cb26-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-222"><a href="#cb26-222" aria-hidden="true" tabindex="-1"></a><span class="in">`categorize_density()`</span></span>
 <span id="cb26-223"><a href="#cb26-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-224"><a href="#cb26-224" aria-hidden="true" tabindex="-1"></a><span class="fu">## Estimate tables</span></span>
+<span id="cb26-224"><a href="#cb26-224" aria-hidden="true" tabindex="-1"></a>Zero facilities is its own category; the other four are cut at the quartiles, each including its upper bound, as in the original code. It stops unless there are exactly three cut points in increasing order.</span>
 <span id="cb26-225"><a href="#cb26-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a>Turns those estimates into a gt table, grouped by block, with one row per model and density term, for each published regression table.</span>
+<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 6. Density categories: <span class="co">[</span><span class="ot">Categories</span><span class="co">](define_exposure.qmd#categories)</span>.</span>
 <span id="cb26-227"><a href="#cb26-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-228"><a href="#cb26-228" aria-hidden="true" tabindex="-1"></a>**Used in:** Tables (<span class="co">[</span><span class="ot">Regression tables</span><span class="co">](tables.qmd#regression-tables)</span>).</span>
-<span id="cb26-229"><a href="#cb26-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-232"><a href="#cb26-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-233"><a href="#cb26-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-format-estimates-table</span></span>
-<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-230"><a href="#cb26-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-231"><a href="#cb26-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-categories</span></span>
+<span id="cb26-232"><a href="#cb26-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-233"><a href="#cb26-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Density effects</span></span>
 <span id="cb26-236"><a href="#cb26-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model formulas</span></span>
+<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a><span class="in">`density_effects()`</span></span>
 <span id="cb26-238"><a href="#cb26-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a>Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model's covariates are a list in <span class="in">`setup.R`</span>.</span>
+<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a>Extracts the density terms of a fitted model with Wald confidence intervals and the number of patients the model used: odds ratios for logistic models, differences for linear ones.</span>
 <span id="cb26-240"><a href="#cb26-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-241"><a href="#cb26-241" aria-hidden="true" tabindex="-1"></a>**Used in:** 7. Models (<span class="co">[</span><span class="ot">Model data</span><span class="co">](models.qmd#model-data)</span>, <span class="co">[</span><span class="ot">Fitting</span><span class="co">](models.qmd#fitting)</span>).</span>
+<span id="cb26-241"><a href="#cb26-241" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 7. Models: <span class="co">[</span><span class="ot">Fitting</span><span class="co">](models.qmd#fitting)</span>.</span>
 <span id="cb26-242"><a href="#cb26-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-245"><a href="#cb26-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-246"><a href="#cb26-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-model-formula</span></span>
-<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variance shares</span></span>
+<span id="cb26-243"><a href="#cb26-243" aria-hidden="true" tabindex="-1"></a>**Called by:** <span class="co">[</span><span class="ot">`density_odds_ratios()`</span><span class="co">](#odds-ratios)</span>.</span>
+<span id="cb26-244"><a href="#cb26-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-effects</span></span>
+<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-251"><a href="#cb26-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a>The share of the variance of eGFR at each level of a null mixed model.</span>
+<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Odds ratios</span></span>
 <span id="cb26-253"><a href="#cb26-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a>**Used in:** 7. Models (<span class="co">[</span><span class="ot">Variance decomposition</span><span class="co">](models.qmd#variance-decomposition)</span>).</span>
+<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a><span class="in">`density_odds_ratios()`</span></span>
 <span id="cb26-255"><a href="#cb26-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-258"><a href="#cb26-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-259"><a href="#cb26-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-variance-share</span></span>
-<span id="cb26-260"><a href="#cb26-260" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-261"><a href="#cb26-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classifying codes</span></span>
-<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a>Sends the codes to one provider in batches, through that provider's own function, and asks once more for any codes the model skipped.</span>
+<span id="cb26-256"><a href="#cb26-256" aria-hidden="true" tabindex="-1"></a>The same for a logistic model, with the estimate named <span class="in">`odds_ratio`</span>.</span>
+<span id="cb26-257"><a href="#cb26-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-258"><a href="#cb26-258" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 7. Models: <span class="co">[</span><span class="ot">eGFR range</span><span class="co">](models.qmd#egfr-range)</span>.</span>
+<span id="cb26-259"><a href="#cb26-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-density-odds-ratios</span></span>
+<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-266"><a href="#cb26-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-267"><a href="#cb26-267" aria-hidden="true" tabindex="-1"></a>**Used in:** 2. Cause of kidney failure (<span class="co">[</span><span class="ot">Running, checking and saving each model</span><span class="co">](classify_esrd_causes.qmd#running-checking-and-saving-each-model)</span>).</span>
+<span id="cb26-267"><a href="#cb26-267" aria-hidden="true" tabindex="-1"></a><span class="fu">## Estimate tables</span></span>
 <span id="cb26-268"><a href="#cb26-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-classify-codes</span></span>
-<span id="cb26-273"><a href="#cb26-273" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-274"><a href="#cb26-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-275"><a href="#cb26-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-276"><a href="#cb26-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking a provider's answers</span></span>
-<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-278"><a href="#cb26-278" aria-hidden="true" tabindex="-1"></a>Stops unless the model answered every code exactly once, invented no code, and used only the six category names.</span>
-<span id="cb26-279"><a href="#cb26-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a>**Used in:** 2. Cause of kidney failure (<span class="co">[</span><span class="ot">Running, checking and saving each model</span><span class="co">](classify_esrd_causes.qmd#running-checking-and-saving-each-model)</span>).</span>
+<span id="cb26-269"><a href="#cb26-269" aria-hidden="true" tabindex="-1"></a><span class="in">`format_estimates_table()`</span></span>
+<span id="cb26-270"><a href="#cb26-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a>Turns those estimates into a gt table, grouped by block, with one row per model and density term, for each published regression table.</span>
+<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-273"><a href="#cb26-273" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** Tables: <span class="co">[</span><span class="ot">Regression tables</span><span class="co">](tables.qmd#regression-tables)</span>.</span>
+<span id="cb26-274"><a href="#cb26-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-278"><a href="#cb26-278" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-format-estimates-table</span></span>
+<span id="cb26-279"><a href="#cb26-279" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb26-281"><a href="#cb26-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-284"><a href="#cb26-284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-285"><a href="#cb26-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-check-votes</span></span>
-<span id="cb26-286"><a href="#cb26-286" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-287"><a href="#cb26-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-288"><a href="#cb26-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-289"><a href="#cb26-289" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving each provider's answers</span></span>
-<span id="cb26-290"><a href="#cb26-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-291"><a href="#cb26-291" aria-hidden="true" tabindex="-1"></a>Saves a provider's checked answers the first time and reads them back on a rerun, so a failure in one provider never means paying the others again.</span>
-<span id="cb26-292"><a href="#cb26-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-293"><a href="#cb26-293" aria-hidden="true" tabindex="-1"></a>**Used in:** 2. Cause of kidney failure (<span class="co">[</span><span class="ot">Running, checking and saving each model</span><span class="co">](classify_esrd_causes.qmd#running-checking-and-saving-each-model)</span>).</span>
-<span id="cb26-294"><a href="#cb26-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-297"><a href="#cb26-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-298"><a href="#cb26-298" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-cached-votes</span></span>
-<span id="cb26-299"><a href="#cb26-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-300"><a href="#cb26-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-301"><a href="#cb26-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-302"><a href="#cb26-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combining the models</span></span>
-<span id="cb26-303"><a href="#cb26-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-304"><a href="#cb26-304" aria-hidden="true" tabindex="-1"></a>One row per code with each model's category and reason; a category is accepted when at least <span class="in">`min_agreement`</span> models give it (two of three in this project).</span>
-<span id="cb26-305"><a href="#cb26-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-306"><a href="#cb26-306" aria-hidden="true" tabindex="-1"></a>**Used in:** 2. Cause of kidney failure (<span class="co">[</span><span class="ot">Agreement</span><span class="co">](classify_esrd_causes.qmd#agreement)</span>).</span>
-<span id="cb26-307"><a href="#cb26-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-310"><a href="#cb26-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-311"><a href="#cb26-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-ensemble-agreement</span></span>
-<span id="cb26-312"><a href="#cb26-312" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-313"><a href="#cb26-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-314"><a href="#cb26-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-315"><a href="#cb26-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting the local models</span></span>
-<span id="cb26-316"><a href="#cb26-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-317"><a href="#cb26-317" aria-hidden="true" tabindex="-1"></a>For each model that answers but does not vote: how many codes it answered once with a code from the list, how many it left unanswered, how many answers carried text that is not a code in the list, how many codes it answered more than once, and how often it gave the category the voting models accepted. Tested on synthetic answers with a known count of each.</span>
-<span id="cb26-318"><a href="#cb26-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-319"><a href="#cb26-319" aria-hidden="true" tabindex="-1"></a>**Used in:** 2. Cause of kidney failure (<span class="co">[</span><span class="ot">What the local models showed</span><span class="co">](classify_esrd_causes.qmd#what-the-local-models-showed)</span>).</span>
-<span id="cb26-320"><a href="#cb26-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-323"><a href="#cb26-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-324"><a href="#cb26-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-local-model-report</span></span>
-<span id="cb26-325"><a href="#cb26-325" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-326"><a href="#cb26-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-327"><a href="#cb26-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-328"><a href="#cb26-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA population</span></span>
-<span id="cb26-329"><a href="#cb26-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-330"><a href="#cb26-330" aria-hidden="true" tabindex="-1"></a>Builds the exposure's denominator from ZCTA populations, counting each ZCTA once per HSA and year even when several of the HSA's ZIP codes share it.</span>
-<span id="cb26-331"><a href="#cb26-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-332"><a href="#cb26-332" aria-hidden="true" tabindex="-1"></a>**Used in:** 1. Public area data (<span class="co">[</span><span class="ot">HSA population</span><span class="co">](download_public_data.qmd#hsa-population)</span>).</span>
-<span id="cb26-333"><a href="#cb26-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-336"><a href="#cb26-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-337"><a href="#cb26-337" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-hsa-population</span></span>
-<span id="cb26-338"><a href="#cb26-338" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-339"><a href="#cb26-339" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-340"><a href="#cb26-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-341"><a href="#cb26-341" aria-hidden="true" tabindex="-1"></a><span class="fu">## Map panels</span></span>
-<span id="cb26-342"><a href="#cb26-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-343"><a href="#cb26-343" aria-hidden="true" tabindex="-1"></a>Draws one panel of Figure 2: HSAs filled by a numeric column, in the Albers equal-area projection (EPSG 5070), with HSAs that have no value in grey.</span>
-<span id="cb26-344"><a href="#cb26-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-345"><a href="#cb26-345" aria-hidden="true" tabindex="-1"></a>**Used in:** Figures (<span class="co">[</span><span class="ot">Figure 2</span><span class="co">](figures.qmd#figure-2)</span>).</span>
-<span id="cb26-346"><a href="#cb26-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-349"><a href="#cb26-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-350"><a href="#cb26-350" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-map-panel</span></span>
-<span id="cb26-351"><a href="#cb26-351" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb26-352"><a href="#cb26-352" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-282"><a href="#cb26-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model formulas</span></span>
+<span id="cb26-283"><a href="#cb26-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-284"><a href="#cb26-284" aria-hidden="true" tabindex="-1"></a><span class="in">`mixed_formula()`</span></span>
+<span id="cb26-285"><a href="#cb26-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-286"><a href="#cb26-286" aria-hidden="true" tabindex="-1"></a>Builds outcome ~ exposure + covariates + (1 | HSA) from names, so each model's covariates are a list in <span class="in">`setup.R`</span>.</span>
+<span id="cb26-287"><a href="#cb26-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-288"><a href="#cb26-288" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 7. Models: <span class="co">[</span><span class="ot">Model data</span><span class="co">](models.qmd#model-data)</span>, <span class="co">[</span><span class="ot">Fitting</span><span class="co">](models.qmd#fitting)</span>.</span>
+<span id="cb26-289"><a href="#cb26-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-292"><a href="#cb26-292" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-293"><a href="#cb26-293" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-model-formula</span></span>
+<span id="cb26-294"><a href="#cb26-294" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-295"><a href="#cb26-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-296"><a href="#cb26-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-297"><a href="#cb26-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variance shares</span></span>
+<span id="cb26-298"><a href="#cb26-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-299"><a href="#cb26-299" aria-hidden="true" tabindex="-1"></a><span class="in">`variance_shares()`</span></span>
+<span id="cb26-300"><a href="#cb26-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-301"><a href="#cb26-301" aria-hidden="true" tabindex="-1"></a>The share of the variance of eGFR at each level of a null mixed model.</span>
+<span id="cb26-302"><a href="#cb26-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-303"><a href="#cb26-303" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 7. Models: <span class="co">[</span><span class="ot">Variance decomposition</span><span class="co">](models.qmd#variance-decomposition)</span>.</span>
+<span id="cb26-304"><a href="#cb26-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-307"><a href="#cb26-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-308"><a href="#cb26-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-variance-share</span></span>
+<span id="cb26-309"><a href="#cb26-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-310"><a href="#cb26-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-311"><a href="#cb26-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-312"><a href="#cb26-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classifying codes</span></span>
+<span id="cb26-313"><a href="#cb26-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-314"><a href="#cb26-314" aria-hidden="true" tabindex="-1"></a><span class="in">`classify_codes()`</span></span>
+<span id="cb26-315"><a href="#cb26-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-316"><a href="#cb26-316" aria-hidden="true" tabindex="-1"></a>Sends the codes to one provider in batches, through that provider's own function, and asks once more for any codes the model skipped.</span>
+<span id="cb26-317"><a href="#cb26-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-318"><a href="#cb26-318" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 2. Cause of kidney failure: <span class="co">[</span><span class="ot">Running, checking and saving each model</span><span class="co">](classify_esrd_causes.qmd#running-checking-and-saving-each-model)</span>.</span>
+<span id="cb26-319"><a href="#cb26-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-322"><a href="#cb26-322" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-323"><a href="#cb26-323" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-classify-codes</span></span>
+<span id="cb26-324"><a href="#cb26-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-325"><a href="#cb26-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-326"><a href="#cb26-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-327"><a href="#cb26-327" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking a provider's answers</span></span>
+<span id="cb26-328"><a href="#cb26-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-329"><a href="#cb26-329" aria-hidden="true" tabindex="-1"></a><span class="in">`check_votes()`</span></span>
+<span id="cb26-330"><a href="#cb26-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-331"><a href="#cb26-331" aria-hidden="true" tabindex="-1"></a>Stops unless the model answered every code exactly once, invented no code, and used only the six category names.</span>
+<span id="cb26-332"><a href="#cb26-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-333"><a href="#cb26-333" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 2. Cause of kidney failure: <span class="co">[</span><span class="ot">Running, checking and saving each model</span><span class="co">](classify_esrd_causes.qmd#running-checking-and-saving-each-model)</span>.</span>
+<span id="cb26-334"><a href="#cb26-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-337"><a href="#cb26-337" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-338"><a href="#cb26-338" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-check-votes</span></span>
+<span id="cb26-339"><a href="#cb26-339" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-340"><a href="#cb26-340" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-341"><a href="#cb26-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-342"><a href="#cb26-342" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving each provider's answers</span></span>
+<span id="cb26-343"><a href="#cb26-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-344"><a href="#cb26-344" aria-hidden="true" tabindex="-1"></a><span class="in">`cached_votes()`</span></span>
+<span id="cb26-345"><a href="#cb26-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-346"><a href="#cb26-346" aria-hidden="true" tabindex="-1"></a>Saves a provider's checked answers the first time and reads them back on a rerun, so a failure in one provider never means paying the others again.</span>
+<span id="cb26-347"><a href="#cb26-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-348"><a href="#cb26-348" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 2. Cause of kidney failure: <span class="co">[</span><span class="ot">Running, checking and saving each model</span><span class="co">](classify_esrd_causes.qmd#running-checking-and-saving-each-model)</span>.</span>
+<span id="cb26-349"><a href="#cb26-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-352"><a href="#cb26-352" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-353"><a href="#cb26-353" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-cached-votes</span></span>
+<span id="cb26-354"><a href="#cb26-354" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-355"><a href="#cb26-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-356"><a href="#cb26-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-357"><a href="#cb26-357" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combining the models</span></span>
+<span id="cb26-358"><a href="#cb26-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-359"><a href="#cb26-359" aria-hidden="true" tabindex="-1"></a><span class="in">`ensemble_agreement()`</span></span>
+<span id="cb26-360"><a href="#cb26-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-361"><a href="#cb26-361" aria-hidden="true" tabindex="-1"></a>One row per code with each model's category and reason; a category is accepted when at least <span class="in">`min_agreement`</span> models give it (two of three in this project).</span>
+<span id="cb26-362"><a href="#cb26-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-363"><a href="#cb26-363" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 2. Cause of kidney failure: <span class="co">[</span><span class="ot">Agreement</span><span class="co">](classify_esrd_causes.qmd#agreement)</span>.</span>
+<span id="cb26-364"><a href="#cb26-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-367"><a href="#cb26-367" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-368"><a href="#cb26-368" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-ensemble-agreement</span></span>
+<span id="cb26-369"><a href="#cb26-369" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-370"><a href="#cb26-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-371"><a href="#cb26-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-372"><a href="#cb26-372" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting the local models</span></span>
+<span id="cb26-373"><a href="#cb26-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-374"><a href="#cb26-374" aria-hidden="true" tabindex="-1"></a><span class="in">`local_model_report()`</span></span>
+<span id="cb26-375"><a href="#cb26-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-376"><a href="#cb26-376" aria-hidden="true" tabindex="-1"></a>For each model that answers but does not vote: how many codes it answered once with a code from the list, how many it left unanswered, how many answers carried text that is not a code in the list, how many codes it answered more than once, and how often it gave the category the voting models accepted. Tested on synthetic answers with a known count of each.</span>
+<span id="cb26-377"><a href="#cb26-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-378"><a href="#cb26-378" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 2. Cause of kidney failure: <span class="co">[</span><span class="ot">What the local models showed</span><span class="co">](classify_esrd_causes.qmd#what-the-local-models-showed)</span>.</span>
+<span id="cb26-379"><a href="#cb26-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-382"><a href="#cb26-382" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-383"><a href="#cb26-383" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-local-model-report</span></span>
+<span id="cb26-384"><a href="#cb26-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-385"><a href="#cb26-385" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-386"><a href="#cb26-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-387"><a href="#cb26-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA population</span></span>
+<span id="cb26-388"><a href="#cb26-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-389"><a href="#cb26-389" aria-hidden="true" tabindex="-1"></a><span class="in">`hsa_population_from_zcta()`</span></span>
+<span id="cb26-390"><a href="#cb26-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-391"><a href="#cb26-391" aria-hidden="true" tabindex="-1"></a>Builds the exposure's denominator from ZCTA populations, counting each ZCTA once per HSA and year even when several of the HSA's ZIP codes share it.</span>
+<span id="cb26-392"><a href="#cb26-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-393"><a href="#cb26-393" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** 1. Public area data: <span class="co">[</span><span class="ot">HSA population</span><span class="co">](download_public_data.qmd#hsa-population)</span>.</span>
+<span id="cb26-394"><a href="#cb26-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-397"><a href="#cb26-397" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-398"><a href="#cb26-398" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-hsa-population</span></span>
+<span id="cb26-399"><a href="#cb26-399" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-400"><a href="#cb26-400" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-401"><a href="#cb26-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-402"><a href="#cb26-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Map panels</span></span>
+<span id="cb26-403"><a href="#cb26-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-404"><a href="#cb26-404" aria-hidden="true" tabindex="-1"></a><span class="in">`map_panel()`</span></span>
+<span id="cb26-405"><a href="#cb26-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-406"><a href="#cb26-406" aria-hidden="true" tabindex="-1"></a>Draws one panel of Figure 2: HSAs filled by a numeric column, in the Albers equal-area projection (EPSG 5070), with HSAs that have no value in grey.</span>
+<span id="cb26-407"><a href="#cb26-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-408"><a href="#cb26-408" aria-hidden="true" tabindex="-1"></a>**Used in the analysis:** Figures: <span class="co">[</span><span class="ot">Figure 2</span><span class="co">](figures.qmd#figure-2)</span>.</span>
+<span id="cb26-409"><a href="#cb26-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-412"><a href="#cb26-412" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-413"><a href="#cb26-413" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fn-map-panel</span></span>
+<span id="cb26-414"><a href="#cb26-414" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-415"><a href="#cb26-415" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

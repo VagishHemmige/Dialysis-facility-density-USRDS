@@ -1,0 +1,3 @@
+provider,model,prompt_version,written_on,codes_answered,codes_missing,answers_not_in_list,codes_repeated,compared_with_accepted,agrees_with_accepted,share_agreeing
+ollama_qwen,qwen3.5:9b,02ff2fbb,2026-10-30,295,150,26,0,295,272,0.9220338983050848
+ollama_llama,llama3.1:8b,02ff2fbb,2026-10-30,412,28,20,5,412,355,0.8616504854368932

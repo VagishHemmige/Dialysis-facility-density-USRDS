@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vagish Hemmige">
+
+<title>2. Cause of kidney failure – Dialysis facility density: a replication</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../quarto/prepare_patients.html" rel="next">
+<link href="../quarto/download_public_data.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-261e60fdf64a0e003ec2340fd2db30d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
+<link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
+</style>
+<script>window.ISSUE_COMMENTS = {"contact":"mailto:vagish.hemmige@gmail.com","endpoint":"https://script.google.com/macros/s/AKfycbyE8fNBvy3vfuAnuQqdjpCTR8i2zYI-KSvGzhkGlQRYevI1I6auqq9H-mIk2yrXCaIROA/exec","owner":"Vagish Hemmige","pageButton":false,"passcode":true,"preview":true};</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/download_public_data.html">Data processing and analysis</a></li><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">2. Cause of kidney failure</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Dialysis facility density: a replication</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clinical background</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The original R Markdown file</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differences from the original code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data processing and analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Public area data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2. Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. USRDS patient data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Linking area data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Cohort flowchart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Density categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tables and figures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Published results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Published figures and tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Published supplement</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project documents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Repository blueprint</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ellmer-version" id="toc-ellmer-version" class="nav-link active" data-scroll-target="#ellmer-version">ellmer version</a></li>
+  <li><a href="#protecting-the-deciders-review" id="toc-protecting-the-deciders-review" class="nav-link" data-scroll-target="#protecting-the-deciders-review">Protecting the deciders’ review</a></li>
+  <li><a href="#the-code-list" id="toc-the-code-list" class="nav-link" data-scroll-target="#the-code-list">The code list</a></li>
+  <li><a href="#the-prompt" id="toc-the-prompt" class="nav-link" data-scroll-target="#the-prompt">The prompt</a></li>
+  <li><a href="#the-six-categories" id="toc-the-six-categories" class="nav-link" data-scroll-target="#the-six-categories">The six categories</a></li>
+  <li><a href="#prompt-and-schema-in-code" id="toc-prompt-and-schema-in-code" class="nav-link" data-scroll-target="#prompt-and-schema-in-code">Prompt and schema in code</a></li>
+  <li><a href="#one-function-per-model" id="toc-one-function-per-model" class="nav-link" data-scroll-target="#one-function-per-model">One function per model</a></li>
+  <li><a href="#setting-up-ollama" id="toc-setting-up-ollama" class="nav-link" data-scroll-target="#setting-up-ollama">Setting up Ollama</a>
+  <ul class="collapse">
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps</a></li>
+  <li><a href="#if-a-model-crashes-the-graphics-card" id="toc-if-a-model-crashes-the-graphics-card" class="nav-link" data-scroll-target="#if-a-model-crashes-the-graphics-card">If a model crashes: the graphics card</a></li>
+  </ul></li>
+  <li><a href="#running-checking-and-saving-each-model" id="toc-running-checking-and-saving-each-model" class="nav-link" data-scroll-target="#running-checking-and-saving-each-model">Running, checking and saving each model</a></li>
+  <li><a href="#agreement" id="toc-agreement" class="nav-link" data-scroll-target="#agreement">Agreement</a></li>
+  <li><a href="#what-the-local-models-showed" id="toc-what-the-local-models-showed" class="nav-link" data-scroll-target="#what-the-local-models-showed">What the local models showed</a></li>
+  <li><a href="#how-the-mapping-is-checked" id="toc-how-the-mapping-is-checked" class="nav-link" data-scroll-target="#how-the-mapping-is-checked">How the mapping is checked</a></li>
+  <li><a href="#writing-the-mapping" id="toc-writing-the-mapping" class="nav-link" data-scroll-target="#writing-the-mapping">Writing the mapping</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/edit/main/quarto/classify_esrd_causes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/download_public_data.html">Data processing and analysis</a></li><li class="breadcrumb-item"><a href="../quarto/classify_esrd_causes.html">2. Cause of kidney failure</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">2. Cause of kidney failure</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+<div class="quarto-title-meta-author column-body">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Vagish Hemmige </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            MAHV
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta column-body">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Drafts the mapping of every USRDS primary-cause code to the six categories of the paper’s Table 1, using three cloud large language models. Codes on which at least two of the three agree are accepted without being read by a person; the deciders review the rest. Two smaller models that run on the analyst’s own computer answer the same question and are reported for comparison, but do not vote: neither produced a complete, valid set of answers (see <a href="#what-the-local-models-showed">What the local models showed</a>). The mapping from the first full run, on 30 October 2026, is accepted for the replication as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none. This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in <code>R/main.R</code> is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to <code>references/</code> is what the analysis reads once the deciders have reviewed it.</p>
+<div class="callout callout-style-default callout-Rcode callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Rcode</span>Source code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The full R script is available at:</p>
+<ul>
+<li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/classify_esrd_causes.R"><code>R/classify_esrd_causes.R</code></a></li>
+</ul>
+<p>This R script file is itself reliant on the following files:</p>
+<ul>
+<li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R"><code>R/setup.R</code></a></li>
+<li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R"><code>R/functions.R</code></a></li>
+<li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md"><code>prompts/esrd-cause-classification.md</code></a></li>
+</ul>
+<p>The code sections below are imported directly from that script when this page is rendered.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What this step needs and produces
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>To run it</strong>, from the project root: <code>source("R/setup.R")</code>, <code>source("R/functions.R")</code>, then <code>source("R/classify_esrd_causes.R")</code>. It is not part of <code>main.R</code>.</p>
+<p><strong>It needs</strong></p>
+<ul>
+<li>ellmer 0.5.0 or later <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span>, and the irr package for Fleiss’ kappa.</li>
+<li>An API key for each cloud provider in <code>.Renviron</code>: <code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code> and <code>GEMINI_API_KEY</code>.</li>
+<li><a href="https://ollama.com">Ollama</a> running on the same computer, with the two local models pulled (<code>ollama pull qwen3.5:9b</code> and <code>ollama pull llama3.1:8b</code> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <a href="#setting-up-ollama">Setting up Ollama</a> before the first run.</li>
+<li>The models, batch sizes and agreement rule set in <code>setup.R</code> (see <a href="../quarto/setup.html#cause-of-kidney-failure">Setup</a>): <code>gpt-6.1-terra</code> (OpenAI), <code>claude-sonnet-5-5</code> (Anthropic) and <code>gemini-3.8-flash</code> (Google) in the cloud, and locally, reported without voting, <code>qwen3.5:9b</code> (Alibaba’s Qwen) and <code>llama3.1:8b</code> (Meta’s Llama).</li>
+</ul>
+<p><strong>It sends</strong> only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), of 25 to Gemini and Qwen (about eighteen calls each), and of 5 to Llama (89 calls), plus more calls for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once: on the analyst’s laptop, Llama 3.1 answered only 7 codes of a batch of 25, but every code of a batch of 5. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.</p>
+<p><strong>It produces</strong></p>
+<ul>
+<li>One file of checked answers per model, in the gitignored <code>data-raw/</code> folder.</li>
+<li><code>references/esrd-cause-categories.csv</code>: one row per code, with each model’s category and reason, how the models agreed (<code>agreement</code>), the accepted category (<code>final_category</code>), the decider’s initials (<code>reviewer</code>), and the prompt version, ellmer version, models and date.</li>
+<li><code>references/esrd-cause-agreement.csv</code>: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss’ kappa.</li>
+<li><code>references/esrd-cause-local-models.csv</code>: one row per local model, with how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category.</li>
+</ul>
+<p><strong>How the analysis uses it</strong>: <a href="../quarto/link_area_data.html">Linking area data</a> reads only <code>code</code> and <code>final_category</code>. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.</p>
+<p><strong>Editing the file</strong>: the deciders fill <code>final_category</code> and <code>reviewer</code> for the codes with no majority, and for any accepted code they change. Edit it as text (in Positron, or another text editor), not in Excel: 11 codes start with a zero, which Excel would strip, and those patients would silently become Other.</p>
+</div>
+</div>
+<section id="ellmer-version" class="level2">
+<h2 class="anchored" data-anchor-id="ellmer-version">ellmer version</h2>
+<p>ellmer asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as <code>claude-sonnet-5-5</code> from version 0.5.0 (the function <code>has_claude_structured_output()</code> in ellmer’s source). Older versions force a tool call instead, which current Claude models reject with the error “tool_choice … not supported for this model”.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ellmer sends Claude a native structured-output request only for model names</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># it recognizes; Claude 5 names (such as claude-sonnet-5-5) are recognized from</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ellmer 0.5.0 (has_claude_structured_output() in R/provider-claude.R). Older</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># versions force a tool call instead, which current Claude models reject</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ("tool_choice ... not supported for this model").</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">packageVersion</span>(<span class="st">"ellmer"</span>) <span class="sc">&lt;</span> <span class="st">"0.5.0"</span>) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ellmer {packageVersion('ellmer')} is too old for the Claude model in setup.R. "</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Run install.packages(</span><span class="sc">\"</span><span class="st">ellmer</span><span class="sc">\"</span><span class="st">) to get 0.5.0 or later."</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="protecting-the-deciders-review" class="level2">
+<h2 class="anchored" data-anchor-id="protecting-the-deciders-review">Protecting the deciders’ review</h2>
+<p>Rerunning the script rewrites the mapping file. If the deciders have already reviewed any code in it, the script stops before calling any model, so their review cannot be overwritten; the existing file has to be renamed or moved first, and the reviewed rows copied into the new one.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A rerun rewrites the mapping file. Stop before any API call if the deciders</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># have already reviewed codes in it, so their review is not overwritten.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(esrd_cause_mapping_file)) {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  existing_mapping <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    esrd_cause_mapping_file,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>())</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Files written before the `reviewer` column held the deciders' initials in</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># `reviewed_by`, beside the models' "unanimous" and "2 of 3 models"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  reviewed_codes <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="st">"reviewer"</span> <span class="sc">%in%</span> <span class="fu">names</span>(existing_mapping)) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(existing_mapping, <span class="sc">!</span><span class="fu">is.na</span>(reviewer))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      existing_mapping,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(reviewed_by),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">str_detect</span>(reviewed_by, <span class="st">"^unanimous$|of </span><span class="sc">\\</span><span class="st">d+ models$"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(reviewed_codes) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">"{esrd_cause_mapping_file} has {nrow(reviewed_codes)} code(s) reviewed by the deciders. "</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Rename or move it before rerunning, then copy the reviewed rows into the new file."</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="the-code-list" class="level2">
+<h2 class="anchored" data-anchor-id="the-code-list">The code list</h2>
+<p>The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format <code>$PD96DET</code> with its description, from Appendix C of the Researcher’s Guide <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, which <code>usRds</code> already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.) The script stops if a code is listed twice.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># usRds holds Appendix C internally; usRds:::metadata_c is used until the</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># package exports the formats (to be raised in the usRds project). The</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># **OTHER** row is the format's catch-all for unlisted values, not a code.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cause_codes <span class="ot">&lt;-</span> usRds<span class="sc">:::</span>metadata_c[[<span class="st">"PD96DET"</span>]] <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">code =</span> <span class="fu">str_trim</span>(<span class="fu">as.character</span>(value)),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">description =</span> <span class="fu">str_squish</span>(<span class="fu">as.character</span>(description))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(code <span class="sc">!=</span> <span class="st">"**OTHER**"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># A code listed twice would be classified twice; stop rather than keep one</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>duplicated_codes <span class="ot">&lt;-</span> cause_codes <span class="sc">|&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(code) <span class="sc">|&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(duplicated_codes) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"$PD96DET lists {nrow(duplicated_codes)} code(s) more than once: "</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"{str_flatten_comma(duplicated_codes$code)}."</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="the-prompt" class="level2">
+<h2 class="anchored" data-anchor-id="the-prompt">The prompt</h2>
+<p>All five models, voting or not, receive the same prompt, word for word. It is kept as a text file, <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md"><code>prompts/esrd-cause-classification.md</code></a>, so that it can be read and edited on its own and shown here exactly as sent:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>You are a nephrologist classifying the primary cause of kidney failure recorded on the CMS-2728 Medical Evidence form, using the USRDS code list.</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Assign each code to exactly one of these categories:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Diabetes: kidney failure attributed to type 1 or type 2 diabetes, including diabetic nephropathy and diabetes with renal manifestations.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hypertension and cardiac disease: hypertensive kidney disease and nephrosclerosis, hypertensive heart and kidney disease, renovascular and other large-vessel disease of the kidney (renal artery stenosis, occlusion or thrombosis, renal atheroembolism), and kidney failure attributed to heart disease, such as cardiorenal syndrome or heart failure.</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Glomerulonephritis: primary and secondary glomerular disease. Primary includes IgA nephropathy, focal segmental glomerulosclerosis, membranous nephropathy, membranoproliferative glomerulonephritis, and acute, rapidly progressive or chronic nephritic and nephrotic syndromes. Secondary includes glomerulonephritis caused by systemic disease: lupus nephritis, ANCA-associated vasculitis (granulomatosis with polyangiitis or Wegener's granulomatosis, microscopic polyangiitis, polyarteritis), anti-GBM disease (Goodpasture's syndrome) and Henoch-Schönlein purpura. It also includes infection-related glomerular disease: post-infectious glomerulonephritis, HIV-associated (AIDS) nephropathy, glomerulonephritis associated with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura), scleroderma, and lupus described as tubulointerstitial disease are not in this category.</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hereditary or polycystic kidney disease: polycystic kidney disease and other inherited kidney diseases, including medullary cystic disease, Alport syndrome, Fabry disease, cystinosis, primary oxalosis and tuberous sclerosis. Congenital anomalies that are not described as inherited (renal hypoplasia or dysplasia, congenital obstruction) are not in this category.</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Transplant failure or complications: complications or failure of any transplanted solid organ or of bone marrow.</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Other: any cause that fits none of the five categories above. This includes:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>other kidney and urinary tract disease: interstitial nephritis, pyelonephritis and other kidney or urinary tract infections (including renal tuberculosis), obstructive and urologic disease, congenital anomalies that are not inherited, and acute kidney injury;</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>systemic disease that is not glomerulonephritis: thrombotic microangiopathies, scleroderma, neoplasms (including myeloma and amyloidosis);</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>codes meaning that the cause is missing, unknown or unreconcilable.</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Classify from the code and its description only; do not assume information that is not given.</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Return one entry per code, with the code exactly as given and a reason of at most 15 words.</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>Codes:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>{{code_list}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For each batch, <code>{code_list}</code> becomes one line per code: the code, a colon and the USRDS description from the Researcher’s Guide (for example, <code>4464Z: WEGENERS GRANULOMATOSIS</code>). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in <code>setup.R</code>, because the structured output can only return those names.</p>
+<p>The prompt makes three rules:</p>
+<ul>
+<li><strong>One category per code</strong>, from the six in the paper’s Table 1, each defined in words.</li>
+<li><strong>“Other” is the catch-all</strong>, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable. This is an assumption: the original spreadsheet had a sheet named “Other”, but what it contained is not known.</li>
+<li><strong>No inference beyond the description.</strong> The model classifies from the code and its description only, which keeps it from inventing context.</li>
+</ul>
+</section>
+<section id="the-six-categories" class="level2">
+<h2 class="anchored" data-anchor-id="the-six-categories">The six categories</h2>
+<p>The original analysis took the six categories from a spreadsheet with one sheet per category (“Diabetes”, “Hypertensive and Cardiac”, “Glomerulonephritis”, “HereditaryPCKD”, “Transplant”, “Other”), which no longer exists. Only the categories’ names survive, in the sheet names and in the paper’s Table 1, which labels the transplant category “solid organ and bone marrow” <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
+<p>The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the 12 headings of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and depart from them where the clinical definition differs:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>CMS-2728 heading (2015)</th>
+<th>Category here</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diabetes</td>
+<td>Diabetes</td>
+</tr>
+<tr class="even">
+<td>Glomerulonephritis</td>
+<td>Glomerulonephritis</td>
+</tr>
+<tr class="odd">
+<td>Secondary Glomerulonephritis/Vasculitis</td>
+<td>Glomerulonephritis for lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura; Other for thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura) and scleroderma</td>
+</tr>
+<tr class="even">
+<td>Interstitial Nephritis/Pyelonephritis</td>
+<td>Other</td>
+</tr>
+<tr class="odd">
+<td>Transplant Complications</td>
+<td>Transplant failure or complications</td>
+</tr>
+<tr class="even">
+<td>Hypertension/Large Vessel Disease</td>
+<td>Hypertension and cardiac disease</td>
+</tr>
+<tr class="odd">
+<td>Cystic/Hereditary/Congenital/Other Diseases</td>
+<td>Hereditary or polycystic kidney disease for cystic and inherited disease; Other for congenital anomalies not described as inherited</td>
+</tr>
+<tr class="even">
+<td>Neoplasms/Tumors</td>
+<td>Other</td>
+</tr>
+<tr class="odd">
+<td>Disorders of Mineral Metabolism</td>
+<td>Other</td>
+</tr>
+<tr class="even">
+<td>Genitourinary System</td>
+<td>Other</td>
+</tr>
+<tr class="odd">
+<td>Acute Kidney Failure</td>
+<td>Other</td>
+</tr>
+<tr class="even">
+<td>Miscellaneous Conditions</td>
+<td>Other, except heart failure (Hypertension and cardiac disease) and HIV disease (Glomerulonephritis)</td>
+</tr>
+</tbody>
+</table>
+<p>The 2015 list covers only the ICD-10-CM codes. The older ICD-9-CM codes in <code>$PD96DET</code> are placed by the same definitions; anti-GBM disease (Goodpasture’s syndrome), for example, appears only among them and counts as glomerulonephritis.</p>
+<p>Four departures need a reason:</p>
+<ul>
+<li><strong>Secondary glomerulonephritis is glomerulonephritis.</strong> The CMS list keeps it apart, but lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura are glomerular inflammation. Lupus described as tubulointerstitial disease is not, and goes to Other. Thrombotic microangiopathies and scleroderma kidney disease, in the same CMS heading, are injury to the small vessels and endothelium rather than glomerular inflammation, so they also go to Other.</li>
+<li><strong>Infection-related glomerular disease is glomerulonephritis</strong>: post-infectious glomerulonephritis, glomerulonephritis with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other.</li>
+<li><strong>HIV-associated nephropathy is glomerulonephritis.</strong> The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span>. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis <span class="citation" data-cites="rosenberg2015hivan">(<a href="#ref-rosenberg2015hivan" role="doc-biblioref">Rosenberg et al. 2015</a>)</span>, so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository’s history, and each saved answer file names the prompt version it answered.</li>
+<li><strong>Heart failure is cardiac disease.</strong> The sheet name “Hypertensive and Cardiac” suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.</li>
+</ul>
+<p><strong>Transplant failure or complications.</strong> The paper’s Table 1 labels this category “solid organ and bone marrow”. On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.</p>
+<p><strong>What the paper’s Table 1 can and cannot show.</strong> In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report <span class="citation" data-cites="usrds2018adr">(<a href="#ref-usrds2018adr" role="doc-biblioref">United States Renal Data System 2018</a>)</span>). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 <span class="citation" data-cites="usrds2018adr">(<a href="#ref-usrds2018adr" role="doc-biblioref">United States Renal Data System 2018</a>)</span>), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.</p>
+</section>
+<section id="prompt-and-schema-in-code" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-and-schema-in-code">Prompt and schema in code</h2>
+<p>The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The prompt is the text file esrd_classifier_prompt_file (prompts/), shown in</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># full on the website. It defines each category in words; {{code_list}} is</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># filled in for each batch.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>prompt_text <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(esrd_classifier_prompt_file)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The structured output can only return names from esrd_cause_categories, so</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the prompt must define each of them under exactly that name</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>undefined_categories <span class="ot">&lt;-</span> esrd_cause_categories <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discard</span>(\(category) <span class="fu">any</span>(<span class="fu">str_starts</span>(prompt_text, <span class="fu">str_glue</span>(<span class="st">"- {category}:"</span>))))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(undefined_categories) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"{esrd_classifier_prompt_file} has no definition line "</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(</span><span class="sc">\"</span><span class="st">- &lt;category&gt;: ...</span><span class="sc">\"</span><span class="st">) for: {str_flatten_comma(undefined_categories)}."</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>classification_prompt <span class="ot">&lt;-</span> <span class="cf">function</span>(batch) {</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  ellmer<span class="sc">::</span><span class="fu">interpolate_file</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    esrd_classifier_prompt_file,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">code_list =</span> <span class="fu">str_flatten</span>(<span class="fu">str_c</span>(batch<span class="sc">$</span>code, <span class="st">": "</span>, batch<span class="sc">$</span>description), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># A short fingerprint of the prompt text, ignoring Windows line endings. It is</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># part of each saved answer file's name, so editing the prompt asks every</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># provider again instead of reusing answers to the old prompt.</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>prompt_version <span class="ot">&lt;-</span> prompt_text <span class="sc">|&gt;</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\r</span><span class="st">"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  rlang<span class="sc">::</span><span class="fu">hash</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_sub</span>(<span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>classification_type <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">type_array</span>(</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  ellmer<span class="sc">::</span><span class="fu">type_object</span>(</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">code =</span> ellmer<span class="sc">::</span><span class="fu">type_string</span>(<span class="st">"The code exactly as given"</span>),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> ellmer<span class="sc">::</span><span class="fu">type_enum</span>(esrd_cause_categories, <span class="st">"Cause of kidney failure category"</span>),</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">reason =</span> ellmer<span class="sc">::</span><span class="fu">type_string</span>(<span class="st">"Reason, at most 15 words"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="one-function-per-model" class="level2">
+<h2 class="anchored" data-anchor-id="one-function-per-model">One function per model</h2>
+<p>Five models, set in <code>setup.R</code>, three voting and two reported, all called through <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude’s answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<code>esrd_classifier_claude_max_tokens</code>).</p>
+<p>The three cloud models are each provider’s current general-purpose model. The two local models run through Ollama on the analyst’s computer (decided by Vagish Hemmige, 28 October 2026): Alibaba’s Qwen and Meta’s Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its “thinking” turned off (<code>reasoning_effort = "none"</code>): with it on, its reasoning filled Ollama’s working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM’s Granite (<code>granite4.2:8b</code>) on 29 October 2026 (decided by Vagish Hemmige): on the analyst’s laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama’s models trained for medicine were considered, but they are all Google’s MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst’s own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One function per model. Each takes a batch of codes and returns one row per</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code with code, category and reason, through ellmer's structured output.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Each call starts a new chat, so no batch sees another batch's answers.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ask_openai <span class="ot">&lt;-</span> <span class="cf">function</span>(batch) {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  chat <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">chat_openai</span>(<span class="at">model =</span> esrd_classifier_models<span class="sc">$</span>openai, <span class="at">echo =</span> <span class="st">"none"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat_structured</span>(<span class="fu">classification_prompt</span>(batch), <span class="at">type =</span> classification_type)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ask_google <span class="ot">&lt;-</span> <span class="cf">function</span>(batch) {</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  chat <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">chat_google_gemini</span>(<span class="at">model =</span> esrd_classifier_models<span class="sc">$</span>google, <span class="at">echo =</span> <span class="st">"none"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat_structured</span>(<span class="fu">classification_prompt</span>(batch), <span class="at">type =</span> classification_type)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>ask_anthropic <span class="ot">&lt;-</span> <span class="cf">function</span>(batch) {</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  chat <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">chat_anthropic</span>(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> esrd_classifier_models<span class="sc">$</span>anthropic,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> ellmer<span class="sc">::</span><span class="fu">params</span>(<span class="at">max_tokens =</span> esrd_classifier_claude_max_tokens),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">echo =</span> <span class="st">"none"</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat_structured</span>(<span class="fu">classification_prompt</span>(batch), <span class="at">type =</span> classification_type)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The two local models run through Ollama (http://localhost:11434), in the</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># same way; ask_ollama() returns the function for one of them, with any</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># settings it needs (passed to ellmer::params())</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>ask_ollama <span class="ot">&lt;-</span> <span class="cf">function</span>(model, ...) {</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(batch) {</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    chat <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">chat_ollama</span>(<span class="at">model =</span> model, <span class="at">params =</span> ellmer<span class="sc">::</span><span class="fu">params</span>(...), <span class="at">echo =</span> <span class="st">"none"</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    chat<span class="sc">$</span><span class="fu">chat_structured</span>(<span class="fu">classification_prompt</span>(batch), <span class="at">type =</span> classification_type)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>providers <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">openai =</span> ask_openai,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">anthropic =</span> ask_anthropic,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">google =</span> ask_google,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Qwen's "thinking" off (see setup.R)</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_qwen =</span> <span class="fu">ask_ollama</span>(esrd_classifier_models<span class="sc">$</span>ollama_qwen, <span class="at">reasoning_effort =</span> <span class="st">"none"</span>),</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">ollama_llama =</span> <span class="fu">ask_ollama</span>(esrd_classifier_models<span class="sc">$</span>ollama_llama)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># A local model on a laptop processor can take longer than ellmer's default</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># wait of 5 minutes per answer</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ellmer_timeout_s =</span> esrd_classifier_timeout_s)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="setting-up-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-ollama">Setting up Ollama</h2>
+<p><a href="https://ollama.com">Ollama</a> runs open-weight models on the analyst’s own computer, and ellmer talks to it with <a href="https://ellmer.tidyverse.org/reference/chat_ollama.html"><code>chat_ollama()</code></a>. Its advantage is privacy: in Ollama’s words, “Ollama runs locally. We don’t see your prompts or data when you run locally” (<a href="https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom">Ollama FAQ</a>). A cloud model, by contrast, receives every prompt on the provider’s servers. This step sends only the public code list, so the cloud models are allowed here, and the local models are a demonstration of the approach that text containing patient information would need. Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.</p>
+<p>Two cautions about the privacy claim:</p>
+<ul>
+<li><strong>Ollama also offers cloud models</strong>, run on Ollama’s servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable <code>OLLAMA_NO_CLOUD=1</code> and restart Ollama; its log then shows <code>Ollama cloud disabled: true</code> (<a href="https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features">Ollama FAQ: disabling cloud features</a>).</li>
+<li><strong>The models are downloaded from the internet</strong> (<code>ollama pull</code>), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.</li>
+</ul>
+<p>The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.</p>
+<section id="steps" class="level3">
+<h3 class="anchored" data-anchor-id="steps">Steps</h3>
+<ol type="1">
+<li><strong>Install Ollama</strong> from <a href="https://ollama.com/download">ollama.com/download</a>. The <a href="https://docs.ollama.com/windows">Windows notes</a> give the requirements and where Ollama keeps its files.</li>
+<li><strong>Download the two models</strong> in a terminal: <code>ollama pull qwen3.5:9b</code> and <code>ollama pull llama3.1:8b</code> (<a href="https://ollama.com/library/qwen3.5">Qwen 3.5</a>, <a href="https://ollama.com/library/llama3.1">Llama 3.1</a>). On a computer with less memory, <code>qwen3.5:4b</code> (3–4 GB) is a smaller choice; change its name in <code>setup.R</code>.</li>
+<li><strong>Test each model in the terminal before running the script</strong>: <code>ollama run qwen3.5:9b "Say hello"</code>. A model that cannot answer this will not answer the script either, and the terminal shows the error directly.</li>
+<li><strong>Measure the speed</strong>: <code>ollama run qwen3.5:9b --verbose "Say hello"</code> prints, after the answer, an <code>eval rate</code> in tokens per second. A batch of 25 codes needs roughly 1,000 tokens of answer, so at 5 tokens per second a batch takes about 3 minutes and the 18 batches about an hour, per model. The first request after starting Ollama also loads the model from disk, which takes up to a minute. Qwen 3.5 “thinks” before it answers, which adds to the time (<a href="https://docs.ollama.com/capabilities/thinking">Ollama: thinking</a>).</li>
+</ol>
+</section>
+<section id="if-a-model-crashes-the-graphics-card" class="level3">
+<h3 class="anchored" data-anchor-id="if-a-model-crashes-the-graphics-card">If a model crashes: the graphics card</h3>
+<p>Ollama looks for a graphics card and puts as much of the model on it as fits. If the card or its driver is not up to it, the model crashes while loading, and every model fails, including the smallest. This happened on the computer used for this project on 28 October 2026, a Windows laptop with an Intel Core i7-8850H, 32 GB of memory and a small NVIDIA Quadro P1000 graphics card (4 GB) beside the processor’s built-in graphics:</p>
+<ul>
+<li>With Ollama 0.40.4 and 0.40.12, every model crashed with <code>exit status 0xc0000005</code>. The log showed the model being loaded onto <code>CUDA0</code>, the NVIDIA card.</li>
+<li>Hiding the card from CUDA (below) made a different error appear, <code>exit status 0xe06d7363</code>. The log showed Ollama then using the same card through Vulkan, another way of reaching graphics cards, and <code>ggml_vulkan: device lost on Vulkan0</code>.</li>
+<li>Turning off both made every model run, on the processor only.</li>
+</ul>
+<p>Ollama’s <a href="https://docs.ollama.com/gpu">hardware page</a> says that NVIDIA cards of this generation (compute capability 5.0 to 6.2) need driver version 570 or newer, and the log reported a driver supporting CUDA 12.2, which points to an older driver. Updating the driver was not tried; the 4 GB card would hold only a small part of these models in any case.</p>
+<p><strong>To run on the processor only</strong> (Windows; type in a terminal, then quit Ollama from its icon by the clock, start it again, and open a new terminal):</p>
+<pre><code>setx CUDA_VISIBLE_DEVICES -1
+setx OLLAMA_VULKAN 0</code></pre>
+<p>Both come from Ollama’s <a href="https://docs.ollama.com/gpu">hardware page</a>: an invalid card number such as <code>-1</code> makes Ollama ignore NVIDIA cards, and <code>OLLAMA_VULKAN=0</code> turns off Vulkan. <code>CUDA_VISIBLE_DEVICES</code> also hides the NVIDIA card from any other program that uses CUDA (machine-learning software, for example), though not from the screen, video or games. To undo either, delete it under “Edit environment variables for your account” in Windows (<a href="https://docs.ollama.com/faq#setting-environment-variables-on-windows">Ollama FAQ: environment variables on Windows</a>).</p>
+<p><strong>Reading Ollama’s log.</strong> On Windows the logs are in <code>%LOCALAPPDATA%\Ollama</code> (paste that into the Windows Run box, Windows key + R); <code>server.log</code> is the newest and <code>server-1.log</code> and so on are older (<a href="https://docs.ollama.com/troubleshooting">Ollama troubleshooting</a>). The lines that matter:</p>
+<ul>
+<li><code>inference compute</code>, near the start: what Ollama will use. <code>library=cpu</code> means the processor; <code>library=CUDA</code> or <code>Vulkan</code> means a graphics card.</li>
+<li><code>load_tensors: ... model buffer size</code>, when a model loads: where it was put (<code>CPU</code>, <code>CUDA0</code>, <code>Vulkan0</code>).</li>
+<li>The last lines before <code>Load failed</code>: the actual error.</li>
+</ul>
+<p>In a terminal, <code>powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server.log -Tail 60"</code> shows the end of the log.</p>
+</section>
+</section>
+<section id="running-checking-and-saving-each-model" class="level2">
+<h2 class="anchored" data-anchor-id="running-checking-and-saving-each-model">Running, checking and saving each model</h2>
+<p>Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models’ answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (<code>check_votes()</code>, on the <a href="../quarto/functions.html">functions page</a>). The local models’ answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (<code>esrd_classifier_timeout_s</code>); ellmer’s default of 5 minutes was too short on a laptop processor. Each batch’s answers are saved as soon as the batch finishes, in a partial file beside the provider’s answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a <code>usRds</code> update, stops the script; deleting that file asks the provider again.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Each model's answers are saved in esrd_votes_dir under the provider, model</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and prompt version, so a rerun after a failure asks only the models with no</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># saved file. The voting models' answers are checked again on every run</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (check_votes()), so a file that no longer matches the code list, for</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># example after a usRds update, stops the script instead of being used;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># delete that file to ask the model again. The local models' answers are kept</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># as they came back and reported (local_model_report()), not checked.</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>votes_path <span class="ot">&lt;-</span> <span class="cf">function</span>(provider) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ollama names contain ":", which Windows does not allow in file names</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(esrd_classifier_models[[provider]], <span class="st">"[^A-Za-z0-9._-]"</span>, <span class="st">"-"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(esrd_votes_dir, <span class="fu">str_glue</span>(<span class="st">"{provider}-{model}-{prompt_version}.csv"</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Before asking any model, check that Ollama is running and has the local</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># models that still need to be asked</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>local_to_ask <span class="ot">&lt;-</span> <span class="fu">names</span>(providers) <span class="sc">|&gt;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(\(provider) <span class="fu">str_starts</span>(provider, <span class="st">"ollama_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discard</span>(\(provider) <span class="fu">file.exists</span>(<span class="fu">votes_path</span>(provider)))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(local_to_ask) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  installed <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    ellmer<span class="sc">::</span><span class="fu">models_ollama</span>()<span class="sc">$</span>id,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"Ollama is not running on this computer. Start it, then rerun."</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  not_pulled <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">unlist</span>(esrd_classifier_models[local_to_ask]), installed)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(not_pulled) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Ollama does not have {str_flatten_comma(not_pulled)}. "</span>,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Run in a terminal: {str_flatten(str_c('ollama pull ', not_pulled), '; ')}"</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Classifying {nrow(cause_codes)} codes with {length(providers)} models. "</span>,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Saved answers are reused; a model that has to be asked can take a minute "</span>,</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"or more per batch."</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>all_votes <span class="ot">&lt;-</span> providers <span class="sc">|&gt;</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="cf">function</span>(ask, provider) {</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, provider, <span class="st">" ("</span>, esrd_classifier_models[[provider]], <span class="st">")"</span>)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    answers <span class="ot">&lt;-</span> <span class="fu">cached_votes</span>(</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">path =</span> <span class="fu">votes_path</span>(provider),</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">classify =</span> <span class="cf">function</span>(partial_path) {</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        <span class="fu">classify_codes</span>(</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>          cause_codes,</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>          ask,</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>          <span class="at">batch_size =</span> esrd_classifier_batch_sizes[[provider]],</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> provider,</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>          <span class="at">partial_path =</span> partial_path</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (provider <span class="sc">%in%</span> esrd_classifier_voting) {</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>      <span class="fu">check_votes</span>(answers, cause_codes, esrd_cause_categories, provider)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(answers, <span class="at">provider =</span> provider)</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Only the voting models decide the mapping</span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">&lt;-</span> <span class="fu">filter</span>(all_votes, provider <span class="sc">%in%</span> esrd_classifier_voting)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="agreement" class="level2">
+<h2 class="anchored" data-anchor-id="agreement">Agreement</h2>
+<p>A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. <code>agreement</code> says, for each code, whether the models were unanimous, how many agreed (for example “2 of 3 models”), or that no category had a majority. For codes with no majority, the deciders fill <code>final_category</code> and their initials in <code>reviewer</code>.</p>
+<p>Fleiss’ kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mapping <span class="ot">&lt;-</span> <span class="fu">ensemble_agreement</span>(votes, cause_codes, <span class="at">min_agreement =</span> esrd_classifier_min_agreement) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">final_category =</span> model_category,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">agreement =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      unanimous <span class="sc">~</span> <span class="st">"unanimous"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(model_category) <span class="sc">~</span> <span class="fu">str_glue</span>(<span class="st">"{n_agreeing} of {n_providers} models"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"no majority"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filled by the deciders for every code they review</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">reviewer =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">prompt_version =</span> prompt_version,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ellmer_version =</span> <span class="fu">as.character</span>(<span class="fu">packageVersion</span>(<span class="st">"ellmer"</span>)),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">models =</span> <span class="fu">str_flatten</span>(<span class="fu">unlist</span>(esrd_classifier_models[esrd_classifier_voting]), <span class="st">"; "</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping_written_on =</span> <span class="fu">as.character</span>(<span class="fu">Sys.Date</span>())</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fleiss' kappa describes how far the models agree beyond chance</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># (1 = perfect, 0 = chance). It is reported, not used to accept codes.</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>kappa <span class="ot">&lt;-</span> mapping <span class="sc">|&gt;</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"category_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  irr<span class="sc">::</span><span class="fu">kappam.fleiss</span>()</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>agreement_summary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">codes =</span> <span class="fu">nrow</span>(mapping),</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">unanimous =</span> <span class="fu">sum</span>(mapping<span class="sc">$</span>agreement <span class="sc">==</span> <span class="st">"unanimous"</span>),</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">majority_only =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(mapping<span class="sc">$</span>model_category) <span class="sc">&amp;</span> mapping<span class="sc">$</span>agreement <span class="sc">!=</span> <span class="st">"unanimous"</span>),</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">no_majority =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(mapping<span class="sc">$</span>model_category)),</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">fleiss_kappa =</span> kappa<span class="sc">$</span>value,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">kappa_z =</span> kappa<span class="sc">$</span>statistic,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">kappa_p_value =</span> kappa<span class="sc">$</span>p.value,</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">prompt_version =</span> prompt_version,</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">models =</span> <span class="fu">first</span>(mapping<span class="sc">$</span>models),</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">written_on =</span> <span class="fu">as.character</span>(<span class="fu">Sys.Date</span>())</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">str_glue</span>(</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{agreement_summary$unanimous} of {agreement_summary$codes} codes unanimous, "</span>,</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{agreement_summary$majority_only} by majority only, "</span>,</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{agreement_summary$no_majority} with no majority; "</span>,</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fleiss' kappa {round(agreement_summary$fleiss_kappa, 3)}. "</span>,</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Review the codes with no majority before running main.R."</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="what-the-local-models-showed" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-local-models-showed">What the local models showed</h2>
+<p>The two local models were meant to vote, and were run on the analyst’s laptop (processor only, 32 GB of memory) on 28 and 29 October 2026. Neither produced a complete, valid set of answers, so neither votes (decided by Vagish Hemmige, 29 October 2026); their answers are kept and reported, because what they did is itself a finding of this demonstration.</p>
+<ul>
+<li><strong>They dropped codes in longer batches.</strong> Both answered every code of a 5-code test. In batches of 25, Qwen left 150 of the 445 codes unanswered even after asking a second time, and Llama answered 7 of a 25-code test. Even in batches of 5, Llama left 124 codes unanswered on its first pass, and 28 after asking a second time.</li>
+<li><strong>They returned text that is not a code.</strong> Qwen put 25 codes in quotation marks and returned one answer with no code. Llama returned codes with <code>&lt;/code&gt;</code> attached, the placeholders <code>{code}</code> and <code>What is the code?</code>, four invented web addresses, and codes not in the list (for example <code>Z88.0</code>, and <code>D1022</code> for <code>E1022</code>). In all, 20 of its answers carried text that is not a code in the list, and it answered 6 codes more than once, some with different categories.</li>
+<li><strong>Some categories contradict the model’s own reason or are clinically wrong.</strong> Qwen put AIDS nephropathy (429) under Diabetes, with the reason that it “falls under viral/glomerular causes … not diabetes”. Llama put lupus nephritis (7100) and membranous nephropathy (5831) under Diabetes, and malignant hypertension (4010) under Diabetes with the reason “No indication of diabetes”.</li>
+<li><strong>They were slow.</strong> Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.</li>
+<li><strong>A third model did not run at all.</strong> IBM’s Granite (<code>granite4.2:8b</code>) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.</li>
+</ul>
+<p>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. <code>references/esrd-cause-local-models.csv</code> records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (<code>local_model_report()</code>, on the <a href="../quarto/functions.html">functions page</a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How complete and valid each local model's answers were, and how often it</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># agreed with the category the voting models accepted</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>local_report <span class="ot">&lt;-</span> all_votes <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>provider <span class="sc">%in%</span> esrd_classifier_voting) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">local_model_report</span>(cause_codes, <span class="at">accepted =</span> mapping) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">unlist</span>(esrd_classifier_models[provider]),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">prompt_version =</span> prompt_version,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">written_on =</span> <span class="fu">as.character</span>(<span class="fu">Sys.Date</span>()),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.after =</span> provider</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">str_glue_data</span>(</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  local_report,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{provider}: {codes_answered} of {nrow(cause_codes)} codes answered once, "</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{codes_missing} missing, {answers_not_in_list} answers not in the list; "</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"agreed with {agrees_with_accepted} of {compared_with_accepted} accepted categories."</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="how-the-mapping-is-checked" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-mapping-is-checked">How the mapping is checked</h2>
+<p>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</p>
+<ul>
+<li><strong>Against USRDS’s own grouping.</strong> The USRDS PATIENTS file carries a primary disease group for each patient (<code>DISGRPC</code>). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.</li>
+<li><strong>Against the paper.</strong> The cohort’s share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.</li>
+</ul>
+</section>
+<section id="writing-the-mapping" class="level2">
+<h2 class="anchored" data-anchor-id="writing-the-mapping">Writing the mapping</h2>
+<p>The two files the repository tracks as data. They hold only public codes, descriptions and the models’ answers. The script creates the <code>references/</code> folder if it does not exist yet, as in a fresh copy of the repository, where Git keeps no empty folders.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Click to show/hide R Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The three files hold only public codes, descriptions and model answers. Git keeps</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># no empty folders, so references/ does not exist in a fresh copy until the</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># first mapping is written and committed.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">dirname</span>(esrd_cause_mapping_file), <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(mapping, esrd_cause_mapping_file, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(agreement_summary, esrd_cause_agreement_file, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(local_report, esrd_local_model_file, <span class="at">na =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cms2728_causes" class="csl-entry" role="listitem">
+Centers for Medicare &amp; Medicaid Services. 2015. <em>List of Primary Causes of Renal Failure: <span>ICD-10-CM</span> Codes for Field 15 of the <span>CMS-2728</span> End Stage Renal Disease Medical Evidence Report (08/15)</em>. <a href="https://www.nwkidney.org/wp-content/uploads/2014/11/ICD-10-CM-LIST-OF-PRIMARY-CAUSES-OF-END-STAGE-RENAL-DISEASE.pdf">https://www.nwkidney.org/wp-content/uploads/2014/11/ICD-10-CM-LIST-OF-PRIMARY-CAUSES-OF-END-STAGE-RENAL-DISEASE.pdf</a>.
+</div>
+<div id="ref-hemmige2024density" class="csl-entry" role="listitem">
+Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geographic Dialysis Facility Density and Early Dialysis Initiation.”</span> <em>JAMA Network Open</em> 7 (1): e2350009. <a href="https://doi.org/10.1001/jamanetworkopen.2023.50009">https://doi.org/10.1001/jamanetworkopen.2023.50009</a>.
+</div>
+<div id="ref-rosenberg2015hivan" class="csl-entry" role="listitem">
+Rosenberg, Avi Z., Saraladevi Naicker, Cheryl A. Winkler, and Jeffrey B. Kopp. 2015. <span>“<span>HIV</span>-Associated Nephropathies: Epidemiology, Pathology, Mechanisms and Treatment.”</span> <em>Nature Reviews Nephrology</em> 11 (3): 150–60. <a href="https://doi.org/10.1038/nrneph.2015.9">https://doi.org/10.1038/nrneph.2015.9</a>.
+</div>
+<div id="ref-usrds2018adr" class="csl-entry" role="listitem">
+United States Renal Data System. 2018. <em>2018 <span>USRDS</span> Annual Data Report, Volume 2, Chapter 1: Incidence, Prevalence, Patient Characteristics, and Treatment Modalities</em>. National Institutes of Health, National Institute of Diabetes; Digestive; Kidney Diseases. <a href="https://www.niddk.nih.gov/-/media/Files/USRDS/2018-Previous-ADR/Volume-2/Chapter/v2_c01_incprev_18_usrds.pdf">https://www.niddk.nih.gov/-/media/Files/USRDS/2018-Previous-ADR/Volume-2/Chapter/v2_c01_incprev_18_usrds.pdf</a>.
+</div>
+<div id="ref-usrds2024guide" class="csl-entry" role="listitem">
+United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USRDS</span> Database, Appendix b (Data File Descriptions) and Appendix c (Data Formats)</em>. National Institute of Diabetes and Digestive and Kidney Diseases. <a href="https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide">https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide</a>.
+</div>
+<div id="ref-ellmer_pkg" class="csl-entry" role="listitem">
+Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. n.d. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vagishhemmige\.github\.io\/Dialysis-facility-density-USRDS");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../quarto/download_public_data.html" class="pagination-link" aria-label="1. Public area data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1. Public area data</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../quarto/prepare_patients.html" class="pagination-link" aria-label="3. USRDS patient data">
+        <span class="nav-page-text">3. USRDS patient data</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "2. Cause of kidney failure"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three cloud large language models. Codes on which at least two of the three agree are accepted without being read by a person; the deciders review the rest. Two smaller models that run on the analyst's own computer answer the same question and are reported for comparison, but do not vote: neither produced a complete, valid set of answers (see <span class="co">[</span><span class="ot">What the local models showed</span><span class="co">](#what-the-local-models-showed)</span>). The mapping from the first full run, on 30 October 2026, is accepted for the replication as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none. This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in <span class="in">`R/main.R`</span> is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to <span class="in">`references/`</span> is what the analysis reads once the deciders have reviewed it.</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/classify_esrd_causes.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/classify_esrd_causes.R)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>This R script file is itself reliant on the following files:</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/setup.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/setup.R)</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`R/functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/R/functions.R)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`prompts/esrd-cause-classification.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>The code sections below are imported directly from that script when this page is rendered.</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">read_chunk</span>(<span class="st">"../R/classify_esrd_causes.R"</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this step needs and produces</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>**To run it**, from the project root: <span class="in">`source("R/setup.R")`</span>, <span class="in">`source("R/functions.R")`</span>, then <span class="in">`source("R/classify_esrd_causes.R")`</span>. It is not part of <span class="in">`main.R`</span>.</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>**It needs**</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ellmer 0.5.0 or later <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span>, and the irr package for Fleiss' kappa.</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>An API key for each cloud provider in <span class="in">`.Renviron`</span>: <span class="in">`OPENAI_API_KEY`</span>, <span class="in">`ANTHROPIC_API_KEY`</span> and <span class="in">`GEMINI_API_KEY`</span>.</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> running on the same computer, with the two local models pulled (<span class="in">`ollama pull qwen3.5:9b`</span> and <span class="in">`ollama pull llama3.1:8b`</span> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <span class="co">[</span><span class="ot">Setting up Ollama</span><span class="co">](#setting-up-ollama)</span> before the first run.</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The models, batch sizes and agreement rule set in <span class="in">`setup.R`</span> (see <span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.qmd#cause-of-kidney-failure)</span>): <span class="in">`gpt-6.1-terra`</span> (OpenAI), <span class="in">`claude-sonnet-5-5`</span> (Anthropic) and <span class="in">`gemini-3.8-flash`</span> (Google) in the cloud, and locally, reported without voting, <span class="in">`qwen3.5:9b`</span> (Alibaba's Qwen) and <span class="in">`llama3.1:8b`</span> (Meta's Llama).</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>**It sends** only the public list of 445 codes with their descriptions: in batches of 100 to OpenAI and Claude (about five calls each), of 25 to Gemini and Qwen (about eighteen calls each), and of 5 to Llama (89 calls), plus more calls for any codes a model skipped. Gemini timed out on batches of 100, and local models are slower and handle less text at once: on the analyst's laptop, Llama 3.1 answered only 7 codes of a batch of 25, but every code of a batch of 5. The local models send nothing over the internet. No patient data are sent anywhere. Each call starts a new conversation, and no temperature or seed is set, so a second run could give different answers; the saved answer files are the record of what each model said.</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>**It produces**</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>One file of checked answers per model, in the gitignored <span class="in">`data-raw/`</span> folder.</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-categories.csv`</span>: one row per code, with each model's category and reason, how the models agreed (<span class="in">`agreement`</span>), the accepted category (<span class="in">`final_category`</span>), the decider's initials (<span class="in">`reviewer`</span>), and the prompt version, ellmer version, models and date.</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-agreement.csv`</span>: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`references/esrd-cause-local-models.csv`</span>: one row per local model, with how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category.</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>**How the analysis uses it**: <span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd)</span> reads only <span class="in">`code`</span> and <span class="in">`final_category`</span>. It stops if any code lacks one of the six categories, and warns if cause codes in the data are missing from the file; codes not in the file count as Other.</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>**Editing the file**: the deciders fill <span class="in">`final_category`</span> and <span class="in">`reviewer`</span> for the codes with no majority, and for any accepted code they change. Edit it as text (in Positron, or another text editor), not in Excel: 11 codes start with a zero, which Excel would strip, and those patients would silently become Other.</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## ellmer version</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>ellmer asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as <span class="in">`claude-sonnet-5-5`</span> from version 0.5.0 (the function <span class="in">`has_claude_structured_output()`</span> in ellmer's source). Older versions force a tool call instead, which current Claude models reject with the error "tool_choice ... not supported for this model".</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-ellmer-version</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Protecting the deciders' review</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>Rerunning the script rewrites the mapping file. If the deciders have already reviewed any code in it, the script stops before calling any model, so their review cannot be overwritten; the existing file has to be renamed or moved first, and the reviewed rows copied into the new one.</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: protect-reviewed-mapping</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## The code list</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format <span class="in">`$PD96DET`</span> with its description, from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, which <span class="in">`usRds`</span> already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.) The script stops if a code is listed twice.</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-cause-codes</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## The prompt</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>All five models, voting or not, receive the same prompt, word for word. It is kept as a text file, <span class="co">[</span><span class="ot">`prompts/esrd-cause-classification.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md)</span>, so that it can be read and edited on its own and shown here exactly as sent:</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{verbatim}</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="in">#| file: ../prompts/esrd-cause-classification.md</span></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="in">#| lang: markdown</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>For each batch, <span class="in">`{code_list}`</span> becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, <span class="in">`4464Z: WEGENERS GRANULOMATOSIS`</span>). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in <span class="in">`setup.R`</span>, because the structured output can only return those names.</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>The prompt makes three rules:</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**One category per code**, from the six in the paper's Table 1, each defined in words.</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable. This is an assumption: the original spreadsheet had a sheet named "Other", but what it contained is not known.</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**No inference beyond the description.** The model classifies from the code and its description only, which keeps it from inventing context.</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## The six categories</span></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>The original analysis took the six categories from a spreadsheet with one sheet per category ("Diabetes", "Hypertensive and Cardiac", "Glomerulonephritis", "HereditaryPCKD", "Transplant", "Other"), which no longer exists. Only the categories' names survive, in the sheet names and in the paper's Table 1, which labels the transplant category "solid organ and bone marrow" <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the 12 headings of the 2015 CMS-2728 list of primary causes <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span> and depart from them where the clinical definition differs:</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CMS-2728 heading (2015) <span class="pp">|</span> Category here <span class="pp">|</span></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Diabetes <span class="pp">|</span> Diabetes <span class="pp">|</span></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Glomerulonephritis <span class="pp">|</span> Glomerulonephritis <span class="pp">|</span></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Secondary Glomerulonephritis/Vasculitis <span class="pp">|</span> Glomerulonephritis for lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura; Other for thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura) and scleroderma <span class="pp">|</span></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Interstitial Nephritis/Pyelonephritis <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Transplant Complications <span class="pp">|</span> Transplant failure or complications <span class="pp">|</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Hypertension/Large Vessel Disease <span class="pp">|</span> Hypertension and cardiac disease <span class="pp">|</span></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Cystic/Hereditary/Congenital/Other Diseases <span class="pp">|</span> Hereditary or polycystic kidney disease for cystic and inherited disease; Other for congenital anomalies not described as inherited <span class="pp">|</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Neoplasms/Tumors <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Disorders of Mineral Metabolism <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Genitourinary System <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Acute Kidney Failure <span class="pp">|</span> Other <span class="pp">|</span></span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Miscellaneous Conditions <span class="pp">|</span> Other, except heart failure (Hypertension and cardiac disease) and HIV disease (Glomerulonephritis) <span class="pp">|</span></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>The 2015 list covers only the ICD-10-CM codes. The older ICD-9-CM codes in <span class="in">`$PD96DET`</span> are placed by the same definitions; anti-GBM disease (Goodpasture's syndrome), for example, appears only among them and counts as glomerulonephritis.</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>Four departures need a reason:</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Secondary glomerulonephritis is glomerulonephritis.** The CMS list keeps it apart, but lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura are glomerular inflammation. Lupus described as tubulointerstitial disease is not, and goes to Other. Thrombotic microangiopathies and scleroderma kidney disease, in the same CMS heading, are injury to the small vessels and endothelium rather than glomerular inflammation, so they also go to Other.</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Infection-related glomerular disease is glomerulonephritis**: post-infectious glomerulonephritis, glomerulonephritis with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other.</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**HIV-associated nephropathy is glomerulonephritis.** The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span>. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis <span class="co">[</span><span class="ot">@rosenberg2015hivan</span><span class="co">]</span>, so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository's history, and each saved answer file names the prompt version it answered.</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Heart failure is cardiac disease.** The sheet name "Hypertensive and Cardiac" suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.</span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prompt and schema in code</span></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file.</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-classification-prompt</span></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## One function per model</span></span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>Five models, set in <span class="in">`setup.R`</span>, three voting and two reported, all called through <span class="in">`ellmer`</span> <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<span class="in">`esrd_classifier_claude_max_tokens`</span>).</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and Meta's Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its "thinking" turned off (<span class="in">`reasoning_effort = "none"`</span>): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM's Granite (<span class="in">`granite4.2:8b`</span>) on 29 October 2026 (decided by Vagish Hemmige): on the analyst's laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.</span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-providers</span></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting up Ollama {#setting-up-ollama}</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> runs open-weight models on the analyst's own computer, and ellmer talks to it with <span class="co">[</span><span class="ot">`chat_ollama()`</span><span class="co">](https://ellmer.tidyverse.org/reference/chat_ollama.html)</span>. Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" (<span class="co">[</span><span class="ot">Ollama FAQ</span><span class="co">](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)</span>). A cloud model, by contrast, receives every prompt on the provider's servers. This step sends only the public code list, so the cloud models are allowed here, and the local models are a demonstration of the approach that text containing patient information would need. Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.</span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>Two cautions about the privacy claim:</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable <span class="in">`OLLAMA_NO_CLOUD=1`</span> and restart Ollama; its log then shows <span class="in">`Ollama cloud disabled: true`</span> (<span class="co">[</span><span class="ot">Ollama FAQ: disabling cloud features</span><span class="co">](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)</span>).</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**The models are downloaded from the internet** (<span class="in">`ollama pull`</span>), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.</span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.</span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Steps</span></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Install Ollama** from <span class="co">[</span><span class="ot">ollama.com/download</span><span class="co">](https://ollama.com/download)</span>. The <span class="co">[</span><span class="ot">Windows notes</span><span class="co">](https://docs.ollama.com/windows)</span> give the requirements and where Ollama keeps its files.</span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Download the two models** in a terminal: <span class="in">`ollama pull qwen3.5:9b`</span> and <span class="in">`ollama pull llama3.1:8b`</span> (<span class="co">[</span><span class="ot">Qwen 3.5</span><span class="co">](https://ollama.com/library/qwen3.5)</span>, <span class="co">[</span><span class="ot">Llama 3.1</span><span class="co">](https://ollama.com/library/llama3.1)</span>). On a computer with less memory, <span class="in">`qwen3.5:4b`</span> (3–4 GB) is a smaller choice; change its name in <span class="in">`setup.R`</span>.</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Test each model in the terminal before running the script**: <span class="in">`ollama run qwen3.5:9b "Say hello"`</span>. A model that cannot answer this will not answer the script either, and the terminal shows the error directly.</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Measure the speed**: <span class="in">`ollama run qwen3.5:9b --verbose "Say hello"`</span> prints, after the answer, an <span class="in">`eval rate`</span> in tokens per second. A batch of 25 codes needs roughly 1,000 tokens of answer, so at 5 tokens per second a batch takes about 3 minutes and the 18 batches about an hour, per model. The first request after starting Ollama also loads the model from disk, which takes up to a minute. Qwen 3.5 "thinks" before it answers, which adds to the time (<span class="co">[</span><span class="ot">Ollama: thinking</span><span class="co">](https://docs.ollama.com/capabilities/thinking)</span>).</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### If a model crashes: the graphics card</span></span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>Ollama looks for a graphics card and puts as much of the model on it as fits. If the card or its driver is not up to it, the model crashes while loading, and every model fails, including the smallest. This happened on the computer used for this project on 28 October 2026, a Windows laptop with an Intel Core i7-8850H, 32 GB of memory and a small NVIDIA Quadro P1000 graphics card (4 GB) beside the processor's built-in graphics:</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>With Ollama 0.40.4 and 0.40.12, every model crashed with <span class="in">`exit status 0xc0000005`</span>. The log showed the model being loaded onto <span class="in">`CUDA0`</span>, the NVIDIA card.</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hiding the card from CUDA (below) made a different error appear, <span class="in">`exit status 0xe06d7363`</span>. The log showed Ollama then using the same card through Vulkan, another way of reaching graphics cards, and <span class="in">`ggml_vulkan: device lost on Vulkan0`</span>.</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Turning off both made every model run, on the processor only.</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>Ollama's <span class="co">[</span><span class="ot">hardware page</span><span class="co">](https://docs.ollama.com/gpu)</span> says that NVIDIA cards of this generation (compute capability 5.0 to 6.2) need driver version 570 or newer, and the log reported a driver supporting CUDA 12.2, which points to an older driver. Updating the driver was not tried; the 4 GB card would hold only a small part of these models in any case.</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>**To run on the processor only** (Windows; type in a terminal, then quit Ollama from its icon by the clock, start it again, and open a new terminal):</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="in">setx CUDA_VISIBLE_DEVICES -1</span></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="in">setx OLLAMA_VULKAN 0</span></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>Both come from Ollama's <span class="co">[</span><span class="ot">hardware page</span><span class="co">](https://docs.ollama.com/gpu)</span>: an invalid card number such as <span class="in">`-1`</span> makes Ollama ignore NVIDIA cards, and <span class="in">`OLLAMA_VULKAN=0`</span> turns off Vulkan. <span class="in">`CUDA_VISIBLE_DEVICES`</span> also hides the NVIDIA card from any other program that uses CUDA (machine-learning software, for example), though not from the screen, video or games. To undo either, delete it under "Edit environment variables for your account" in Windows (<span class="co">[</span><span class="ot">Ollama FAQ: environment variables on Windows</span><span class="co">](https://docs.ollama.com/faq#setting-environment-variables-on-windows)</span>).</span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>**Reading Ollama's log.** On Windows the logs are in <span class="in">`%LOCALAPPDATA%\Ollama`</span> (paste that into the Windows Run box, Windows key + R); <span class="in">`server.log`</span> is the newest and <span class="in">`server-1.log`</span> and so on are older (<span class="co">[</span><span class="ot">Ollama troubleshooting</span><span class="co">](https://docs.ollama.com/troubleshooting)</span>). The lines that matter:</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`inference compute`</span>, near the start: what Ollama will use. <span class="in">`library=cpu`</span> means the processor; <span class="in">`library=CUDA`</span> or <span class="in">`Vulkan`</span> means a graphics card.</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`load_tensors: ... model buffer size`</span>, when a model loads: where it was put (<span class="in">`CPU`</span>, <span class="in">`CUDA0`</span>, <span class="in">`Vulkan0`</span>).</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The last lines before <span class="in">`Load failed`</span>: the actual error.</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>In a terminal, <span class="in">`powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server.log -Tail 60"`</span> shows the end of the log.</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running, checking and saving each model</span></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models' answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (<span class="in">`check_votes()`</span>, on the <span class="co">[</span><span class="ot">functions page</span><span class="co">](functions.qmd)</span>). The local models' answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (<span class="in">`esrd_classifier_timeout_s`</span>); ellmer's default of 5 minutes was too short on a laptop processor. Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a <span class="in">`usRds`</span> update, stops the script; deleting that file asks the provider again.</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: classify-with-ensemble</span></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agreement</span></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. <span class="in">`agreement`</span> says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill <span class="in">`final_category`</span> and their initials in <span class="in">`reviewer`</span>.</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: measure-agreement</span></span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## What the local models showed {#what-the-local-models-showed}</span></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>The two local models were meant to vote, and were run on the analyst's laptop (processor only, 32 GB of memory) on 28 and 29 October 2026. Neither produced a complete, valid set of answers, so neither votes (decided by Vagish Hemmige, 29 October 2026); their answers are kept and reported, because what they did is itself a finding of this demonstration.</span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They dropped codes in longer batches.** Both answered every code of a 5-code test. In batches of 25, Qwen left 150 of the 445 codes unanswered even after asking a second time, and Llama answered 7 of a 25-code test. Even in batches of 5, Llama left 124 codes unanswered on its first pass, and 28 after asking a second time.</span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They returned text that is not a code.** Qwen put 25 codes in quotation marks and returned one answer with no code. Llama returned codes with <span class="in">`&lt;/code&gt;`</span> attached, the placeholders <span class="in">`{code}`</span> and <span class="in">`What is the code?`</span>, four invented web addresses, and codes not in the list (for example <span class="in">`Z88.0`</span>, and <span class="in">`D1022`</span> for <span class="in">`E1022`</span>). In all, 20 of its answers carried text that is not a code in the list, and it answered 6 codes more than once, some with different categories.</span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Some categories contradict the model's own reason or are clinically wrong.** Qwen put AIDS nephropathy (429) under Diabetes, with the reason that it "falls under viral/glomerular causes … not diabetes". Llama put lupus nephritis (7100) and membranous nephropathy (5831) under Diabetes, and malignant hypertension (4010) under Diabetes with the reason "No indication of diabetes".</span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They were slow.** Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.</span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**A third model did not run at all.** IBM's Granite (<span class="in">`granite4.2:8b`</span>) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.</span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. <span class="in">`references/esrd-cause-local-models.csv`</span> records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (<span class="in">`local_model_report()`</span>, on the <span class="co">[</span><span class="ot">functions page</span><span class="co">](functions.qmd)</span>).</span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: report-local-models</span></span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## How the mapping is checked</span></span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (<span class="in">`DISGRPC`</span>). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.</span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing the mapping</span></span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>The two files the repository tracks as data. They hold only public codes, descriptions and the models' answers. The script creates the <span class="in">`references/`</span> folder if it does not exist yet, as in a fresh copy of the repository, where Git keeps no empty folders.</span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: write-mapping</span></span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/edit/main/quarto/classify_esrd_causes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

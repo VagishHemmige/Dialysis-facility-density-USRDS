@@ -3,8 +3,7 @@ title: "Published supplement"
 format: html
 ---
 
-::: callout-important
-## Reproduced from the published supplement
+::: {.Results title="Reproduced from the published supplement"}
 Everything on this page is reproduced, unchanged, from the Supplementary Online Content of Hemmige V, Deshpande P, Norris KC, et al. Geographic dialysis facility density and early dialysis initiation. *JAMA Network Open*. 2024;7(1):e2350009 [@hemmige2024density], © 2024 Hemmige V et al., published under a [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/). These are the outputs cleared by USRDS for publication. They were **not** produced by this repository's code; the replication's own outputs will appear only after they are checked and cleared.
 :::
 

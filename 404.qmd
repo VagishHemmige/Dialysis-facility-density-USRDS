@@ -1,0 +1,9 @@
+---
+title: "Page not found"
+toc: false
+---
+
+The page you were looking for isn't on this site. It may have been moved or renamed.
+
+- Go to the [home page](index.qmd).
+- Or use the search box in the sidebar.

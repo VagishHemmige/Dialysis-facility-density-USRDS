@@ -1,3 +1,63 @@
+/* Sidebar cues for the kind of page. Each colour follows an icon set in
+   _quarto.yml, not a position in the sidebar, so pages can be added or
+   reordered without editing this file. The colours match the callouts that
+   mark the same kind of content on the pages themselves (custom-callout in
+   _quarto.yml). */
+.sidebar-navigation {
+  --cue-prose: #2780e3;   /* background: cosmo's primary blue */
+  --cue-study: #e8590c;   /* study design and methods: orange */
+  --cue-code: #d63384;    /* R code: pink, as the 💻 Rcode callout */
+  --cue-results: #198754; /* results: green, as the 📊 Results callout */
+  --cue-rules: #6c757d;   /* project documents: grey */
+}
+.sidebar-navigation .bi-book { color: var(--cue-prose); }
+.sidebar-navigation .bi-diagram-3 { color: var(--cue-study); }
+.sidebar-navigation .bi-laptop { color: var(--cue-code); }
+.sidebar-navigation .bi-clipboard-data { color: var(--cue-results); }
+.sidebar-navigation .bi-file-earmark-ruled { color: var(--cue-rules); }
+
+/* Section headings read as group labels rather than pages */
+.sidebar-navigation .sidebar-item-section > .sidebar-item-container .menu-text {
+  font-weight: 600;
+}
+
+/* A thin rule between sections, and before the last links */
+.sidebar-navigation .sidebar-item-section + .sidebar-item-section,
+.sidebar-navigation .sidebar-item-section + .sidebar-item {
+  border-top: 1px solid rgba(0, 0, 0, .08);
+  margin-top: .35rem;
+  padding-top: .35rem;
+}
+
+/* Sections inside another section (those under Code): lighter and a
+   little smaller, so the hierarchy shows without relying on indentation */
+.sidebar-navigation .sidebar-section .sidebar-item-section > .sidebar-item-container .menu-text {
+  font-weight: 500;
+  font-size: .95em;
+}
+
+/* Provisional content: a yellow highlighter, added by quarto/_pending.lua
+   to paragraphs that start with **Decision pending:** and to any
+   [text]{.pending}, and the colour of the Pending callout. Yellow is kept
+   for this and used for no kind of page. */
+.pending {
+  background: #fff3bf;
+  border-radius: 3px;
+  padding: 0 .2em;
+}
+.pending-note p {
+  background: #fff3bf;
+  border-left: 3px solid #f0c400;
+  border-radius: 3px;
+  padding: .35rem .6rem;
+}
+
+/* Pages with no title (the project-document pages show the root file's own
+   first heading) would otherwise show an empty heading in the code-tools bar */
+.quarto-title-tools-only h1:empty {
+  display: none;
+}
+
 /* Side-by-side code comparisons (side_by_side_diff() in quarto/_site_functions.R):
    removed lines soft red, added lines soft green, unchanged lines plain */
 .sbs-wrap {

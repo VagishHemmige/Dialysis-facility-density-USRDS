@@ -1,6 +1,7 @@
 ---
 pagetitle: "Analysis plan"
 format: html
+from: markdown+gfm_auto_identifiers
 ---
 
 <!--

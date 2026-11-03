@@ -63,7 +63,7 @@ Mixed-effects models with a random intercept for HSA, progressively adjusted, fi
 
 The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with `melogit`, Stata's default is adaptive Gauss-Hermite quadrature with 7 points [@stata_melogit].
 
-A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. When each HSA has many patients, as here, the two give practically the same answer. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
+A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation's bias shrinks as the number of patients per HSA grows [@joe2008laplace], so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts [@scialla2014iv], and the variance between HSAs is more sensitive to the approximation [@stata_melogit]. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
 
 | Fit | Time | Convergence warnings | Odds ratio, highest vs zero density |
 |---|---|---|---|
@@ -75,7 +75,7 @@ A mixed model's likelihood has to be computed by approximation, because each HSA
 The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:
 
 -   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.
--   **`MixedModels.jl`** [@mixedmodels_jl], a Julia package by Douglas Bates, the original author of `lme4`, and Phillip Alday, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` is a young, single-maintainer package with little recent activity, so it was not used.
+-   **`MixedModels.jl`** [@mixedmodels_jl], a Julia package by Douglas Bates, the original author of `lme4`, and Phillip Alday, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` was archived on CRAN on 5 April 2025 [@jlme], so it was not used.
 -   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This would keep the paper's estimation method, if the paper used `melogit` with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor `MixedModels.jl` was timed here, so how their speed compares with each other or with `glmmTMB` on these data is not known.
 
 ## Multiple imputation
@@ -89,7 +89,7 @@ The paper reports "a multiple imputation technique with chained predictive analy
 
 ## Fitting
 
-Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules, whose intervals combine the variation within and between the imputed data sets.
+Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules [@rubin1987mi], whose intervals combine the variation within and between the imputed data sets.
 
 **Functions used:** [`density_effects()`](functions.qmd#density-effects), [`mixed_formula()`](functions.qmd#model-formulas).
 

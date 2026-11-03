@@ -47,7 +47,7 @@ One Dartmouth crosswalk per year, 2011 to 2019. The 2018 and 2019 files are publ
 
 ## ZIP code to ZCTA
 
-ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. About a fifth of ZIP codes, mostly PO box and large-volume ZIP codes, have no ZCTA of their own and belong to a surrounding ZCTA with a different number. The UDS Mapper crosswalk for each year, bundled in `zippeR` [@zipper_pkg; @uds_crosswalk], maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.
+ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Not every ZIP code has a ZCTA of its own [@census_zcta]; those that do not, mostly PO box and large-volume ZIP codes, belong to a surrounding ZCTA with a different number [@grubesic2006zcta]. The UDS Mapper crosswalk for each year, bundled in `zippeR` [@zipper_pkg; @uds_crosswalk], maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.
 
 **Functions used:** [`standardize_zip()`](functions.qmd#zip-codes), [`assert_unique()`](functions.qmd#unique-keys).
 
@@ -58,7 +58,7 @@ ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Abou
 
 ## American Community Survey
 
-ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (`GEOID`), because `tidycensus` removes the two-digit state prefix only for 2013 and later [@tidycensus]; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.
+ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (`GEOID`), because in some years the identifier `tidycensus` returns [@tidycensus] can carry a two-digit state prefix, and the last five characters are the ZCTA either way; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.
 
 **Functions used:** [`assert_unique()`](functions.qmd#unique-keys), [`check_acs_labels()`](functions.qmd#checking-acs-variables).
 

@@ -3,7 +3,7 @@ title: "7. Models"
 format: html
 ---
 
-Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes.
+Fits the models behind Table 2 and eTables 1 to 3. The paper's models were fit in Stata; these are rebuilt from its text and table footnotes. The models, the choice of fitting package and the sensitivity analyses are explained on [Analysis and reporting](study_analysis.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -59,28 +59,11 @@ Each block has Models 1 to 3. The models are listed in one table, one row per pu
 
 Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with `glmmTMB` [@glmmtmb]: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
 
-### Choosing the model-fitting package
-
-The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with `melogit`, Stata's default is adaptive Gauss-Hermite quadrature with 7 points [@stata_melogit].
-
-A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation's bias shrinks as the number of patients per HSA grows [@joe2008laplace], so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts [@scialla2014iv], and the variance between HSAs is more sensitive to the approximation [@stata_melogit]. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
-
-| Fit | Time | Convergence warnings | Odds ratio, highest vs zero density |
-|---|---|---|---|
-| `lme4::glmer` [@lme4_pkg], default settings | 117 s | 4 | 10.08 (not converged) |
-| `lme4::glmer`, rescaled covariates, higher iteration limit | 111 s | 0 | 10.62 |
-| `lme4::glmer`, 7-point quadrature (Stata's default) | 119 s | 0 | 10.63 |
-| `glmmTMB` [@glmmtmb] | 4 s | 0 | 10.63 |
-
-The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each HSA has many patients. The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:
-
--   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.
--   **`MixedModels.jl`** [@mixedmodels_jl], a Julia package by Douglas Bates, the original author of `lme4`, and Phillip Alday, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` was archived on CRAN on 5 April 2025 [@jlme], so it was not used.
--   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This would keep the paper's estimation method, if the paper used `melogit` with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor `MixedModels.jl` was timed here, so how their speed compares with each other or with `glmmTMB` on these data is not known.
+The analysis uses `glmmTMB` rather than `lme4` or Stata itself (decided by Vagish Hemmige, 27 October 2026). Why, with a timing comparison of the options on synthetic data, is on [How the models are fitted](study_analysis.qmd#how-the-models-are-fitted).
 
 ## Multiple imputation
 
-The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).
+Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper's description is on [Missing laboratory values](study_analysis.qmd#missing-laboratory-values).
 
 ```{r}
 #| label: impute-albumin-hemoglobin
@@ -133,7 +116,7 @@ In the code, `model_covariates("Model 3", labs = TRUE, patients = "All")` return
 
 ## Variance decomposition
 
-How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). Both models are fit on the patients with a dialysis facility ID, which the nested model needs; see [Variation between and within HSAs](study_analysis.qmd#variation-between-and-within-hsas).
 
 **Functions used:** [`variance_shares()`](functions.qmd#variance-shares).
 

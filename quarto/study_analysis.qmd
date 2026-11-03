@@ -1,0 +1,88 @@
+---
+title: "Analysis and reporting"
+format: html
+---
+
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code is on [7. Models](models.qmd) and [Tables](tables.qmd).
+
+## Describing the cohort
+
+Table 1 compares the five density categories, with one-way ANOVA for continuous characteristics, chi-squared tests for categorical ones, and missing values shown.
+
+## The main models
+
+Mixed-effects logistic regression of early start on density category, with a random intercept for HSA so that patients in the same area are not treated as independent. Covariates are added in three stages, following the paper's Table 2 footnotes:
+
+-   **Model 1:** age, sex, race, Hispanic ethnicity and year.
+-   **Model 2:** adds coexisting conditions, access type and cause of kidney failure.
+-   **Model 3:** adds insurance, nephrology care, rural-urban type, ZIP code poverty and share of Black residents, and the three HSA benchmarks the paper's Methods name (HbA1c testing and eye examinations in diabetes, and ambulatory-sensitive discharges).
+
+Models 2 and 3 are fit with and without albumin and hemoglobin; with them, only patients with both values are used (533,375 in the paper [@hemmige2024density]). Census region is not adjusted for, because the footnotes do not list it.
+
+The paper's Methods list these benchmarks with "such as", so the three it names are taken to be the ones used. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on [Every published model](models.qmd#every-published-model).
+
+**Specified in:** [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis).
+
+**Current code:** the original R code had exploratory models only, so the published models are rebuilt; see [Differences: models](differences.qmd#models).
+
+## How the models are fitted
+
+The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with `melogit`, Stata's default is adaptive Gauss-Hermite quadrature with 7 points [@stata_melogit].
+
+A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation's bias shrinks as the number of patients per HSA grows [@joe2008laplace], so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts [@scialla2014iv], and the variance between HSAs is more sensitive to the approximation [@stata_melogit]. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
+
+| Fit | Time | Convergence warnings | Odds ratio, highest vs zero density |
+|---|---|---|---|
+| `lme4::glmer` [@lme4_pkg], default settings | 117 s | 4 | 10.08 (not converged) |
+| `lme4::glmer`, rescaled covariates, higher iteration limit | 111 s | 0 | 10.62 |
+| `lme4::glmer`, 7-point quadrature (Stata's default) | 119 s | 0 | 10.63 |
+| `glmmTMB` [@glmmtmb] | 4 s | 0 | 10.63 |
+
+The numbers are synthetic; only the comparison matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67). The analysis therefore uses `glmmTMB` (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:
+
+-   **`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.
+-   **`MixedModels.jl`** [@mixedmodels_jl], a Julia package by Douglas Bates, the original author of `lme4`, and Phillip Alday, is designed for very large models and can be called from R with the `jlme` package [@jlme]. It needs a Julia installation, and `jlme` was archived on CRAN on 5 April 2025 [@jlme], so it was not used.
+-   **Stata itself**, called from R. The `RStata` package [@rstata] runs Stata commands or a do-file from R and passes a data frame in and out, for example `stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`; Stata 17 and later also offer `pystata`, Stata's own interface, which R can reach through `reticulate`. This would keep the paper's estimation method, if the paper used `melogit` with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor `MixedModels.jl` was timed here, so how their speed compares with each other or with `glmmTMB` on these data is not known.
+
+## Missing laboratory values
+
+The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).
+
+```{r}
+#| label: impute-albumin-hemoglobin
+#| eval: false
+```
+
+**Specified in:** [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis) (missing data).
+
+## Variation between and within HSAs
+
+How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by `lme4::lmer` with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).
+
+**Specified in:** [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis).
+
+## Sensitivity analyses
+
+Each asks whether the main finding rests on one assumption:
+
+-   excluding HSAs with no facility, with the lowest non-zero category as reference, in case distance to any facility drives the result;
+-   separate models for White and for Black patients;
+-   density as a continuous measure, in case the result depends on the cut points;
+-   eGFR as a continuous outcome, in case it depends on the threshold of 10;
+-   albumin and hemoglobin filled in by multiple imputation (10 imputations, predictive mean matching), in case missing laboratory values bias the complete-case results;
+-   excluding eGFR of 5 or below, from the original R code and not in the paper.
+
+**Specified in:** [§9 Sensitivity analyses](analysis-plan.qmd#9-sensitivity-analyses), [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis) (missing data).
+
+**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. [Models](models.qmd) does not yet include this; the effects are to be added to [Differences from the original code](differences.qmd) after the first run ([issue #52](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)).
+
+## Disclosure
+
+The USRDS data are used under the investigators' data use agreement. No count from 1 to 10 is published in a table, figure, flowchart box or text, including counts that could be worked out by subtraction. Tables and figures stay out of the repository until checked and cleared for release, so this site shows no results from USRDS data.
+
+**Specified in:** [§10 Disclosure control](analysis-plan.qmd#10-disclosure-control).
+
+## References
+
+::: {#refs}
+:::

@@ -1,0 +1,45 @@
+---
+title: "Who is studied"
+format: html
+---
+
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code is on [3. USRDS patient data](prepare_patients.qmd) and [5. Cohort flowchart](create_cohort.qmd).
+
+## The index event
+
+The study looks at the start of dialysis, so each patient enters on their **first** Medical Evidence form; later forms describe a second or later episode. The patient's place of residence is the residential ZIP code in effect on the day dialysis started, taken from the Residence file. A patient with no residence period containing that day, or with more than one, has no residence and is excluded at that step, where the count is shown.
+
+## Exclusions, in order
+
+Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did (how the linkage works is on [Linking census and facility data](study_linkage.qmd)).
+
+1.  **First Medical Evidence form per patient.** Later forms describe a second or later episode of dialysis, not its start.
+2.  **Dialysis started 2011 to 2019**, after the IDEAL trial changed practice (see [Clinical background](background.qmd)).
+3.  **Age 18 or older.**
+4.  **Hemodialysis**, not peritoneal dialysis.
+5.  **In-center dialysis.** The timing of a home dialysis start depends on training schedules and trainer availability, and can be very early by design, so the paper excludes them [@hemmige2024density].
+6.  **Insurance recorded**, a Model 3 covariate.
+7.  **Access type recorded**, a Model 2 covariate.
+8.  **Sex recorded**, a Model 1 covariate.
+9.  **eGFR recorded and 20 or below**, the range in which nephrologists decide when to start (see [The eGFR thresholds](background.qmd#the-egfr-thresholds)).
+10. **A residential ZIP code on the date dialysis started**, to place the patient in an area.
+11. **The ZIP code has a ZCTA** in that year's crosswalk, the Census area for which ACS data are published.
+12. **ACS data for that ZCTA and year.**
+13. **Facility data for the date dialysis started**, to count facilities.
+14. **The ZIP code is in a Dartmouth HSA**, the unit of the exposure.
+15. **The 48 contiguous states or the District of Columbia**, as the paper studies the continental US [@hemmige2024density].
+16. **Race and Hispanic ethnicity recorded**, Model 1 covariates.
+17. **Complete ACS and rural-urban data for the ZIP code**, Model 3 covariates. ZIP codes with RUCA code 99 have no population.
+
+Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.
+
+Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring recorded covariates means every model without laboratory values uses the same patients, as in the paper (844,466 [@hemmige2024density]).
+
+**Specified in:** [§4 Study population](analysis-plan.qmd#4-study-population).
+
+**Current code:** the plan's single step for a ZCTA and ACS data is drawn as two boxes, so each loss is counted separately ([Cohort flowchart](create_cohort.qmd#exclusions)). Residents of an HSA with no ACS population have no density and are removed at the HSA step ([Linking area data](link_area_data.qmd#facility-density)).
+
+## References
+
+::: {#refs}
+:::

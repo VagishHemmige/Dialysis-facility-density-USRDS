@@ -3,7 +3,7 @@ title: "2. Cause of kidney failure"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, using three cloud large language models. Codes on which at least two of the three agree are accepted without being read by a person; the deciders review the rest. Two smaller models that run on the analyst's own computer answer the same question and are reported for comparison, but do not vote: neither produced a complete, valid set of answers (see [What the local models showed](#what-the-local-models-showed)). The mapping from the first full run, on 30 October 2026, is accepted for the replication as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none. This step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, by asking three cloud large language models through `ellmer` and two local models for comparison. Why language models are used, the categories and their definitions, the agreement rule and what the models showed are explained on [Cause of kidney failure](study_esrd_causes.qmd), in Study design and methods; this page explains the code. The step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -72,7 +72,7 @@ Rerunning the script rewrites the mapping file. If the deciders have already rev
 
 ## The code list
 
-The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format `$PD96DET` with its description, from Appendix C of the Researcher's Guide [@usrds2024guide], which `usRds` already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.) The script stops if a code is listed twice.
+The script reads the public list of 445 codes of USRDS format `$PD96DET` with their descriptions, which `usRds` holds (where the list comes from is on [The code list](study_esrd_causes.qmd#the-code-list)), and stops if a code is listed twice.
 
 ```{r}
 #| label: load-cause-codes
@@ -81,54 +81,7 @@ The original mapping spreadsheet is lost. Its replacement starts from a public l
 
 ## The prompt
 
-All five models, voting or not, receive the same prompt, word for word. It is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md), so that it can be read and edited on its own and shown here exactly as sent:
-
-```{verbatim}
-#| file: ../prompts/esrd-cause-classification.md
-#| lang: markdown
-```
-
-For each batch, `{{code_list}}` becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, `4464Z: WEGENERS GRANULOMATOSIS`). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in `setup.R`, because the structured output can only return those names.
-
-The prompt makes three rules:
-
--   **One category per code**, from the six in the paper's Table 1, each defined in words.
--   **"Other" is the catch-all**, for every cause outside the first five and for codes that mean missing, unknown or unreconcilable. This is an assumption: the original spreadsheet had a sheet named "Other", but what it contained is not known.
--   **No inference beyond the description.** The model classifies from the code and its description only, which keeps it from inventing context.
-
-## The six categories
-
-The original analysis took the six categories from a spreadsheet with one sheet per category ("Diabetes", "Hypertensive and Cardiac", "Glomerulonephritis", "HereditaryPCKD", "Transplant", "Other"), which no longer exists. Only the categories' names survive, in the sheet names and in the paper's Table 1, which labels the transplant category "solid organ and bone marrow" [@hemmige2024density].
-
-The definitions in the prompt (decided by Vagish Hemmige, 27 October 2026) start from the 12 headings of the 2015 CMS-2728 list of primary causes [@cms2728_causes] and depart from them where the clinical definition differs:
-
-| CMS-2728 heading (2015) | Category here |
-|---|---|
-| Diabetes | Diabetes |
-| Glomerulonephritis | Glomerulonephritis |
-| Secondary Glomerulonephritis/Vasculitis | Glomerulonephritis for lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura; Other for thrombotic microangiopathies (hemolytic-uremic syndrome, thrombotic thrombocytopenic purpura) and scleroderma |
-| Interstitial Nephritis/Pyelonephritis | Other |
-| Transplant Complications | Transplant failure or complications |
-| Hypertension/Large Vessel Disease | Hypertension and cardiac disease |
-| Cystic/Hereditary/Congenital/Other Diseases | Hereditary or polycystic kidney disease for cystic and inherited disease; Other for congenital anomalies not described as inherited |
-| Neoplasms/Tumors | Other |
-| Disorders of Mineral Metabolism | Other |
-| Genitourinary System | Other |
-| Acute Kidney Failure | Other |
-| Miscellaneous Conditions | Other, except heart failure (Hypertension and cardiac disease) and HIV disease (Glomerulonephritis) |
-
-The 2015 list covers only the ICD-10-CM codes. The older ICD-9-CM codes in `$PD96DET` are placed by the same definitions; anti-GBM disease (Goodpasture's syndrome), for example, appears only among them and counts as glomerulonephritis.
-
-Four departures need a reason:
-
--   **Secondary glomerulonephritis is glomerulonephritis.** The CMS list keeps it apart, but lupus nephritis, ANCA vasculitis and Henoch-Schönlein purpura are glomerular inflammation. Lupus described as tubulointerstitial disease is not, and goes to Other. Thrombotic microangiopathies and scleroderma kidney disease, in the same CMS heading, are injury to the small vessels and endothelium rather than glomerular inflammation, so they also go to Other.
--   **Infection-related glomerular disease is glomerulonephritis**: post-infectious glomerulonephritis, glomerulonephritis with hepatitis B or C, and cryoglobulinemic glomerulonephritis. Infections that are not glomerular, such as pyelonephritis and renal tuberculosis, stay in Other.
--   **HIV-associated nephropathy is glomerulonephritis.** The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions [@cms2728_causes]. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis [@rosenberg2015hivan], so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository's history, and each saved answer file names the prompt version it answered.
--   **Heart failure is cardiac disease.** The sheet name "Hypertensive and Cardiac" suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.
-
-**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it can mean kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity [@ojo2003nonrenal]. A patient whose kidney transplant fails already had kidney failure before that transplant, so their first form would usually date from then rather than from the failed transplant.
-
-**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report [@usrds2018adr]). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 [@usrds2018adr]), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.
+The prompt is kept as a text file, [`prompts/esrd-cause-classification.md`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/prompts/esrd-cause-classification.md); it is shown, with its rules, on [The prompt](study_esrd_causes.qmd#the-prompt). For each batch, `{{code_list}}` becomes one line per code: the code, a colon and the USRDS description from the Researcher's Guide (for example, `4464Z: WEGENERS GRANULOMATOSIS`). Nothing else about a code is sent. The script stops if the prompt does not define each of the six categories, under exactly the names in `setup.R`, because the structured output can only return those names.
 
 ## Prompt and schema in code
 
@@ -141,9 +94,7 @@ The structured output schema restricts each answer to the six category names. Th
 
 ## One function per model
 
-Five models, set in `setup.R`, three voting and two reported, all called through `ellmer` [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`).
-
-The three cloud models are each provider's current general-purpose model. The two local models run through Ollama on the analyst's computer (decided by Vagish Hemmige, 28 October 2026): Alibaba's Qwen and Meta's Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its "thinking" turned off (`reasoning_effort = "none"`): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM's Granite (`granite4.2:8b`) on 29 October 2026 (decided by Vagish Hemmige): on the analyst's laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama's models trained for medicine were considered, but they are all Google's MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst's own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.
+Five models, set in `setup.R`, three voting and two reported, all called through `ellmer` [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`). Qwen answers with its "thinking" turned off (`reasoning_effort = "none"`): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Which models were chosen, and why, is on [Which models, and how they are asked](study_esrd_causes.qmd#which-models-and-how-they-are-asked).
 
 ```{r}
 #| label: define-providers
@@ -152,14 +103,7 @@ The three cloud models are each provider's current general-purpose model. The tw
 
 ## Setting up Ollama {#setting-up-ollama}
 
-[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" ([Ollama FAQ](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)). A cloud model, by contrast, receives every prompt on the provider's servers. This step sends only the public code list, so the cloud models are allowed here, and the local models are a demonstration of the approach that text containing patient information would need. Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.
-
-Two cautions about the privacy claim:
-
--   **Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable `OLLAMA_NO_CLOUD=1` and restart Ollama; its log then shows `Ollama cloud disabled: true` ([Ollama FAQ: disabling cloud features](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)).
--   **The models are downloaded from the internet** (`ollama pull`), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.
-
-The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.
+[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Why local models matter, and the cautions about Ollama's privacy, are on [Local models and privacy](study_esrd_causes.qmd#local-models-and-privacy). Setting it up takes some work: Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer.
 
 ### Steps
 
@@ -208,9 +152,9 @@ Before asking any model, the script checks that Ollama is running and has the lo
 
 ## Agreement
 
-A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
+The script applies the two-of-three rule explained on [Agreement](study_esrd_causes.qmd#agreement). `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
 
-Fleiss' kappa [@fleiss1971kappa] describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.
+Fleiss' kappa is computed with the irr package and written to the agreement summary.
 
 **Functions used:** [`ensemble_agreement()`](functions.qmd#combining-the-models).
 
@@ -219,17 +163,9 @@ Fleiss' kappa [@fleiss1971kappa] describes how far the models agree beyond chanc
 #| eval: false
 ```
 
-## What the local models showed {#what-the-local-models-showed}
+## Reporting the local models
 
-The two local models were meant to vote, and were run on the analyst's laptop (processor only, 32 GB of memory) on 28 and 29 October 2026. Neither produced a complete, valid set of answers, so neither votes (decided by Vagish Hemmige, 29 October 2026); their answers are kept and reported, because what they did is itself a finding of this demonstration.
-
--   **They dropped codes in longer batches.** Both answered every code of a 5-code test. In batches of 25, Qwen left 150 of the 445 codes unanswered even after asking a second time, and Llama answered 7 of a 25-code test. Even in batches of 5, Llama left 124 codes unanswered on its first pass, and 28 after asking a second time.
--   **They returned text that is not a code.** Qwen put 25 codes in quotation marks and returned one answer with no code. Llama returned codes with `</code>` attached, the placeholders `{code}` and `What is the code?`, four invented web addresses, and codes not in the list (for example `Z88.0`, and `D1022` for `E1022`). In all, 20 of its answers carried text that is not a code in the list, and it answered 6 codes more than once, some with different categories.
--   **Some categories contradict the model's own reason or are clinically wrong.** Qwen put AIDS nephropathy (429) under Diabetes, with the reason that it "falls under viral/glomerular causes … not diabetes". Llama put lupus nephritis (7100) and membranous nephropathy (5831) under Diabetes, and malignant hypertension (4010) under Diabetes with the reason "No indication of diabetes".
--   **They were slow.** Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.
--   **A third model did not run at all.** IBM's Granite (`granite4.2:8b`) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.
-
-These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better. `references/esrd-cause-local-models.csv` records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (`local_model_report()`, on the [functions page](functions.qmd)).
+The local models' answers are kept as they came back and counted, not checked; what they showed is on [What the local models showed](study_esrd_causes.qmd#what-the-local-models-showed). `references/esrd-cause-local-models.csv` records, for each local model, how many codes it answered once with a code from the list, left unanswered or answered with other text, and how often it gave the category the cloud models accepted (`local_model_report()`, on the [functions page](functions.qmd)).
 
 **Functions used:** [`local_model_report()`](functions.qmd#reporting-the-local-models).
 
@@ -237,13 +173,6 @@ These are observations from one laptop and one prompt, not a general verdict on 
 #| label: report-local-models
 #| eval: false
 ```
-
-## How the mapping is checked
-
-Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:
-
--   **Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (`DISGRPC`). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.
--   **Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.
 
 ## Writing the mapping
 

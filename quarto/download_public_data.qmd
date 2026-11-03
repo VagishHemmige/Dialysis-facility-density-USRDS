@@ -3,7 +3,7 @@ title: "1. Public area data"
 format: html
 ---
 
-Downloads every public area-level source from its publisher and prepares it for linkage. It uses no USRDS data.
+Downloads every public area-level source from its publisher and prepares it for linkage. It uses no USRDS data. How these sources are linked to each patient, and why, is on [Linking census and facility data](study_linkage.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

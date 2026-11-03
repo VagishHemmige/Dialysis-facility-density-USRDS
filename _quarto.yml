@@ -43,7 +43,22 @@ website:
       - section: Study design and methods
         contents:
           - href: quarto/study_methods.qmd
-            text: Study design and methods
+            text: Overview
+            icon: diagram-3
+          - href: quarto/study_cohort.qmd
+            text: Who is studied
+            icon: diagram-3
+          - href: quarto/study_linkage.qmd
+            text: Linking census and facility data
+            icon: diagram-3
+          - href: quarto/study_exposure.qmd
+            text: Exposure, outcome and covariates
+            icon: diagram-3
+          - href: quarto/study_esrd_causes.qmd
+            text: Cause of kidney failure
+            icon: diagram-3
+          - href: quarto/study_analysis.qmd
+            text: Analysis and reporting
             icon: diagram-3
           - href: quarto/differences.qmd
             text: Differences from the original code

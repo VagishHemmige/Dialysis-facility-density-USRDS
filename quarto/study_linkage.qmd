@@ -1,0 +1,47 @@
+---
+title: "Linking census and facility data"
+format: html
+---
+
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code is on [1. Public area data](download_public_data.qmd) and [4. Linking area data](link_area_data.qmd).
+
+Each patient is placed by the residential ZIP code in effect on the day dialysis started. Everything known about where they lived is attached through that ZIP code: the dialysis facilities around them, the census characteristics of their neighbourhood, their Hospital Service Area (HSA) and its population, the HSA's care measures, and how rural the ZIP code is. Every source except USRDS is public and is downloaded from its publisher.
+
+## One date for everything
+
+All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The original code matched area data to the year of the Medical Evidence form instead, and its facility join quietly dropped patients whose two years differed; the replication corrects this (decided by Vagish Hemmige, 27 October 2026).
+
+**Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§4 Study population](analysis-plan.qmd#4-study-population) ("Year of linkage").
+
+## Dialysis facilities on the dialysis date
+
+CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time [@cms2025dfc]. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. `usRds` holds the releases from December 2005 to April 2025 and does the counting (`add_dialysis_facility_counts()`); facilities whose ZIP code has no HSA are not counted.
+
+**Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
+
+**Current code:** the counts differ from the original code in several ways; see [Differences: facility counts](differences.qmd#facility-counts).
+
+## Census data through the ZCTA
+
+The American Community Survey (ACS) reports by ZIP Code Tabulation Area (ZCTA), not by ZIP code, and not every ZIP code has a ZCTA of its own [@census_zcta]. Each patient's ZIP code is therefore mapped to its ZCTA with the UDS Mapper crosswalk for the year dialysis started [@uds_crosswalk; @zipper_pkg], and the ZCTA's ACS 5-year estimates for that year are attached from subject table S0601 [@tidycensus]: the ZCTA's population and characteristics such as the share of Black residents and the share below the poverty line. Matching ZIP codes to ZCTAs by number alone, as the original code did, would lose everyone in a ZIP code whose ZCTA has a different number.
+
+**Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§6 Covariates](analysis-plan.qmd#6-covariates).
+
+## The HSA and its population
+
+The Dartmouth Atlas crosswalk for the same year places each ZIP code in an HSA [@dartmouth_crosswalks]. The HSA's population, the denominator of the exposure, is the ACS population of the ZCTAs of the ZIP codes in the HSA that year. Several ZIP codes can share a ZCTA, so each ZCTA is counted once per HSA; summing over ZIP codes would count a shared ZCTA's population several times. A patient whose HSA has no ACS population has no facility density and is excluded at the HSA step.
+
+**Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
+
+**Current code:** the HSA step removes these patients together with those whose ZIP code has no HSA ([Linking area data](link_area_data.qmd#facility-density)).
+
+## HSA care measures and rural-urban type
+
+The Dartmouth Atlas's primary care measures (2015) and hospital resources (2012) are attached by HSA [@dartmouth_primarycare; @dartmouth_capacity]; values coded as too small or suppressed are treated as missing, not as numbers. The Economic Research Service's 2010 RUCA ZIP code file gives each ZIP code a primary code, grouped as metropolitan, micropolitan, small town or rural [@ers2020ruca; @ers_ruca_documentation]. These are fixed measures, not matched by year.
+
+**Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§6 Covariates](analysis-plan.qmd#6-covariates).
+
+## References
+
+::: {#refs}
+:::

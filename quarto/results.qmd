@@ -63,6 +63,11 @@ The other group totals (sex, ethnicity, nephrology care, dialysis access, insura
 -   The Model 3 sample without albumin and hemoglobin is printed "n = 844 4656"; the Model 2 sample is 844,466.
 -   Model 3, category 3, with albumin and hemoglobin: 1.04 (1.00-1.05) with P = .06.
 
+**Text and Table 1**
+
+-   The Results compare the densest HSAs with those with no facility as "29.5% vs 12.9%" Black residents; Table 1 gives means of 29.6 and 6.7. The text's figures are the standard deviations (29.5 and 12.9).
+-   The Abstract and Results give the share of households in poverty as "10.4% vs 8.4%"; Table 1 gives means of 19.6 and 15.5. The text's figures are the standard deviations (10.4 and 8.4).
+
 ## References
 
 ::: {#refs}

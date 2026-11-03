@@ -36,7 +36,7 @@ The index event is the start of regular dialysis on each patient's **first** Med
 2.  were 18 or older;
 3.  started hemodialysis in a dialysis facility (home starts are excluded, because their timing depends on training and can be early by design [@hemmige2024density]);
 4.  had insurance, vascular access type and sex recorded;
-5.  had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start;
+5.  had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start [@scialla2014iv];
 6.  had one residential ZIP code in effect on the day dialysis started, with a ZCTA, ACS data, a facility listing and an HSA for that date and year;
 7.  lived in the 48 contiguous states or the District of Columbia;
 8.  had race and Hispanic ethnicity recorded, and complete ACS and rural-urban data for their ZIP code.
@@ -72,7 +72,7 @@ Two choices fill gaps in the record:
 
 ## Outcome
 
-The primary outcome is an **early start**: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with the CKD-EPI equation [@levey2009ckdepi]. Ten is the lower edge of the IDEAL trial's early-start range [@cooper2010ideal]. The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on [Clinical background](background.qmd#race-and-egfr).
+The primary outcome is an **early start**: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with a CKD-EPI equation, read as the 2009 equation [@usrds2024guide; @levey2009ckdepi]. Ten is the lower edge of the IDEAL trial's early-start range [@cooper2010ideal], which IDEAL measured on a different scale (Cockcroft-Gault). The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on [Clinical background](background.qmd#race-and-egfr).
 
 **Specified in:** [§7 Outcome](analysis-plan.qmd#7-outcome).
 

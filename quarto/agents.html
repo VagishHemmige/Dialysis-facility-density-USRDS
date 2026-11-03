@@ -115,14 +115,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>
 div.callout-Rcode.callout {
-  border-left-color: pink;
+  border-left-color: #d63384;
 }
 div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgb(from pink r g b / 13%);
+  background-color: rgba(214, 51, 132, 0.13);
 }
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -168,7 +190,8 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><i class="bi bi-house" role="img">
+</i> 
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -183,20 +206,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
  <span class="menu-text">Clinical background</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The original R Markdown file</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Differences from the original code</span></a>
+  <a href="../quarto/methodological_background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Methodological background</span></a>
   </div>
 </li>
       </ul>
@@ -204,7 +223,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Setup and helper functions</span></a>
+ <span class="menu-text">Study design and methods</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -212,14 +231,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Setup</span></a>
+  <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Study design and methods</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Functions</span></a>
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Differences from the original code</span></a>
   </div>
 </li>
       </ul>
@@ -227,97 +248,162 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data processing and analysis</span></a>
+ <span class="menu-text">Code</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data processing and analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">1. Public area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">2. Cause of kidney failure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">3. USRDS patient data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">4. Linking area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">5. Cohort flowchart</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">6. Density categories</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">7. Models</span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Tables and figures</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">Tables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">Figures</span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Published results</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Original analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">The original R Markdown file</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Published results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
  <span class="menu-text">Published figures and tables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
  <span class="menu-text">Published supplement</span></a>
   </div>
 </li>
@@ -325,34 +411,38 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">Project documents</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">Analysis plan</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">Architecture</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link active">
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link active"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">AGENTS.md</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">Repository blueprint</span></a>
   </div>
 </li>
@@ -360,7 +450,8 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link"><i class="bi bi-info-circle" role="img">
+</i> 
  <span class="menu-text">About</span></a>
   </div>
 </li>
@@ -619,14 +710,59 @@ edit that file, not this page. Its first heading is the page title.
 <h2 class="anchored" data-anchor-id="quarto-website">Quarto website</h2>
 <p>The site documents the code. It does not run the analysis.</p>
 <ul>
-<li><code>_quarto.yml</code> and <code>index.qmd</code> sit at the root; <code>quarto/</code> has one page per definitive script, named after it. The <code>custom-callout</code> extension in <code>_extensions/</code> provides the <code>Rcode</code> callout.</li>
-<li>Each page loads its script with <code>knitr::read_chunk("../R/&lt;script&gt;.R")</code> in a hidden chunk and shows each labelled section with <code>#| eval: false</code>, with prose explaining what the section does and why. Pages link to the script on GitHub and to the scripts it depends on.</li>
-<li><strong>Never evaluate analysis code in the site.</strong> Pages render without restricted data.</li>
-<li><strong>Site-only helpers</strong> live in <code>quarto/_site_functions.R</code>, which pages source and <code>main.R</code> never does. They read only code or text given to them, never data, and are tested in <code>tests/test-site-functions.R</code>. A chunk calling them (for example <code>side_by_side_diff()</code>, which shows two versions of some code side by side) is the only other kind of chunk a page may run. Helpers the analysis needs stay in <code>R/functions.R</code>.</li>
-<li><strong>Function cross-references.</strong> <code>R/functions.R</code> has one top-level function per labelled chunk, and the functions page one section per chunk. Under each heading is the function’s name; after the explanation, <strong>Used in the analysis:</strong> links the method-page sections that call it, and <strong>Called by:</strong> the functions on the page that call it. Each method-page section whose code calls a helper ends its prose with <strong>Functions used:</strong>. <code>tests/check-crosslinks.R</code> derives all of these from the code and runs on every pull request; when it fails, run it with <code>draft</code> and copy what it prints, rather than writing the links by hand.</li>
-<li>The original R Markdown file is shown on its own page as code only, with machine-specific paths removed.</li>
-<li>The site renders to <code>docs/</code>, which is not committed. <code>.github/workflows/publish.yml</code> renders it on every pull request as a check and, on each push to <code>main</code>, publishes it to the <code>gh-pages</code> branch, which GitHub Pages serves. When you add a script, add its page and sidebar entry in the same pull request; render locally to preview, but do not commit the output.</li>
-<li><strong>Prose must match the code.</strong> If a change alters what a section does, update its explanation in the same pull request.</li>
+<li><p><code>_quarto.yml</code>, <code>index.qmd</code> and <code>404.qmd</code> (the page GitHub Pages shows for a missing address) sit at the root; <code>quarto/</code> has one page per definitive script, named after it. The <code>custom-callout</code> extension in <code>_extensions/</code> provides the <code>Rcode</code>, <code>Results</code> and <code>Pending</code> callouts.</p></li>
+<li><p>Each page loads its script with <code>knitr::read_chunk("../R/&lt;script&gt;.R")</code> in a hidden chunk and shows each labelled section with <code>#| eval: false</code>, with prose explaining what the section does and why. Pages link to the script on GitHub and to the scripts it depends on.</p></li>
+<li><p><strong>Visual cues.</strong> Each kind of page has one icon and colour, set by its sidebar entry’s <code>icon:</code> in <code>_quarto.yml</code> and coloured by <code>styles.css</code>; pages mark the same kind of content with the callout of that colour:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Kind</th>
+<th>Sidebar icon</th>
+<th>Colour</th>
+<th>Callout</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Background</td>
+<td><code>book</code></td>
+<td>blue</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Study design and methods</td>
+<td><code>diagram-3</code></td>
+<td>orange</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>R code</td>
+<td><code>laptop</code></td>
+<td>pink</td>
+<td><code>Rcode</code> (💻)</td>
+</tr>
+<tr class="even">
+<td>Results</td>
+<td><code>clipboard-data</code></td>
+<td>green</td>
+<td><code>Results</code> (📊)</td>
+</tr>
+<tr class="odd">
+<td>Project documents</td>
+<td><code>file-earmark-ruled</code></td>
+<td>grey</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>The original R Markdown page is R code; the differences page is study design and methods; the published results and supplement pages are results, and their notice says they are reproduced from the article, not produced by this code. Give every new page the icon for its kind. <code>styles.css</code> keys colours to icons, not to positions, so adding or moving pages needs no CSS change.</p></li>
+<li><p><strong>Provisional content.</strong> Text that depends on an open decision is highlighted in yellow. <code>quarto/_pending.lua</code> marks every paragraph that starts with <strong>Decision pending:</strong>, every paragraph of the plan’s page that contains the plan’s <strong>Open:</strong> marker, and any phrase written as <code>[text]{.pending}</code>; a page with a mark gets a yellow ⏳ <code>Pending</code> callout at the top. Mark only what an open decision could change, link its decision issue, and remove the mark when the decision is settled. Yellow is used for nothing else.</p></li>
+<li><p><strong>Never evaluate analysis code in the site.</strong> Pages render without restricted data. The Architecture page runs one chunk, which reads <code>ARCHITECTURE.md</code> as text so any <code>```mermaid</code> diagrams are drawn; it reads only that file.</p></li>
+<li><p><strong>Site-only helpers</strong> live in <code>quarto/_site_functions.R</code>, which pages source and <code>main.R</code> never does. They read only code or text given to them, never data, and are tested in <code>tests/test-site-functions.R</code>. A chunk calling them (for example <code>side_by_side_diff()</code>, which shows two versions of some code side by side) is the only other kind of chunk a page may run. Helpers the analysis needs stay in <code>R/functions.R</code>.</p></li>
+<li><p><strong>Function cross-references.</strong> <code>R/functions.R</code> has one top-level function per labelled chunk, and the functions page one section per chunk. Under each heading is the function’s name; after the explanation, <strong>Used in the analysis:</strong> links the method-page sections that call it, and <strong>Called by:</strong> the functions on the page that call it. Each method-page section whose code calls a helper ends its prose with <strong>Functions used:</strong>. <code>tests/check-crosslinks.R</code> derives all of these from the code and runs on every pull request; when it fails, run it with <code>draft</code> and copy what it prints, rather than writing the links by hand.</p></li>
+<li><p>The original R Markdown file is shown on its own page as code only, with machine-specific paths removed.</p></li>
+<li><p>The site renders to <code>docs/</code>, which is not committed. <code>.github/workflows/publish.yml</code> renders it on every pull request as a check and, on each push to <code>main</code>, publishes it to the <code>gh-pages</code> branch, which GitHub Pages serves. When you add a script, add its page and sidebar entry in the same pull request; render locally to preview, but do not commit the output.</p></li>
+<li><p><strong>Prose must match the code.</strong> If a change alters what a section does, update its explanation in the same pull request.</p></li>
 </ul>
 </section>
 <section id="outputs" class="level2">
@@ -669,7 +805,7 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong>Cohort:</strong> do the flowchart steps’ order, denominators, and labels match their conditions, and can each count be reproduced from code?</li>
 <li><strong>Joins and denominators:</strong> no unintended row multiplication; missing, suppressed, and zero kept distinct.</li>
 <li><strong>Reported numbers:</strong> does each estimate match the plan’s estimand, and do tables, figures, and site prose say what the code actually computes?</li>
-<li><strong>Structure:</strong> is <code>ARCHITECTURE.md</code> current; are chunk labels unique and found by their pages; does every definitive script have a page and sidebar entry; does any site chunk run analysis code? Only the hidden <code>read_chunk()</code> import, calls to the site helpers, and results pages reading outputs cleared for release, run.</li>
+<li><strong>Structure:</strong> is <code>ARCHITECTURE.md</code> current; are chunk labels unique and found by their pages; does every definitive script have a page and a sidebar entry with its kind’s icon; does any site chunk run analysis code? Only the hidden <code>read_chunk()</code> import, calls to the site helpers, the Architecture page’s reader of <code>ARCHITECTURE.md</code>, and results pages reading outputs cleared for release, run.</li>
 <li><strong>Execution:</strong> does <code>main.R</code> run in a fresh session with relative paths; are any saved intermediates or caches stale?</li>
 </ul>
 <p>Project-specific checks:</p>

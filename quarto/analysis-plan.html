@@ -134,14 +134,36 @@ div.csl-indent {
 }</script>
 <style>
 div.callout-Rcode.callout {
-  border-left-color: pink;
+  border-left-color: #d63384;
 }
 div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgb(from pink r g b / 13%);
+  background-color: rgba(214, 51, 132, 0.13);
 }
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -187,7 +209,8 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><i class="bi bi-house" role="img">
+</i> 
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -202,20 +225,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
  <span class="menu-text">Clinical background</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The original R Markdown file</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Differences from the original code</span></a>
+  <a href="../quarto/methodological_background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Methodological background</span></a>
   </div>
 </li>
       </ul>
@@ -223,7 +242,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Setup and helper functions</span></a>
+ <span class="menu-text">Study design and methods</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -231,14 +250,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Setup</span></a>
+  <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Study design and methods</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Functions</span></a>
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Differences from the original code</span></a>
   </div>
 </li>
       </ul>
@@ -246,97 +267,162 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data processing and analysis</span></a>
+ <span class="menu-text">Code</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data processing and analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">1. Public area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">2. Cause of kidney failure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">3. USRDS patient data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">4. Linking area data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">5. Cohort flowchart</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">6. Density categories</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">7. Models</span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Tables and figures</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">Tables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
  <span class="menu-text">Figures</span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Published results</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Original analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">The original R Markdown file</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Published results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
  <span class="menu-text">Published figures and tables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
  <span class="menu-text">Published supplement</span></a>
   </div>
 </li>
@@ -344,34 +430,38 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">Project documents</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link active">
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link active"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">Analysis plan</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">Architecture</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">AGENTS.md</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
  <span class="menu-text">Repository blueprint</span></a>
   </div>
 </li>
@@ -379,7 +469,8 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link"><i class="bi bi-info-circle" role="img">
+</i> 
  <span class="menu-text">About</span></a>
   </div>
 </li>
@@ -396,18 +487,18 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <li><a href="#analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation" id="toc-analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation" class="nav-link active" data-scroll-target="#analysis-plan-replication-of-geographic-dialysis-facility-density-and-early-dialysis-initiation">Analysis plan: Replication of “Geographic Dialysis Facility Density and Early Dialysis Initiation”</a>
   <ul class="collapse">
   <li><a href="#scope-and-reporting-framework" id="toc-scope-and-reporting-framework" class="nav-link" data-scroll-target="#scope-and-reporting-framework">Scope and reporting framework</a></li>
-  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective">1. Objective</a></li>
-  <li><a href="#design" id="toc-design" class="nav-link" data-scroll-target="#design">2. Design</a></li>
-  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">3. Data source</a></li>
-  <li><a href="#study-population" id="toc-study-population" class="nav-link" data-scroll-target="#study-population">4. Study population</a></li>
-  <li><a href="#exposure" id="toc-exposure" class="nav-link" data-scroll-target="#exposure">5. Exposure</a></li>
-  <li><a href="#covariates" id="toc-covariates" class="nav-link" data-scroll-target="#covariates">6. Covariates</a></li>
-  <li><a href="#outcome" id="toc-outcome" class="nav-link" data-scroll-target="#outcome">7. Outcome</a></li>
-  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">8. Statistical analysis</a></li>
-  <li><a href="#sensitivity-analyses" id="toc-sensitivity-analyses" class="nav-link" data-scroll-target="#sensitivity-analyses">9. Sensitivity analyses</a></li>
-  <li><a href="#disclosure-control" id="toc-disclosure-control" class="nav-link" data-scroll-target="#disclosure-control">10. Disclosure control</a></li>
-  <li><a href="#limitations-to-address-in-reporting" id="toc-limitations-to-address-in-reporting" class="nav-link" data-scroll-target="#limitations-to-address-in-reporting">11. Limitations to address in reporting</a></li>
-  <li><a href="#corrections-to-the-original-code" id="toc-corrections-to-the-original-code" class="nav-link" data-scroll-target="#corrections-to-the-original-code">12. Corrections to the original code</a></li>
+  <li><a href="#1-objective" id="toc-1-objective" class="nav-link" data-scroll-target="#1-objective">1. Objective</a></li>
+  <li><a href="#2-design" id="toc-2-design" class="nav-link" data-scroll-target="#2-design">2. Design</a></li>
+  <li><a href="#3-data-source" id="toc-3-data-source" class="nav-link" data-scroll-target="#3-data-source">3. Data source</a></li>
+  <li><a href="#4-study-population" id="toc-4-study-population" class="nav-link" data-scroll-target="#4-study-population">4. Study population</a></li>
+  <li><a href="#5-exposure" id="toc-5-exposure" class="nav-link" data-scroll-target="#5-exposure">5. Exposure</a></li>
+  <li><a href="#6-covariates" id="toc-6-covariates" class="nav-link" data-scroll-target="#6-covariates">6. Covariates</a></li>
+  <li><a href="#7-outcome" id="toc-7-outcome" class="nav-link" data-scroll-target="#7-outcome">7. Outcome</a></li>
+  <li><a href="#8-statistical-analysis" id="toc-8-statistical-analysis" class="nav-link" data-scroll-target="#8-statistical-analysis">8. Statistical analysis</a></li>
+  <li><a href="#9-sensitivity-analyses" id="toc-9-sensitivity-analyses" class="nav-link" data-scroll-target="#9-sensitivity-analyses">9. Sensitivity analyses</a></li>
+  <li><a href="#10-disclosure-control" id="toc-10-disclosure-control" class="nav-link" data-scroll-target="#10-disclosure-control">10. Disclosure control</a></li>
+  <li><a href="#11-limitations-to-address-in-reporting" id="toc-11-limitations-to-address-in-reporting" class="nav-link" data-scroll-target="#11-limitations-to-address-in-reporting">11. Limitations to address in reporting</a></li>
+  <li><a href="#12-corrections-to-the-original-code" id="toc-12-corrections-to-the-original-code" class="nav-link" data-scroll-target="#12-corrections-to-the-original-code">12. Corrections to the original code</a></li>
   <li><a href="#open-decisions" id="toc-open-decisions" class="nav-link" data-scroll-target="#open-decisions">Open decisions</a></li>
   <li><a href="#reporting-map" id="toc-reporting-map" class="nav-link" data-scroll-target="#reporting-map">Reporting map</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -462,8 +553,8 @@ edit that file, not this page. Its first heading is the page title.
 <p>This is a replication. The design is the one published in JAMA Network Open <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>, and every choice the paper states is treated as decided and cited to it. The original analysis code (an R Markdown file from October 2023, kept in <code>original/</code>) is the second source: where it makes a choice the paper does not state, the plan adopts the code’s choice and says so. Where the code and the paper disagree, or the code contains an error, the point is marked <strong>Open</strong> and linked to a decision issue for the deciders. Each such point is also listed on the website’s “Differences from the original code” page.</p>
 <p>Reporting will follow STROBE <span class="citation" data-cites="vonelm2007strobe">(<a href="#ref-vonelm2007strobe" role="doc-biblioref"><span class="nocase">Elm et al.</span> 2007</a>)</span> and RECORD <span class="citation" data-cites="benchimol2015record">(<a href="#ref-benchimol2015record" role="doc-biblioref"><span class="nocase">Benchimol et al.</span> 2015</a>)</span>. The reporting map below links each checklist item to a section of this plan.</p>
 </section>
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">1. Objective</h2>
+<section id="1-objective" class="level2">
+<h2 class="anchored" data-anchor-id="1-objective">1. Objective</h2>
 <p>To test whether the density of dialysis facilities in a patient’s Hospital Service Area (HSA; the paper calls it a health service area) is associated with starting in-center hemodialysis early, defined as an estimated glomerular filtration rate (eGFR) of 10 mL/min/1.73 m² or above at initiation (section 7) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
 <ul>
 <li><strong>Primary hypothesis (stated in advance by the paper):</strong> patients in HSAs with higher facility density have higher odds of initiating hemodialysis at eGFR &gt; 10 mL/min/1.73 m².</li>
@@ -472,12 +563,12 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong>Replication objective:</strong> to reproduce the paper’s Figure 1 (cohort flow), Table 1, Table 2 and eTables 1 to 3 from public code, using <code>usRds</code> and <code>flowchart</code>, and to quantify the effect of each correction to the original code.</li>
 </ul>
 </section>
-<section id="design" class="level2">
-<h2 class="anchored" data-anchor-id="design">2. Design</h2>
+<section id="2-design" class="level2">
+<h2 class="anchored" data-anchor-id="2-design">2. Design</h2>
 <p>Cross-sectional study of incident hemodialysis patients linked to area-level data <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The question is associational; no causal estimand or target-trial emulation is used.</p>
 </section>
-<section id="data-source" class="level2">
-<h2 class="anchored" data-anchor-id="data-source">3. Data source</h2>
+<section id="3-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="3-data-source">3. Data source</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -553,8 +644,8 @@ edit that file, not this page. Its first heading is the page title.
 <p><strong>Secondary-data declaration.</strong> The investigators have analyzed this USRDS release before: it is the release used for the published paper, and the published results are known. Every result of this replication is therefore a reproduction, not a new test of the hypothesis.</p>
 <p><strong>Data currency.</strong> The facility snapshot current on each patient’s date of dialysis start is used; a snapshot describes facilities from its CMS release date until the day before the next release.</p>
 </section>
-<section id="study-population" class="level2">
-<h2 class="anchored" data-anchor-id="study-population">4. Study population</h2>
+<section id="4-study-population" class="level2">
+<h2 class="anchored" data-anchor-id="4-study-population">4. Study population</h2>
 <p><strong>Source population:</strong> every patient with a CMS-2728 Medical Evidence form in the USRDS.</p>
 <p><strong>Index event:</strong> start of regular chronic dialysis (<code>DIALDAT</code>) on the patient’s first Medical Evidence form.</p>
 <p><strong>Eligibility, in order.</strong> Each step is one box of the cohort flowchart. Steps 1 to 9 come from the paper and the original code; steps 10 to 16 are linkage and completeness requirements from the original code.</p>
@@ -579,8 +670,8 @@ edit that file, not this page. Its first heading is the page title.
 <p>The original code applied several of these filters outside its CONSORT table, and its table misreported others; see section 12. In this replication every exclusion is a flowchart step, so the diagram reproduces the cohort exactly.</p>
 <p><strong>Year of linkage.</strong> All area data (ZCTA crosswalk, ACS, HSA, HSA population) are matched to the year dialysis started (<code>DIALDAT</code>), the same year as the facility counts. The original code matched area data to the year of the Medical Evidence form (<code>MEFDATE</code>) and its facility join silently required the two years to be equal; the replication corrects this (decided by Vagish Hemmige, 27 October 2026).</p>
 </section>
-<section id="exposure" class="level2">
-<h2 class="anchored" data-anchor-id="exposure">5. Exposure</h2>
+<section id="5-exposure" class="level2">
+<h2 class="anchored" data-anchor-id="5-exposure">5. Exposure</h2>
 <p><strong>HSA dialysis facility density:</strong> the number of dialysis facilities in the patient’s HSA on the date of dialysis start, divided by the HSA’s population, times 100,000 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
 <ul>
 <li><strong>Facilities:</strong> every facility listed in the CMS release current on the date of dialysis start (<code>usRds::add_dialysis_facility_counts()</code>), assigned to an HSA by its ZIP code and the crosswalk for that calendar year. Facilities whose ZIP code has no HSA are not counted.</li>
@@ -590,8 +681,8 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong>Also described:</strong> facility stations per 100,000, and for-profit and non-profit facility counts.</li>
 </ul>
 </section>
-<section id="covariates" class="level2">
-<h2 class="anchored" data-anchor-id="covariates">6. Covariates</h2>
+<section id="6-covariates" class="level2">
+<h2 class="anchored" data-anchor-id="6-covariates">6. Covariates</h2>
 <p>All patient covariates are measured on the first Medical Evidence form, at initiation. Area covariates are fixed for the patient’s ZIP code or HSA as described in section 3.</p>
 <table class="caption-top table">
 <colgroup>
@@ -669,14 +760,14 @@ edit that file, not this page. Its first heading is the page title.
 </table>
 <p><strong>Cause of kidney failure mapping.</strong> The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format <code>$PD96DET</code> <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three cloud large language models, called through <code>ellmer</code> (0.5.0 or later, the first version that sends current Claude models a native structured-output request) <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same prompt and a structured output schema, each classify every code, and every model’s answers pass the same check: one each from OpenAI, Anthropic and Google. Two models run locally through Ollama, Alibaba’s Qwen and Meta’s Llama, receive the same prompt and are reported for comparison, but do not vote (decided by Vagish Hemmige, 29 October 2026): on the analyst’s laptop neither produced a complete, valid set of answers, and IBM’s Granite, tried first, returned none. A code is accepted when at least two of the three cloud models agree (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted, and was chosen because the classification demonstrates the method rather than being the main analysis); codes so accepted are not read by a person, and every other code is reviewed by the deciders, who record the category and their initials (<code>reviewer</code>). Agreement among the models is reported with Fleiss’ kappa in a one-row public summary (<code>references/esrd-cause-agreement.csv</code>), together with the number of codes accepted unanimously, by majority only and not at all; kappa is descriptive and plays no part in accepting codes. A second public file (<code>references/esrd-cause-local-models.csv</code>) reports, for each local model, how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category. The reviewed mapping is committed to <code>references/</code> and is the only version the analysis reads. No patient data are given to any model; the local models send nothing over the internet. Patient-level cross-checks against USRDS’s own disease group (<code>DISGRPC</code>, PATIENTS file) and against the published Table 1 counts are run by an authorized person. The prompt defines each category in words, starting from the 12 groups of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and the original spreadsheet’s sheet names: glomerulonephritis includes secondary glomerulonephritis (lupus nephritis, ANCA vasculitis, anti-GBM disease, Henoch-Schönlein purpura) and infection-related glomerular disease (post-infectious glomerulonephritis, HIV-associated nephropathy, hepatitis-associated and cryoglobulinemic glomerulonephritis), while other infections are in Other (decided by Vagish Hemmige, 27 October 2026). HIV-associated nephropathy is thereby counted as glomerulonephritis, unlike in the CMS-2728 grouping, where HIV disease is a miscellaneous condition. The definitions are shown on the website. The mapping written on 30 October 2026 (prompt version <code>02ff2fbb</code>; 423 codes unanimous, 22 accepted by two of three, none without a majority) is accepted for the replication as drafted, with no changes after review (decided by Vagish Hemmige, 30 October 2026; D4).</p>
 </section>
-<section id="outcome" class="level2">
-<h2 class="anchored" data-anchor-id="outcome">7. Outcome</h2>
+<section id="7-outcome" class="level2">
+<h2 class="anchored" data-anchor-id="7-outcome">7. Outcome</h2>
 <p><strong>Primary:</strong> eGFR at initiation (<code>GFR_EPI</code>, CKD-EPI creatinine equation <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span> as calculated by USRDS, with the race coefficient) of 10 or above vs below 10 mL/min/1.73 m², as in the original code’s <code>GFR_DICH</code> (decided by Vagish Hemmige, 27 October 2026, in a working session: “Use the code”). The paper describes the outcome as greater than 10 vs at most 10 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>; the two differ only for patients at exactly 10.</p>
 <p><strong>Secondary:</strong> eGFR as a continuous variable.</p>
 <p>There is no follow-up; the outcome is measured at the index event.</p>
 </section>
-<section id="statistical-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-analysis">8. Statistical analysis</h2>
+<section id="8-statistical-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="8-statistical-analysis">8. Statistical analysis</h2>
 <p><strong>Descriptive analysis.</strong> Table 1 by the five density categories: means (SD) for continuous variables and counts (%) for categorical ones, with classical one-way ANOVA for continuous variables, as the paper says (R’s <code>oneway.test()</code> with <code>var.equal = TRUE</code>; its default is Welch’s test; decided by Vagish Hemmige, 28 October 2026), and chi-squared tests for categorical variables. The paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>; Kruskal-Wallis is not used here. Missing data are reported for each variable.</p>
 <p><strong>Primary model.</strong> Mixed-effects logistic regression of eGFR ≥ 10 on the density category (reference: 0 facilities), with a random intercept for HSA, progressively adjusted <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>:</p>
 <ul>
@@ -691,8 +782,8 @@ edit that file, not this page. Its first heading is the page title.
 <p><strong>Missing data.</strong> Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as “a multiple imputation technique with chained predictive analytics (10 imputations)” (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin’s rules. This imputation model was confirmed by Vagish Hemmige, 28 October 2026 (D7).</p>
 <p><strong>Software.</strong> R, with <code>usRds</code> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span>, <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>, <code>tidycensus</code> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span>, <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>, <code>lme4</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> and <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span>. The <code>usRds</code> version or commit is recorded with every result.</p>
 </section>
-<section id="sensitivity-analyses" class="level2">
-<h2 class="anchored" data-anchor-id="sensitivity-analyses">9. Sensitivity analyses</h2>
+<section id="9-sensitivity-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="9-sensitivity-analyses">9. Sensitivity analyses</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -736,16 +827,16 @@ edit that file, not this page. Its first heading is the page title.
 </tbody>
 </table>
 </section>
-<section id="disclosure-control" class="level2">
-<h2 class="anchored" data-anchor-id="disclosure-control">10. Disclosure control</h2>
+<section id="10-disclosure-control" class="level2">
+<h2 class="anchored" data-anchor-id="10-disclosure-control">10. Disclosure control</h2>
 <p>USRDS data are used under the investigators’ data use agreement. No cell, flowchart box or table entry with a count from 1 to 10 is published, including counts recoverable by subtraction. Tables and figures from USRDS data stay out of the repository until they have been checked for errors and cleared for release.</p>
 </section>
-<section id="limitations-to-address-in-reporting" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-to-address-in-reporting">11. Limitations to address in reporting</h2>
+<section id="11-limitations-to-address-in-reporting" class="level2">
+<h2 class="anchored" data-anchor-id="11-limitations-to-address-in-reporting">11. Limitations to address in reporting</h2>
 <p>The limitations in the paper apply <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Specific to the replication: the cause-of-kidney-failure mapping is rebuilt rather than recovered; Stata models are re-estimated in R; and public source files (CMS, Dartmouth, ERS, ACS) are re-downloaded and may have been revised since the original analysis.</p>
 </section>
-<section id="corrections-to-the-original-code" class="level2">
-<h2 class="anchored" data-anchor-id="corrections-to-the-original-code">12. Corrections to the original code</h2>
+<section id="12-corrections-to-the-original-code" class="level2">
+<h2 class="anchored" data-anchor-id="12-corrections-to-the-original-code">12. Corrections to the original code</h2>
 <p>Each is applied in the replication and its effect is reported (section 9). Decisions that belong to the deciders are linked.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1467,14 +1558,15 @@ Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerk
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">pagetitle:</span><span class="co"> "Analysis plan"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows analysis-plan.md from the repository root, which is the one source:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../analysis-plan.md &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">from:</span><span class="co"> markdown+gfm_auto_identifiers</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows analysis-plan.md from the repository root, which is the one source:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../analysis-plan.md &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

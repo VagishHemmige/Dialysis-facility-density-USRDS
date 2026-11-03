@@ -1,0 +1,86 @@
+---
+title: "Methodological background"
+format: html
+---
+
+This page explains, in general terms and without code, the data and methods a study like this one rests on: what the United States Renal Data System and the Medical Evidence form are, how a patient is placed in a health care area, where area-level information comes from, and why patients grouped in areas need particular models. What this study chose is on [Study design and methods](study_methods.qmd).
+
+## The United States Renal Data System
+
+The United States Renal Data System (USRDS) is a national data system on chronic kidney disease and kidney failure in the United States, funded by the National Institute of Diabetes and Digestive and Kidney Diseases [@usrds2024guide]. Researchers receive it as a set of files linked by one patient identifier. Two matter most for studying how dialysis begins:
+
+-   the **Medical Evidence file**, which holds the forms completed when a person starts treatment for kidney failure;
+-   the **Residence file**, which holds a person's residential ZIP code and state as a series of periods with start and end dates [@usrds2024guide].
+
+The meaning of each coded value is given by a named list of codes (a *format*) in the USRDS Researcher's Guide [@usrds2024guide]. Formats can change between releases, so code written for one release needs checking against the formats of the release it runs on.
+
+## The Medical Evidence form
+
+The CMS-2728 End Stage Renal Disease Medical Evidence Report is completed when a person starts regular dialysis or receives a kidney transplant, including a transplant instead of a course of dialysis [@cms2728_form; @usrds2024guide]. It records, at that moment, demographics (age, sex, race, Hispanic ethnicity); coexisting conditions as yes/no fields; laboratory values before the first dialysis, including creatinine, albumin and hemoglobin; the type and setting of dialysis, the vascular access and insurance; whether the patient saw a nephrologist beforehand; and the primary cause of kidney failure, as a code from a list CMS publishes [@cms2728_causes].
+
+Coexisting conditions are those the facility recorded, not confirmed by separate review. A person can have more than one form, for example after recovering kidney function and later restarting dialysis, so studies of the first start use the earliest.
+
+## Estimated GFR at the start of dialysis
+
+The glomerular filtration rate (GFR) measures how much blood the kidneys filter each minute. In practice it is *estimated* (eGFR) from serum creatinine with an equation, in mL/min/1.73 m² (adjusted to a standard body size). The CKD-EPI equation published in 2009 uses creatinine, age, sex and race, and gives a higher eGFR to a patient recorded as Black than to another with the same creatinine [@levey2009ckdepi]. Equations published in 2021 leave race out [@inker2021ckdepi].
+
+The eGFR at the start of dialysis describes *when* in the course of kidney disease dialysis began; a start at a higher eGFR is often called an **early start**. The IDEAL trial randomized adults to start dialysis at a higher or a lower estimated GFR and found no survival benefit from starting earlier [@cooper2010ideal]. Since then, studies have asked what, besides the patient's kidney function, influences when dialysis starts, including how local care is organized [@hemmige2024density]. The eGFR at initiation is best read as the value clinicians saw when they decided to start.
+
+## Dialysis facility listings
+
+The Centers for Medicare & Medicaid Services (CMS) publishes lists of dialysis facilities, with each facility's ZIP code, stations and ownership, and archives earlier releases [@cms2025dfc]. Each release describes the facilities at that time, so the facilities near a patient on a given date come from the release current on that date.
+
+## Hospital Service Areas
+
+The Dartmouth Atlas of Health Care divides the United States into Hospital Service Areas (HSAs): groups of ZIP codes whose residents receive most of their hospital care locally [@dartmouth_faq]. An HSA is a local health care market rather than a political boundary. The Atlas publishes a crosswalk assigning each ZIP code to an HSA for each year, because ZIP codes are added and retired [@dartmouth_crosswalks].
+
+The Atlas also publishes measures for each HSA, such as the share of Medicare enrollees with diabetes who receive eye examinations and HbA1c testing, the rate of hospital discharges for conditions that good outpatient care can often prevent (ambulatory-sensitive discharges), and hospital beds and staff per resident [@dartmouth_primarycare; @dartmouth_capacity]. Values too small to be reliable, and values suppressed, are stored as special negative codes; these are flags, not numbers, and are treated as missing [@dartmouth_primarycare].
+
+## ZIP codes and ZCTAs
+
+ZIP codes are mail delivery routes, not areas with fixed boundaries. The Census Bureau publishes its statistics for ZIP Code Tabulation Areas (ZCTAs), areas built to approximate the territory of ZIP codes. Most ZIP codes have a ZCTA with the same number; a ZIP code with no territory of its own belongs to a surrounding ZCTA with a different number.
+
+Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the `zippeR` R package makes them available [@uds_crosswalk; @zipper_pkg]. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.
+
+## American Community Survey estimates
+
+The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes *5-year estimates*, which pool five years of responses; an estimate labelled with a year describes the five years ending in that year. A *subject table* gathers many characteristics of an area (population, race, income, poverty) in one place. The `tidycensus` R package downloads ACS tables [@tidycensus]. The codes that identify variables in a subject table can change between years, so each year's labels need checking.
+
+## Rural-urban commuting area codes
+
+The US Department of Agriculture's Economic Research Service publishes Rural-Urban Commuting Area (RUCA) codes, which classify areas by population density, urbanization and daily commuting [@ers2020ruca]. Its ZIP code file gives each ZIP code a primary code, from metropolitan core to rural, with a separate code for ZIP codes with no population. The primary codes are commonly grouped into metropolitan, micropolitan, small town and rural areas [@ers2020ruca].
+
+## Area-level exposures
+
+An *area-level* exposure describes where a person lives, not the person: for example, dialysis facilities per resident of an HSA. Everyone in the same area has the same value. Such exposures suit questions about how care is organized locally, but need care in interpretation:
+
+-   An association between an area's characteristics and its residents' outcomes describes people living in such areas. It does not show which individual patients were affected, or how; inferring individual relationships from area patterns is known as the *ecological fallacy*.
+-   Results can depend on how areas are drawn: a measure computed for HSAs may behave differently for counties.
+-   A rate per resident needs a population for the same area and time. Where the area is built from smaller units, each unit's population should be counted once.
+
+Such studies are observational: they describe associations, adjusted for measured differences, and cannot by themselves show that changing the exposure would change the outcome.
+
+## Mixed-effects logistic regression
+
+Logistic regression models a yes/no outcome, such as starting dialysis at or above an eGFR threshold. Results are reported as **odds ratios**: how much higher or lower the odds of the outcome are in one group than in a reference group, with the other variables in the model held fixed. Adding groups of variables in stages shows how much of an association each group accounts for.
+
+Standard logistic regression assumes each patient's outcome is independent of every other's. Patients in the same area share nephrologists, hospitals and local habits of practice. A **mixed-effects** (or *multilevel*) model allows for this with a **random intercept** for each area, a term that lets the baseline odds differ from area to area. Ignoring the grouping would make confidence intervals too narrow, especially for an exposure measured at the area level.
+
+Fitting a mixed model requires averaging over every area's random intercept, which must be approximated. The Laplace approximation uses one point per area; adaptive Gauss-Hermite quadrature uses several, and is more exact but slower. Stata's mixed-effects logistic command uses adaptive quadrature by default [@stata_melogit]; the R packages `lme4` and `glmmTMB` fit the same models [@lme4_pkg; @glmmtmb]. When each area contains many patients, the approximations give practically the same answer. The same structure with a continuous outcome is a linear mixed model.
+
+## How much variation lies between areas
+
+A *null* linear mixed model, with no explanatory variables, divides the variation of a continuous outcome such as eGFR into a part between areas and a part between patients within areas [@lme4_pkg]. Groupings can be nested, such as dialysis facilities within HSAs, to show the share at each level. Shares from different models are comparable only when the models use the same patients.
+
+## Missing laboratory values
+
+A **complete-case** analysis uses only patients with every value recorded; it loses patients and can be biased if they differ systematically. **Multiple imputation** fills in each missing value several times from a model of the other variables, analyses each completed data set, and combines the results by Rubin's rules, so the uncertainty about the missing values is carried into the confidence intervals [@vanbuuren2011mice]. *Chained equations* impute each variable in turn; *predictive mean matching* fills each gap with a value observed in a similar patient [@vanbuuren2011mice].
+
+## Reporting standards
+
+STROBE is a checklist for reporting observational studies, including a flow diagram of exclusions [@vonelm2007strobe]. RECORD extends it to routinely collected data such as registries, adding the codes and algorithms that define variables, how sources were linked, and access to data and code [@benchimol2015record].
+
+## References
+
+::: {#refs}
+:::

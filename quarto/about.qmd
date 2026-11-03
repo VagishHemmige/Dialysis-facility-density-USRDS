@@ -34,6 +34,8 @@ Four documents describe the project. In short: the plan is the scientific intent
 ## Pages
 
 -   [**Clinical background**](background.qmd): why the timing of dialysis and facility density matter.
+-   [**Methodological background**](methodological_background.qmd): the data sources, area definitions and models the methods rest on, in general terms.
+-   [**Study design and methods**](study_methods.qmd): what this study chose and why, in plain language, linked to the plan.
 -   [**Differences from the original code**](differences.qmd): every correction and open decision, with a glossary of USRDS terms.
 -   [**Setup**](setup.qmd): packages and every constant.
 -   [**Functions**](functions.qmd): tested helper functions.

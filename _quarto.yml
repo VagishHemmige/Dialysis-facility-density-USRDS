@@ -36,9 +36,15 @@ website:
           - href: quarto/background.qmd
             text: Clinical background
             icon: book
+          - href: quarto/methodological_background.qmd
+            text: Methodological background
+            icon: book
 
       - section: Study design and methods
         contents:
+          - href: quarto/study_methods.qmd
+            text: Study design and methods
+            icon: diagram-3
           - href: quarto/differences.qmd
             text: Differences from the original code
             icon: diagram-3

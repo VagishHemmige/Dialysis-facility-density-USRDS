@@ -114,15 +114,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -136,15 +136,15 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -233,7 +233,42 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Study design and methods</span></a>
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Linking census and facility data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -756,6 +791,7 @@ edit that file, not this page. Its first heading is the page title.
 </tbody>
 </table>
 <p>The original R Markdown page is R code; the differences page is study design and methods; the published results and supplement pages are results, and their notice says they are reproduced from the article, not produced by this code. Give every new page the icon for its kind. <code>styles.css</code> keys colours to icons, not to positions, so adding or moving pages needs no CSS change.</p></li>
+<li><p><strong>Code pages and study design pages.</strong> A script’s page explains its code: what each section does, its inputs and outputs, and the functions it uses. Why the study does it that way, in terms a clinician can follow, goes on the Study design and methods pages (<code>quarto/study_*.qmd</code>): the overview, who is studied, linking census and facility data, exposure, outcome and covariates, cause of kidney failure, and analysis and reporting. Each code page links its study page, and each study section ends with <strong>Specified in:</strong> and, where needed, <strong>Current code:</strong> notes. When a change alters a method, update both pages in the same pull request.</p></li>
 <li><p><strong>Provisional content.</strong> Text that depends on an open decision is highlighted in yellow. <code>quarto/_pending.lua</code> marks every paragraph that starts with <strong>Decision pending:</strong>, every paragraph of the plan’s page that contains the plan’s <strong>Open:</strong> marker, and any phrase written as <code>[text]{.pending}</code>; a page with a mark gets a yellow ⏳ <code>Pending</code> callout at the top. Mark only what an open decision could change, link its decision issue, and remove the mark when the decision is settled. Yellow is used for nothing else.</p></li>
 <li><p><strong>Never evaluate analysis code in the site.</strong> Pages render without restricted data. The Architecture page runs one chunk, which reads <code>ARCHITECTURE.md</code> as text so any <code>```mermaid</code> diagrams are drawn; it reads only that file.</p></li>
 <li><p><strong>Site-only helpers</strong> live in <code>quarto/_site_functions.R</code>, which pages source and <code>main.R</code> never does. They read only code or text given to them, never data, and are tested in <code>tests/test-site-functions.R</code>. A chunk calling them (for example <code>side_by_side_diff()</code>, which shows two versions of some code side by side) is the only other kind of chunk a page may run. Helpers the analysis needs stay in <code>R/functions.R</code>.</p></li>

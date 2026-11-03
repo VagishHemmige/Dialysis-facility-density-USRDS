@@ -125,17 +125,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -145,6 +134,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -233,7 +233,42 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Study design and methods</span></a>
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Linking census and facility data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -671,7 +706,7 @@ $PD96DET code list (usRds) ── classify_esrd_causes.R (by hand, once)     │
 </section>
 <section id="website" class="level2">
 <h2 class="anchored" data-anchor-id="website">Website</h2>
-<p><code>_quarto.yml</code>, <code>index.qmd</code> and <code>404.qmd</code> at the root; one page per definitive script in <code>quarto/</code>, plus clinical and methodological background, study design and methods, differences, results, supplement, the original file and about. Four pages show the project documents (<code>analysis-plan.qmd</code>, <code>architecture.qmd</code>, <code>agents.qmd</code>, <code>repository-blueprint.qmd</code>); each shows its file from the repository root, which stays the one source, so the plan’s citations resolve on the site. Three include their file; the Architecture page reads <code>ARCHITECTURE.md</code> as text so that any mermaid diagrams are drawn. Each sidebar entry has the icon of its kind of page, coloured by <code>styles.css</code>, and the Lua filter <code>quarto/_pending.lua</code> highlights text marked as depending on an open decision. Pages import code from <code>R/</code> with <code>knitr::read_chunk()</code> and never evaluate it. Helpers used only by the pages are in <code>quarto/_site_functions.R</code>: <code>side_by_side_diff()</code> for before-and-after code comparisons, and <code>rmd_as_markdown()</code>, which shows the original R Markdown file on its page as formatted text with each chunk folded, without running anything. Their style is in <code>styles.css</code>, and <code>main.R</code> never sources them. The site renders to <code>docs/</code>, which is not committed: <code>.github/workflows/publish.yml</code> renders it on every pull request as a check and, on each push to <code>main</code>, renders it and publishes it to the <code>gh-pages</code> branch, which GitHub Pages serves.</p>
+<p><code>_quarto.yml</code>, <code>index.qmd</code> and <code>404.qmd</code> at the root; one page per definitive script in <code>quarto/</code>, plus clinical and methodological background, six study design and methods pages (<code>study_*.qmd</code>) that explain the methods without code, differences, results, supplement, the original file and about. Four pages show the project documents (<code>analysis-plan.qmd</code>, <code>architecture.qmd</code>, <code>agents.qmd</code>, <code>repository-blueprint.qmd</code>); each shows its file from the repository root, which stays the one source, so the plan’s citations resolve on the site. Three include their file; the Architecture page reads <code>ARCHITECTURE.md</code> as text so that any mermaid diagrams are drawn. Each sidebar entry has the icon of its kind of page, coloured by <code>styles.css</code>, and the Lua filter <code>quarto/_pending.lua</code> highlights text marked as depending on an open decision. Pages import code from <code>R/</code> with <code>knitr::read_chunk()</code> and never evaluate it. Helpers used only by the pages are in <code>quarto/_site_functions.R</code>: <code>side_by_side_diff()</code> for before-and-after code comparisons, and <code>rmd_as_markdown()</code>, which shows the original R Markdown file on its page as formatted text with each chunk folded, without running anything. Their style is in <code>styles.css</code>, and <code>main.R</code> never sources them. The site renders to <code>docs/</code>, which is not committed: <code>.github/workflows/publish.yml</code> renders it on every pull request as a check and, on each push to <code>main</code>, renders it and publishes it to the <code>gh-pages</code> branch, which GitHub Pages serves.</p>
 </section>
 <section id="tests" class="level2">
 <h2 class="anchored" data-anchor-id="tests">Tests</h2>

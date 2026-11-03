@@ -114,6 +114,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -134,17 +145,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
   background-image: none;
 }
 </style>
@@ -233,7 +233,42 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Study design and methods</span></a>
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Linking census and facility data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -507,7 +542,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </header>
 
 
-<p>For each patient’s first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA’s population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study’s exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the <a href="../quarto/create_cohort.html">cohort flowchart</a>.</p>
+<p>For each patient’s first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA’s population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study’s exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the <a href="../quarto/create_cohort.html">cohort flowchart</a>. The method is explained on <a href="../quarto/study_linkage.html">Linking census and facility data</a>.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1171,7 +1206,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>For each patient's first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA's population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study's exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>.</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>For each patient's first Medical Evidence form, this script adds what is known about the place they lived: the number of dialysis facilities in their ZIP code and HSA on the day dialysis started, census (ACS) data for the ZIP code, the HSA's population and Dartmouth Atlas benchmarks, whether the area is rural or urban, and the cause of kidney failure. It then calculates the study's exposure, dialysis facilities per 100,000 HSA residents. No patients are removed at this step; those with missing area data are excluded later, as steps in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>. The method is explained on <span class="co">[</span><span class="ot">Linking census and facility data</span><span class="co">](study_linkage.qmd)</span>.</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>

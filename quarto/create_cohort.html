@@ -144,17 +144,6 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   content: '📊';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -164,6 +153,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -252,7 +252,42 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Study design and methods</span></a>
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Linking census and facility data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -526,7 +561,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>Builds the analytic cohort with <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>. Every exclusion is one <code>fc_filter()</code> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort.</p>
+<p>Builds the analytic cohort with <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>. Every exclusion is one <code>fc_filter()</code> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on <a href="../quarto/study_cohort.html">Who is studied</a>.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -566,27 +601,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="exclusions" class="level2">
 <h2 class="anchored" data-anchor-id="exclusions">Exclusions</h2>
-<p>The steps, in order, with the reason for each. Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did. The <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md#4-study-population">analysis plan</a>, section 4, has the details.</p>
-<ol type="1">
-<li><strong>First Medical Evidence form per patient.</strong> Later forms describe a second or later episode of dialysis, not its start.</li>
-<li><strong>Dialysis started 2011 to 2019</strong>, after the IDEAL trial changed practice (see <a href="../quarto/background.html">Clinical background</a>).</li>
-<li><strong>Age 18 or older.</strong></li>
-<li><strong>Hemodialysis</strong>, not peritoneal dialysis.</li>
-<li><strong>In-center dialysis.</strong> The timing of a home dialysis start depends on training schedules and trainer availability, and can be very early by design, so the paper excludes them <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</li>
-<li><strong>Insurance recorded</strong>, a Model 3 covariate.</li>
-<li><strong>Access type recorded</strong>, a Model 2 covariate.</li>
-<li><strong>Sex recorded</strong>, a Model 1 covariate.</li>
-<li><strong>eGFR recorded and 20 or below</strong>, the range in which nephrologists decide when to start (see <a href="../quarto/background.html#the-egfr-thresholds">The eGFR thresholds</a>).</li>
-<li><strong>A residential ZIP code on the date dialysis started</strong>, to place the patient in an area.</li>
-<li><strong>The ZIP code has a ZCTA</strong> in that year’s crosswalk, the Census area for which ACS data are published.</li>
-<li><strong>ACS data for that ZCTA and year.</strong></li>
-<li><strong>Facility data for the date dialysis started</strong>, to count facilities.</li>
-<li><strong>The ZIP code is in a Dartmouth HSA</strong>, the unit of the exposure.</li>
-<li><strong>The 48 contiguous states or the District of Columbia</strong>, as the paper studies the continental US <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</li>
-<li><strong>Race and Hispanic ethnicity recorded</strong>, Model 1 covariates.</li>
-<li><strong>Complete ACS and rural-urban data for the ZIP code</strong>, Model 3 covariates. ZIP codes with RUCA code 99 have no population.</li>
-</ol>
-<p>Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.</p>
+<p>Each of the 17 steps is one <code>fc_filter()</code> call, in the order of section 4 of the <a href="../quarto/analysis-plan.html#4-study-population">analysis plan</a>; the reason for each is on <a href="../quarto/study_cohort.html#exclusions-in-order">Who is studied</a>. Steps 11 and 12 are one step in the plan, drawn as two boxes so that each loss is counted.</p>
 <p>In the original code the cohort was filtered in about 27 separate places, and a hand-maintained table recorded the counts. The table and the data drifted apart: one exclusion was recorded as removing nobody while the next line removed patients; at least eight filters (including the facility linkage) were never recorded; two rows were labelled with the wrong variable; and one recorded step was never applied. Here each step both filters and counts, so the diagram cannot disagree with the data.</p>
 <div class="cell">
 <details class="code-fold">
@@ -659,9 +674,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-hemmige2024density" class="csl-entry" role="listitem">
-Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geographic Dialysis Facility Density and Early Dialysis Initiation.”</span> <em>JAMA Network Open</em> 7 (1): e2350009. <a href="https://doi.org/10.1001/jamanetworkopen.2023.50009">https://doi.org/10.1001/jamanetworkopen.2023.50009</a>.
-</div>
 <div id="ref-flowchart_pkg" class="csl-entry" role="listitem">
 Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristian Tebé. 2026. <span>“Flowchart: An <span>R</span> Package for Data Flowchart Generation.”</span> <em>Journal of Open Research Software</em> 14 (1): 20. <a href="https://doi.org/10.5334/jors.649">https://doi.org/10.5334/jors.649</a>.
 </div>
@@ -1134,7 +1146,7 @@ Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristia
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Builds the analytic cohort with <span class="in">`flowchart`</span> <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span>. Every exclusion is one <span class="in">`fc_filter()`</span> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Builds the analytic cohort with <span class="in">`flowchart`</span> <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span>. Every exclusion is one <span class="in">`fc_filter()`</span> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd)</span>.</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
@@ -1167,49 +1179,29 @@ Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristia
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exclusions</span></span>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>The steps, in order, with the reason for each. Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did. The <span class="co">[</span><span class="ot">analysis plan</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md#4-study-population)</span>, section 4, has the details.</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>Each of the 17 steps is one <span class="in">`fc_filter()`</span> call, in the order of section 4 of the <span class="co">[</span><span class="ot">analysis plan</span><span class="co">](analysis-plan.qmd#4-study-population)</span>; the reason for each is on <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd#exclusions-in-order)</span>. Steps 11 and 12 are one step in the plan, drawn as two boxes so that each loss is counted.</span>
 <span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**First Medical Evidence form per patient.** Later forms describe a second or later episode of dialysis, not its start.</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Dialysis started 2011 to 2019**, after the IDEAL trial changed practice (see <span class="co">[</span><span class="ot">Clinical background</span><span class="co">](background.qmd)</span>).</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Age 18 or older.**</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Hemodialysis**, not peritoneal dialysis.</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>**In-center dialysis.** The timing of a home dialysis start depends on training schedules and trainer availability, and can be very early by design, so the paper excludes them <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>**Insurance recorded**, a Model 3 covariate.</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>**Access type recorded**, a Model 2 covariate.</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="ss">8.  </span>**Sex recorded**, a Model 1 covariate.</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="ss">9.  </span>**eGFR recorded and 20 or below**, the range in which nephrologists decide when to start (see <span class="co">[</span><span class="ot">The eGFR thresholds</span><span class="co">](background.qmd#the-egfr-thresholds)</span>).</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="ss">10. </span>**A residential ZIP code on the date dialysis started**, to place the patient in an area.</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="ss">11. </span>**The ZIP code has a ZCTA** in that year's crosswalk, the Census area for which ACS data are published.</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="ss">12. </span>**ACS data for that ZCTA and year.**</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="ss">13. </span>**Facility data for the date dialysis started**, to count facilities.</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="ss">14. </span>**The ZIP code is in a Dartmouth HSA**, the unit of the exposure.</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="ss">15. </span>**The 48 contiguous states or the District of Columbia**, as the paper studies the continental US <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="ss">16. </span>**Race and Hispanic ethnicity recorded**, Model 1 covariates.</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="ss">17. </span>**Complete ACS and rural-urban data for the ZIP code**, Model 3 covariates. ZIP codes with RUCA code 99 have no population.</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>In the original code the cohort was filtered in about 27 separate places, and a hand-maintained table recorded the counts. The table and the data drifted apart: one exclusion was recorded as removing nobody while the next line removed patients; at least eight filters (including the facility linkage) were never recorded; two rows were labelled with the wrong variable; and one recorded step was never applied. Here each step both filters and counts, so the diagram cannot disagree with the data.</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: build-flowchart</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes on the code</span></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="in">`flowchart`</span> turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that <span class="in">`main.R`</span> has put in the global environment from <span class="in">`setup.R`</span>, never objects local to a function.</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## The cohort</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>The data from the final step, one row per patient. The HSA used for facility counts and the HSA used for population are checked to be the same.</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: extract-cohort</span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>In the original code the cohort was filtered in about 27 separate places, and a hand-maintained table recorded the counts. The table and the data drifted apart: one exclusion was recorded as removing nobody while the next line removed patients; at least eight filters (including the facility linkage) were never recorded; two rows were labelled with the wrong variable; and one recorded step was never applied. Here each step both filters and counts, so the diagram cannot disagree with the data.</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: build-flowchart</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes on the code</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="in">`flowchart`</span> turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that <span class="in">`main.R`</span> has put in the global environment from <span class="in">`setup.R`</span>, never objects local to a function.</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## The cohort</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>The data from the final step, one row per patient. The HSA used for facility counts and the HSA used for population are checked to be the same.</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: extract-cohort</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

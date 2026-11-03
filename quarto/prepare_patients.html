@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -153,6 +142,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -252,7 +252,42 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Study design and methods</span></a>
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Linking census and facility data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -527,7 +562,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </header>
 
 
-<p>Loads the Medical Evidence and Residence files through <code>usRds</code> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <a href="../quarto/create_cohort.html">cohort flowchart</a>.</p>
+<p>Loads the Medical Evidence and Residence files through <code>usRds</code> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <a href="../quarto/create_cohort.html">cohort flowchart</a>. What the variables mean, and why they are defined this way, is on <a href="../quarto/study_exposure.html">Exposure, outcome and covariates</a> and <a href="../quarto/study_cohort.html">Who is studied</a>.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -587,7 +622,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 <section id="patient-variables" class="level2">
 <h2 class="anchored" data-anchor-id="patient-variables">Patient variables</h2>
-<p>Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper’s five groups. How the Stata analysis merged the form’s other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard <span class="citation" data-cites="omb1997race">(<a href="#ref-omb1997race" role="doc-biblioref">Office of Management and Budget 1997</a>)</span>, and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as <code>race_detailed</code>.</p>
+<p>Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper’s five groups, with Middle Eastern as White, South Asian as Asian and Other or multiracial as White (why: <a href="../quarto/study_exposure.html#patient-and-area-characteristics">Patient and area characteristics</a>). The detailed race is kept as <code>race_detailed</code>.</p>
 <p>The clinical variables are derived as follows:</p>
 <ul>
 <li><strong>Comorbidities</strong> are present when any of their form fields is marked yes; blank or unknown counts as not present, as on the form. Diabetes combines four fields (insulin, oral medication, no medication, retinopathy), alcohol or drug dependence two, immobility three (inability to ambulate, needing assistance, inability to transfer) and institutionalized four (any type of institution).</li>
@@ -772,9 +807,6 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-omb1997race" class="csl-entry" role="listitem">
-Office of Management and Budget. 1997. <em>Revisions to the Standards for the Classification of Federal Data on Race and Ethnicity</em>. Federal Register 62(210):58782–58790. <a href="https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf">https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf</a>.
-</div>
 <div id="ref-usrds2024guide" class="csl-entry" role="listitem">
 United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USRDS</span> Database, Appendix b (Data File Descriptions) and Appendix c (Data Formats)</em>. National Institute of Diabetes and Digestive and Kidney Diseases. <a href="https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide">https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide</a>.
 </div>
@@ -1247,7 +1279,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Loads the Medical Evidence and Residence files through <span class="in">`usRds`</span> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>.</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Loads the Medical Evidence and Residence files through <span class="in">`usRds`</span> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>. What the variables mean, and why they are defined this way, is on <span class="co">[</span><span class="ot">Exposure, outcome and covariates</span><span class="co">](study_exposure.qmd)</span> and <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd)</span>.</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
@@ -1280,7 +1312,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Patient variables</span></span>
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard <span class="co">[</span><span class="ot">@omb1997race</span><span class="co">]</span>, and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as <span class="in">`race_detailed`</span>.</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups, with Middle Eastern as White, South Asian as Asian and Other or multiracial as White (why: <span class="co">[</span><span class="ot">Patient and area characteristics</span><span class="co">](study_exposure.qmd#patient-and-area-characteristics)</span>). The detailed race is kept as <span class="in">`race_detailed`</span>.</span>
 <span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>The clinical variables are derived as follows:</span>
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>

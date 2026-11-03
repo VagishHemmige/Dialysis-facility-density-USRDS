@@ -92,7 +92,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../quarto/setup.html" rel="next">
-<link href="../quarto/study_methods.html" rel="prev">
+<link href="../quarto/study_analysis.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -144,17 +144,6 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Results.callout {
-  border-left-color: #198754;
-}
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
-}
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -164,6 +153,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -252,7 +252,42 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Study design and methods</span></a>
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Linking census and facility data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Cause of kidney failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -853,7 +888,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis.</td>
 <td>Rebuilt</td>
-<td>See <a href="../quarto/classify_esrd_causes.html#the-six-categories">Classifying codes</a> (decided 27 October 2026).</td>
+<td>See <a href="../quarto/study_esrd_causes.html#the-six-categories">Classifying codes</a> (decided 27 October 2026).</td>
 <td>Table 1 cause rows; Models 2 and 3, slightly</td>
 </tr>
 <tr class="odd">
@@ -1559,8 +1594,8 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../quarto/study_methods.html" class="pagination-link" aria-label="Study design and methods">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Study design and methods</span>
+      <a href="../quarto/study_analysis.html" class="pagination-link" aria-label="Analysis and reporting">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Analysis and reporting</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1667,7 +1702,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The outcome <span class="in">`GFR_DICH`</span> counted eGFR of 10 or above as early. The paper describes the outcome as eGFR "greater than 10" vs "less than or equal to 10". <span class="pp">|</span> Paper differs from code <span class="pp">|</span> The code's rule: 10 or above is early (decided 27 October 2026). <span class="pp">|</span> None, if Stata used <span class="in">`GFR_DICH`</span>; otherwise patients at exactly 10 <span class="pp">|</span></span>
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The mapping of the primary cause of kidney failure to six categories came from a spreadsheet that is no longer available. <span class="pp">|</span> Rebuilt (D4, decided 30 October 2026) <span class="pp">|</span> Three cloud language models classify the public USRDS code list; a code is accepted when two of the three agree, and the deciders review the rest. Two local models are reported for comparison without voting. See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>. <span class="pp">|</span> Table 1 cause rows; Models 2 and 3 <span class="pp">|</span></span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A primary-cause code listed on two category sheets would have joined twice and duplicated those patients. The sheets were built from the codes that appeared in the data. <span class="pp">|</span> Corrected error <span class="pp">|</span> The mapping is built from the full public code list, one row per code, and the join stops if a code appears twice. <span class="pp">|</span> None, unless the original sheets had such a code <span class="pp">|</span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis. <span class="pp">|</span> Rebuilt <span class="pp">|</span> See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd#the-six-categories)</span> (decided 27 October 2026). <span class="pp">|</span> Table 1 cause rows; Models 2 and 3, slightly <span class="pp">|</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis. <span class="pp">|</span> Rebuilt <span class="pp">|</span> See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](study_esrd_causes.qmd#the-six-categories)</span> (decided 27 October 2026). <span class="pp">|</span> Table 1 cause rows; Models 2 and 3, slightly <span class="pp">|</span></span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Access type had the arteriovenous fistula as its first level, and so as the reference in the exploratory R models. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Catheter, the most common access, is the reference. <span class="pp">|</span> None on the density estimates; only the access-type coefficients change <span class="pp">|</span></span>
 <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The paper says eGFR was "calculated by CKD-EPI equation 2012". The original code used the USRDS variable <span class="in">`GFR_EPI`</span>, which the site takes to be the 2009 creatinine equation with the race coefficient <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>; the CKD-EPI equations published in 2012 add cystatin C <span class="co">[</span><span class="ot">@inker2012cystatin</span><span class="co">]</span>, which the form does not record <span class="co">[</span><span class="ot">@cms2728_form2015</span><span class="co">]</span>. The 2024 Researcher's Guide describes <span class="in">`GFR_EPI`</span> only as calculated with CKD-EPI, and lists <span class="in">`GFR_EPI_REFIT`</span> for the 2021 refit <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>; the year of <span class="in">`GFR_EPI`</span>'s equation is inferred from that, not stated. <span class="pp">|</span> Paper differs from code <span class="pp">|</span> <span class="in">`GFR_EPI`</span>, as the original code used. <span class="pp">|</span> None, if <span class="in">`GFR_EPI`</span> is what the paper used <span class="pp">|</span></span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A comorbidity field that was blank became missing, which would drop the patient from a model. The published sample sizes show the paper's models kept these patients. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Blank or unknown counts as not present, as on the form. <span class="pp">|</span> Matches the published sample sizes <span class="pp">|</span></span>

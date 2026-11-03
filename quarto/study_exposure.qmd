@@ -1,0 +1,40 @@
+---
+title: "Exposure, outcome and covariates"
+format: html
+---
+
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code is on [3. USRDS patient data](prepare_patients.qmd), [4. Linking area data](link_area_data.qmd) and [6. Density categories](define_exposure.qmd).
+
+## Exposure: facility density
+
+The exposure is the number of dialysis facilities in the patient's HSA on the day dialysis started, per 100,000 HSA residents. Every facility in the CMS release current that day counts, placed in an HSA by its ZIP code. The population is that of the ZCTAs making up the HSA, each counted once even when several ZIP codes share it.
+
+Density is cut into five categories: no facility, then four groups split at the 25th, 50th and 75th percentiles among patients in the final cohort, each including its upper bound. Percentiles are taken across patients, not HSAs, as in the original code that produced the published cut points (1.36, 1.95 and 2.76 per 100,000 [@hemmige2024density]). Density per 100,000 as a continuous measure is used in sensitivity analyses.
+
+**Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
+
+**Current code:** facility and population counts differ from the original code in several ways; see [Differences: facility counts](differences.qmd#facility-counts) and [Differences: cohort construction](differences.qmd#cohort-construction).
+
+## Outcome
+
+The primary outcome is an **early start**: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with a CKD-EPI equation, read as the 2009 equation [@usrds2024guide; @levey2009ckdepi]. Ten is the lower edge of the IDEAL trial's early-start range [@cooper2010ideal], which IDEAL measured on a different scale (Cockcroft-Gault). The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on [Clinical background](background.qmd#race-and-egfr).
+
+**Specified in:** [§7 Outcome](analysis-plan.qmd#7-outcome).
+
+## Patient and area characteristics
+
+Patient characteristics come from the first form: age, sex, race, Hispanic ethnicity, year dialysis started, coexisting conditions (present when any of their fields is marked yes, absent when blank or unknown, as on the form), vascular access, nephrology care before kidney failure (none, some or unknown), insurance, albumin, hemoglobin and primary cause of kidney failure. Area characteristics are the ZIP code's poverty rate and share of Black residents, its rural-urban type, and HSA quality benchmarks.
+
+Two choices fill gaps in the record:
+
+-   **Race.** The paper reports five race groups whose counts add up to the total, so the form's other codes were merged in a way not recorded. Here Middle Eastern counts as White and South Asian as Asian, following the 1997 federal standard [@omb1997race], and Other or multiracial as White, the largest group. Chosen for this demonstration. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2).
+-   **Cause of kidney failure.** The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: [Cause of kidney failure](study_esrd_causes.qmd).
+
+**Specified in:** [§6 Covariates](analysis-plan.qmd#6-covariates).
+
+**Current code:** Table 1 shows the characteristics in the paper's Table 1; leg amputations, hospital beds and staff, station density and the non-profit count are prepared but not shown ([Tables](tables.qmd#table-1); where to report them is [issue #53](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/53)). Coding differences from the original are on [Differences: patient variables](differences.qmd#patient-variables).
+
+## References
+
+::: {#refs}
+:::

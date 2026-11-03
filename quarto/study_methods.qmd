@@ -1,9 +1,9 @@
 ---
-title: "Study design and methods"
+title: "Study design and methods: overview"
 format: html
 ---
 
-This page explains, in plain language and without code, what this study chose and why. The general background is on [Methodological background](methodological_background.qmd). The formal specification is the [analysis plan](analysis-plan.qmd); each section below ends by linking the part of the plan that governs it. Two kinds of note mark where the description stands:
+This section explains, in plain language and without code, what this study chose and why. This page gives the question, the design and the data; the pages after it take each part in turn. The general background is on [Methodological background](methodological_background.qmd). The formal specification is the [analysis plan](analysis-plan.qmd); each section of these pages ends by linking the part of the plan that governs it. Two kinds of note mark where the description stands:
 
 -   **Specified in:** the section of the analysis plan that defines the method.
 -   **Current code:** where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.
@@ -24,96 +24,9 @@ The study is a replication: every choice the paper states is kept, and where the
 
 Patients come from the USRDS Medical Evidence file, and their ZIP code on the day dialysis started from the Residence file. Facilities come from the CMS release current on that day. Each ZIP code is placed in an HSA with the Dartmouth crosswalk and in a ZCTA with the UDS Mapper crosswalk; ZIP code characteristics come from the American Community Survey 5-year subject table for that ZCTA. HSA quality measures (2015) and hospital resources (2012) come from the Dartmouth Atlas, and rural-urban type from the 2010 RUCA ZIP code file.
 
-All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. See [Public area data](download_public_data.qmd) and [USRDS patient data](prepare_patients.qmd).
+All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. How each source is linked to the patient is on [Linking census and facility data](study_linkage.qmd).
 
 **Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§4 Study population](analysis-plan.qmd#4-study-population) ("Year of linkage").
-
-## Who is studied
-
-The index event is the start of regular dialysis on each patient's **first** Medical Evidence form; later forms describe a second episode. Patients are then kept, in this order, if they:
-
-1.  started dialysis from 2011 to 2019, after the IDEAL trial changed practice (see [Clinical background](background.qmd));
-2.  were 18 or older;
-3.  started hemodialysis in a dialysis facility (home starts are excluded, because their timing depends on training and can be early by design [@hemmige2024density]);
-4.  had insurance, vascular access type and sex recorded;
-5.  had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start [@scialla2014iv];
-6.  had one residential ZIP code in effect on the day dialysis started, with a ZCTA, ACS data, a facility listing and an HSA for that date and year;
-7.  lived in the 48 contiguous states or the District of Columbia;
-8.  had race and Hispanic ethnicity recorded, and complete ACS and rural-urban data for their ZIP code.
-
-Requiring recorded covariates means every model without laboratory values uses the same patients, as in the paper (844,466 [@hemmige2024density]). Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself; the steps and reasons are on [Cohort flowchart](create_cohort.qmd).
-
-**Specified in:** [§4 Study population](analysis-plan.qmd#4-study-population).
-
-**Current code:** the plan's single step for a ZCTA and ACS data is drawn as two boxes, so each loss is counted separately ([Cohort flowchart](create_cohort.qmd#exclusions)). Residents of an HSA with no ACS population have no density and are removed at the HSA step ([Linking area data](link_area_data.qmd#facility-density)).
-
-## Exposure: facility density
-
-The exposure is the number of dialysis facilities in the patient's HSA on the day dialysis started, per 100,000 HSA residents. Every facility in the CMS release current that day counts, placed in an HSA by its ZIP code. The population is that of the ZCTAs making up the HSA, each counted once even when several ZIP codes share it.
-
-Density is cut into five categories: no facility, then four groups split at the 25th, 50th and 75th percentiles among patients in the final cohort, each including its upper bound. Percentiles are taken across patients, not HSAs, as in the original code that produced the published cut points (1.36, 1.95 and 2.76 per 100,000 [@hemmige2024density]). Density per 100,000 as a continuous measure is used in sensitivity analyses. See [Density categories](define_exposure.qmd).
-
-**Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
-
-**Current code:** facility and population counts differ from the original code in several ways; see [Differences: facility counts](differences.qmd#facility-counts) and [Differences: cohort construction](differences.qmd#cohort-construction).
-
-## Patient and area characteristics
-
-Patient characteristics come from the first form: age, sex, race, Hispanic ethnicity, year dialysis started, coexisting conditions (present when any of their fields is marked yes, absent when blank), vascular access, nephrology care before kidney failure (none, some or unknown), insurance, albumin, hemoglobin and primary cause of kidney failure. Area characteristics are the ZIP code's poverty rate and share of Black residents, its rural-urban type, and HSA quality benchmarks.
-
-Two choices fill gaps in the record:
-
--   **Race.** The paper reports five race groups whose counts add up to the total, so the form's other codes were merged in a way not recorded. Here Middle Eastern counts as White and South Asian as Asian, following the 1997 federal standard [@omb1997race], and Other or multiracial as White, the largest group. Chosen for this demonstration.
--   **Cause of kidney failure.** The original mapping of cause codes to six categories is lost. Three language models from different companies each classified the public USRDS code list, never patient data; a code was accepted when two of the three agreed, and the deciders reviewed the rest. The two-of-three rule was chosen for this demonstration. See [Cause of kidney failure](classify_esrd_causes.qmd).
-
-**Specified in:** [§6 Covariates](analysis-plan.qmd#6-covariates).
-
-**Current code:** Table 1 shows the characteristics in the paper's Table 1; leg amputations, hospital beds and staff, station density and the non-profit count are prepared but not shown ([Tables](tables.qmd#table-1); where to report them is [issue #53](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/53)). Coding differences from the original are on [Differences: patient variables](differences.qmd#patient-variables).
-
-## Outcome
-
-The primary outcome is an **early start**: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with a CKD-EPI equation, read as the 2009 equation [@usrds2024guide; @levey2009ckdepi]. Ten is the lower edge of the IDEAL trial's early-start range [@cooper2010ideal], which IDEAL measured on a different scale (Cockcroft-Gault). The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on [Clinical background](background.qmd#race-and-egfr).
-
-**Specified in:** [§7 Outcome](analysis-plan.qmd#7-outcome).
-
-## Analysis
-
-**Description.** Table 1 compares the five density categories, with one-way ANOVA for continuous characteristics, chi-squared tests for categorical ones, and missing values shown.
-
-**Main models.** Mixed-effects logistic regression of early start on density category, with a random intercept for HSA so that patients in the same area are not treated as independent. Covariates are added in three stages, following the paper's Table 2 footnotes:
-
--   **Model 1:** age, sex, race, Hispanic ethnicity and year.
--   **Model 2:** adds coexisting conditions, access type and cause of kidney failure.
--   **Model 3:** adds insurance, nephrology care, rural-urban type, ZIP code poverty and share of Black residents, and the three HSA benchmarks the paper's Methods name (HbA1c testing and eye examinations in diabetes, and ambulatory-sensitive discharges).
-
-Models 2 and 3 are fit with and without albumin and hemoglobin; with them, only patients with both values are used (533,375 in the paper [@hemmige2024density]). Census region is not adjusted for, because the footnotes do not list it. The paper's Stata models are rebuilt in R with `glmmTMB` [@glmmtmb], which on synthetic data matched a slower, fully converged alternative.
-
-**Variance.** Two null linear models of eGFR give the share of its variation between HSAs, and between facilities within HSAs, both on patients with a facility recorded so the shares are comparable. See [Models](models.qmd).
-
-**Specified in:** [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis).
-
-**Current code:** the original R code had exploratory models only, so the published models are rebuilt; see [Differences: models](differences.qmd#models).
-
-## Sensitivity analyses
-
-Each asks whether the main finding rests on one assumption:
-
--   excluding HSAs with no facility, with the lowest non-zero category as reference, in case distance to any facility drives the result;
--   separate models for White and for Black patients;
--   density as a continuous measure, in case the result depends on the cut points;
--   eGFR as a continuous outcome, in case it depends on the threshold of 10;
--   albumin and hemoglobin filled in by multiple imputation (10 imputations, predictive mean matching), in case missing laboratory values bias the complete-case results;
--   excluding eGFR of 5 or below, from the original R code and not in the paper.
-
-**Specified in:** [§9 Sensitivity analyses](analysis-plan.qmd#9-sensitivity-analyses), [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis) (missing data).
-
-**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. [Models](models.qmd) does not yet include this; the effects are to be added to [Differences from the original code](differences.qmd) after the first run ([issue #52](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)).
-
-## Disclosure
-
-The USRDS data are used under the investigators' data use agreement. No count from 1 to 10 is published in a table, figure, flowchart box or text, including counts that could be worked out by subtraction. Tables and figures stay out of the repository until checked and cleared for release, so this site shows no results from USRDS data.
-
-**Specified in:** [§10 Disclosure control](analysis-plan.qmd#10-disclosure-control).
 
 ## References
 

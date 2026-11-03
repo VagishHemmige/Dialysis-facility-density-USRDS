@@ -329,7 +329,7 @@ One row per code with each model's category and reason; a category is accepted w
 
 For each model that answers but does not vote: how many codes it answered once with a code from the list, how many it left unanswered, how many answers carried text that is not a code in the list, how many codes it answered more than once, and how often it gave the category the voting models accepted. Tested on synthetic answers with a known count of each.
 
-**Used in the analysis:** 2. Cause of kidney failure: [What the local models showed](classify_esrd_causes.qmd#what-the-local-models-showed).
+**Used in the analysis:** 2. Cause of kidney failure: [Reporting the local models](classify_esrd_causes.qmd#reporting-the-local-models).
 
 ```{r}
 #| label: fn-local-model-report

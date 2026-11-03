@@ -3,7 +3,7 @@ title: "6. Density categories"
 format: html
 ---
 
-Cuts HSA facility density into the five published categories, using quartiles from the final cohort.
+Cuts HSA facility density into the five published categories, using quartiles from the final cohort. Why the cut points are taken across patients is on [Exposure: facility density](study_exposure.qmd#exposure-facility-density).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

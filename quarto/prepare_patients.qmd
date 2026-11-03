@@ -3,7 +3,7 @@ title: "3. USRDS patient data"
 format: html
 ---
 
-Loads the Medical Evidence and Residence files through `usRds` and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the [cohort flowchart](create_cohort.qmd).
+Loads the Medical Evidence and Residence files through `usRds` and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the [cohort flowchart](create_cohort.qmd). What the variables mean, and why they are defined this way, is on [Exposure, outcome and covariates](study_exposure.qmd) and [Who is studied](study_cohort.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -36,7 +36,7 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Patient variables
 
-Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups. How the Stata analysis merged the form's other codes is not recorded, so for this demonstration Middle Eastern counts as White and South Asian as Asian, following the 1997 OMB race standard [@omb1997race], and Other or multiracial counts as White, the largest group. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2). The detailed race is kept as `race_detailed`.
+Each form is numbered within its patient, and the first form is flagged. Race is grouped into the paper's five groups, with Middle Eastern as White, South Asian as Asian and Other or multiracial as White (why: [Patient and area characteristics](study_exposure.qmd#patient-and-area-characteristics)). The detailed race is kept as `race_detailed`.
 
 The clinical variables are derived as follows:
 

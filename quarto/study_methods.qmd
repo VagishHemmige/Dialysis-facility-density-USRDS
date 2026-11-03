@@ -68,7 +68,7 @@ Two choices fill gaps in the record:
 
 **Specified in:** [§6 Covariates](analysis-plan.qmd#6-covariates).
 
-**Current code:** Table 1 shows the characteristics in the paper's Table 1; leg amputations, hospital beds and staff, station density and the non-profit count are prepared but not shown ([Tables](tables.qmd#table-1)). Coding differences from the original are on [Differences: patient variables](differences.qmd#patient-variables).
+**Current code:** Table 1 shows the characteristics in the paper's Table 1; leg amputations, hospital beds and staff, station density and the non-profit count are prepared but not shown ([Tables](tables.qmd#table-1); where to report them is [issue #53](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/53)). Coding differences from the original are on [Differences: patient variables](differences.qmd#patient-variables).
 
 ## Outcome
 
@@ -107,7 +107,7 @@ Each asks whether the main finding rests on one assumption:
 
 **Specified in:** [§9 Sensitivity analyses](analysis-plan.qmd#9-sensitivity-analyses), [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis) (missing data).
 
-**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. [Models](models.qmd) does not yet include this; the effects are to be added to [Differences from the original code](differences.qmd) after the first run.
+**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. [Models](models.qmd) does not yet include this; the effects are to be added to [Differences from the original code](differences.qmd) after the first run ([issue #52](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)).
 
 ## Disclosure
 

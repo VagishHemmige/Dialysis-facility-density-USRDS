@@ -3,6 +3,7 @@ project:
   output-dir: docs
   render:
     - index.qmd
+    - 404.qmd
     - quarto/**
 
 author:
@@ -22,79 +23,131 @@ website:
 
   sidebar:
     style: docked
+    # Every section starts open, including those inside Code
+    collapse-level: 3
     search: true
     contents:
       - href: index.qmd
         text: Home
+        icon: house
 
       - section: Background
         contents:
           - href: quarto/background.qmd
             text: Clinical background
-          - href: quarto/original.qmd
-            text: The original R Markdown file
+            icon: book
+
+      - section: Study design and methods
+        contents:
           - href: quarto/differences.qmd
             text: Differences from the original code
+            icon: diagram-3
 
-      - section: Setup and helper functions
+      - section: Code
         contents:
-          - href: quarto/setup.qmd
-            text: Setup
-          - href: quarto/functions.qmd
-            text: Functions
+          - section: Setup and helper functions
+            contents:
+              - href: quarto/setup.qmd
+                text: Setup
+                icon: laptop
+              - href: quarto/functions.qmd
+                text: Functions
+                icon: laptop
 
-      - section: Data processing and analysis
-        contents:
-          - href: quarto/download_public_data.qmd
-            text: 1. Public area data
-          - href: quarto/classify_esrd_causes.qmd
-            text: 2. Cause of kidney failure
-          - href: quarto/prepare_patients.qmd
-            text: 3. USRDS patient data
-          - href: quarto/link_area_data.qmd
-            text: 4. Linking area data
-          - href: quarto/create_cohort.qmd
-            text: 5. Cohort flowchart
-          - href: quarto/define_exposure.qmd
-            text: 6. Density categories
-          - href: quarto/models.qmd
-            text: 7. Models
+          - section: Data processing and analysis
+            contents:
+              - href: quarto/download_public_data.qmd
+                text: 1. Public area data
+                icon: laptop
+              - href: quarto/classify_esrd_causes.qmd
+                text: 2. Cause of kidney failure
+                icon: laptop
+              - href: quarto/prepare_patients.qmd
+                text: 3. USRDS patient data
+                icon: laptop
+              - href: quarto/link_area_data.qmd
+                text: 4. Linking area data
+                icon: laptop
+              - href: quarto/create_cohort.qmd
+                text: 5. Cohort flowchart
+                icon: laptop
+              - href: quarto/define_exposure.qmd
+                text: 6. Density categories
+                icon: laptop
+              - href: quarto/models.qmd
+                text: 7. Models
+                icon: laptop
 
-      - section: Tables and figures
-        contents:
-          - href: quarto/tables.qmd
-            text: Tables
-          - href: quarto/figures.qmd
-            text: Figures
+          - section: Tables and figures
+            contents:
+              - href: quarto/tables.qmd
+                text: Tables
+                icon: laptop
+              - href: quarto/figures.qmd
+                text: Figures
+                icon: laptop
+
+          - section: Original analysis
+            contents:
+              - href: quarto/original.qmd
+                text: The original R Markdown file
+                icon: laptop
 
       - section: Published results
         contents:
           - href: quarto/results.qmd
             text: Published figures and tables
+            icon: clipboard-data
           - href: quarto/supplement.qmd
             text: Published supplement
+            icon: clipboard-data
 
       - section: Project documents
         contents:
           - href: quarto/analysis-plan.qmd
             text: Analysis plan
+            icon: file-earmark-ruled
           - href: quarto/architecture.qmd
             text: Architecture
+            icon: file-earmark-ruled
           - href: quarto/agents.qmd
             text: AGENTS.md
+            icon: file-earmark-ruled
           - href: quarto/repository-blueprint.qmd
             text: Repository blueprint
+            icon: file-earmark-ruled
 
       - href: quarto/about.qmd
         text: About
+        icon: info-circle
 
+# Each kind of page has one cue, used both in the sidebar (icon and colour
+# set here and in styles.css) and on the page (a callout of the same colour):
+#   background                book icon, blue
+#   study design and methods  diagram-3 icon, orange
+#   R code                    laptop icon and the 💻 Rcode callout, pink
+#   results                   clipboard-data icon and the 📊 Results callout, green
+#   project documents         ruled-page icon, grey
+# Yellow, with the ⏳ Pending callout, marks provisional content.
 custom-callout:
   Rcode:
     icon: true
     icon-symbol: "💻"
-    color: pink
+    color: "#d63384"
+  Results:
+    icon: true
+    icon-symbol: "📊"
+    color: "#198754"
+  Pending:
+    icon: true
+    icon-symbol: "⏳"
+    color: "#f0c400"
 
 filters:
+  # Yellow marks for provisional content, and their Pending callout
+  # (AGENTS.md, "Quarto website"). It runs before custom-callout, which
+  # turns the callout it adds into a styled box.
+  - quarto/_pending.lua
   - custom-callout
   - issue-comments
 
@@ -103,8 +156,6 @@ issue-comments:
   owner: Vagish Hemmige
   contact: mailto:vagish.hemmige@gmail.com
   passcode: true
-
-  
 
 format:
   html:
@@ -117,7 +168,8 @@ format:
     code-summary: "Click to show/hide R Code"
 
 # The site shows code; it never runs the analysis. Only the hidden
-# read_chunk() imports and calls to the site helpers in
-# quarto/_site_functions.R set eval: true.
+# read_chunk() imports, calls to the site helpers in
+# quarto/_site_functions.R, and the Architecture page's reader of
+# ARCHITECTURE.md set eval: true.
 execute:
   eval: false

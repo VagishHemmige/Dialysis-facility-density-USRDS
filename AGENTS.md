@@ -97,9 +97,21 @@ Label analysis variables with human-readable descriptions. USRDS variables get t
 
 The site documents the code. It does not run the analysis.
 
-- `_quarto.yml` and `index.qmd` sit at the root; `quarto/` has one page per definitive script, named after it. The `custom-callout` extension in `_extensions/` provides the `Rcode` callout.
+- `_quarto.yml`, `index.qmd` and `404.qmd` (the page GitHub Pages shows for a missing address) sit at the root; `quarto/` has one page per definitive script, named after it. The `custom-callout` extension in `_extensions/` provides the `Rcode`, `Results` and `Pending` callouts.
 - Each page loads its script with `knitr::read_chunk("../R/<script>.R")` in a hidden chunk and shows each labelled section with `#| eval: false`, with prose explaining what the section does and why. Pages link to the script on GitHub and to the scripts it depends on.
-- **Never evaluate analysis code in the site.** Pages render without restricted data.
+- **Visual cues.** Each kind of page has one icon and colour, set by its sidebar entry's `icon:` in `_quarto.yml` and coloured by `styles.css`; pages mark the same kind of content with the callout of that colour:
+
+  | Kind | Sidebar icon | Colour | Callout |
+  |---|---|---|---|
+  | Background | `book` | blue | — |
+  | Study design and methods | `diagram-3` | orange | — |
+  | R code | `laptop` | pink | `Rcode` (💻) |
+  | Results | `clipboard-data` | green | `Results` (📊) |
+  | Project documents | `file-earmark-ruled` | grey | — |
+
+  The original R Markdown page is R code; the differences page is study design and methods; the published results and supplement pages are results, and their notice says they are reproduced from the article, not produced by this code. Give every new page the icon for its kind. `styles.css` keys colours to icons, not to positions, so adding or moving pages needs no CSS change.
+- **Provisional content.** Text that depends on an open decision is highlighted in yellow. `quarto/_pending.lua` marks every paragraph that starts with **Decision pending:**, every paragraph of the plan's page that contains the plan's **Open:** marker, and any phrase written as `[text]{.pending}`; a page with a mark gets a yellow ⏳ `Pending` callout at the top. Mark only what an open decision could change, link its decision issue, and remove the mark when the decision is settled. Yellow is used for nothing else.
+- **Never evaluate analysis code in the site.** Pages render without restricted data. The Architecture page runs one chunk, which reads `ARCHITECTURE.md` as text so any ```` ```mermaid ```` diagrams are drawn; it reads only that file.
 - **Site-only helpers** live in `quarto/_site_functions.R`, which pages source and `main.R` never does. They read only code or text given to them, never data, and are tested in `tests/test-site-functions.R`. A chunk calling them (for example `side_by_side_diff()`, which shows two versions of some code side by side) is the only other kind of chunk a page may run. Helpers the analysis needs stay in `R/functions.R`.
 - **Function cross-references.** `R/functions.R` has one top-level function per labelled chunk, and the functions page one section per chunk. Under each heading is the function's name; after the explanation, **Used in the analysis:** links the method-page sections that call it, and **Called by:** the functions on the page that call it. Each method-page section whose code calls a helper ends its prose with **Functions used:**. `tests/check-crosslinks.R` derives all of these from the code and runs on every pull request; when it fails, run it with `draft` and copy what it prints, rather than writing the links by hand.
 - The original R Markdown file is shown on its own page as code only, with machine-specific paths removed.
@@ -141,7 +153,7 @@ Check the items that apply before opening a pull request.
 - **Cohort:** do the flowchart steps' order, denominators, and labels match their conditions, and can each count be reproduced from code?
 - **Joins and denominators:** no unintended row multiplication; missing, suppressed, and zero kept distinct.
 - **Reported numbers:** does each estimate match the plan's estimand, and do tables, figures, and site prose say what the code actually computes?
-- **Structure:** is `ARCHITECTURE.md` current; are chunk labels unique and found by their pages; does every definitive script have a page and sidebar entry; does any site chunk run analysis code? Only the hidden `read_chunk()` import, calls to the site helpers, and results pages reading outputs cleared for release, run.
+- **Structure:** is `ARCHITECTURE.md` current; are chunk labels unique and found by their pages; does every definitive script have a page and a sidebar entry with its kind's icon; does any site chunk run analysis code? Only the hidden `read_chunk()` import, calls to the site helpers, the Architecture page's reader of `ARCHITECTURE.md`, and results pages reading outputs cleared for release, run.
 - **Execution:** does `main.R` run in a fresh session with relative paths; are any saved intermediates or caches stale?
 
 Project-specific checks:

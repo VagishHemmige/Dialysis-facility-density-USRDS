@@ -144,17 +144,6 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -164,6 +153,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -863,7 +863,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <td>None on the density estimates; only the access-type coefficients change</td>
 </tr>
 <tr class="even">
-<td>The paper says eGFR was “calculated by CKD-EPI equation 2012”. The original code used the USRDS variable <code>GFR_EPI</code>, which the site takes to be the 2009 creatinine equation with the race coefficient <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>; the CKD-EPI equations published in 2012 add cystatin C, which the form does not record. Still to be confirmed in the Researcher’s Guide.</td>
+<td>The paper says eGFR was “calculated by CKD-EPI equation 2012”. The original code used the USRDS variable <code>GFR_EPI</code>, which the site takes to be the 2009 creatinine equation with the race coefficient <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>; the CKD-EPI equations published in 2012 add cystatin C <span class="citation" data-cites="inker2012cystatin">(<a href="#ref-inker2012cystatin" role="doc-biblioref"><span class="nocase">Inker et al.</span> 2012</a>)</span>, which the form does not record <span class="citation" data-cites="cms2728_form2015">(<a href="#ref-cms2728_form2015" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span>. The 2024 Researcher’s Guide describes <code>GFR_EPI</code> only as calculated with CKD-EPI, and lists <code>GFR_EPI_REFIT</code> for the 2021 refit <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>; the year of <code>GFR_EPI</code>’s equation is inferred from that, not stated.</td>
 <td>Paper differs from code</td>
 <td><code>GFR_EPI</code>, as the original code used.</td>
 <td>None, if <code>GFR_EPI</code> is what the paper used</td>
@@ -1077,8 +1077,14 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cms2728_form2015" class="csl-entry" role="listitem">
+Centers for Medicare &amp; Medicaid Services. 2015. <em>End Stage Renal Disease Medical Evidence Report: Medicare Entitlement and/or Patient Registration, <span>Form CMS-2728-U3</span> (08/15)</em>. <a href="https://www2.niddk.nih.gov/-/media/Files/USRDS/For-Researchers/Data-Collection-Forms/CMS-ESRD-Forms/CMS-2728/cms27282015.pdf">https://www2.niddk.nih.gov/-/media/Files/USRDS/For-Researchers/Data-Collection-Forms/CMS-ESRD-Forms/CMS-2728/cms27282015.pdf</a>.
+</div>
 <div id="ref-hemmige2024density" class="csl-entry" role="listitem">
 Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geographic Dialysis Facility Density and Early Dialysis Initiation.”</span> <em>JAMA Network Open</em> 7 (1): e2350009. <a href="https://doi.org/10.1001/jamanetworkopen.2023.50009">https://doi.org/10.1001/jamanetworkopen.2023.50009</a>.
+</div>
+<div id="ref-inker2012cystatin" class="csl-entry" role="listitem">
+<span class="nocase">Inker, Lesley A, Christopher H Schmid, Hocine Tighiouart, et al.</span> 2012. <span>“Estimating Glomerular Filtration Rate from Serum Creatinine and Cystatin <span>C</span>.”</span> <em>New England Journal of Medicine</em> 367 (1): 20–29. <a href="https://doi.org/10.1056/NEJMoa1114248">https://doi.org/10.1056/NEJMoa1114248</a>.
 </div>
 <div id="ref-levey2009ckdepi" class="csl-entry" role="listitem">
 <span class="nocase">Levey, Andrew S, Lesley A Stevens, Christopher H Schmid, et al.</span> 2009. <span>“A New Equation to Estimate Glomerular Filtration Rate.”</span> <em>Annals of Internal Medicine</em> 150 (9): 604–12. <a href="https://doi.org/10.7326/0003-4819-150-9-200905050-00006">https://doi.org/10.7326/0003-4819-150-9-200905050-00006</a>.
@@ -1663,7 +1669,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A primary-cause code listed on two category sheets would have joined twice and duplicated those patients. The sheets were built from the codes that appeared in the data. <span class="pp">|</span> Corrected error <span class="pp">|</span> The mapping is built from the full public code list, one row per code, and the join stops if a code appears twice. <span class="pp">|</span> None, unless the original sheets had such a code <span class="pp">|</span></span>
 <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not recorded in the original. HIV-associated nephropathy, which the CMS list of causes places under Miscellaneous Conditions, is counted as glomerulonephritis here, and so are secondary and infection-related glomerulonephritis. <span class="pp">|</span> Rebuilt <span class="pp">|</span> See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd#the-six-categories)</span> (decided 27 October 2026). <span class="pp">|</span> Table 1 cause rows; Models 2 and 3, slightly <span class="pp">|</span></span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Access type had the arteriovenous fistula as its first level, and so as the reference in the exploratory R models. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Catheter, the most common access, is the reference. <span class="pp">|</span> None on the density estimates; only the access-type coefficients change <span class="pp">|</span></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The paper says eGFR was "calculated by CKD-EPI equation 2012". The original code used the USRDS variable <span class="in">`GFR_EPI`</span>, which the site takes to be the 2009 creatinine equation with the race coefficient <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>; the CKD-EPI equations published in 2012 add cystatin C, which the form does not record. Still to be confirmed in the Researcher's Guide. <span class="pp">|</span> Paper differs from code <span class="pp">|</span> <span class="in">`GFR_EPI`</span>, as the original code used. <span class="pp">|</span> None, if <span class="in">`GFR_EPI`</span> is what the paper used <span class="pp">|</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The paper says eGFR was "calculated by CKD-EPI equation 2012". The original code used the USRDS variable <span class="in">`GFR_EPI`</span>, which the site takes to be the 2009 creatinine equation with the race coefficient <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>; the CKD-EPI equations published in 2012 add cystatin C <span class="co">[</span><span class="ot">@inker2012cystatin</span><span class="co">]</span>, which the form does not record <span class="co">[</span><span class="ot">@cms2728_form2015</span><span class="co">]</span>. The 2024 Researcher's Guide describes <span class="in">`GFR_EPI`</span> only as calculated with CKD-EPI, and lists <span class="in">`GFR_EPI_REFIT`</span> for the 2021 refit <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>; the year of <span class="in">`GFR_EPI`</span>'s equation is inferred from that, not stated. <span class="pp">|</span> Paper differs from code <span class="pp">|</span> <span class="in">`GFR_EPI`</span>, as the original code used. <span class="pp">|</span> None, if <span class="in">`GFR_EPI`</span> is what the paper used <span class="pp">|</span></span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A comorbidity field that was blank became missing, which would drop the patient from a model. The published sample sizes show the paper's models kept these patients. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Blank or unknown counts as not present, as on the form. <span class="pp">|</span> Matches the published sample sizes <span class="pp">|</span></span>
 <span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Race had nine levels in R; the paper reports five groups whose counts add up to each column total, so the Stata analysis merged the others in a way that is not recorded. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Middle Eastern counts as White and South Asian as Asian (1997 OMB race standard); Other or multiracial counts as White, the largest group. Chosen for this demonstration (27 October 2026). <span class="pp">|</span> Table 1 race rows; models adjusting for race, slightly; the White stratum of eTables 1 and 2, which includes these patients <span class="pp">|</span></span>
 <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>

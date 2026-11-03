@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 div.callout-Rcode.callout {
@@ -155,15 +155,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -559,7 +559,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <li>were 18 or older;</li>
 <li>started hemodialysis in a dialysis facility (home starts are excluded, because their timing depends on training and can be early by design <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>);</li>
 <li>had insurance, vascular access type and sex recorded;</li>
-<li>had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start;</li>
+<li>had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start <span class="citation" data-cites="scialla2014iv">(<a href="#ref-scialla2014iv" role="doc-biblioref"><span class="nocase">Scialla et al.</span> 2014</a>)</span>;</li>
 <li>had one residential ZIP code in effect on the day dialysis started, with a ZCTA, ACS data, a facility listing and an HSA for that date and year;</li>
 <li>lived in the 48 contiguous states or the District of Columbia;</li>
 <li>had race and Hispanic ethnicity recorded, and complete ACS and rural-urban data for their ZIP code.</li>
@@ -588,7 +588,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="outcome" class="level2">
 <h2 class="anchored" data-anchor-id="outcome">Outcome</h2>
-<p>The primary outcome is an <strong>early start</strong>: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with the CKD-EPI equation <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>. Ten is the lower edge of the IDEAL trial’s early-start range <span class="citation" data-cites="cooper2010ideal">(<a href="#ref-cooper2010ideal" role="doc-biblioref"><span class="nocase">Cooper et al.</span> 2010</a>)</span>. The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on <a href="../quarto/background.html#race-and-egfr">Clinical background</a>.</p>
+<p>The primary outcome is an <strong>early start</strong>: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with a CKD-EPI equation, read as the 2009 equation <span class="citation" data-cites="usrds2024guide levey2009ckdepi">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>; <a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>. Ten is the lower edge of the IDEAL trial’s early-start range <span class="citation" data-cites="cooper2010ideal">(<a href="#ref-cooper2010ideal" role="doc-biblioref"><span class="nocase">Cooper et al.</span> 2010</a>)</span>, which IDEAL measured on a different scale (Cockcroft-Gault). The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on <a href="../quarto/background.html#race-and-egfr">Clinical background</a>.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#7-outcome">§7 Outcome</a>.</p>
 </section>
 <section id="analysis" class="level2">
@@ -641,6 +641,12 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 </div>
 <div id="ref-omb1997race" class="csl-entry" role="listitem">
 Office of Management and Budget. 1997. <em>Revisions to the Standards for the Classification of Federal Data on Race and Ethnicity</em>. Federal Register 62(210):58782–58790. <a href="https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf">https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf</a>.
+</div>
+<div id="ref-scialla2014iv" class="csl-entry" role="listitem">
+<span class="nocase">Scialla, Julia J, Jiannong Liu, Deidra C Crews, et al.</span> 2014. <span>“An Instrumental Variable Approach Finds No Associated Harm or Benefit with Early Dialysis Initiation in the <span>United States</span>.”</span> <em>Kidney International</em> 86 (4): 798–809. <a href="https://doi.org/10.1038/ki.2014.110">https://doi.org/10.1038/ki.2014.110</a>.
+</div>
+<div id="ref-usrds2024guide" class="csl-entry" role="listitem">
+United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USRDS</span> Database, Appendix b (Data File Descriptions) and Appendix c (Data Formats)</em>. National Institute of Diabetes and Digestive and Kidney Diseases. <a href="https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide">https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide</a>.
 </div>
 </div>
 
@@ -1151,7 +1157,7 @@ Office of Management and Budget. 1997. <em>Revisions to the Standards for the Cl
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>were 18 or older;</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>started hemodialysis in a dialysis facility (home starts are excluded, because their timing depends on training and can be early by design <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>);</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>had insurance, vascular access type and sex recorded;</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start;</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>had an eGFR recorded and of 20 mL/min/1.73 m² or below, the range in which nephrologists decide when to start <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>;</span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>had one residential ZIP code in effect on the day dialysis started, with a ZCTA, ACS data, a facility listing and an HSA for that date and year;</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>lived in the 48 contiguous states or the District of Columbia;</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">8.  </span>had race and Hispanic ethnicity recorded, and complete ACS and rural-urban data for their ZIP code.</span>
@@ -1187,7 +1193,7 @@ Office of Management and Budget. 1997. <em>Revisions to the Standards for the Cl
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## Outcome</span></span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>The primary outcome is an **early start**: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with the CKD-EPI equation <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. Ten is the lower edge of the IDEAL trial's early-start range <span class="co">[</span><span class="ot">@cooper2010ideal</span><span class="co">]</span>. The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on <span class="co">[</span><span class="ot">Clinical background</span><span class="co">](background.qmd#race-and-egfr)</span>.</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>The primary outcome is an **early start**: an eGFR of 10 mL/min/1.73 m² or above at initiation, as calculated by USRDS with a CKD-EPI equation, read as the 2009 equation <span class="co">[</span><span class="ot">@usrds2024guide; @levey2009ckdepi</span><span class="co">]</span>. Ten is the lower edge of the IDEAL trial's early-start range <span class="co">[</span><span class="ot">@cooper2010ideal</span><span class="co">]</span>, which IDEAL measured on a different scale (Cockcroft-Gault). The secondary outcome is eGFR itself. Both are measured at the index event; there is no follow-up. Why the equation with the race coefficient is kept is on <span class="co">[</span><span class="ot">Clinical background</span><span class="co">](background.qmd#race-and-egfr)</span>.</span>
 <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§7 Outcome</span><span class="co">](analysis-plan.qmd#7-outcome)</span>.</span>
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>

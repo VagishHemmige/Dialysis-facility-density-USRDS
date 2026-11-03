@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -155,15 +155,15 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -577,7 +577,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <p><strong>To run it</strong>, from the project root: <code>source("R/setup.R")</code>, <code>source("R/functions.R")</code>, then <code>source("R/classify_esrd_causes.R")</code>. It is not part of <code>main.R</code>.</p>
 <p><strong>It needs</strong></p>
 <ul>
-<li>ellmer 0.5.0 or later <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span>, and the irr package for Fleiss’ kappa.</li>
+<li>ellmer 0.5.0 or later <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span>, and the irr package for Fleiss’ kappa.</li>
 <li>An API key for each cloud provider in <code>.Renviron</code>: <code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code> and <code>GEMINI_API_KEY</code>.</li>
 <li><a href="https://ollama.com">Ollama</a> running on the same computer, with the two local models pulled (<code>ollama pull qwen3.5:9b</code> and <code>ollama pull llama3.1:8b</code> in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see <a href="#setting-up-ollama">Setting up Ollama</a> before the first run.</li>
 <li>The models, batch sizes and agreement rule set in <code>setup.R</code> (see <a href="../quarto/setup.html#cause-of-kidney-failure">Setup</a>): <code>gpt-6.1-terra</code> (OpenAI), <code>claude-sonnet-5-5</code> (Anthropic) and <code>gemini-3.8-flash</code> (Google) in the cloud, and locally, reported without voting, <code>qwen3.5:9b</code> (Alibaba’s Qwen) and <code>llama3.1:8b</code> (Meta’s Llama).</li>
@@ -783,7 +783,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <li><strong>HIV-associated nephropathy is glomerulonephritis.</strong> The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span>. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis <span class="citation" data-cites="rosenberg2015hivan">(<a href="#ref-rosenberg2015hivan" role="doc-biblioref">Rosenberg et al. 2015</a>)</span>, so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository’s history, and each saved answer file names the prompt version it answered.</li>
 <li><strong>Heart failure is cardiac disease.</strong> The sheet name “Hypertensive and Cardiac” suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.</li>
 </ul>
-<p><strong>Transplant failure or complications.</strong> The paper’s Table 1 labels this category “solid organ and bone marrow”. On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.</p>
+<p><strong>Transplant failure or complications.</strong> The paper’s Table 1 labels this category “solid organ and bone marrow”. On a first Medical Evidence form it can mean kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity <span class="citation" data-cites="ojo2003nonrenal">(<a href="#ref-ojo2003nonrenal" role="doc-biblioref"><span class="nocase">Ojo et al.</span> 2003</a>)</span>. A patient whose kidney transplant fails already had kidney failure before that transplant, so their first form would usually date from then rather than from the failed transplant.</p>
 <p><strong>What the paper’s Table 1 can and cannot show.</strong> In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report <span class="citation" data-cites="usrds2018adr">(<a href="#ref-usrds2018adr" role="doc-biblioref">United States Renal Data System 2018</a>)</span>). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 <span class="citation" data-cites="usrds2018adr">(<a href="#ref-usrds2018adr" role="doc-biblioref">United States Renal Data System 2018</a>)</span>), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.</p>
 </section>
 <section id="prompt-and-schema-in-code" class="level2">
@@ -836,7 +836,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="one-function-per-model" class="level2">
 <h2 class="anchored" data-anchor-id="one-function-per-model">One function per model</h2>
-<p>Five models, set in <code>setup.R</code>, three voting and two reported, all called through <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude’s answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<code>esrd_classifier_claude_max_tokens</code>).</p>
+<p>Five models, set in <code>setup.R</code>, three voting and two reported, all called through <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span> with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude’s answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (<code>esrd_classifier_claude_max_tokens</code>).</p>
 <p>The three cloud models are each provider’s current general-purpose model. The two local models run through Ollama on the analyst’s computer (decided by Vagish Hemmige, 28 October 2026): Alibaba’s Qwen and Meta’s Llama, from two further companies. They were chosen to vote, and were moved to reporting only on 29 October 2026 (decided by Vagish Hemmige), when neither produced a complete, valid set of answers. Qwen answers with its “thinking” turned off (<code>reasoning_effort = "none"</code>): with it on, its reasoning filled Ollama’s working space before it wrote the answer, and the answer was cut off. Llama 3.1 replaced IBM’s Granite (<code>granite4.2:8b</code>) on 29 October 2026 (decided by Vagish Hemmige): on the analyst’s laptop Granite timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes. Ollama’s models trained for medicine were considered, but they are all Google’s MedGemma, which would overlap with Gemini, or older models built on Llama 2. Both local models are small enough to run on a laptop. They show the approach that would be needed if a classification ever involved patient data: a model on the analyst’s own computer sends nothing to an outside company. Here only the public code list is used, so the cloud models are allowed, and the local models show what that approach costs.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1006,7 +1006,7 @@ setx OLLAMA_VULKAN 0</code></pre>
 <section id="agreement" class="level2">
 <h2 class="anchored" data-anchor-id="agreement">Agreement</h2>
 <p>A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. <code>agreement</code> says, for each code, whether the models were unanimous, how many agreed (for example “2 of 3 models”), or that no category had a majority. For codes with no majority, the deciders fill <code>final_category</code> and their initials in <code>reviewer</code>.</p>
-<p>Fleiss’ kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</p>
+<p>Fleiss’ kappa <span class="citation" data-cites="fleiss1971kappa">(<a href="#ref-fleiss1971kappa" role="doc-biblioref">Fleiss 1971</a>)</span> describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</p>
 <p><strong>Functions used:</strong> <a href="../quarto/functions.html#combining-the-models"><code>ensemble_agreement()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1122,8 +1122,14 @@ setx OLLAMA_VULKAN 0</code></pre>
 <div id="ref-cms2728_causes" class="csl-entry" role="listitem">
 Centers for Medicare &amp; Medicaid Services. 2015. <em>List of Primary Causes of Renal Failure: <span>ICD-10-CM</span> Codes for Field 15 of the <span>CMS-2728</span> End Stage Renal Disease Medical Evidence Report (08/15)</em>. <a href="https://www.nwkidney.org/wp-content/uploads/2014/11/ICD-10-CM-LIST-OF-PRIMARY-CAUSES-OF-END-STAGE-RENAL-DISEASE.pdf">https://www.nwkidney.org/wp-content/uploads/2014/11/ICD-10-CM-LIST-OF-PRIMARY-CAUSES-OF-END-STAGE-RENAL-DISEASE.pdf</a>.
 </div>
+<div id="ref-fleiss1971kappa" class="csl-entry" role="listitem">
+Fleiss, Joseph L. 1971. <span>“Measuring Nominal Scale Agreement Among Many Raters.”</span> <em>Psychological Bulletin</em> 76 (5): 378–82. <a href="https://doi.org/10.1037/h0031619">https://doi.org/10.1037/h0031619</a>.
+</div>
 <div id="ref-hemmige2024density" class="csl-entry" role="listitem">
 Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geographic Dialysis Facility Density and Early Dialysis Initiation.”</span> <em>JAMA Network Open</em> 7 (1): e2350009. <a href="https://doi.org/10.1001/jamanetworkopen.2023.50009">https://doi.org/10.1001/jamanetworkopen.2023.50009</a>.
+</div>
+<div id="ref-ojo2003nonrenal" class="csl-entry" role="listitem">
+<span class="nocase">Ojo, Akinlolu O, Philip J Held, Friedrich K Port, et al.</span> 2003. <span>“Chronic Renal Failure After Transplantation of a Nonrenal Organ.”</span> <em>New England Journal of Medicine</em> 349 (10): 931–40. <a href="https://doi.org/10.1056/NEJMoa021744">https://doi.org/10.1056/NEJMoa021744</a>.
 </div>
 <div id="ref-rosenberg2015hivan" class="csl-entry" role="listitem">
 Rosenberg, Avi Z., Saraladevi Naicker, Cheryl A. Winkler, and Jeffrey B. Kopp. 2015. <span>“<span>HIV</span>-Associated Nephropathies: Epidemiology, Pathology, Mechanisms and Treatment.”</span> <em>Nature Reviews Nephrology</em> 11 (3): 150–60. <a href="https://doi.org/10.1038/nrneph.2015.9">https://doi.org/10.1038/nrneph.2015.9</a>.
@@ -1135,7 +1141,7 @@ United States Renal Data System. 2018. <em>2018 <span>USRDS</span> Annual Data R
 United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USRDS</span> Database, Appendix b (Data File Descriptions) and Appendix c (Data Formats)</em>. National Institute of Diabetes and Digestive and Kidney Diseases. <a href="https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide">https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide</a>.
 </div>
 <div id="ref-ellmer_pkg" class="csl-entry" role="listitem">
-Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. n.d. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
+Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. 2026. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
 </div>
 </div>
 
@@ -1736,7 +1742,7 @@ Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerk
 <span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**HIV-associated nephropathy is glomerulonephritis.** The 2015 CMS list places HIV disease (code B20) under Miscellaneous Conditions <span class="co">[</span><span class="ot">@cms2728_causes</span><span class="co">]</span>. Clinically, HIV-associated nephropathy is a glomerular disease whose classic form is collapsing focal segmental glomerulosclerosis <span class="co">[</span><span class="ot">@rosenberg2015hivan</span><span class="co">]</span>, so here it counts as glomerulonephritis, a deliberate departure from the CMS grouping. On the first run, before the definitions were written, all three models put HIV in Other. Earlier versions of the prompt are in the repository's history, and each saved answer file names the prompt version it answered.</span>
 <span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Heart failure is cardiac disease.** The sheet name "Hypertensive and Cardiac" suggests that kidney failure attributed to heart disease belonged with hypertension, so heart failure (I50.9, in Miscellaneous Conditions on the CMS list) counts there.</span>
 <span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it mostly means kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity. A failed kidney transplant would not usually start incident dialysis, since that patient already had kidney failure.</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>**Transplant failure or complications.** The paper's Table 1 labels this category "solid organ and bone marrow". On a first Medical Evidence form it can mean kidney failure after a transplant of another organ (heart, liver, lung) or of bone marrow, for example from calcineurin-inhibitor toxicity <span class="co">[</span><span class="ot">@ojo2003nonrenal</span><span class="co">]</span>. A patient whose kidney transplant fails already had kidney failure before that transplant, so their first form would usually date from then rather than from the failed transplant.</span>
 <span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>**What the paper's Table 1 can and cannot show.** In the published cohort, the six categories were diabetes 48.0%, hypertension and cardiac disease 29.5%, glomerulonephritis 5.7%, hereditary or polycystic kidney disease 1.9%, transplant 0.5% and other 14.3% (computed from the Table 1 counts). Among all incident patients in 2016, glomerulonephritis was 7.3% and cystic kidney disease 2.8% (computed from the counts in Table 1.6 of the 2018 USRDS Annual Data Report <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>). The cohort is in-center hemodialysis only, and patients with glomerulonephritis or cystic kidney disease more often start on peritoneal dialysis or receive a transplant first (Table 1.6 <span class="co">[</span><span class="ot">@usrds2018adr</span><span class="co">]</span>), so these percentages cannot show where the original spreadsheet drew either boundary. Small groups such as HIV are invisible in these percentages.</span>
 <span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
@@ -1820,7 +1826,7 @@ Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerk
 <span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>A code is accepted when at least two of the three cloud models agree, a majority rule chosen for this demonstration (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted). Accepted codes are not read by a person. <span class="in">`agreement`</span> says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill <span class="in">`final_category`</span> and their initials in <span class="in">`reviewer`</span>.</span>
 <span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>Fleiss' kappa describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>Fleiss' kappa <span class="co">[</span><span class="ot">@fleiss1971kappa</span><span class="co">]</span> describes how far the models agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give. It is reported in the agreement summary, and is not used to accept or reject codes.</span>
 <span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`ensemble_agreement()`</span><span class="co">](functions.qmd#combining-the-models)</span>.</span>
 <span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a></span>

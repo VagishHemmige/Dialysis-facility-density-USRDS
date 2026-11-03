@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -153,6 +142,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -606,13 +606,13 @@ edit that file, not this page. Its first heading is the page title.
 <tr class="even">
 <td>UDS Mapper ZIP-to-ZCTA crosswalk</td>
 <td>ZCTA of each ZIP code</td>
-<td>2011 to 2019, matched to the year dialysis started, via <code>zippeR</code> <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al., n.d.</a>)</span></td>
+<td>2011 to 2019, matched to the year dialysis started, via <code>zippeR</code> <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>)</span></td>
 <td>ZIP code and year</td>
 </tr>
 <tr class="odd">
 <td>American Community Survey (ACS) 5-year, subject table S0601</td>
 <td>ZCTA population, % female, % White, % Black, % Asian, % Hispanic, median income, % below poverty</td>
-<td>Each year 2011 to 2019, matched to the year dialysis started <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span></td>
+<td>Each year 2011 to 2019, matched to the year dialysis started <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span></td>
 <td>ZCTA (from the crosswalk) and year</td>
 </tr>
 <tr class="even">
@@ -706,7 +706,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>Race</td>
-<td><code>RACE</code> (format <code>$MERACE</code>), reported in the paper’s five groups: White, Black, Asian, Native American, Pacific Islander. The five published counts sum to each column’s total, so the form’s Middle Eastern, South Asian and Other/multiracial codes were merged into those groups in the Stata analysis; how is not recorded. Here Middle Eastern counts as White and South Asian as Asian (1997 OMB race standard), and Other/multiracial as White, the largest group (chosen for this demonstration at Vagish Hemmige’s request, 27 October 2026).</td>
+<td><code>RACE</code> (format <code>$MERACE</code>), reported in the paper’s five groups: White, Black, Asian, Native American, Pacific Islander. The five published counts sum to each column’s total, so the form’s Middle Eastern, South Asian and Other/multiracial codes were merged into those groups in the Stata analysis; how is not recorded. Here Middle Eastern counts as White and South Asian as Asian (1997 OMB race standard <span class="citation" data-cites="omb1997race">(<a href="#ref-omb1997race" role="doc-biblioref">Office of Management and Budget 1997</a>)</span>), and Other/multiracial as White, the largest group (chosen for this demonstration at Vagish Hemmige’s request, 27 October 2026).</td>
 </tr>
 <tr class="even">
 <td>Hispanic ethnicity</td>
@@ -746,7 +746,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>Rural-urban type</td>
-<td>Primary RUCA code grouped as metropolitan (1 to 3), micropolitan (4 to 6), small town (7 to 9) and rural (10) <span class="citation" data-cites="ers2020ruca">(<a href="#ref-ers2020ruca" role="doc-biblioref">USDA Economic Research Service 2020</a>)</span>, the four groups in the paper’s Table 1</td>
+<td>Primary RUCA code grouped as metropolitan (1 to 3), micropolitan (4 to 6), small town (7 to 9) and rural (10) <span class="citation" data-cites="ers2020ruca ers_ruca_documentation">(<a href="#ref-ers2020ruca" role="doc-biblioref">USDA Economic Research Service 2020</a>, <a href="#ref-ers_ruca_documentation" role="doc-biblioref">n.d.</a>)</span>, the four groups in the paper’s Table 1</td>
 </tr>
 <tr class="even">
 <td>Census region</td>
@@ -758,11 +758,11 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 </tbody>
 </table>
-<p><strong>Cause of kidney failure mapping.</strong> The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format <code>$PD96DET</code> <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three cloud large language models, called through <code>ellmer</code> (0.5.0 or later, the first version that sends current Claude models a native structured-output request) <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span> with the same prompt and a structured output schema, each classify every code, and every model’s answers pass the same check: one each from OpenAI, Anthropic and Google. Two models run locally through Ollama, Alibaba’s Qwen and Meta’s Llama, receive the same prompt and are reported for comparison, but do not vote (decided by Vagish Hemmige, 29 October 2026): on the analyst’s laptop neither produced a complete, valid set of answers, and IBM’s Granite, tried first, returned none. A code is accepted when at least two of the three cloud models agree (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted, and was chosen because the classification demonstrates the method rather than being the main analysis); codes so accepted are not read by a person, and every other code is reviewed by the deciders, who record the category and their initials (<code>reviewer</code>). Agreement among the models is reported with Fleiss’ kappa in a one-row public summary (<code>references/esrd-cause-agreement.csv</code>), together with the number of codes accepted unanimously, by majority only and not at all; kappa is descriptive and plays no part in accepting codes. A second public file (<code>references/esrd-cause-local-models.csv</code>) reports, for each local model, how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category. The reviewed mapping is committed to <code>references/</code> and is the only version the analysis reads. No patient data are given to any model; the local models send nothing over the internet. Patient-level cross-checks against USRDS’s own disease group (<code>DISGRPC</code>, PATIENTS file) and against the published Table 1 counts are run by an authorized person. The prompt defines each category in words, starting from the 12 groups of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and the original spreadsheet’s sheet names: glomerulonephritis includes secondary glomerulonephritis (lupus nephritis, ANCA vasculitis, anti-GBM disease, Henoch-Schönlein purpura) and infection-related glomerular disease (post-infectious glomerulonephritis, HIV-associated nephropathy, hepatitis-associated and cryoglobulinemic glomerulonephritis), while other infections are in Other (decided by Vagish Hemmige, 27 October 2026). HIV-associated nephropathy is thereby counted as glomerulonephritis, unlike in the CMS-2728 grouping, where HIV disease is a miscellaneous condition. The definitions are shown on the website. The mapping written on 30 October 2026 (prompt version <code>02ff2fbb</code>; 423 codes unanimous, 22 accepted by two of three, none without a majority) is accepted for the replication as drafted, with no changes after review (decided by Vagish Hemmige, 30 October 2026; D4).</p>
+<p><strong>Cause of kidney failure mapping.</strong> The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format <code>$PD96DET</code> <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three cloud large language models, called through <code>ellmer</code> (0.5.0 or later, the first version that sends current Claude models a native structured-output request) <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span> with the same prompt and a structured output schema, each classify every code, and every model’s answers pass the same check: one each from OpenAI, Anthropic and Google. Two models run locally through Ollama, Alibaba’s Qwen and Meta’s Llama, receive the same prompt and are reported for comparison, but do not vote (decided by Vagish Hemmige, 29 October 2026): on the analyst’s laptop neither produced a complete, valid set of answers, and IBM’s Granite, tried first, returned none. A code is accepted when at least two of the three cloud models agree (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted, and was chosen because the classification demonstrates the method rather than being the main analysis); codes so accepted are not read by a person, and every other code is reviewed by the deciders, who record the category and their initials (<code>reviewer</code>). Agreement among the models is reported with Fleiss’ kappa <span class="citation" data-cites="fleiss1971kappa">(<a href="#ref-fleiss1971kappa" role="doc-biblioref">Fleiss 1971</a>)</span> in a one-row public summary (<code>references/esrd-cause-agreement.csv</code>), together with the number of codes accepted unanimously, by majority only and not at all; kappa is descriptive and plays no part in accepting codes. A second public file (<code>references/esrd-cause-local-models.csv</code>) reports, for each local model, how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category. The reviewed mapping is committed to <code>references/</code> and is the only version the analysis reads. No patient data are given to any model; the local models send nothing over the internet. Patient-level cross-checks against USRDS’s own disease group (<code>DISGRPC</code>, PATIENTS file) and against the published Table 1 counts are run by an authorized person. The prompt defines each category in words, starting from the 12 groups of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and the original spreadsheet’s sheet names: glomerulonephritis includes secondary glomerulonephritis (lupus nephritis, ANCA vasculitis, anti-GBM disease, Henoch-Schönlein purpura) and infection-related glomerular disease (post-infectious glomerulonephritis, HIV-associated nephropathy, hepatitis-associated and cryoglobulinemic glomerulonephritis), while other infections are in Other (decided by Vagish Hemmige, 27 October 2026). HIV-associated nephropathy is thereby counted as glomerulonephritis, unlike in the CMS-2728 grouping, where HIV disease is a miscellaneous condition. The definitions are shown on the website. The mapping written on 30 October 2026 (prompt version <code>02ff2fbb</code>; 423 codes unanimous, 22 accepted by two of three, none without a majority) is accepted for the replication as drafted, with no changes after review (decided by Vagish Hemmige, 30 October 2026; D4).</p>
 </section>
 <section id="7-outcome" class="level2">
 <h2 class="anchored" data-anchor-id="7-outcome">7. Outcome</h2>
-<p><strong>Primary:</strong> eGFR at initiation (<code>GFR_EPI</code>, CKD-EPI creatinine equation <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span> as calculated by USRDS, with the race coefficient) of 10 or above vs below 10 mL/min/1.73 m², as in the original code’s <code>GFR_DICH</code> (decided by Vagish Hemmige, 27 October 2026, in a working session: “Use the code”). The paper describes the outcome as greater than 10 vs at most 10 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>; the two differ only for patients at exactly 10.</p>
+<p><strong>Primary:</strong> eGFR at initiation (<code>GFR_EPI</code>, which the Researcher’s Guide describes as calculated with CKD-EPI, listing the 2021 refit as a separate variable <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>; read as the 2009 creatinine equation with the race coefficient <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>) of 10 or above vs below 10 mL/min/1.73 m², as in the original code’s <code>GFR_DICH</code> (decided by Vagish Hemmige, 27 October 2026, in a working session: “Use the code”). The paper describes the outcome as greater than 10 vs at most 10 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>; the two differ only for patients at exactly 10.</p>
 <p><strong>Secondary:</strong> eGFR as a continuous variable.</p>
 <p>There is no follow-up; the outcome is measured at the index event.</p>
 </section>
@@ -779,8 +779,8 @@ edit that file, not this page. Its first heading is the page title.
 <p><strong>Variance decomposition.</strong> Null mixed linear models of continuous eGFR with a random intercept for HSA, and with HSA and dialysis facility (<code>PROVUSRD</code>) nested, report the share of variance at each level. Both models are fit on the same patients, those with a facility ID, so the shares are comparable (decided by Vagish Hemmige, 28 October 2026).</p>
 <p><strong>Effect modification.</strong> Models stratified by race (White, Black) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
 <p><strong>Multiplicity.</strong> None; a single primary comparison is reported, as in the paper.</p>
-<p><strong>Missing data.</strong> Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as “a multiple imputation technique with chained predictive analytics (10 imputations)” (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin’s rules. This imputation model was confirmed by Vagish Hemmige, 28 October 2026 (D7).</p>
-<p><strong>Software.</strong> R, with <code>usRds</code> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span>, <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>, <code>tidycensus</code> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span>, <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>, <code>lme4</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> and <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al., n.d.</a>)</span>. The <code>usRds</code> version or commit is recorded with every result.</p>
+<p><strong>Missing data.</strong> Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as “a multiple imputation technique with chained predictive analytics (10 imputations)” (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin’s rules <span class="citation" data-cites="rubin1987mi">(<a href="#ref-rubin1987mi" role="doc-biblioref">Rubin 1987</a>)</span>. This imputation model was confirmed by Vagish Hemmige, 28 October 2026 (D7).</p>
+<p><strong>Software.</strong> R, with <code>usRds</code> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span>, <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>, <code>tidycensus</code> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>, <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>, <code>lme4</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> and <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span>. The <code>usRds</code> version or commit is recorded with every result.</p>
 </section>
 <section id="9-sensitivity-analyses" class="level2">
 <h2 class="anchored" data-anchor-id="9-sensitivity-analyses">9. Sensitivity analyses</h2>
@@ -1052,6 +1052,9 @@ Centers for Medicare &amp; Medicaid Services. 2025. <em>Dialysis Facility Compar
 <div id="ref-vonelm2007strobe" class="csl-entry" role="listitem">
 <span class="nocase">Elm, Erik von, Douglas G Altman, Matthias Egger, et al.</span> 2007. <span>“The <span class="nocase">Strengthening the Reporting of Observational Studies in Epidemiology (STROBE)</span> Statement: Guidelines for Reporting Observational Studies.”</span> <em>Lancet</em> 370 (9596): 1453–57. <a href="https://doi.org/10.1016/S0140-6736(07)61602-X">https://doi.org/10.1016/S0140-6736(07)61602-X</a>.
 </div>
+<div id="ref-fleiss1971kappa" class="csl-entry" role="listitem">
+Fleiss, Joseph L. 1971. <span>“Measuring Nominal Scale Agreement Among Many Raters.”</span> <em>Psychological Bulletin</em> 76 (5): 378–82. <a href="https://doi.org/10.1037/h0031619">https://doi.org/10.1037/h0031619</a>.
+</div>
 <div id="ref-usrds_pkg" class="csl-entry" role="listitem">
 Hemmige, Vagish. 2026. <em>usRds: A Package to Automate Processing and Access to the <span>USRDS</span></em>. <a href="https://vagishhemmige.github.io/usRds/">https://vagishhemmige.github.io/usRds/</a>.
 </div>
@@ -1061,8 +1064,14 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <div id="ref-levey2009ckdepi" class="csl-entry" role="listitem">
 <span class="nocase">Levey, Andrew S, Lesley A Stevens, Christopher H Schmid, et al.</span> 2009. <span>“A New Equation to Estimate Glomerular Filtration Rate.”</span> <em>Annals of Internal Medicine</em> 150 (9): 604–12. <a href="https://doi.org/10.7326/0003-4819-150-9-200905050-00006">https://doi.org/10.7326/0003-4819-150-9-200905050-00006</a>.
 </div>
+<div id="ref-omb1997race" class="csl-entry" role="listitem">
+Office of Management and Budget. 1997. <em>Revisions to the Standards for the Classification of Federal Data on Race and Ethnicity</em>. Federal Register 62(210):58782–58790. <a href="https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf">https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf</a>.
+</div>
 <div id="ref-zipper_pkg" class="csl-entry" role="listitem">
-Prener, Christopher, Timothy Wiemken, and Angela Cook. n.d. <em>zippeR: Working with United States <span>ZIP</span> Code and <span>ZIP</span> Code Tabulation Area Data</em>. <a href="https://github.com/pfizer-opensource/zippeR">https://github.com/pfizer-opensource/zippeR</a>.
+Prener, Christopher, Timothy Wiemken, and Angela Cook. 2026. <em>zippeR: Working with United States <span>ZIP</span> Code and <span>ZIP</span> Code Tabulation Area Data</em>. <a href="https://github.com/pfizer-opensource/zippeR">https://github.com/pfizer-opensource/zippeR</a>.
+</div>
+<div id="ref-rubin1987mi" class="csl-entry" role="listitem">
+Rubin, Donald B. 1987. <em>Multiple Imputation for Nonresponse in Surveys</em>. John Wiley &amp; Sons. <a href="https://doi.org/10.1002/9780470316696">https://doi.org/10.1002/9780470316696</a>.
 </div>
 <div id="ref-flowchart_pkg" class="csl-entry" role="listitem">
 Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristian Tebé. 2026. <span>“Flowchart: An <span>R</span> Package for Data Flowchart Generation.”</span> <em>Journal of Open Research Software</em> 14 (1): 20. <a href="https://doi.org/10.5334/jors.649">https://doi.org/10.5334/jors.649</a>.
@@ -1085,11 +1094,14 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <div id="ref-ers2020ruca" class="csl-entry" role="listitem">
 USDA Economic Research Service. 2020. <em>Rural-Urban Commuting Area Codes, 2010, <span>ZIP</span> Code File</em>. <a href="https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes">https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes</a>.
 </div>
+<div id="ref-ers_ruca_documentation" class="csl-entry" role="listitem">
+USDA Economic Research Service. n.d. <em>Rural-Urban Commuting Area Codes: Documentation</em>. Accessed November 3, 2026. <a href="https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation">https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation</a>.
+</div>
 <div id="ref-tidycensus" class="csl-entry" role="listitem">
-Walker, Kyle, and Matt Herman. n.d. <em>Tidycensus: Load <span>US</span> Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
+Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
 </div>
 <div id="ref-ellmer_pkg" class="csl-entry" role="listitem">
-Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. n.d. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
+Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. 2026. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

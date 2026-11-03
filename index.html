@@ -132,6 +132,17 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -152,17 +163,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
   background-image: none;
 }
 </style>
@@ -536,7 +536,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <ul>
 <li><strong>usRds</strong> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span> loads and labels the USRDS files, and attaches CMS dialysis facility counts to each patient by the date dialysis started.</li>
 <li><strong>flowchart</strong> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</li>
-<li><strong>tidycensus</strong> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman, n.d.</a>)</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</li>
+<li><strong>tidycensus</strong> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</li>
 </ul>
 <p>Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the <a href="./quarto/differences.html">differences page</a>. Where the original code and the paper disagree, the choice is left to the investigators.</p>
 </section>
@@ -568,7 +568,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristian Tebé. 2026. <span>“Flowchart: An <span>R</span> Package for Data Flowchart Generation.”</span> <em>Journal of Open Research Software</em> 14 (1): 20. <a href="https://doi.org/10.5334/jors.649">https://doi.org/10.5334/jors.649</a>.
 </div>
 <div id="ref-tidycensus" class="csl-entry" role="listitem">
-Walker, Kyle, and Matt Herman. n.d. <em>Tidycensus: Load <span>US</span> Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
+Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
 </div>
 </div>
 

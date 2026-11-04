@@ -24,7 +24,7 @@ The study is a replication: every choice the paper states is kept, and where the
 
 Patients come from the USRDS Medical Evidence file, and their ZIP code on the day dialysis started from the Residence file. Facilities come from the CMS release current on that day. Each ZIP code is placed in an HSA with the Dartmouth crosswalk and in a ZCTA with the UDS Mapper crosswalk; ZIP code characteristics come from the American Community Survey 5-year subject table for that ZCTA. HSA quality measures (2015) and hospital resources (2012) come from the Dartmouth Atlas, and rural-urban type from the 2010 RUCA ZIP code file.
 
-All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. How each source is linked to the patient is on [Linking census and facility data](study_linkage.qmd).
+All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. How each source is linked to the patient is on [Dialysis facilities](study_facilities.qmd) and [Census and area data](study_linkage.qmd).
 
 **Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§4 Study population](analysis-plan.qmd#4-study-population) ("Year of linkage").
 

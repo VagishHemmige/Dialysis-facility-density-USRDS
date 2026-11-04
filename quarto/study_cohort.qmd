@@ -11,7 +11,7 @@ The study looks at the start of dialysis, so each patient enters on their **firs
 
 ## Exclusions, in order
 
-Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did (how the linkage works is on [Linking census and facility data](study_linkage.qmd)).
+Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did (how the linkage works is on [Dialysis facilities](study_facilities.qmd) and [Census and area data](study_linkage.qmd)).
 
 1.  **First Medical Evidence form per patient.** Later forms describe a second or later episode of dialysis, not its start.
 2.  **Dialysis started 2011 to 2019**, after the IDEAL trial changed practice (see [Clinical background](background.qmd)).

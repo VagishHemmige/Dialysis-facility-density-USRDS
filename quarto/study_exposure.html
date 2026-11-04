@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -164,6 +153,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -280,7 +280,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <div class="sidebar-item-container"> 
   <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
 </i> 
- <span class="menu-text">Cause of kidney failure</span></a>
+ <span class="menu-text">Mapping cause codes with ellmer</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -353,7 +353,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <div class="sidebar-item-container"> 
   <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
 </i> 
- <span class="menu-text">2. Cause of kidney failure</span></a>
+ <span class="menu-text">2. Mapping cause codes with ellmer</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -580,7 +580,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <p>Two choices fill gaps in the record:</p>
 <ul>
 <li><strong>Race.</strong> The paper reports five race groups whose counts add up to the total, so the form’s other codes were merged in a way not recorded. Here Middle Eastern counts as White and South Asian as Asian, following the 1997 federal standard <span class="citation" data-cites="omb1997race">(<a href="#ref-omb1997race" role="doc-biblioref">Office of Management and Budget 1997</a>)</span>, and Other or multiracial as White, the largest group. Chosen for this demonstration. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2).</li>
-<li><strong>Cause of kidney failure.</strong> The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: <a href="../quarto/study_esrd_causes.html">Cause of kidney failure</a>.</li>
+<li><strong>Cause of kidney failure.</strong> The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: <a href="../quarto/study_esrd_causes.html">Mapping cause codes with ellmer</a>.</li>
 </ul>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#6-covariates">§6 Covariates</a>.</p>
 <p><strong>Current code:</strong> Table 1 shows the characteristics in the paper’s Table 1; leg amputations, hospital beds and staff, station density and the non-profit count are prepared but not shown (<a href="../quarto/tables.html#table-1">Tables</a>; where to report them is <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/53">issue #53</a>). Coding differences from the original are on <a href="../quarto/differences.html#patient-variables">Differences: patient variables</a>.</p>
@@ -1069,8 +1069,8 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../quarto/study_esrd_causes.html" class="pagination-link" aria-label="Cause of kidney failure">
-        <span class="nav-page-text">Cause of kidney failure</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../quarto/study_esrd_causes.html" class="pagination-link" aria-label="Mapping cause codes with ellmer">
+        <span class="nav-page-text">Mapping cause codes with ellmer</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1104,7 +1104,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Two choices fill gaps in the record:</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Race.** The paper reports five race groups whose counts add up to the total, so the form's other codes were merged in a way not recorded. Here Middle Eastern counts as White and South Asian as Asian, following the 1997 federal standard <span class="co">[</span><span class="ot">@omb1997race</span><span class="co">]</span>, and Other or multiracial as White, the largest group. Chosen for this demonstration. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2).</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Cause of kidney failure.** The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: <span class="co">[</span><span class="ot">Cause of kidney failure</span><span class="co">](study_esrd_causes.qmd)</span>.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Cause of kidney failure.** The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: <span class="co">[</span><span class="ot">Mapping cause codes with ellmer</span><span class="co">](study_esrd_causes.qmd)</span>.</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§6 Covariates</span><span class="co">](analysis-plan.qmd#6-covariates)</span>.</span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>

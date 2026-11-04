@@ -87,7 +87,9 @@ side_by_side_diff <- function(old, new, old_title = "Before", new_title = "After
   body <- purrr::pmap_chr(rows, row_html)
 
   htmltools::HTML(stringr::str_c(
-    '<div class="sbs-wrap"><table class="sbs">',
+    # Quarto otherwise parses a raw HTML table into its own table: that drops
+    # the column widths and collapses the leading spaces of each code line
+    '<div class="sbs-wrap"><table class="sbs" data-quarto-disable-processing="true">',
     '<colgroup><col class="sbs-n"><col><col class="sbs-n"><col></colgroup>',
     stringr::str_glue(
       '<thead><tr><th colspan="2">{old_title}</th><th colspan="2">{new_title}</th></tr></thead>'

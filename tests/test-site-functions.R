@@ -74,3 +74,12 @@ test_that("rmd_as_markdown works without a YAML header and stops on an unclosed 
   expect_equal(rmd_as_markdown(rmd_file("Just prose.")), "Just prose.")
   expect_error(rmd_as_markdown(rmd_file("```{r}", "x <- 1")), "never closed")
 })
+
+test_that("side_by_side_diff keeps the code's indentation", {
+  html <- as.character(side_by_side_diff("f(\n  a\n)", "f(\n  b\n)"))
+  # The leading spaces are written as they are, and Quarto is told to leave
+  # the table alone so that they are not collapsed when the page is rendered
+  expect_match(html, 'sbs-add">  b<')
+  expect_match(html, 'sbs-del">  a<')
+  expect_match(html, 'data-quarto-disable-processing="true"')
+})

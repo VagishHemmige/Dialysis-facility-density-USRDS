@@ -144,17 +144,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Results.callout {
-  border-left-color: #198754;
-}
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
-}
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -164,6 +153,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -750,6 +750,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <li><strong>They were slow.</strong> Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.</li>
 <li><strong>A third model did not run at all.</strong> IBM’s Granite (<code>granite4.2:8b</code>) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.</li>
 </ul>
+<p>Each local model’s answers, exactly as returned, are in <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/references/esrd-cause-local-answers.csv"><code>references/esrd-cause-local-answers.csv</code></a>.</p>
 <p>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better.</p>
 </section>
 <section id="how-the-mapping-is-checked" class="level2">
@@ -1358,19 +1359,21 @@ Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerk
 <span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**They were slow.** Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.</span>
 <span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**A third model did not run at all.** IBM's Granite (<span class="in">`granite4.2:8b`</span>) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.</span>
 <span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better.</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>Each local model's answers, exactly as returned, are in <span class="co">[</span><span class="ot">`references/esrd-cause-local-answers.csv`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/references/esrd-cause-local-answers.csv)</span>.</span>
 <span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## How the mapping is checked</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better.</span>
 <span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## How the mapping is checked</span></span>
 <span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (<span class="in">`DISGRPC`</span>). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.</span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.</span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>Agreement among the models shows only that they agree, not that they are right. The plan adds two checks on the data, run by an authorized person once the mapping is reviewed:</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against USRDS's own grouping.** The USRDS PATIENTS file carries a primary disease group for each patient (<span class="in">`DISGRPC`</span>). A cross-tabulation of the six categories against it, as percentages with small cells suppressed, shows which codes the mapping puts somewhere USRDS does not. Differences are expected where the definitions depart from the CMS grouping on purpose (secondary glomerulonephritis, HIV, heart failure); any others point to codes to review.</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Against the paper.** The cohort's share in each category, compared with the published Table 1 percentages above. A large gap in one category points to codes to review.</span>
 <span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

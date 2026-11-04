@@ -125,6 +125,14 @@ The site documents the code. It does not run the analysis.
 - Published figures need alt text.
 - `README.Rmd` is the source of `README.md`; edit the `.Rmd` and re-knit.
 
+## Python-generated public figures (trial convention)
+
+- Commit the generating Python script alongside each new or revised Python-generated public figure, together with any local assets it needs. Keep source and generated outputs in the same change.
+- Put public website illustrations in `images/`, with a descriptive source subdirectory containing `draw.py`, `assets/` when needed, and a `README.md`. Keep the existing `figures/` restrictions for analysis outputs.
+- The README records the output paths, exact regeneration commands, dependencies, asset provenance, and whether displayed values are illustrative or derived from public data. Resolve paths relative to the script; regeneration must not depend on a developer's working directory or credentials.
+- Commit a generated SVG and any PNG used by the site. Regenerate and inspect the output before committing; website builds consume these files without running figure-generation scripts.
+- When recovering source for an existing image, document what was recovered and how fidelity was checked. Do not describe a reconstruction as the original source without evidence.
+
 ## Restricted data (applies to everyone)
 
 The **Access** column of "Data sources" says which sources are restricted. For each restricted source:

@@ -144,17 +144,6 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -164,6 +153,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -615,7 +615,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <p>The <a href="../quarto/supplement.html">published supplement</a> has eTables 1 to 3 and eFigures 1 and 2. Apparent errors in the published figures and tables are kept as printed and listed under <a href="#notes-on-the-published-results">Notes on the published results</a>; several of them bear on choices in this analysis.</p>
 <section id="figure-1.-diagram-of-study-cohort" class="level2">
 <h2 class="anchored" data-anchor-id="figure-1.-diagram-of-study-cohort">Figure 1. Diagram of study cohort</h2>
-<p><img src="../images/published/figure-1-cohort-flow.png" class="img-fluid" alt="Published cohort flow diagram. 3,416,330 total patients in USRDS medical files; 2,571,864 patients excluded: 163,207 receiving second or later dialysis treatment; 2,166,517 started dialysis before 2011; 8,210 age under 18 years at the start of hemodialysis; 124,455 not receiving hemodialysis; 14,380 receiving home hemodialysis; 24 access type, sex, or race and ethnicity missing; 38,708 eGFR <20 mL/min/1.73 m2; 224 ZIP code did not agree with a ZCTA in 2010 US Census; 15,124 ACS ZCTA code data missing; 11,025 ZIP code did not correspond to an HSA; 6,483 Alaska and Hawaii residence; 23,507 ACS data missing. 844,466 patients in final cohort."></p>
+<p><img src="../images/published/figure-1-cohort-flow.png" class="img-fluid" alt="Published cohort flow diagram. 3,416,330 total patients in USRDS medical files; 2,571,864 patients excluded: 163,207 receiving second or later dialysis treatment; 2,166,517 started dialysis before 2011; 8,210 age under 18 years at the start of hemodialysis; 124,455 not receiving hemodialysis; 14,380 receiving home hemodialysis; 24 access type, sex, or race and ethnicity missing; 38,708 eGFR <20 mL/min/1.73 m2; 224 ZIP code did not agree with a ZCTA in 2010 US Census; 15,124 ACS ZCTA code data missing; 11,025 ZIP code did not correspond to an HSA; 6,483 Alaska and Hawaii residence; 23,507 ACS data missing. 844,466 patients in final cohort. The box labelled eGFR <20 counts patients excluded for an eGFR above 20 or missing, as the notes below explain."></p>
 <p>ACS indicates American Community Survey; eGFR, estimated glomerular filtration rate; HSA, health service area; USRDS, US Renal Data System; and ZCTA, zip code tabulation area.</p>
 </section>
 <section id="table-1.-characteristics-of-individuals-and-hsas" class="level2">
@@ -624,11 +624,11 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="table-2.-odds-of-starting-dialysis-respective-to-the-density-of-dialysis-units-in-patients-residential-hsas" class="level2">
 <h2 class="anchored" data-anchor-id="table-2.-odds-of-starting-dialysis-respective-to-the-density-of-dialysis-units-in-patients-residential-hsas">Table 2. Odds of starting dialysis respective to the density of dialysis units in patients’ residential HSAs</h2>
-<p><img src="../images/published/table-2.png" class="img-fluid" alt="Published Table 2: odds ratios (95% CI) for hemodialysis initiated at eGFR above 10 mL/min/1.73 m2 by category of HSA dialysis facility density, for Models 1, 2 and 3. With all variables (n = 533,375 in Models 2 and 3), category 5 (>2.76) versus category 1 (0): 1.06 (1.02-1.10), 1.05 (1.01-1.10) and 1.06 (1.02-1.11). Without albumin and hemoglobin (n = 844,466): 1.06 (1.02-1.10), 1.06 (1.02-1.10) and 1.07 (1.03-1.11). Without category 1 (n = 807,519), category 5 versus category 2: 1.07 (1.04-1.10), 1.06 (1.02-1.09) and 1.07 (1.03-1.11)."></p>
+<p><img src="../images/published/table-2.png" class="img-fluid" alt="Published Table 2: odds ratios (95% CI) for hemodialysis initiated at eGFR above 10 mL/min/1.73 m2 by category of HSA dialysis facility density, for Models 1, 2 and 3. With all variables (n = 533,375 in Models 2 and 3), category 5 (>2.76) versus category 1 (0): 1.06 (1.02-1.10), 1.05 (1.01-1.10) and 1.06 (1.02-1.11). Without albumin and hemoglobin (n = 844,466): 1.06 (1.02-1.10), 1.06 (1.02-1.10) and 1.07 (1.03-1.11). Without category 1 (n = 807,519), category 5 versus category 2: 1.07 (1.04-1.10), 1.06 (1.02-1.09) and 1.07 (1.03-1.11). Compared with HSAs with no facility, categories 2 to 4 have odds ratios between 0.99 and 1.05, most with intervals that include or reach 1; the clearest difference is in category 5."></p>
 </section>
 <section id="figure-2.-health-service-area-hsa-level-findings" class="level2">
 <h2 class="anchored" data-anchor-id="figure-2.-health-service-area-hsa-level-findings">Figure 2. Health Service Area (HSA) level findings</h2>
-<p><img src="../images/published/figure-2-hsa-maps.png" class="img-fluid" alt="Three published maps of HSAs in the contiguous United States. A: dialysis center density per 100,000 population in five categories (0; nonzero to <1.36; 1.36 to <1.95; 1.95 to 2.76; >2.76). B: dialysis station density per 100,000 in five categories (0; nonzero to <24.59; 24.59 to <35.40; 35.40 to 49.46; >49.46). C: annual percentage of eye examinations among patients with diabetes in 2015, in five categories from 26.64 to 93.75, with missing HSAs in gray. Dense HSAs in A and B are concentrated in the Midwest and Southeast."></p>
+<p><img src="../images/published/figure-2-hsa-maps.png" class="img-fluid" alt="Three published maps of HSAs in the contiguous United States. A: dialysis center density per 100,000 population in five categories (0; nonzero to <1.36; 1.36 to <1.95; 1.95 to 2.76; >2.76). B: dialysis station density per 100,000 in five categories (0; nonzero to <24.59; 24.59 to <35.40; 35.40 to 49.46; >49.46). C: annual percentage of eye examinations among patients with diabetes in 2015, in five categories from 26.64 to 93.75, with missing HSAs in gray. In A and B, the densest categories are widespread across the Southeast, Texas and the Great Plains, and HSAs with no facility are common in the rural West and Great Plains. In C, eye examination rates are highest in the upper Midwest and New England and lowest in parts of the Southwest, south Texas and Appalachia."></p>
 <p>HSA-level dialysis facility density (A), HSA-level dialysis station density (B), and HSA-based annual percentage of eye examinations among patients with diabetes in 2015 (C).</p>
 </section>
 <section id="notes-on-the-published-results" class="level2">
@@ -657,6 +657,10 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <li>Race, &gt;2.76 column: the rows sum to 210,691, one more than n = 210,690. As a result, the White row sums to 558,365 across the columns, while eTable 1 gives 558,364.</li>
 </ul>
 <p>The other group totals (sex, ethnicity, nephrology care, dialysis access, insurance and etiology) add up in every column. Seven other percentages differ from their counts by 0.05 to 0.1 points, which is consistent with rounding an already-rounded value. Men total 484,346, as in the abstract; the Results text gives 483,346.</p>
+<p><strong>Figure 2</strong></p>
+<ul>
+<li>The legend of panel A gives the categories as “Nonzero to &lt;1.36”, “1.36 to &lt;1.95” and “1.95 to 2.76”, so 1.36 and 1.95 fall in the higher category; Table 1 gives “&gt;0-1.36”, “&gt;1.36-1.95” and “&gt;1.95-2.76”, so they fall in the lower one. The analysis follows Table 1 and the original code, with each category including its upper bound.</li>
+</ul>
 <p><strong>Table 2</strong></p>
 <ul>
 <li>The Model 3 sample without albumin and hemoglobin is printed “n = 844 4656”; the Model 2 sample is 844,466.</li>
@@ -1158,7 +1162,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Figure 1. Diagram of study cohort</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/published/figure-1-cohort-flow.png)</span>{fig-alt="Published cohort flow diagram. 3,416,330 total patients in USRDS medical files; 2,571,864 patients excluded: 163,207 receiving second or later dialysis treatment; 2,166,517 started dialysis before 2011; 8,210 age under 18 years at the start of hemodialysis; 124,455 not receiving hemodialysis; 14,380 receiving home hemodialysis; 24 access type, sex, or race and ethnicity missing; 38,708 eGFR &lt;20 mL/min/1.73 m2; 224 ZIP code did not agree with a ZCTA in 2010 US Census; 15,124 ACS ZCTA code data missing; 11,025 ZIP code did not correspond to an HSA; 6,483 Alaska and Hawaii residence; 23,507 ACS data missing. 844,466 patients in final cohort."}</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/published/figure-1-cohort-flow.png)</span>{fig-alt="Published cohort flow diagram. 3,416,330 total patients in USRDS medical files; 2,571,864 patients excluded: 163,207 receiving second or later dialysis treatment; 2,166,517 started dialysis before 2011; 8,210 age under 18 years at the start of hemodialysis; 124,455 not receiving hemodialysis; 14,380 receiving home hemodialysis; 24 access type, sex, or race and ethnicity missing; 38,708 eGFR &lt;20 mL/min/1.73 m2; 224 ZIP code did not agree with a ZCTA in 2010 US Census; 15,124 ACS ZCTA code data missing; 11,025 ZIP code did not correspond to an HSA; 6,483 Alaska and Hawaii residence; 23,507 ACS data missing. 844,466 patients in final cohort. The box labelled eGFR &lt;20 counts patients excluded for an eGFR above 20 or missing, as the notes below explain."}</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ACS indicates American Community Survey; eGFR, estimated glomerular filtration rate; HSA, health service area; USRDS, US Renal Data System; and ZCTA, zip code tabulation area.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
@@ -1168,11 +1172,11 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table 2. Odds of starting dialysis respective to the density of dialysis units in patients' residential HSAs</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/published/table-2.png)</span>{fig-alt="Published Table 2: odds ratios (95% CI) for hemodialysis initiated at eGFR above 10 mL/min/1.73 m2 by category of HSA dialysis facility density, for Models 1, 2 and 3. With all variables (n = 533,375 in Models 2 and 3), category 5 (&gt;2.76) versus category 1 (0): 1.06 (1.02-1.10), 1.05 (1.01-1.10) and 1.06 (1.02-1.11). Without albumin and hemoglobin (n = 844,466): 1.06 (1.02-1.10), 1.06 (1.02-1.10) and 1.07 (1.03-1.11). Without category 1 (n = 807,519), category 5 versus category 2: 1.07 (1.04-1.10), 1.06 (1.02-1.09) and 1.07 (1.03-1.11)."}</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/published/table-2.png)</span>{fig-alt="Published Table 2: odds ratios (95% CI) for hemodialysis initiated at eGFR above 10 mL/min/1.73 m2 by category of HSA dialysis facility density, for Models 1, 2 and 3. With all variables (n = 533,375 in Models 2 and 3), category 5 (&gt;2.76) versus category 1 (0): 1.06 (1.02-1.10), 1.05 (1.01-1.10) and 1.06 (1.02-1.11). Without albumin and hemoglobin (n = 844,466): 1.06 (1.02-1.10), 1.06 (1.02-1.10) and 1.07 (1.03-1.11). Without category 1 (n = 807,519), category 5 versus category 2: 1.07 (1.04-1.10), 1.06 (1.02-1.09) and 1.07 (1.03-1.11). Compared with HSAs with no facility, categories 2 to 4 have odds ratios between 0.99 and 1.05, most with intervals that include or reach 1; the clearest difference is in category 5."}</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Figure 2. Health Service Area (HSA) level findings</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/published/figure-2-hsa-maps.png)</span>{fig-alt="Three published maps of HSAs in the contiguous United States. A: dialysis center density per 100,000 population in five categories (0; nonzero to &lt;1.36; 1.36 to &lt;1.95; 1.95 to 2.76; &gt;2.76). B: dialysis station density per 100,000 in five categories (0; nonzero to &lt;24.59; 24.59 to &lt;35.40; 35.40 to 49.46; &gt;49.46). C: annual percentage of eye examinations among patients with diabetes in 2015, in five categories from 26.64 to 93.75, with missing HSAs in gray. Dense HSAs in A and B are concentrated in the Midwest and Southeast."}</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="al">![](../images/published/figure-2-hsa-maps.png)</span>{fig-alt="Three published maps of HSAs in the contiguous United States. A: dialysis center density per 100,000 population in five categories (0; nonzero to &lt;1.36; 1.36 to &lt;1.95; 1.95 to 2.76; &gt;2.76). B: dialysis station density per 100,000 in five categories (0; nonzero to &lt;24.59; 24.59 to &lt;35.40; 35.40 to 49.46; &gt;49.46). C: annual percentage of eye examinations among patients with diabetes in 2015, in five categories from 26.64 to 93.75, with missing HSAs in gray. In A and B, the densest categories are widespread across the Southeast, Texas and the Great Plains, and HSAs with no facility are common in the rural West and Great Plains. In C, eye examination rates are highest in the upper Midwest and New England and lowest in parts of the Southwest, south Texas and Appalachia."}</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>HSA-level dialysis facility density (A), HSA-level dialysis station density (B), and HSA-based annual percentage of eye examinations among patients with diabetes in 2015 (C).</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
@@ -1205,20 +1209,24 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>The other group totals (sex, ethnicity, nephrology care, dialysis access, insurance and etiology) add up in every column. Seven other percentages differ from their counts by 0.05 to 0.1 points, which is consistent with rounding an already-rounded value. Men total 484,346, as in the abstract; the Results text gives 483,346.</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>**Table 2**</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>**Figure 2**</span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Model 3 sample without albumin and hemoglobin is printed "n = 844 4656"; the Model 2 sample is 844,466.</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Model 3, category 3, with albumin and hemoglobin: 1.04 (1.00-1.05) with P = .06.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>**Text and Table 1**</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Results compare the densest HSAs with those with no facility as "29.5% vs 12.9%" Black residents; Table 1 gives means of 29.6 and 6.7. The text's figures are the standard deviations (29.5 and 12.9).</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Abstract and Results give the share of households in poverty as "10.4% vs 8.4%"; Table 1 gives means of 19.6 and 15.5. The text's figures are the standard deviations (10.4 and 8.4).</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The legend of panel A gives the categories as "Nonzero to &lt;1.36", "1.36 to &lt;1.95" and "1.95 to 2.76", so 1.36 and 1.95 fall in the higher category; Table 1 gives "&gt;0-1.36", "&gt;1.36-1.95" and "&gt;1.95-2.76", so they fall in the lower one. The analysis follows Table 1 and the original code, with each category including its upper bound.</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>**Table 2**</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Model 3 sample without albumin and hemoglobin is printed "n = 844 4656"; the Model 2 sample is 844,466.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Model 3, category 3, with albumin and hemoglobin: 1.04 (1.00-1.05) with P = .06.</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>**Text and Table 1**</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Results compare the densest HSAs with those with no facility as "29.5% vs 12.9%" Black residents; Table 1 gives means of 29.6 and 6.7. The text's figures are the standard deviations (29.5 and 12.9).</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Abstract and Results give the share of households in poverty as "10.4% vs 8.4%"; Table 1 gives means of 19.6 and 15.5. The text's figures are the standard deviations (10.4 and 8.4).</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

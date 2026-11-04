@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
-}
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
-}
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -153,6 +142,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -599,6 +599,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 
 
 <p>This page is part of the study’s design and methods. The <strong>Specified in</strong> and <strong>Current code</strong> notes are explained on the <a href="../quarto/study_methods.html">Overview</a>, and the general background is on <a href="../quarto/data_sources.html">Data sources</a> and <a href="../quarto/statistical_methods.html">Statistical methods</a>. The code is on <a href="../quarto/download_public_data.html">1. Public area data</a> and <a href="../quarto/link_area_data.html">4. Linking area data</a>.</p>
+<p><strong>Abbreviations:</strong> ACS, American Community Survey; HSA, Hospital Service Area; RUCA, Rural-Urban Commuting Area; USRDS, United States Renal Data System; ZCTA, ZIP Code Tabulation Area.</p>
 <p>Each patient is placed by the residential ZIP code in effect on the day dialysis started. Everything known about the area where they lived is attached through that ZIP code: the census characteristics of their neighbourhood, their Hospital Service Area (HSA) and its population, the HSA’s care measures, and how rural the ZIP code is. The dialysis facilities around them, also counted on that day, are on <a href="../quarto/study_facilities.html">Dialysis facilities</a>. Every source except USRDS is public and is downloaded from its publisher.</p>
 <section id="one-date-for-everything" class="level2">
 <h2 class="anchored" data-anchor-id="one-date-for-everything">One date for everything</h2>
@@ -1129,38 +1130,40 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the <span class="co">[</span><span class="ot">Overview</span><span class="co">](study_methods.qmd)</span>, and the general background is on <span class="co">[</span><span class="ot">Data sources</span><span class="co">](data_sources.qmd)</span> and <span class="co">[</span><span class="ot">Statistical methods</span><span class="co">](statistical_methods.qmd)</span>. The code is on <span class="co">[</span><span class="ot">1. Public area data</span><span class="co">](download_public_data.qmd)</span> and <span class="co">[</span><span class="ot">4. Linking area data</span><span class="co">](link_area_data.qmd)</span>.</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Each patient is placed by the residential ZIP code in effect on the day dialysis started. Everything known about the area where they lived is attached through that ZIP code: the census characteristics of their neighbourhood, their Hospital Service Area (HSA) and its population, the HSA's care measures, and how rural the ZIP code is. The dialysis facilities around them, also counted on that day, are on <span class="co">[</span><span class="ot">Dialysis facilities</span><span class="co">](study_facilities.qmd)</span>. Every source except USRDS is public and is downloaded from its publisher.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>**Abbreviations:** ACS, American Community Survey; HSA, Hospital Service Area; RUCA, Rural-Urban Commuting Area; USRDS, United States Renal Data System; ZCTA, ZIP Code Tabulation Area.</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## One date for everything</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Each patient is placed by the residential ZIP code in effect on the day dialysis started. Everything known about the area where they lived is attached through that ZIP code: the census characteristics of their neighbourhood, their Hospital Service Area (HSA) and its population, the HSA's care measures, and how rural the ZIP code is. The dialysis facilities around them, also counted on that day, are on <span class="co">[</span><span class="ot">Dialysis facilities</span><span class="co">](study_facilities.qmd)</span>. Every source except USRDS is public and is downloaded from its publisher.</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The original code matched area data to the year of the Medical Evidence form instead, and its facility join quietly dropped patients whose two years differed; this analysis corrects this (decided by Vagish Hemmige, 27 October 2026).</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## One date for everything</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§4 Study population</span><span class="co">](analysis-plan.qmd#4-study-population)</span> ("Year of linkage").</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The original code matched area data to the year of the Medical Evidence form instead, and its facility join quietly dropped patients whose two years differed; this analysis corrects this (decided by Vagish Hemmige, 27 October 2026).</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Census data through the ZCTA</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§4 Study population</span><span class="co">](analysis-plan.qmd#4-study-population)</span> ("Year of linkage").</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>The American Community Survey (ACS) reports by ZIP Code Tabulation Area (ZCTA), not by ZIP code, and not every ZIP code has a ZCTA of its own <span class="co">[</span><span class="ot">@census_zcta</span><span class="co">]</span>. Each patient's ZIP code is therefore mapped to its ZCTA with the UDS Mapper crosswalk for the year dialysis started <span class="co">[</span><span class="ot">@uds_crosswalk; @zipper_pkg</span><span class="co">]</span>, and the ZCTA's ACS 5-year estimates for that year are attached from subject table S0601 <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>: the ZCTA's population and characteristics such as the share of Black residents and the share below the poverty line. Matching ZIP codes to ZCTAs by number alone, as the original code did, would lose everyone in a ZIP code whose ZCTA has a different number.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Census data through the ZCTA</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§6 Covariates</span><span class="co">](analysis-plan.qmd#6-covariates)</span>.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>The American Community Survey (ACS) reports by ZIP Code Tabulation Area (ZCTA), not by ZIP code, and not every ZIP code has a ZCTA of its own <span class="co">[</span><span class="ot">@census_zcta</span><span class="co">]</span>. Each patient's ZIP code is therefore mapped to its ZCTA with the UDS Mapper crosswalk for the year dialysis started <span class="co">[</span><span class="ot">@uds_crosswalk; @zipper_pkg</span><span class="co">]</span>, and the ZCTA's ACS 5-year estimates for that year are attached from subject table S0601 <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>: the ZCTA's population and characteristics such as the share of Black residents and the share below the poverty line. Matching ZIP codes to ZCTAs by number alone, as the original code did, would lose everyone in a ZIP code whose ZCTA has a different number.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## The HSA and its population</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§6 Covariates</span><span class="co">](analysis-plan.qmd#6-covariates)</span>.</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>The Dartmouth Atlas crosswalk for the same year places each ZIP code in an HSA <span class="co">[</span><span class="ot">@dartmouth_crosswalks</span><span class="co">]</span>. The HSA's population, the denominator of the exposure, is the ACS population of the ZCTAs of the ZIP codes in the HSA that year. Several ZIP codes can share a ZCTA, so each ZCTA is counted once per HSA; summing over ZIP codes would count a shared ZCTA's population several times. A patient whose HSA has no ACS population has no facility density and is excluded at the HSA step.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## The HSA and its population</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§5 Exposure</span><span class="co">](analysis-plan.qmd#5-exposure)</span>.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The Dartmouth Atlas crosswalk for the same year places each ZIP code in an HSA <span class="co">[</span><span class="ot">@dartmouth_crosswalks</span><span class="co">]</span>. The HSA's population, the denominator of the exposure, is the ACS population of the ZCTAs of the ZIP codes in the HSA that year. Several ZIP codes can share a ZCTA, so each ZCTA is counted once per HSA; summing over ZIP codes would count a shared ZCTA's population several times. A patient whose HSA has no ACS population has no facility density and is excluded at the HSA step.</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>**Current code:** the HSA step removes these patients together with those whose ZIP code has no HSA (<span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd#facility-density)</span>).</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§5 Exposure</span><span class="co">](analysis-plan.qmd#5-exposure)</span>.</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA care measures and rural-urban type</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>**Current code:** the HSA step removes these patients together with those whose ZIP code has no HSA (<span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd#facility-density)</span>).</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>The Dartmouth Atlas's primary care measures (2015) and hospital resources (2012) are attached by HSA <span class="co">[</span><span class="ot">@dartmouth_primarycare; @dartmouth_capacity</span><span class="co">]</span>; values coded as too small or suppressed are treated as missing, not as numbers. The Economic Research Service's 2010 RUCA ZIP code file gives each ZIP code a primary code, grouped as metropolitan, micropolitan, small town or rural <span class="co">[</span><span class="ot">@ers2020ruca; @ers_ruca_documentation</span><span class="co">]</span>. These are fixed measures, not matched by year.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## HSA care measures and rural-urban type</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§6 Covariates</span><span class="co">](analysis-plan.qmd#6-covariates)</span>.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>The Dartmouth Atlas's primary care measures (2015) and hospital resources (2012) are attached by HSA <span class="co">[</span><span class="ot">@dartmouth_primarycare; @dartmouth_capacity</span><span class="co">]</span>; values coded as too small or suppressed are treated as missing, not as numbers. The Economic Research Service's 2010 RUCA ZIP code file gives each ZIP code a primary code, grouped as metropolitan, micropolitan, small town or rural <span class="co">[</span><span class="ot">@ers2020ruca; @ers_ruca_documentation</span><span class="co">]</span>. These are fixed measures, not matched by year.</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§6 Covariates</span><span class="co">](analysis-plan.qmd#6-covariates)</span>.</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

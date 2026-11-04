@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -153,6 +142,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -596,10 +596,11 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 
 
 <p>This page is part of the study’s design and methods. The <strong>Specified in</strong> and <strong>Current code</strong> notes are explained on the <a href="../quarto/study_methods.html">Overview</a>, and the general background is on <a href="../quarto/data_sources.html#dialysis-facility-listings">Data sources</a>. The code is on <a href="../quarto/link_area_data.html">4. Linking area data</a>.</p>
+<p><strong>Abbreviations:</strong> CMS, Centers for Medicare &amp; Medicaid Services; HSA, Hospital Service Area.</p>
 <p>Each patient is placed by the residential ZIP code in effect on the day dialysis started, and the dialysis facilities around them on that day are counted. The count is the numerator of the study’s exposure, facilities per 100,000 residents of the patient’s Hospital Service Area (HSA); the population it is divided by comes from census data, on <a href="../quarto/study_linkage.html">Census and area data</a>. Both are matched to the same date (<a href="../quarto/study_linkage.html#one-date-for-everything">One date for everything</a>).</p>
 <section id="facilities-on-the-dialysis-date" class="level2">
 <h2 class="anchored" data-anchor-id="facilities-on-the-dialysis-date">Facilities on the dialysis date</h2>
-<p>CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time <span class="citation" data-cites="cms2025dfc">(<a href="#ref-cms2025dfc" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2025</a>)</span>. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient’s ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. <code>usRds</code> holds the releases from December 2005 to April 2025 and does the counting (<code>add_dialysis_facility_counts()</code>); facilities whose ZIP code has no HSA are not counted.</p>
+<p>CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time <span class="citation" data-cites="cms2025dfc">(<a href="#ref-cms2025dfc" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2025</a>)</span>. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient’s ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. The <code>usRds</code> package holds the releases from December 2005 to April 2025 and does the counting (the code is on <a href="../quarto/link_area_data.html">4. Linking area data</a>); facilities whose ZIP code has no HSA are not counted.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#5-exposure">§5 Exposure</a>.</p>
 <p><strong>Current code:</strong> the counts differ from the original code in several ways; see <a href="../quarto/differences.html#facility-counts">Differences: facility counts</a>.</p>
 </section>
@@ -1087,20 +1088,22 @@ Centers for Medicare &amp; Medicaid Services. 2025. <em>Dialysis Facility Compar
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the <span class="co">[</span><span class="ot">Overview</span><span class="co">](study_methods.qmd)</span>, and the general background is on <span class="co">[</span><span class="ot">Data sources</span><span class="co">](data_sources.qmd#dialysis-facility-listings)</span>. The code is on <span class="co">[</span><span class="ot">4. Linking area data</span><span class="co">](link_area_data.qmd)</span>.</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Each patient is placed by the residential ZIP code in effect on the day dialysis started, and the dialysis facilities around them on that day are counted. The count is the numerator of the study's exposure, facilities per 100,000 residents of the patient's Hospital Service Area (HSA); the population it is divided by comes from census data, on <span class="co">[</span><span class="ot">Census and area data</span><span class="co">](study_linkage.qmd)</span>. Both are matched to the same date (<span class="co">[</span><span class="ot">One date for everything</span><span class="co">](study_linkage.qmd#one-date-for-everything)</span>).</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>**Abbreviations:** CMS, Centers for Medicare &amp; Medicaid Services; HSA, Hospital Service Area.</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Facilities on the dialysis date</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Each patient is placed by the residential ZIP code in effect on the day dialysis started, and the dialysis facilities around them on that day are counted. The count is the numerator of the study's exposure, facilities per 100,000 residents of the patient's Hospital Service Area (HSA); the population it is divided by comes from census data, on <span class="co">[</span><span class="ot">Census and area data</span><span class="co">](study_linkage.qmd)</span>. Both are matched to the same date (<span class="co">[</span><span class="ot">One date for everything</span><span class="co">](study_linkage.qmd#one-date-for-everything)</span>).</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time <span class="co">[</span><span class="ot">@cms2025dfc</span><span class="co">]</span>. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. <span class="in">`usRds`</span> holds the releases from December 2005 to April 2025 and does the counting (<span class="in">`add_dialysis_facility_counts()`</span>); facilities whose ZIP code has no HSA are not counted.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Facilities on the dialysis date</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§5 Exposure</span><span class="co">](analysis-plan.qmd#5-exposure)</span>.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time <span class="co">[</span><span class="ot">@cms2025dfc</span><span class="co">]</span>. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. The <span class="in">`usRds`</span> package holds the releases from December 2005 to April 2025 and does the counting (the code is on <span class="co">[</span><span class="ot">4. Linking area data</span><span class="co">](link_area_data.qmd)</span>); facilities whose ZIP code has no HSA are not counted.</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>**Current code:** the counts differ from the original code in several ways; see <span class="co">[</span><span class="ot">Differences: facility counts</span><span class="co">](differences.qmd#facility-counts)</span>.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§5 Exposure</span><span class="co">](analysis-plan.qmd#5-exposure)</span>.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>**Current code:** the counts differ from the original code in several ways; see <span class="co">[</span><span class="ot">Differences: facility counts</span><span class="co">](differences.qmd#facility-counts)</span>.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

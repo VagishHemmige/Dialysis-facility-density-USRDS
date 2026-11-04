@@ -132,17 +132,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -152,6 +141,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -599,7 +599,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 
 <section id="the-study" class="level2">
 <h2 class="anchored" data-anchor-id="the-study">The study</h2>
-<p>Hemmige and colleagues studied 844,466 adults who started in-center hemodialysis in the United States from 2011 to 2019, using the US Renal Data System (USRDS) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Patients living in the Hospital Service Areas (HSAs, which the paper calls health service areas) with the most dialysis facilities per resident had higher odds of starting dialysis at an estimated glomerular filtration rate (eGFR) above 10 mL/min/1.73 m²: an odds ratio of 1.06 (95% CI 1.02 to 1.10) compared with HSAs with no facility. The <a href="./quarto/background.html">clinical background</a> page explains why that matters.</p>
+<p>Hemmige and colleagues studied 844,466 adults who started in-center hemodialysis in the United States from 2011 to 2019, using the US Renal Data System (USRDS) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Patients living in the Hospital Service Areas (HSAs, which the paper calls health service areas) with the most dialysis facilities per resident had higher odds of starting dialysis at an estimated glomerular filtration rate (eGFR) above 10 mL/min/1.73 m²: an odds ratio of 1.06 (95% CI 1.02 to 1.10) compared with HSAs with no facility. The difference is small: in the paper’s linear models, patients in the densest HSAs started at an eGFR about 0.1 mL/min/1.73 m² higher (eTable 3). The odds rose across the density categories and were clearest in the densest; the comparison group, HSAs with no facility, held about 4% of the patients. In models fitted separately by race, the fully adjusted estimate was the same in White and Black patients (odds ratio 1.05), but statistically significant only in White patients (95% CI 1.00 to 1.10, against 0.93 to 1.18 in the smaller group of Black patients; eTable 1) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The <a href="./quarto/background.html">clinical background</a> page explains why the question matters.</p>
 </section>
 <section id="what-this-site-does" class="level2">
 <h2 class="anchored" data-anchor-id="what-this-site-does">What this site does</h2>
@@ -1116,7 +1116,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## The study</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Hemmige and colleagues studied 844,466 adults who started in-center hemodialysis in the United States from 2011 to 2019, using the US Renal Data System (USRDS) <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. Patients living in the Hospital Service Areas (HSAs, which the paper calls health service areas) with the most dialysis facilities per resident had higher odds of starting dialysis at an estimated glomerular filtration rate (eGFR) above 10 mL/min/1.73 m²: an odds ratio of 1.06 (95% CI 1.02 to 1.10) compared with HSAs with no facility. The <span class="co">[</span><span class="ot">clinical background</span><span class="co">](quarto/background.qmd)</span> page explains why that matters.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Hemmige and colleagues studied 844,466 adults who started in-center hemodialysis in the United States from 2011 to 2019, using the US Renal Data System (USRDS) <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. Patients living in the Hospital Service Areas (HSAs, which the paper calls health service areas) with the most dialysis facilities per resident had higher odds of starting dialysis at an estimated glomerular filtration rate (eGFR) above 10 mL/min/1.73 m²: an odds ratio of 1.06 (95% CI 1.02 to 1.10) compared with HSAs with no facility. The difference is small: in the paper's linear models, patients in the densest HSAs started at an eGFR about 0.1 mL/min/1.73 m² higher (eTable 3). The odds rose across the density categories and were clearest in the densest; the comparison group, HSAs with no facility, held about 4% of the patients. In models fitted separately by race, the fully adjusted estimate was the same in White and Black patients (odds ratio 1.05), but statistically significant only in White patients (95% CI 1.00 to 1.10, against 0.93 to 1.18 in the smaller group of Black patients; eTable 1) <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The <span class="co">[</span><span class="ot">clinical background</span><span class="co">](quarto/background.qmd)</span> page explains why the question matters.</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this site does</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>

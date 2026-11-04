@@ -234,6 +234,11 @@ model_estimates <- list(
   published = published_estimates,
   variance = variance_decomposition,
   egfr_range = egfr_range_estimates,
-  usrds_version = as.character(packageVersion("usRds"))
+  usrds_version = as.character(packageVersion("usRds")),
+  # version, and repository and commit when installed from GitHub
+  packages = provenance_packages |>
+    set_names() |>
+    map(\(package) suppressWarnings(utils::packageDescription(package))) |>
+    package_provenance()
 )
 saveRDS(model_estimates, file.path("models", "model_estimates.rds"))

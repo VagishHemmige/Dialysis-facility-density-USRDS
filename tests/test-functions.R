@@ -291,3 +291,22 @@ test_that("format_estimates_table keeps one row per model and term, without the 
   expect_equal(gt::extract_cells(out, term), c("2", "3"))
   expect_equal(gt::extract_cells(out, estimate), c("1.23", "2.35"))
 })
+
+test_that("package_provenance records version, source and GitHub commit", {
+  descriptions <- list(
+    usRds = list(
+      Package = "usRds", Version = "0.4.0.9000", RemoteType = "github",
+      RemoteUsername = "VagishHemmige", RemoteRepo = "usRds",
+      RemoteSha = "e7ac3851a2b4c6d8e0f1a2b3c4d5e6f7a8b9c0d1"
+    ),
+    glmmTMB = list(Package = "glmmTMB", Version = "1.1.8", Repository = "CRAN"),
+    missingpkg = NA
+  )
+  out <- package_provenance(descriptions)
+
+  expect_equal(out$package, c("usRds", "glmmTMB", "missingpkg"))
+  expect_equal(out$version, c("0.4.0.9000", "1.1.8", NA))
+  expect_equal(out$source, c("github", "CRAN", "not installed"))
+  expect_equal(out$repository, c("VagishHemmige/usRds", NA, NA))
+  expect_equal(out$commit, c("e7ac3851a2b4c6d8e0f1a2b3c4d5e6f7a8b9c0d1", NA, NA))
+})

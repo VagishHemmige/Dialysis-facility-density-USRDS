@@ -59,7 +59,7 @@ $PD96DET code list (usRds) ── classify_esrd_causes.R (by hand, once)     │
 
 ## Dependencies outside this repository
 
-- **usRds**: needs the version containing `dialysis_facility_snapshots`, `add_dialysis_facility_counts()` and `summarize_dialysis_facilities()`, which is under review in the usRds project. `R/classify_esrd_causes.R` reads the internal `usRds:::metadata_c` until the package exports its format tables.
+- **usRds**: needs the version containing `dialysis_facility_snapshots`, `add_dialysis_facility_counts()` and `summarize_dialysis_facilities()`, which is under review in the usRds project. `R/classify_esrd_causes.R` reads the internal `usRds:::metadata_c` until the package exports its format tables. `models.R` saves, with the estimates, the version of each package in `provenance_packages` (`setup.R`) and, for packages installed from GitHub such as usRds, the repository and commit (`package_provenance()`).
 - **Packages used without being attached**: `ellmer`, `irr` and `rlang` (classification). `broom.mixed`, used for the estimates, is attached in `setup.R`.
 - **Census API key** for tidycensus; **API keys** for OpenAI, Anthropic and Google, and **Ollama** with the two local models, for the one-time classification.
 

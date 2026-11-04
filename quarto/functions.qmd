@@ -271,6 +271,19 @@ The share of the variance of eGFR at each level of a null mixed model.
 #| eval: false
 ```
 
+## Package provenance
+
+`package_provenance()`
+
+Where each package that builds the cohort or the estimates came from: its version, its source (CRAN or GitHub), and for a package installed from GitHub, such as usRds while its facility functions are unreleased, the repository and commit. A result can then be traced to the exact code that produced it. It takes the packages' descriptions as `utils::packageDescription()` returns them, so it reads nothing itself, and marks a package that is not installed.
+
+**Used in the analysis:** 7. Models: [Saving](models.qmd#saving).
+
+```{r}
+#| label: fn-package-provenance
+#| eval: false
+```
+
 ## Classifying codes
 
 `classify_codes()`

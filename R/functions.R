@@ -265,6 +265,37 @@ variance_shares <- function(model) {
     transmute(level = grp, variance = vcov, share = vcov / sum(vcov))
 }
 
+## ---- fn-package-provenance
+# Where each installed package came from, so a result can be traced to the
+# exact code that produced it: the version, and for a package installed from
+# GitHub (as usRds is, while its facility functions are unreleased) the
+# repository and commit. Takes the packages' descriptions, named by package,
+# as utils::packageDescription() returns them (NA for a package that is not
+# installed), so it reads nothing itself.
+package_provenance <- function(descriptions) {
+  field <- \(description, name) {
+    value <- if (is.list(description)) description[[name]] else NULL
+    if (is.null(value)) NA_character_ else as.character(value)
+  }
+
+  imap(descriptions, \(description, package) {
+    user <- field(description, "RemoteUsername")
+    tibble(
+      package = package,
+      version = field(description, "Version"),
+      source = case_when(
+        !is.list(description) ~ "not installed",
+        !is.na(field(description, "RemoteType")) ~ field(description, "RemoteType"),
+        !is.na(field(description, "Repository")) ~ field(description, "Repository"),
+        .default = "unknown"
+      ),
+      repository = if (is.na(user)) NA_character_ else str_glue("{user}/{field(description, 'RemoteRepo')}"),
+      commit = field(description, "RemoteSha")
+    )
+  }) |>
+    list_rbind()
+}
+
 ## ---- fn-classify-codes
 # Classify codes with one model, in batches. `ask` is that provider's function:
 # it takes a batch of codes (code, description) and returns one row per code

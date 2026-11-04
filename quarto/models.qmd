@@ -149,7 +149,9 @@ A sensitivity analysis from the original R code that is not in the paper: Model 
 
 ## Saving
 
-Estimates are saved in the gitignored `models/` folder with the `usRds` version, so tables can be rebuilt without refitting.
+Estimates are saved in the gitignored `models/` folder, so tables can be rebuilt without refitting. With them are saved the version of each package in `provenance_packages` (set in `setup.R`), and for usRds, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while usRds is changing ([usRds issue #18](https://github.com/VagishHemmige/usRds/issues/18)).
+
+**Functions used:** [`package_provenance()`](functions.qmd#package-provenance).
 
 ```{r}
 #| label: save-models

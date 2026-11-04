@@ -12,7 +12,9 @@ This repository revises the analysis of a published cross-sectional
 study of 844,466 incident hemodialysis patients in the US Renal Data
 System (USRDS), which found that patients in Hospital Service Areas
 (HSAs, which the paper calls health service areas) with more dialysis
-facilities per resident started hemodialysis at a higher eGFR:
+facilities per resident had slightly higher odds of starting
+hemodialysis at an eGFR of 10 mL/min/1.73 m² or above (odds ratio 1.06
+in the densest category; about 0.1 mL/min/1.73 m² higher on average):
 
 > Hemmige V, Deshpande P, Norris KC, Shen JI, Erickson KF, Johansen KL,
 > Golestaneh L. Geographic dialysis facility density and early dialysis

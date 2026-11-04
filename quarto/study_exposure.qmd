@@ -5,11 +5,15 @@ format: html
 
 This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code is on [3. USRDS patient data](prepare_patients.qmd), [4. Linking area data](link_area_data.qmd) and [6. Density categories](define_exposure.qmd).
 
+**Abbreviations:** CKD-EPI, Chronic Kidney Disease Epidemiology Collaboration (equation); CMS, Centers for Medicare & Medicaid Services; eGFR, estimated glomerular filtration rate; HSA, Hospital Service Area; USRDS, United States Renal Data System; ZCTA, ZIP Code Tabulation Area.
+
 ## Exposure: facility density
 
 The exposure is the number of dialysis facilities in the patient's HSA on the day dialysis started, per 100,000 HSA residents. Every facility in the CMS release current that day counts, placed in an HSA by its ZIP code. The population is that of the ZCTAs making up the HSA, each counted once even when several ZIP codes share it.
 
 Density is cut into five categories: no facility, then four groups split at the 25th, 50th and 75th percentiles among patients in the final cohort, each including its upper bound. Percentiles are taken across patients, not HSAs, as in the original code that produced the published cut points (1.36, 1.95 and 2.76 per 100,000 [@hemmige2024density]). Density per 100,000 as a continuous measure is used in sensitivity analyses.
+
+**What the comparison group is like.** HSAs with no facility are mostly small and rural. In the paper's Table 1, 47% of patients in them lived in small-town or rural ZIP codes, against 2% to 14% in the other categories, and only about 4% of patients lived in them [@hemmige2024density]. A comparison with this group therefore also compares rural with metropolitan places, where distance to care differs; the sensitivity analysis that drops these HSAs, using the lowest non-zero category as the reference, addresses this ([Sensitivity analyses](study_analysis.qmd#sensitivity-analyses)).
 
 **Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
 

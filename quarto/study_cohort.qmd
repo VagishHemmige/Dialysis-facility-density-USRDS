@@ -5,6 +5,8 @@ format: html
 
 This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code is on [3. USRDS patient data](prepare_patients.qmd) and [5. Cohort flowchart](create_cohort.qmd).
 
+**Abbreviations:** ACS, American Community Survey; eGFR, estimated glomerular filtration rate; HSA, Hospital Service Area; RUCA, Rural-Urban Commuting Area; USRDS, United States Renal Data System; ZCTA, ZIP Code Tabulation Area.
+
 ## The index event
 
 The study looks at the start of dialysis, so each patient enters on their **first** Medical Evidence form; later forms describe a second or later episode. The patient's place of residence is the residential ZIP code in effect on the day dialysis started, taken from the Residence file. A patient with no residence period containing that day, or with more than one, has no residence and is excluded at that step, where the count is shown.
@@ -14,7 +16,7 @@ The study looks at the start of dialysis, so each patient enters on their **firs
 Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients whose area data can be linked, as the original code did (how the linkage works is on [Dialysis facilities](study_facilities.qmd) and [Census and area data](study_linkage.qmd)).
 
 1.  **First Medical Evidence form per patient.** Later forms describe a second or later episode of dialysis, not its start.
-2.  **Dialysis started 2011 to 2019**, after the IDEAL trial changed practice (see [Clinical background](background.qmd)).
+2.  **Dialysis started 2011 to 2019**, after the IDEAL trial was published (see [Clinical background](background.qmd)).
 3.  **Age 18 or older.**
 4.  **Hemodialysis**, not peritoneal dialysis.
 5.  **In-center dialysis.** The timing of a home dialysis start depends on training schedules and trainer availability, and can be very early by design, so the paper excludes them [@hemmige2024density].

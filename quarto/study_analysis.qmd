@@ -5,6 +5,8 @@ format: html
 
 This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code is on [7. Models](models.qmd) and [Tables](tables.qmd).
 
+**Abbreviations:** eGFR, estimated glomerular filtration rate; HSA, Hospital Service Area; USRDS, United States Renal Data System.
+
 ## Describing the cohort
 
 Table 1 compares the five density categories, with one-way ANOVA for continuous characteristics, chi-squared tests for categorical ones, and missing values shown.

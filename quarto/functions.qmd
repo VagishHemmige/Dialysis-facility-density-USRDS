@@ -3,7 +3,7 @@ title: "Functions"
 format: html
 ---
 
-Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in [`tests/test-functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R).
+Reusable helpers. Each takes its inputs as arguments and reads no global objects, and all but two are tested on synthetic data with a known answer in [`tests/test-functions.R`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R). The two without a test are `read_header_table()`, which reads the Dartmouth spreadsheets, and `map_panel()`, which draws a map for Figure 2. `density_category_labels()` is tested through `categorize_density()`, which uses it.
 
 Each section names the function under its heading, explains what it does, and then links to where it is used: the steps of the analysis that call it, and any function on this page that calls it.
 

@@ -46,10 +46,12 @@ jobs:
         with:
           use-public-rspm: true
 
-      # Only what the pages run: knitr and rmarkdown for the R chunks, and the
+      # What the pages run: knitr and rmarkdown for the R chunks, and the
       # packages quarto/_site_functions.R calls with ::, plus yaml for the
-      # cross-reference check. Current CRAN versions.
-      - name: Install the R packages the pages use
+      # cross-reference check; and what the tests need: testthat, tidyverse,
+      # lme4, glmmTMB and broom.mixed. gt is left out, so its one test is
+      # skipped. Current CRAN versions.
+      - name: Install the R packages the pages and tests use
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
@@ -62,6 +64,20 @@ jobs:
             any::stringr
             any::tibble
             any::yaml
+            any::testthat
+            any::tidyverse
+            any::lme4
+            any::glmmTMB
+            any::broom.mixed
+
+      # The helpers, the model written out on the models page, and the site
+      # helpers, all on synthetic data (AGENTS.md, "Checks for any change").
+      # A failing test stops the run, so nothing is published.
+      - name: Run the tests
+        run: |
+          Rscript -e 'testthat::test_file("tests/test-functions.R", stop_on_failure = TRUE)'
+          Rscript -e 'testthat::test_file("tests/test-model-example.R", stop_on_failure = TRUE)'
+          Rscript -e 'testthat::test_file("tests/test-site-functions.R", stop_on_failure = TRUE)'
 
       # The functions page and the method pages must link each other as the
       # code says (AGENTS.md, "Quarto website"); see the script for how to fix

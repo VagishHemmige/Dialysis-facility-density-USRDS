@@ -582,7 +582,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </header>
 
 
-<p>This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call <code>library()</code> or hard-code a number.</p>
+<p>This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call <code>library()</code> or hard-code a number. Reusable helpers are in <code>R/functions.R</code>; a few small functions used by one script only are defined in that script (in <code>download_public_data.R</code>, <code>models.R</code> and <code>classify_esrd_causes.R</code>) and are explained on its page.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -655,7 +655,9 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>sensitivity_egfr_range <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">25</span>)</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># States outside the 48 contiguous states + DC; territories have no region</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>noncontiguous_states <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ALASKA"</span>, <span class="st">"HAWAII"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>noncontiguous_states <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ALASKA"</span>, <span class="st">"HAWAII"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># The same states as two-letter codes, as the Dartmouth HSA boundaries give them</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>noncontiguous_state_codes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"AK"</span>, <span class="st">"HI"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1381,7 +1383,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call <span class="in">`library()`</span> or hard-code a number.</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call <span class="in">`library()`</span> or hard-code a number. Reusable helpers are in <span class="in">`R/functions.R`</span>; a few small functions used by one script only are defined in that script (in <span class="in">`download_public_data.R`</span>, <span class="in">`models.R`</span> and <span class="in">`classify_esrd_causes.R`</span>) and are explained on its page.</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>

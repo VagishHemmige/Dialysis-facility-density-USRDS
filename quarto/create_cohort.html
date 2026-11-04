@@ -133,6 +133,17 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -153,17 +164,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
   background-image: none;
 }
 </style>
@@ -644,37 +644,39 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <summary>Click to show/hide R Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># flowchart turns each condition into text and evaluates it again in its own</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># environment, which reaches the global environment where main.R puts the</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># constants from setup.R. Keep conditions free of string literals (flowchart</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># collapses double spaces in the text) and of objects local to a function.</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cohort_fc <span class="ot">&lt;-</span> linked_forms <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_fc</span>(<span class="at">label =</span> <span class="st">"USRDS Medical Evidence forms"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(first_form, <span class="at">label =</span> <span class="st">"First form per patient"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>, <span class="at">label_exc =</span> <span class="st">"Second or later dialysis episode"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(dialysis_year <span class="sc">%in%</span> study_years, <span class="at">label =</span> year_label, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(age <span class="sc">&gt;=</span> minimum_age, <span class="at">label =</span> age_label, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(DIALTYP <span class="sc">==</span> <span class="st">"HEMO"</span>, <span class="at">label =</span> <span class="st">"Hemodialysis"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(DIALSET <span class="sc">%in%</span> dialysis_settings_kept,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> setting_label,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(insurance), <span class="at">label =</span> <span class="st">"Insurance recorded"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(access_type), <span class="at">label =</span> <span class="st">"Access type recorded"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex), <span class="at">label =</span> <span class="st">"Sex recorded"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(egfr) <span class="sc">&amp;</span> egfr <span class="sc">&lt;=</span> egfr_maximum,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> egfr_label, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_residence, <span class="at">label =</span> <span class="st">"Residential ZIP code on the dialysis start date"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_zcta, <span class="at">label =</span> <span class="st">"ZIP code has a ZCTA (UDS Mapper crosswalk for the year)"</span>,</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_acs, <span class="at">label =</span> <span class="st">"ACS data for the ZCTA and year"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_facility_snapshot,</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Facility data for the dialysis start date"</span>,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_hsa, <span class="at">label =</span> <span class="st">"ZIP code in a Hospital Service Area (HSA)"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(region) <span class="sc">&amp;</span> <span class="sc">!</span>state <span class="sc">%in%</span> noncontiguous_states,</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Contiguous US or District of Columbia"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(race) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(hispanic), <span class="at">label =</span> <span class="st">"Race and Hispanic ethnicity recorded"</span>,</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_complete_acs <span class="sc">&amp;</span> has_ruca, <span class="at">label =</span> <span class="st">"Complete ACS and RUCA data for the ZIP code"</span>,</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># constants from setup.R. flowchart re-evaluates each condition from its text,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># collapsing double spaces, so a string literal in a condition must be a single</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># word (as "HEMO" is); anything longer belongs in a constant. Conditions must</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># not use objects local to a function.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cohort_fc <span class="ot">&lt;-</span> linked_forms <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_fc</span>(<span class="at">label =</span> <span class="st">"USRDS Medical Evidence forms"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(first_form, <span class="at">label =</span> <span class="st">"First form per patient"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>, <span class="at">label_exc =</span> <span class="st">"Second or later dialysis episode"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(dialysis_year <span class="sc">%in%</span> study_years, <span class="at">label =</span> year_label, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(age <span class="sc">&gt;=</span> minimum_age, <span class="at">label =</span> age_label, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(DIALTYP <span class="sc">==</span> <span class="st">"HEMO"</span>, <span class="at">label =</span> <span class="st">"Hemodialysis"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(DIALSET <span class="sc">%in%</span> dialysis_settings_kept,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> setting_label,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(insurance), <span class="at">label =</span> <span class="st">"Insurance recorded"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(access_type), <span class="at">label =</span> <span class="st">"Access type recorded"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex), <span class="at">label =</span> <span class="st">"Sex recorded"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(egfr) <span class="sc">&amp;</span> egfr <span class="sc">&lt;=</span> egfr_maximum,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> egfr_label, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_residence, <span class="at">label =</span> <span class="st">"Residential ZIP code on the dialysis start date"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_zcta, <span class="at">label =</span> <span class="st">"ZIP code has a ZCTA (UDS Mapper crosswalk for the year)"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_acs, <span class="at">label =</span> <span class="st">"ACS data for the ZCTA and year"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_facility_snapshot,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Facility data for the dialysis start date"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_hsa, <span class="at">label =</span> <span class="st">"ZIP code in a Hospital Service Area (HSA)"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(region) <span class="sc">&amp;</span> <span class="sc">!</span>state <span class="sc">%in%</span> noncontiguous_states,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Contiguous US or District of Columbia"</span>, <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(race) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(hispanic), <span class="at">label =</span> <span class="st">"Race and Hispanic ethnicity recorded"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_filter</span>(has_complete_acs <span class="sc">&amp;</span> has_ruca, <span class="at">label =</span> <span class="st">"Complete ACS and RUCA data for the ZIP code"</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_exc =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>

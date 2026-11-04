@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -153,6 +142,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -793,7 +793,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <tr class="odd">
 <td>ACS data were downloaded once and cached in a local file.</td>
 <td>Rebuilt</td>
-<td>Downloaded by <code>tidycensus</code> on each fresh run, with the Census Bureau’s cache.</td>
+<td>Downloaded by <code>tidycensus</code> on each fresh run; tidycensus 2.0.0 keeps no local copy of ACS tables <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>.</td>
 <td>None, unless the Census Bureau has revised the estimates</td>
 </tr>
 <tr class="even">
@@ -922,7 +922,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <tr class="even">
 <td>The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<code>centers3</code>, <code>lag3</code>) or repeat the outcome in the formula (<code>GFR_DICH~GFR_DICH~</code>).</td>
 <td>Rebuilt</td>
-<td>Rebuilt from the paper’s text and Table 2 footnotes. The estimation method differs: Stata’s default is adaptive quadrature with 7 points; this analysis uses <code>glmmTMB</code> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <code>lme4::glmer</code> (decided 27 October 2026). See <a href="../quarto/models.html">Models</a> for the comparison.</td>
+<td>Rebuilt from the paper’s text and Table 2 footnotes. The estimation method differs: Stata’s default is adaptive quadrature with 7 points; this analysis uses <code>glmmTMB</code> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <code>lme4::glmer</code> (decided 27 October 2026). See <a href="../quarto/models.html#choosing-the-model-fitting-package">Choosing the model-fitting package</a> for the comparison.</td>
 <td>Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds</td>
 </tr>
 <tr class="odd">
@@ -1115,6 +1115,9 @@ The Dartmouth Atlas of Health Care. n.d.-b. <em>Selected Primary Care Access and
 </div>
 <div id="ref-usrds2024guide" class="csl-entry" role="listitem">
 United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USRDS</span> Database, Appendix b (Data File Descriptions) and Appendix c (Data Formats)</em>. National Institute of Diabetes and Digestive and Kidney Diseases. <a href="https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide">https://www.niddk.nih.gov/about-niddk/strategic-plans-reports/usrds/for-researchers/researchers-guide</a>.
+</div>
+<div id="ref-tidycensus" class="csl-entry" role="listitem">
+Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census Boundary and Attribute Data as ’Tidyverse’ and ’Sf’-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
 </div>
 </div>
 
@@ -1638,7 +1641,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Dartmouth Atlas negative values were made positive (<span class="in">`ifelse(x &lt; 0, -x, x)`</span>). Dartmouth codes small values as -88888 and suppressed values as -99999 <span class="co">[</span><span class="ot">@dartmouth_primarycare</span><span class="co">]</span>, so suppressed HSAs would enter as 88,888 or 99,999. <span class="pp">|</span> Corrected error <span class="pp">|</span> Set to missing (decided 27 October 2026). <span class="pp">|</span> Table 1 benchmark rows and Model 3, if the original files held these codes <span class="pp">|</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS subject-table variable codes (for example <span class="in">`S0601_C01_047`</span>) were assumed to mean the same thing every year. <span class="pp">|</span> Corrected error <span class="pp">|</span> Each year's labels are checked; a mismatch stops the run. <span class="pp">|</span> None if the codes were stable; otherwise ZIP code income and poverty <span class="pp">|</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS data were downloaded once and cached in a local file. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Downloaded by <span class="in">`tidycensus`</span> on each fresh run, with the Census Bureau's cache. <span class="pp">|</span> None, unless the Census Bureau has revised the estimates <span class="pp">|</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS data were downloaded once and cached in a local file. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Downloaded by <span class="in">`tidycensus`</span> on each fresh run; tidycensus 2.0.0 keeps no local copy of ACS tables <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>. <span class="pp">|</span> None, unless the Census Bureau has revised the estimates <span class="pp">|</span></span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> RUCA codes, Dartmouth crosswalks, benchmarks and boundaries were read from files on the analyst's computer; the benchmarks were Stata files made by hand. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Downloaded from the publishers' URLs. The benchmark spreadsheets are very likely the sources of the original Stata files; the code checks each column by name. <span class="pp">|</span> None, if the spreadsheets match <span class="pp">|</span></span>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The 2018 and 2019 Dartmouth crosswalks are published as zipped CSV; the original reader only read Excel files. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Both formats are read. <span class="pp">|</span> None <span class="pp">|</span></span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> State FIPS codes were labelled from a spreadsheet. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`usRds`</span> labels the state from the USRDS format <span class="in">`$STATFIP`</span>. <span class="pp">|</span> None <span class="pp">|</span></span>
@@ -1696,7 +1699,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Several published models were fit only in Stata and never in R: the race-stratified Model 2, eTable 2's continuous-density models with albumin and hemoglobin, imputed and by race, and eTable 3's models with albumin and hemoglobin and without 0-facility HSAs. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Every model in Table 2 and eTables 1 to 3 is fit, as presented, from one list of published models (decided 27 October 2026). <span class="pp">|</span> eTables 1 to 3 <span class="pp">|</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<span class="in">`centers3`</span>, <span class="in">`lag3`</span>) or repeat the outcome in the formula (<span class="in">`GFR_DICH~GFR_DICH~`</span>). <span class="pp">|</span> Rebuilt <span class="pp">|</span> Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; this analysis uses <span class="in">`glmmTMB`</span> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <span class="in">`lme4::glmer`</span> (decided 27 October 2026). See <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> for the comparison. <span class="pp">|</span> Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds <span class="pp">|</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<span class="in">`centers3`</span>, <span class="in">`lag3`</span>) or repeat the outcome in the formula (<span class="in">`GFR_DICH~GFR_DICH~`</span>). <span class="pp">|</span> Rebuilt <span class="pp">|</span> Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; this analysis uses <span class="in">`glmmTMB`</span> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <span class="in">`lme4::glmer`</span> (decided 27 October 2026). See <span class="co">[</span><span class="ot">Choosing the model-fitting package</span><span class="co">](models.qmd#choosing-the-model-fitting-package)</span> for the comparison. <span class="pp">|</span> Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds <span class="pp">|</span></span>
 <span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as "a multiple imputation technique with chained predictive analytics (10 imputations)", read here as chained equations. <span class="pp">|</span> Rebuilt (D7, decided 28 October 2026) <span class="pp">|</span> Albumin and hemoglobin imputed with <span class="in">`mice`</span> (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. <span class="pp">|</span> The imputation rows of eTable 2 <span class="pp">|</span></span>
 <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model 3 adjusts for "HSA-level success in achieving primary care benchmarks, such as" HbA1c testing, eye examinations among patients with diabetes and ambulatory-sensitive discharges. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Those three benchmarks; the paper's "such as" may mean that Stata used more (Table 1 also reports mammography). <span class="pp">|</span> Model 3, if Stata used more benchmarks <span class="pp">|</span></span>
 <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The original R code also fit Model 3 among patients with eGFR between 5 and 25. Not in the paper. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Kept as an extra table, labelled as not in the paper. Since the cohort already has eGFR of 20 or below, it excludes eGFR of 5 or below. <span class="pp">|</span> None on the published tables <span class="pp">|</span></span>

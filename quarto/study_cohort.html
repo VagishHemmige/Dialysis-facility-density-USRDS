@@ -624,7 +624,8 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <li><strong>Complete ACS and rural-urban data for the ZIP code</strong>, Model 3 covariates. ZIP codes with RUCA code 99 have no population.</li>
 </ol>
 <p>Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.</p>
-<p>Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring recorded covariates means every model without laboratory values uses the same patients, as in the paper (844,466 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>).</p>
+<p>Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring the recorded patient covariates, and complete census and rural-urban data, keeps the patients the same across Models 1 to 3 without laboratory values, as in the paper (844,466 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>).</p>
+<p><strong>Current code:</strong> no flowchart step requires the three HSA quality benchmarks that Model 3 adds, so a patient whose HSA lacks one of them is left out of Model 3 only. Each model reports the number of patients it used, so any such difference is visible in the output.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#4-study-population">§4 Study population</a>.</p>
 <p><strong>Current code:</strong> the plan’s single step for a ZCTA and ACS data is drawn as two boxes, so each loss is counted separately (<a href="../quarto/create_cohort.html#exclusions">Cohort flowchart</a>). Residents of an HSA with no ACS population have no density and are removed at the HSA step (<a href="../quarto/link_area_data.html#facility-density">Linking area data</a>).</p>
 </section>
@@ -1140,16 +1141,18 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring recorded covariates means every model without laboratory values uses the same patients, as in the paper (844,466 <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>).</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring the recorded patient covariates, and complete census and rural-urban data, keeps the patients the same across Models 1 to 3 without laboratory values, as in the paper (844,466 <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>).</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§4 Study population</span><span class="co">](analysis-plan.qmd#4-study-population)</span>.</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Current code:** no flowchart step requires the three HSA quality benchmarks that Model 3 adds, so a patient whose HSA lacks one of them is left out of Model 3 only. Each model reports the number of patients it used, so any such difference is visible in the output.</span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>**Current code:** the plan's single step for a ZCTA and ACS data is drawn as two boxes, so each loss is counted separately (<span class="co">[</span><span class="ot">Cohort flowchart</span><span class="co">](create_cohort.qmd#exclusions)</span>). Residents of an HSA with no ACS population have no density and are removed at the HSA step (<span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd#facility-density)</span>).</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§4 Study population</span><span class="co">](analysis-plan.qmd#4-study-population)</span>.</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>**Current code:** the plan's single step for a ZCTA and ACS data is drawn as two boxes, so each loss is counted separately (<span class="co">[</span><span class="ot">Cohort flowchart</span><span class="co">](create_cohort.qmd#exclusions)</span>). Residents of an HSA with no ACS population have no density and are removed at the HSA step (<span class="co">[</span><span class="ot">Linking area data</span><span class="co">](link_area_data.qmd#facility-density)</span>).</span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

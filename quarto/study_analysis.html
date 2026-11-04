@@ -133,6 +133,17 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
+  background-image: none;
+}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -153,17 +164,6 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
-  background-image: none;
-}
-div.callout-Results.callout {
-  border-left-color: #198754;
-}
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
-}
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
   background-image: none;
 }
 </style>
@@ -622,50 +622,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <section id="how-the-models-are-fitted" class="level2">
 <h2 class="anchored" data-anchor-id="how-the-models-are-fitted">How the models are fitted</h2>
 <p>The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with <code>melogit</code>, Stata’s default is adaptive Gauss-Hermite quadrature with 7 points <span class="citation" data-cites="stata_melogit">(<a href="#ref-stata_melogit" role="doc-biblioref">StataCorp, n.d.</a>)</span>.</p>
-<p>A mixed model’s likelihood has to be computed by approximation, because each HSA’s random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation’s bias shrinks as the number of patients per HSA grows <span class="citation" data-cites="joe2008laplace">(<a href="#ref-joe2008laplace" role="doc-biblioref">Joe 2008</a>)</span>, so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts <span class="citation" data-cites="scialla2014iv">(<a href="#ref-scialla2014iv" role="doc-biblioref"><span class="nocase">Scialla et al.</span> 2014</a>)</span>, and the variance between HSAs is more sensitive to the approximation <span class="citation" data-cites="stata_melogit">(<a href="#ref-stata_melogit" role="doc-biblioref">StataCorp, n.d.</a>)</span>. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Fit</th>
-<th>Time</th>
-<th>Convergence warnings</th>
-<th>Odds ratio, highest vs zero density</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>lme4::glmer</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span>, default settings</td>
-<td>117 s</td>
-<td>4</td>
-<td>10.08 (not converged)</td>
-</tr>
-<tr class="even">
-<td><code>lme4::glmer</code>, rescaled covariates, higher iteration limit</td>
-<td>111 s</td>
-<td>0</td>
-<td>10.62</td>
-</tr>
-<tr class="odd">
-<td><code>lme4::glmer</code>, 7-point quadrature (Stata’s default)</td>
-<td>119 s</td>
-<td>0</td>
-<td>10.63</td>
-</tr>
-<tr class="even">
-<td><code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span></td>
-<td>4 s</td>
-<td>0</td>
-<td>10.63</td>
-</tr>
-</tbody>
-</table>
-<p>The numbers are synthetic; only the comparison matters. <code>glmmTMB</code> gave the same estimates as a fully converged <code>glmer</code> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67). The analysis therefore uses <code>glmmTMB</code> (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:</p>
+<p>A mixed model’s likelihood has to be computed by approximation, because each HSA’s random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation’s bias shrinks as the number of patients per HSA grows <span class="citation" data-cites="joe2008laplace">(<a href="#ref-joe2008laplace" role="doc-biblioref">Joe 2008</a>)</span>, so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts <span class="citation" data-cites="scialla2014iv">(<a href="#ref-scialla2014iv" role="doc-biblioref"><span class="nocase">Scialla et al.</span> 2014</a>)</span>, and the variance between HSAs is more sensitive to the approximation <span class="citation" data-cites="stata_melogit">(<a href="#ref-stata_melogit" role="doc-biblioref">StataCorp, n.d.</a>)</span>. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. Timed against each other on synthetic test data shaped like Model 3, <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span> gave the same estimates as a fully converged <code>lme4::glmer</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> in a small fraction of the time, and using 7-point quadrature rather than the Laplace approximation changed the estimates very little; the comparison is on the code page, <a href="../quarto/models.html#choosing-the-model-fitting-package">Choosing the model-fitting package</a>. The analysis therefore uses <code>glmmTMB</code> (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:</p>
 <ul>
 <li><strong><code>GLMMadaptive</code></strong> fits the model with adaptive quadrature and any number of points, closest to Stata’s method. It was not timed here.</li>
 <li><strong><code>MixedModels.jl</code></strong> <span class="citation" data-cites="mixedmodels_jl">(<a href="#ref-mixedmodels_jl" role="doc-biblioref">Alday and Bates, n.d.</a>)</span>, a Julia package by Douglas Bates, the original author of <code>lme4</code>, and Phillip Alday, is designed for very large models and can be called from R with the <code>jlme</code> package <span class="citation" data-cites="jlme">(<a href="#ref-jlme" role="doc-biblioref">Choe 2024</a>)</span>. It needs a Julia installation, and <code>jlme</code> was archived on CRAN on 5 April 2025 <span class="citation" data-cites="jlme">(<a href="#ref-jlme" role="doc-biblioref">Choe 2024</a>)</span>, so it was not used.</li>
@@ -1236,64 +1193,49 @@ StataCorp. n.d. <em>Melogit: Multilevel Mixed-Effects Logistic Regression</em>. 
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>The paper fit its models in Stata 15 and calls them mixed-effects logit models; it does not name the command. If they were fit with <span class="in">`melogit`</span>, Stata's default is adaptive Gauss-Hermite quadrature with 7 points <span class="co">[</span><span class="ot">@stata_melogit</span><span class="co">]</span>.</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation's bias shrinks as the number of patients per HSA grows <span class="co">[</span><span class="ot">@joe2008laplace</span><span class="co">]</span>, so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>, and the variance between HSAs is more sensitive to the approximation <span class="co">[</span><span class="ot">@stata_melogit</span><span class="co">]</span>. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. On synthetic data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>A mixed model's likelihood has to be computed by approximation, because each HSA's random effect is averaged over. The Laplace approximation does this with one point per HSA; adaptive quadrature uses several (here 7), which is more exact but slower. For the odds ratios, the Laplace approximation's bias shrinks as the number of patients per HSA grows <span class="co">[</span><span class="ot">@joe2008laplace</span><span class="co">]</span>, so when most HSAs have many patients the two give practically the same answer; HSA sizes vary widely in USRDS cohorts <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>, and the variance between HSAs is more sensitive to the approximation <span class="co">[</span><span class="ot">@stata_melogit</span><span class="co">]</span>. How many patients each HSA has in this cohort is known only on the real data. In R there are several ways to fit the same model. Timed against each other on synthetic test data shaped like Model 3, <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span> gave the same estimates as a fully converged <span class="in">`lme4::glmer`</span> <span class="co">[</span><span class="ot">@lme4_pkg</span><span class="co">]</span> in a small fraction of the time, and using 7-point quadrature rather than the Laplace approximation changed the estimates very little; the comparison is on the code page, <span class="co">[</span><span class="ot">Choosing the model-fitting package</span><span class="co">](models.qmd#choosing-the-model-fitting-package)</span>. The analysis therefore uses <span class="in">`glmmTMB`</span> (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fit <span class="pp">|</span> Time <span class="pp">|</span> Convergence warnings <span class="pp">|</span> Odds ratio, highest vs zero density <span class="pp">|</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span> <span class="co">[</span><span class="ot">@lme4_pkg</span><span class="co">]</span>, default settings <span class="pp">|</span> 117 s <span class="pp">|</span> 4 <span class="pp">|</span> 10.08 (not converged) <span class="pp">|</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, rescaled covariates, higher iteration limit <span class="pp">|</span> 111 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.62 <span class="pp">|</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, 7-point quadrature (Stata's default) <span class="pp">|</span> 119 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span> <span class="pp">|</span> 4 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>The numbers are synthetic; only the comparison matters. <span class="in">`glmmTMB`</span> gave the same estimates as a fully converged <span class="in">`glmer`</span> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67). The analysis therefore uses <span class="in">`glmmTMB`</span> (decided by Vagish Hemmige, 27 October 2026). Three other options were considered:</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`MixedModels.jl`** <span class="co">[</span><span class="ot">@mixedmodels_jl</span><span class="co">]</span>, a Julia package by Douglas Bates, the original author of <span class="in">`lme4`</span>, and Phillip Alday, is designed for very large models and can be called from R with the <span class="in">`jlme`</span> package <span class="co">[</span><span class="ot">@jlme</span><span class="co">]</span>. It needs a Julia installation, and <span class="in">`jlme`</span> was archived on CRAN on 5 April 2025 <span class="co">[</span><span class="ot">@jlme</span><span class="co">]</span>, so it was not used.</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Stata itself**, called from R. The <span class="in">`RStata`</span> package <span class="co">[</span><span class="ot">@rstata</span><span class="co">]</span> runs Stata commands or a do-file from R and passes a data frame in and out, for example <span class="in">`stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`</span>; Stata 17 and later also offer <span class="in">`pystata`</span>, Stata's own interface, which R can reach through <span class="in">`reticulate`</span>. This would keep the paper's estimation method, if the paper used <span class="in">`melogit`</span> with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor <span class="in">`MixedModels.jl`</span> was timed here, so how their speed compares with each other or with <span class="in">`glmmTMB`</span> on these data is not known.</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing laboratory values</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the <span class="in">`mice`</span> default for numeric variables <span class="co">[</span><span class="ot">@vanbuuren2011mice</span><span class="co">]</span>), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: impute-albumin-hemoglobin</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span> (missing data).</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variation between and within HSAs</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by <span class="in">`lme4::lmer`</span> with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span>.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sensitivity analyses</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>Each asks whether the main finding rests on one assumption:</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>excluding HSAs with no facility, with the lowest non-zero category as reference, in case distance to any facility drives the result;</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>separate models for White and for Black patients;</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>density as a continuous measure, in case the result depends on the cut points;</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>eGFR as a continuous outcome, in case it depends on the threshold of 10;</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>albumin and hemoglobin filled in by multiple imputation (10 imputations, predictive mean matching), in case missing laboratory values bias the complete-case results;</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>excluding eGFR of 5 or below, from the original R code and not in the paper.</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§9 Sensitivity analyses</span><span class="co">](analysis-plan.qmd#9-sensitivity-analyses)</span>, <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span> (missing data).</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> does not yet include this (<span class="co">[</span><span class="ot">issue #52</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)</span>).</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disclosure</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>The USRDS data are used under the investigators' data use agreement. No count from 1 to 10 is published in a table, figure, flowchart box or text, including counts that could be worked out by subtraction. Tables and figures stay out of the repository until checked and cleared for release, so this site shows no results from USRDS data.</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§10 Disclosure control</span><span class="co">](analysis-plan.qmd#10-disclosure-control)</span>.</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`GLMMadaptive`** fits the model with adaptive quadrature and any number of points, closest to Stata's method. It was not timed here.</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`MixedModels.jl`** <span class="co">[</span><span class="ot">@mixedmodels_jl</span><span class="co">]</span>, a Julia package by Douglas Bates, the original author of <span class="in">`lme4`</span>, and Phillip Alday, is designed for very large models and can be called from R with the <span class="in">`jlme`</span> package <span class="co">[</span><span class="ot">@jlme</span><span class="co">]</span>. It needs a Julia installation, and <span class="in">`jlme`</span> was archived on CRAN on 5 April 2025 <span class="co">[</span><span class="ot">@jlme</span><span class="co">]</span>, so it was not used.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Stata itself**, called from R. The <span class="in">`RStata`</span> package <span class="co">[</span><span class="ot">@rstata</span><span class="co">]</span> runs Stata commands or a do-file from R and passes a data frame in and out, for example <span class="in">`stata("melogit early_start i.density_category ... || hsanum:", data.in = model_data)`</span>; Stata 17 and later also offer <span class="in">`pystata`</span>, Stata's own interface, which R can reach through <span class="in">`reticulate`</span>. This would keep the paper's estimation method, if the paper used <span class="in">`melogit`</span> with its default 7-point adaptive quadrature, but it needs a Stata licence, so it is not part of the public code. Neither Stata nor <span class="in">`MixedModels.jl`</span> was timed here, so how their speed compares with each other or with <span class="in">`glmmTMB`</span> on these data is not known.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing laboratory values</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>The paper reports "a multiple imputation technique with chained predictive analytics (10 imputations)" for albumin and hemoglobin (eTable 2), done in Stata, read here as chained equations; it gives no other detail, and the original R code has none. Here only albumin and hemoglobin are imputed, by predictive mean matching (the <span class="in">`mice`</span> default for numeric variables <span class="co">[</span><span class="ot">@vanbuuren2011mice</span><span class="co">]</span>), from the outcome, the density category and the Model 3 covariates. HSA is not a predictor (about 3,400 levels), and continuous density is not used as a predictor because it duplicates the density category. This imputation model was confirmed by Vagish Hemmige on 28 October 2026 (decision D7).</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span> (missing data).</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variation between and within HSAs</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>How much of the variation in eGFR at initiation lies between HSAs, and between facilities within HSAs, from two null linear mixed models fit by <span class="in">`lme4::lmer`</span> with its default, restricted maximum likelihood (REML). The nested model cannot use patients with no dialysis facility ID, so both models are fit on the patients who have one; otherwise the two shares would come from different patients (decided by Vagish Hemmige, 28 October 2026).</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span>.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sensitivity analyses</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>Each asks whether the main finding rests on one assumption:</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>excluding HSAs with no facility, with the lowest non-zero category as reference, in case distance to any facility drives the result;</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>separate models for White and for Black patients;</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>density as a continuous measure, in case the result depends on the cut points;</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>eGFR as a continuous outcome, in case it depends on the threshold of 10;</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>albumin and hemoglobin filled in by multiple imputation (10 imputations, predictive mean matching), in case missing laboratory values bias the complete-case results;</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>excluding eGFR of 5 or below, from the original R code and not in the paper.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§9 Sensitivity analyses</span><span class="co">](analysis-plan.qmd#9-sensitivity-analyses)</span>, <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span> (missing data).</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> does not yet include this (<span class="co">[</span><span class="ot">issue #52</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)</span>).</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disclosure</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>The USRDS data are used under the investigators' data use agreement. No count from 1 to 10 is published in a table, figure, flowchart box or text, including counts that could be worked out by subtraction. Tables and figures stay out of the repository until checked and cleared for release, so this site shows no results from USRDS data.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§10 Disclosure control</span><span class="co">](analysis-plan.qmd#10-disclosure-control)</span>.</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

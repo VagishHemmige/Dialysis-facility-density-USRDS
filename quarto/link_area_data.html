@@ -114,15 +114,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 div.callout-Rcode.callout {
@@ -136,15 +136,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -605,7 +605,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </div>
 <section id="cause-of-kidney-failure-mapping" class="level2">
 <h2 class="anchored" data-anchor-id="cause-of-kidney-failure-mapping">Cause of kidney failure mapping</h2>
-<p>The reviewed mapping, written by <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>, must exist and give every code one of the six categories; otherwise the run stops with instructions. Only <code>code</code> and <code>final_category</code> are read.</p>
+<p>The reviewed mapping, written by <a href="../quarto/classify_esrd_causes.html">2. Cause code mapping</a>, must exist and give every code one of the six categories; otherwise the run stops with instructions. Only <code>code</code> and <code>final_category</code> are read.</p>
 <p><strong>Functions used:</strong> <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -659,7 +659,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 <section id="facility-counts-on-the-dialysis-date" class="level2">
 <h2 class="anchored" data-anchor-id="facility-counts-on-the-dialysis-date">Facility counts on the dialysis date</h2>
-<p>This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. <code>usRds::add_dialysis_facility_counts()</code> instead finds the CMS release current on each patient’s date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes two errors in the original counts (see <a href="../quarto/differences.html">Differences</a>).</p>
+<p>This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. <code>usRds::add_dialysis_facility_counts()</code> instead finds the CMS release current on each patient’s date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes three errors in the original counts (see <a href="../quarto/differences.html#facility-counts">Differences: facility counts</a>).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1268,7 +1268,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cause of kidney failure mapping</span></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>The reviewed mapping, written by <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>, must exist and give every code one of the six categories; otherwise the run stops with instructions. Only <span class="in">`code`</span> and <span class="in">`final_category`</span> are read.</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>The reviewed mapping, written by <span class="co">[</span><span class="ot">2. Cause code mapping</span><span class="co">](classify_esrd_causes.qmd)</span>, must exist and give every code one of the six categories; otherwise the run stops with instructions. Only <span class="in">`code`</span> and <span class="in">`final_category`</span> are read.</span>
 <span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
@@ -1286,7 +1286,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Facility counts on the dialysis date</span></span>
 <span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. <span class="in">`usRds::add_dialysis_facility_counts()`</span> instead finds the CMS release current on each patient's date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes two errors in the original counts (see <span class="co">[</span><span class="ot">Differences</span><span class="co">](differences.qmd)</span>).</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. <span class="in">`usRds::add_dialysis_facility_counts()`</span> instead finds the CMS release current on each patient's date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes three errors in the original counts (see <span class="co">[</span><span class="ot">Differences: facility counts</span><span class="co">](differences.qmd#facility-counts)</span>).</span>
 <span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: attach-facility-counts</span></span>

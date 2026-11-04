@@ -125,17 +125,6 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -145,6 +134,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -599,7 +599,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </header>
 
 
-<p>Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R"><code>tests/test-functions.R</code></a>.</p>
+<p>Reusable helpers. Each takes its inputs as arguments and reads no global objects, and all but two are tested on synthetic data with a known answer in <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R"><code>tests/test-functions.R</code></a>. The two without a test are <code>read_header_table()</code>, which reads the Dartmouth spreadsheets, and <code>map_panel()</code>, which draws a map for Figure 2. <code>density_category_labels()</code> is tested through <code>categorize_density()</code>, which uses it.</p>
 <p>Each section names the function under its heading, explains what it does, and then links to where it is used: the steps of the analysis that call it, and any function on this page that calls it.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1825,7 +1825,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>Reusable helpers. Each takes its inputs as arguments and reads no global objects, and each is tested on synthetic data with a known answer in <span class="co">[</span><span class="ot">`tests/test-functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R)</span>.</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>Reusable helpers. Each takes its inputs as arguments and reads no global objects, and all but two are tested on synthetic data with a known answer in <span class="co">[</span><span class="ot">`tests/test-functions.R`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/tests/test-functions.R)</span>. The two without a test are <span class="in">`read_header_table()`</span>, which reads the Dartmouth spreadsheets, and <span class="in">`map_panel()`</span>, which draws a map for Figure 2. <span class="in">`density_category_labels()`</span> is tested through <span class="in">`categorize_density()`</span>, which uses it.</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>Each section names the function under its heading, explains what it does, and then links to where it is used: the steps of the analysis that call it, and any function on this page that calls it.</span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>

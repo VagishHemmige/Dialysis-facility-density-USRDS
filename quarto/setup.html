@@ -114,17 +114,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -145,6 +134,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -775,7 +775,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="cause-of-kidney-failure" class="level2">
 <h2 class="anchored" data-anchor-id="cause-of-kidney-failure">Cause of kidney failure</h2>
-<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
+<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">2. Cause code mapping</a>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1437,7 +1437,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cause of kidney failure</span></span>
 <span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">2. Cause code mapping</span><span class="co">](classify_esrd_causes.qmd)</span>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-cause-constants</span></span>

@@ -5,11 +5,13 @@ format: html
 
 This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd#dialysis-facility-listings). The code is on [4. Linking area data](link_area_data.qmd).
 
+**Abbreviations:** CMS, Centers for Medicare & Medicaid Services; HSA, Hospital Service Area.
+
 Each patient is placed by the residential ZIP code in effect on the day dialysis started, and the dialysis facilities around them on that day are counted. The count is the numerator of the study's exposure, facilities per 100,000 residents of the patient's Hospital Service Area (HSA); the population it is divided by comes from census data, on [Census and area data](study_linkage.qmd). Both are matched to the same date ([One date for everything](study_linkage.qmd#one-date-for-everything)).
 
 ## Facilities on the dialysis date
 
-CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time [@cms2025dfc]. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. `usRds` holds the releases from December 2005 to April 2025 and does the counting (`add_dialysis_facility_counts()`); facilities whose ZIP code has no HSA are not counted.
+CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time [@cms2025dfc]. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. The `usRds` package holds the releases from December 2005 to April 2025 and does the counting (the code is on [4. Linking area data](link_area_data.qmd)); facilities whose ZIP code has no HSA are not counted.
 
 **Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
 

@@ -11,7 +11,7 @@ The [published supplement](supplement.qmd) has eTables 1 to 3 and eFigures 1 and
 
 ## Figure 1. Diagram of study cohort
 
-![](../images/published/figure-1-cohort-flow.png){fig-alt="Published cohort flow diagram. 3,416,330 total patients in USRDS medical files; 2,571,864 patients excluded: 163,207 receiving second or later dialysis treatment; 2,166,517 started dialysis before 2011; 8,210 age under 18 years at the start of hemodialysis; 124,455 not receiving hemodialysis; 14,380 receiving home hemodialysis; 24 access type, sex, or race and ethnicity missing; 38,708 eGFR <20 mL/min/1.73 m2; 224 ZIP code did not agree with a ZCTA in 2010 US Census; 15,124 ACS ZCTA code data missing; 11,025 ZIP code did not correspond to an HSA; 6,483 Alaska and Hawaii residence; 23,507 ACS data missing. 844,466 patients in final cohort."}
+![](../images/published/figure-1-cohort-flow.png){fig-alt="Published cohort flow diagram. 3,416,330 total patients in USRDS medical files; 2,571,864 patients excluded: 163,207 receiving second or later dialysis treatment; 2,166,517 started dialysis before 2011; 8,210 age under 18 years at the start of hemodialysis; 124,455 not receiving hemodialysis; 14,380 receiving home hemodialysis; 24 access type, sex, or race and ethnicity missing; 38,708 eGFR <20 mL/min/1.73 m2; 224 ZIP code did not agree with a ZCTA in 2010 US Census; 15,124 ACS ZCTA code data missing; 11,025 ZIP code did not correspond to an HSA; 6,483 Alaska and Hawaii residence; 23,507 ACS data missing. 844,466 patients in final cohort. The box labelled eGFR <20 counts patients excluded for an eGFR above 20 or missing, as the notes below explain."}
 
 ACS indicates American Community Survey; eGFR, estimated glomerular filtration rate; HSA, health service area; USRDS, US Renal Data System; and ZCTA, zip code tabulation area.
 
@@ -21,11 +21,11 @@ ACS indicates American Community Survey; eGFR, estimated glomerular filtration r
 
 ## Table 2. Odds of starting dialysis respective to the density of dialysis units in patients' residential HSAs
 
-![](../images/published/table-2.png){fig-alt="Published Table 2: odds ratios (95% CI) for hemodialysis initiated at eGFR above 10 mL/min/1.73 m2 by category of HSA dialysis facility density, for Models 1, 2 and 3. With all variables (n = 533,375 in Models 2 and 3), category 5 (>2.76) versus category 1 (0): 1.06 (1.02-1.10), 1.05 (1.01-1.10) and 1.06 (1.02-1.11). Without albumin and hemoglobin (n = 844,466): 1.06 (1.02-1.10), 1.06 (1.02-1.10) and 1.07 (1.03-1.11). Without category 1 (n = 807,519), category 5 versus category 2: 1.07 (1.04-1.10), 1.06 (1.02-1.09) and 1.07 (1.03-1.11)."}
+![](../images/published/table-2.png){fig-alt="Published Table 2: odds ratios (95% CI) for hemodialysis initiated at eGFR above 10 mL/min/1.73 m2 by category of HSA dialysis facility density, for Models 1, 2 and 3. With all variables (n = 533,375 in Models 2 and 3), category 5 (>2.76) versus category 1 (0): 1.06 (1.02-1.10), 1.05 (1.01-1.10) and 1.06 (1.02-1.11). Without albumin and hemoglobin (n = 844,466): 1.06 (1.02-1.10), 1.06 (1.02-1.10) and 1.07 (1.03-1.11). Without category 1 (n = 807,519), category 5 versus category 2: 1.07 (1.04-1.10), 1.06 (1.02-1.09) and 1.07 (1.03-1.11). Compared with HSAs with no facility, categories 2 to 4 have odds ratios between 0.99 and 1.05, most with intervals that include or reach 1; the clearest difference is in category 5."}
 
 ## Figure 2. Health Service Area (HSA) level findings
 
-![](../images/published/figure-2-hsa-maps.png){fig-alt="Three published maps of HSAs in the contiguous United States. A: dialysis center density per 100,000 population in five categories (0; nonzero to <1.36; 1.36 to <1.95; 1.95 to 2.76; >2.76). B: dialysis station density per 100,000 in five categories (0; nonzero to <24.59; 24.59 to <35.40; 35.40 to 49.46; >49.46). C: annual percentage of eye examinations among patients with diabetes in 2015, in five categories from 26.64 to 93.75, with missing HSAs in gray. Dense HSAs in A and B are concentrated in the Midwest and Southeast."}
+![](../images/published/figure-2-hsa-maps.png){fig-alt="Three published maps of HSAs in the contiguous United States. A: dialysis center density per 100,000 population in five categories (0; nonzero to <1.36; 1.36 to <1.95; 1.95 to 2.76; >2.76). B: dialysis station density per 100,000 in five categories (0; nonzero to <24.59; 24.59 to <35.40; 35.40 to 49.46; >49.46). C: annual percentage of eye examinations among patients with diabetes in 2015, in five categories from 26.64 to 93.75, with missing HSAs in gray. In A and B, the densest categories are widespread across the Southeast, Texas and the Great Plains, and HSAs with no facility are common in the rural West and Great Plains. In C, eye examination rates are highest in the upper Midwest and New England and lowest in parts of the Southwest, south Texas and Appalachia."}
 
 HSA-level dialysis facility density (A), HSA-level dialysis station density (B), and HSA-based annual percentage of eye examinations among patients with diabetes in 2015 (C).
 
@@ -57,6 +57,10 @@ Three groups of rows do not add up to their column size:
 -   Race, >2.76 column: the rows sum to 210,691, one more than n = 210,690. As a result, the White row sums to 558,365 across the columns, while eTable 1 gives 558,364.
 
 The other group totals (sex, ethnicity, nephrology care, dialysis access, insurance and etiology) add up in every column. Seven other percentages differ from their counts by 0.05 to 0.1 points, which is consistent with rounding an already-rounded value. Men total 484,346, as in the abstract; the Results text gives 483,346.
+
+**Figure 2**
+
+-   The legend of panel A gives the categories as "Nonzero to <1.36", "1.36 to <1.95" and "1.95 to 2.76", so 1.36 and 1.95 fall in the higher category; Table 1 gives ">0-1.36", ">1.36-1.95" and ">1.95-2.76", so they fall in the lower one. The analysis follows Table 1 and the original code, with each category including its upper bound.
 
 **Table 2**
 

@@ -8,6 +8,13 @@ engine: knitr
 
 This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code that carries this out is on [2. Cause code mapping](classify_esrd_causes.qmd).
 
+**Abbreviations:** ANCA, antineutrophil cytoplasmic antibody; CMS, Centers for Medicare & Medicaid Services; ICD-9-CM and ICD-10-CM, International Classification of Diseases, 9th and 10th Revisions, Clinical Modification; USRDS, United States Renal Data System.
+
+::: callout-note
+## In brief, for clinicians
+Each patient's primary cause of kidney failure, as coded on the Medical Evidence form, is placed in one of the paper's six groups: diabetes; hypertension and cardiac disease; glomerulonephritis (primary and secondary glomerular disease); hereditary or polycystic kidney disease; transplant failure or complications; and other. The original grouping was lost, so it was rebuilt. Of the 445 cause codes, the three models agreed on 423 and two of three agreed on the other 22; where the definitions here depart from the CMS grouping (lupus and ANCA vasculitis, HIV-associated nephropathy, heart failure) is set out under [The six categories](#the-six-categories). Agreement between models shows they agree, not that they are right; two checks against the data, once it is run, are under [How the mapping is checked](#how-the-mapping-is-checked). The rest of this page explains how the models were asked.
+:::
+
 The paper's Table 1 groups each patient's primary cause of kidney failure into six categories. The original analysis took the grouping from a spreadsheet that no longer exists. This analysis rebuilds it by asking three cloud large language models, from three companies, to classify every USRDS cause code, and accepting a code's category when at least two of the three agree. Two smaller models that run on the analyst's own computer were asked the same question and are reported for comparison, but do not vote. Only the public list of codes and their descriptions is sent to any model, never patient data. How language models can classify codes, and how `ellmer` calls them from R, is explained in [Statistical methods](statistical_methods.qmd#classifying-text-with-language-models); this page describes how this study applies it.
 
 The mapping from the first full run, on 30 October 2026, is accepted for this analysis as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none.

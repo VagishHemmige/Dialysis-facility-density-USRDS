@@ -39,13 +39,13 @@ Four documents describe the project. In short: the plan is the scientific intent
 -   [**Who is studied**](study_cohort.qmd): the index event and every exclusion, in order, with its reason.
 -   [**Linking census and facility data**](study_linkage.qmd): how facilities, census data, the HSA and its population are attached to each patient.
 -   [**Exposure, outcome and covariates**](study_exposure.qmd): facility density and its categories, the early-start outcome, and the patient and area characteristics.
--   [**Cause of kidney failure**](study_esrd_causes.qmd): rebuilding the cause categories with three language models, and what two local models showed.
+-   [**Mapping cause codes with ellmer**](study_esrd_causes.qmd): rebuilding the cause categories with three language models, and what two local models showed.
 -   [**Analysis and reporting**](study_analysis.qmd): the models, how they are fitted, missing values, sensitivity analyses and disclosure.
 -   [**Differences from the original code**](differences.qmd): every correction and open decision, with a glossary of USRDS terms.
 -   [**Setup**](setup.qmd): packages and every constant.
 -   [**Functions**](functions.qmd): tested helper functions.
 -   [**1. Public area data**](download_public_data.qmd): ACS, Dartmouth Atlas and RUCA downloads.
--   [**2. Cause of kidney failure**](classify_esrd_causes.qmd): the code that asks the language models, checks and saves their answers, and writes the mapping.
+-   [**2. Mapping cause codes with ellmer**](classify_esrd_causes.qmd): the code that asks the language models, checks and saves their answers, and writes the mapping.
 -   [**3. USRDS patient data**](prepare_patients.qmd): Medical Evidence and Residence files through `usRds`.
 -   [**4. Linking area data**](link_area_data.qmd): facility counts by date, area data and the exposure.
 -   [**5. Cohort flowchart**](create_cohort.qmd): every exclusion as one `flowchart` step.

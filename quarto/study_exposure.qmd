@@ -28,7 +28,7 @@ Patient characteristics come from the first form: age, sex, race, Hispanic ethni
 Two choices fill gaps in the record:
 
 -   **Race.** The paper reports five race groups whose counts add up to the total, so the form's other codes were merged in a way not recorded. Here Middle Eastern counts as White and South Asian as Asian, following the 1997 federal standard [@omb1997race], and Other or multiracial as White, the largest group. Chosen for this demonstration. These patients are therefore in the White stratum of the race-stratified models (eTables 1 and 2).
--   **Cause of kidney failure.** The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: [Cause of kidney failure](study_esrd_causes.qmd).
+-   **Cause of kidney failure.** The original mapping of cause codes to six categories is lost. It is rebuilt with language models, a method with a page of its own: [Mapping cause codes with ellmer](study_esrd_causes.qmd).
 
 **Specified in:** [§6 Covariates](analysis-plan.qmd#6-covariates).
 

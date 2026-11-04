@@ -1,9 +1,9 @@
 ---
-title: "2. Cause of kidney failure"
+title: "2. Mapping cause codes with ellmer"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, by asking three cloud large language models through `ellmer` and two local models for comparison. Why language models are used, the categories and their definitions, the agreement rule and what the models showed are explained on [Cause of kidney failure](study_esrd_causes.qmd), in Study design and methods; this page explains the code. The step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, by asking three cloud large language models through `ellmer` and two local models for comparison. Why language models are used, the categories and their definitions, the agreement rule and what the models showed are explained on [Mapping cause codes with ellmer](study_esrd_causes.qmd), in Study design and methods; this page explains the code. The step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

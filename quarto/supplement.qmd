@@ -4,7 +4,7 @@ format: html
 ---
 
 ::: {.Results title="Reproduced from the published supplement"}
-Everything on this page is reproduced, unchanged, from the Supplementary Online Content of Hemmige V, Deshpande P, Norris KC, et al. Geographic dialysis facility density and early dialysis initiation. *JAMA Network Open*. 2024;7(1):e2350009 [@hemmige2024density], © 2024 Hemmige V et al., published under a [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/). These are the outputs cleared by USRDS for publication. They were **not** produced by this repository's code; the replication's own outputs will appear only after they are checked and cleared.
+Everything on this page is reproduced, unchanged, from the Supplementary Online Content of Hemmige V, Deshpande P, Norris KC, et al. Geographic dialysis facility density and early dialysis initiation. *JAMA Network Open*. 2024;7(1):e2350009 [@hemmige2024density], © 2024 Hemmige V et al., published under a [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/). These are the outputs cleared by USRDS for publication. They were **not** produced by this repository's code.
 :::
 
 The tables are transcribed cell for cell from the supplement PDF. Apparent typographical errors in the published tables are kept as printed and listed under [Notes on the published tables](#notes-on-the-published-tables).
@@ -102,7 +102,7 @@ Column headings as in eTable 1; the first column is "Increase in eGFR at dialysi
 
 ## Notes on the published tables
 
-These look like typographical errors in the published supplement. They are kept above as printed and are listed here so that the replication's tables can be compared with what the authors intended.
+These look like typographical errors in the published supplement. They are kept above as printed and are listed here so that this analysis's tables can be compared with what the authors intended.
 
 -   The fourth density category is printed as "4(1.05-2.76)"; the main text and Table 1 define it as >1.95 to 2.76.
 -   eTable 1: the Black-only analysis gives n=146,386 in its heading and N=236,947 in the table; the White-only analysis, described as "without Albumin and Hemoglobin", gives n=355,564 and N=558,364.

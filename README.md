@@ -2,13 +2,13 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![Status](https://img.shields.io/badge/status-replication_in_progress-yellow)](#)
+[![Status](https://img.shields.io/badge/status-revised_analysis_in_progress-yellow)](#)
 [![Paper](https://img.shields.io/badge/JAMA_Netw_Open-2024-blue)](https://doi.org/10.1001/jamanetworkopen.2023.50009)
 <!-- badges: end -->
 
-# Dialysis facility density and early dialysis initiation: a replication
+# Dialysis facility density and early dialysis initiation: a revised analysis
 
-This repository replicates the analysis of a published cross-sectional
+This repository revises the analysis of a published cross-sectional
 study of 844,466 incident hemodialysis patients in the US Renal Data
 System (USRDS), which found that patients in Hospital Service Areas
 (HSAs, which the paper calls health service areas) with more dialysis
@@ -28,7 +28,7 @@ along the way, and documents every difference from the original code.
 
 **Status.** The paper and its results are published. The rebuilt code is
 complete and tested on synthetic data, but has not yet been run on the
-USRDS data, so the replication has produced no results; the differences
+USRDS data, so this analysis has produced no results; the differences
 page describes what each correction could change, not what it did
 change. The published figures and tables shown on the website are the
 journal’s, not outputs of this code.

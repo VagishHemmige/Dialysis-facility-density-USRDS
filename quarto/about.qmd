@@ -10,7 +10,7 @@ Hemmige V, Deshpande P, Norris KC, Shen JI, Erickson KF, Johansen KL, Golestaneh
 -   **Ladan Golestaneh** (senior author)
 -   **Vagish Hemmige** (first author, statistical analysis and this repository)
 
-Scientific decisions for the replication are made by Vagish Hemmige and Ladan Golestaneh.
+Scientific decisions for this analysis are made by Vagish Hemmige and Ladan Golestaneh.
 
 ## This repository
 

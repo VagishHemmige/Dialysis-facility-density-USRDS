@@ -9,7 +9,7 @@ Each patient is placed by the residential ZIP code in effect on the day dialysis
 
 ## One date for everything
 
-All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The original code matched area data to the year of the Medical Evidence form instead, and its facility join quietly dropped patients whose two years differed; the replication corrects this (decided by Vagish Hemmige, 27 October 2026).
+All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The original code matched area data to the year of the Medical Evidence form instead, and its facility join quietly dropped patients whose two years differed; this analysis corrects this (decided by Vagish Hemmige, 27 October 2026).
 
 **Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§4 Study population](analysis-plan.qmd#4-study-population) ("Year of linkage").
 

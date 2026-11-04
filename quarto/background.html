@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 div.callout-Rcode.callout {
@@ -155,15 +155,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -521,6 +521,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <ul>
   <li><a href="#when-to-start-dialysis" id="toc-when-to-start-dialysis" class="nav-link active" data-scroll-target="#when-to-start-dialysis">When to start dialysis</a></li>
   <li><a href="#why-facility-density" id="toc-why-facility-density" class="nav-link" data-scroll-target="#why-facility-density">Why facility density</a></li>
+  <li><a href="#an-open-question" id="toc-an-open-question" class="nav-link" data-scroll-target="#an-open-question">An open question</a></li>
   <li><a href="#the-measures" id="toc-the-measures" class="nav-link" data-scroll-target="#the-measures">The measures</a></li>
   <li><a href="#the-egfr-thresholds" id="toc-the-egfr-thresholds" class="nav-link" data-scroll-target="#the-egfr-thresholds">The eGFR thresholds</a></li>
   <li><a href="#race-and-egfr" id="toc-race-and-egfr" class="nav-link" data-scroll-target="#race-and-egfr">Race and eGFR</a></li>
@@ -571,6 +572,13 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <h2 class="anchored" data-anchor-id="why-facility-density">Why facility density</h2>
 <p>If eGFR alone does not dictate when dialysis starts, the surrounding health system may. The hypothesis of the paper is that areas organized around high-intensity treatment of end-stage disease, with many dialysis facilities per resident, start dialysis earlier than areas oriented toward prevention <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The unit is the Dartmouth Atlas Hospital Service Area (HSA): a group of ZIP codes whose residents get most of their hospital care locally, about 3,400 in the US <span class="citation" data-cites="dartmouth_faq">(<a href="#ref-dartmouth_faq" role="doc-biblioref">The Dartmouth Atlas of Health Care, n.d.-a</a>)</span>. The paper calls these “health service areas”; this site keeps the abbreviation HSA.</p>
 </section>
+<section id="an-open-question" class="level2">
+<h2 class="anchored" data-anchor-id="an-open-question">An open question</h2>
+<p>Whether the place a patient lives, and the dialysis care around it, affects when dialysis starts is a matter of controversy. The evidence points in more than one direction.</p>
+<p>Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation <span class="citation" data-cites="scialla2014iv">(<a href="#ref-scialla2014iv" role="doc-biblioref"><span class="nocase">Scialla et al.</span> 2014</a>)</span>; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics <span class="citation" data-cites="li2017trends">(<a href="#ref-li2017trends" role="doc-biblioref">Li et al. 2017</a>)</span>. The paper replicated here found that patients in HSAs with the most facilities per resident started at a higher eGFR <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
+<p>Others find little or no association at a larger scale. In Canada, after adjustment for patients and facilities, none of the explained variation in eGFR at initiation lay between 14 geographic regions, and 3.1% lay between dialysis facilities <span class="citation" data-cites="sood2014variation">(<a href="#ref-sood2014variation" role="doc-biblioref"><span class="nocase">Sood et al.</span> 2014</a>)</span>. Across US states, the number of nephrologists per resident was not associated with mean eGFR at initiation, although it was associated with how many people started dialysis <span class="citation" data-cites="ku2015workforce">(<a href="#ref-ku2015workforce" role="doc-biblioref">Ku et al. 2015</a>)</span>.</p>
+<p>The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see <a href="../quarto/methodological_background.html#area-level-exposures">Area-level exposures</a>), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper’s analysis reproduces; it does not settle the controversy.</p>
+</section>
 <section id="the-measures" class="level2">
 <h2 class="anchored" data-anchor-id="the-measures">The measures</h2>
 <ul>
@@ -616,6 +624,9 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <div id="ref-inker2012cystatin" class="csl-entry" role="listitem">
 <span class="nocase">Inker, Lesley A, Christopher H Schmid, Hocine Tighiouart, et al.</span> 2012. <span>“Estimating Glomerular Filtration Rate from Serum Creatinine and Cystatin <span>C</span>.”</span> <em>New England Journal of Medicine</em> 367 (1): 20–29. <a href="https://doi.org/10.1056/NEJMoa1114248">https://doi.org/10.1056/NEJMoa1114248</a>.
 </div>
+<div id="ref-ku2015workforce" class="csl-entry" role="listitem">
+Ku, Elaine, Kirsten L Johansen, Anthony A Portale, Barbara Grimes, and Chi-yuan Hsu. 2015. <span>“State Level Variations in Nephrology Workforce and Timing and Incidence of Dialysis in the <span>United States</span> Among Children and Adults: A Retrospective Cohort Study.”</span> <em>BMC Nephrology</em> 16: 2. <a href="https://doi.org/10.1186/1471-2369-16-2">https://doi.org/10.1186/1471-2369-16-2</a>.
+</div>
 <div id="ref-levey2009ckdepi" class="csl-entry" role="listitem">
 <span class="nocase">Levey, Andrew S, Lesley A Stevens, Christopher H Schmid, et al.</span> 2009. <span>“A New Equation to Estimate Glomerular Filtration Rate.”</span> <em>Annals of Internal Medicine</em> 150 (9): 604–12. <a href="https://doi.org/10.7326/0003-4819-150-9-200905050-00006">https://doi.org/10.7326/0003-4819-150-9-200905050-00006</a>.
 </div>
@@ -624,6 +635,9 @@ Li, Yun, Yan Jin, Alissa Kapke, et al. 2017. <span>“Explaining Trends and Vari
 </div>
 <div id="ref-scialla2014iv" class="csl-entry" role="listitem">
 <span class="nocase">Scialla, Julia J, Jiannong Liu, Deidra C Crews, et al.</span> 2014. <span>“An Instrumental Variable Approach Finds No Associated Harm or Benefit with Early Dialysis Initiation in the <span>United States</span>.”</span> <em>Kidney International</em> 86 (4): 798–809. <a href="https://doi.org/10.1038/ki.2014.110">https://doi.org/10.1038/ki.2014.110</a>.
+</div>
+<div id="ref-sood2014variation" class="csl-entry" role="listitem">
+<span class="nocase">Sood, Manish M, Braden Manns, Allison Dart, et al.</span> 2014. <span>“Variation in the Level of <span class="nocase">eGFR</span> at Dialysis Initiation Across Dialysis Facilities and Geographic Regions.”</span> <em>Clinical Journal of the American Society of Nephrology</em> 9 (10): 1747–56. <a href="https://doi.org/10.2215/CJN.12321213">https://doi.org/10.2215/CJN.12321213</a>.
 </div>
 <div id="ref-dartmouth_faq" class="csl-entry" role="listitem">
 The Dartmouth Atlas of Health Care. n.d.-a. <em>Frequently Asked Questions: Hospital Service Areas</em>. Accessed October 27, 2026. <a href="https://www.dartmouthatlas.org/faq/">https://www.dartmouthatlas.org/faq/</a>.
@@ -1127,28 +1141,38 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>If eGFR alone does not dictate when dialysis starts, the surrounding health system may. The hypothesis of the paper is that areas organized around high-intensity treatment of end-stage disease, with many dialysis facilities per resident, start dialysis earlier than areas oriented toward prevention <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The unit is the Dartmouth Atlas Hospital Service Area (HSA): a group of ZIP codes whose residents get most of their hospital care locally, about 3,400 in the US <span class="co">[</span><span class="ot">@dartmouth_faq</span><span class="co">]</span>. The paper calls these "health service areas"; this site keeps the abbreviation HSA.</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## The measures</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## An open question</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**eGFR at initiation** is calculated by the USRDS from the serum creatinine reported on the CMS-2728 Medical Evidence form, using a CKD-EPI equation. The Researcher's Guide describes this variable (<span class="in">`GFR_EPI`</span>) only as calculated with CKD-EPI, and lists a separate variable for the 2021 refit <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>; <span class="in">`GFR_EPI`</span> is therefore read here as the earlier equation, with the race coefficient <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. It is kept because it approximates the value physicians saw when deciding. The paper's Methods call it "CKD-EPI equation 2012", the year of the equation that adds cystatin C <span class="co">[</span><span class="ot">@inker2012cystatin</span><span class="co">]</span>; see the <span class="co">[</span><span class="ot">differences page</span><span class="co">](differences.qmd#patient-variables)</span>.</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Facility density** counts the dialysis facilities listed by CMS in the patient's HSA on the date dialysis started, per 100,000 residents <span class="co">[</span><span class="ot">@cms2025dfc</span><span class="co">]</span>.</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Area characteristics** come from the American Community Survey <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>, the USDA rural-urban commuting area codes <span class="co">[</span><span class="ot">@ers2020ruca</span><span class="co">]</span>, and Dartmouth Atlas primary care and hospital measures <span class="co">[</span><span class="ot">@dartmouth_primarycare; @dartmouth_capacity</span><span class="co">]</span>.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Whether the place a patient lives, and the dialysis care around it, affects when dialysis starts is a matter of controversy. The evidence points in more than one direction.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics <span class="co">[</span><span class="ot">@li2017trends</span><span class="co">]</span>. The paper replicated here found that patients in HSAs with the most facilities per resident started at a higher eGFR <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The eGFR thresholds</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Others find little or no association at a larger scale. In Canada, after adjustment for patients and facilities, none of the explained variation in eGFR at initiation lay between 14 geographic regions, and 3.1% lay between dialysis facilities <span class="co">[</span><span class="ot">@sood2014variation</span><span class="co">]</span>. Across US states, the number of nephrologists per resident was not associated with mean eGFR at initiation, although it was associated with how many people started dialysis <span class="co">[</span><span class="ot">@ku2015workforce</span><span class="co">]</span>.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Three eGFR values, all in mL/min/1.73 m², shape the analysis:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see <span class="co">[</span><span class="ot">Area-level exposures</span><span class="co">](methodological_background.qmd#area-level-exposures)</span>), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper's analysis reproduces; it does not settle the controversy.</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**20, the cohort's ceiling.** Patients starting above it are excluded, because the paper restricts to the range nephrologists target for starting dialysis <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>; earlier work on the same registry used eGFR 5 to 20 as the range commonly targeted for starting <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>. As in the original code, 20 itself is kept.</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**10, the definition of an early start.** It is the lower edge of the IDEAL trial's early-start range <span class="co">[</span><span class="ot">@cooper2010ideal</span><span class="co">]</span>, which IDEAL measured on the Cockcroft-Gault scale rather than CKD-EPI. As in the original code, 10 itself counts as early.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**5, in one extra analysis.** The original R code also fit the full model only among patients with eGFR above 5. The code does not record why. This analysis is not in the paper.</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Race and eGFR</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## The measures</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**eGFR at initiation** is calculated by the USRDS from the serum creatinine reported on the CMS-2728 Medical Evidence form, using a CKD-EPI equation. The Researcher's Guide describes this variable (<span class="in">`GFR_EPI`</span>) only as calculated with CKD-EPI, and lists a separate variable for the 2021 refit <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>; <span class="in">`GFR_EPI`</span> is therefore read here as the earlier equation, with the race coefficient <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. It is kept because it approximates the value physicians saw when deciding. The paper's Methods call it "CKD-EPI equation 2012", the year of the equation that adds cystatin C <span class="co">[</span><span class="ot">@inker2012cystatin</span><span class="co">]</span>; see the <span class="co">[</span><span class="ot">differences page</span><span class="co">](differences.qmd#patient-variables)</span>.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Facility density** counts the dialysis facilities listed by CMS in the patient's HSA on the date dialysis started, per 100,000 residents <span class="co">[</span><span class="ot">@cms2025dfc</span><span class="co">]</span>.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Area characteristics** come from the American Community Survey <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>, the USDA rural-urban commuting area codes <span class="co">[</span><span class="ot">@ers2020ruca</span><span class="co">]</span>, and Dartmouth Atlas primary care and hospital measures <span class="co">[</span><span class="ot">@dartmouth_primarycare; @dartmouth_capacity</span><span class="co">]</span>.</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper's Table 1 <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race <span class="co">[</span><span class="ot">@inker2021ckdepi; @delgado2022unifying</span><span class="co">]</span>; the replication keeps the paper's measure, because the question is how physicians acted on the eGFR they saw.</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## The eGFR thresholds</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Three eGFR values, all in mL/min/1.73 m², shape the analysis:</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**20, the cohort's ceiling.** Patients starting above it are excluded, because the paper restricts to the range nephrologists target for starting dialysis <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>; earlier work on the same registry used eGFR 5 to 20 as the range commonly targeted for starting <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>. As in the original code, 20 itself is kept.</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**10, the definition of an early start.** It is the lower edge of the IDEAL trial's early-start range <span class="co">[</span><span class="ot">@cooper2010ideal</span><span class="co">]</span>, which IDEAL measured on the Cockcroft-Gault scale rather than CKD-EPI. As in the original code, 10 itself counts as early.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**5, in one extra analysis.** The original R code also fit the full model only among patients with eGFR above 5. The code does not record why. This analysis is not in the paper.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Race and eGFR</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper's Table 1 <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race <span class="co">[</span><span class="ot">@inker2021ckdepi; @delgado2022unifying</span><span class="co">]</span>; the replication keeps the paper's measure, because the question is how physicians acted on the eGFR they saw.</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

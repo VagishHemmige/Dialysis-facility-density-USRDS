@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>Clinical background – Dialysis facility density: a replication</title>
+<title>Clinical background – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -155,15 +155,15 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   content: '📊';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -197,7 +197,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -611,9 +611,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="an-open-question" class="level2">
 <h2 class="anchored" data-anchor-id="an-open-question">An open question</h2>
 <p>Whether the place a patient lives, and the dialysis care around it, affects when dialysis starts is a matter of controversy. The evidence points in more than one direction.</p>
-<p>Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation <span class="citation" data-cites="scialla2014iv">(<a href="#ref-scialla2014iv" role="doc-biblioref"><span class="nocase">Scialla et al.</span> 2014</a>)</span>; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics <span class="citation" data-cites="li2017trends">(<a href="#ref-li2017trends" role="doc-biblioref">Li et al. 2017</a>)</span>. The paper replicated here found that patients in HSAs with the most facilities per resident started at a higher eGFR <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
+<p>Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation <span class="citation" data-cites="scialla2014iv">(<a href="#ref-scialla2014iv" role="doc-biblioref"><span class="nocase">Scialla et al.</span> 2014</a>)</span>; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics <span class="citation" data-cites="li2017trends">(<a href="#ref-li2017trends" role="doc-biblioref">Li et al. 2017</a>)</span>. The paper revisited here found that patients in HSAs with the most facilities per resident started at a higher eGFR <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
 <p>Others find little or no association at a larger scale. In Canada, after adjustment for patients and facilities, none of the explained variation in eGFR at initiation lay between 14 geographic regions, and 3.1% lay between dialysis facilities <span class="citation" data-cites="sood2014variation">(<a href="#ref-sood2014variation" role="doc-biblioref"><span class="nocase">Sood et al.</span> 2014</a>)</span>. Across US states, the number of nephrologists per resident was not associated with mean eGFR at initiation, although it was associated with how many people started dialysis <span class="citation" data-cites="ku2015workforce">(<a href="#ref-ku2015workforce" role="doc-biblioref">Ku et al. 2015</a>)</span>.</p>
-<p>The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see <a href="../quarto/statistical_methods.html#area-level-exposures">Area-level exposures</a>), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper’s analysis reproduces; it does not settle the controversy.</p>
+<p>The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see <a href="../quarto/statistical_methods.html#area-level-exposures">Area-level exposures</a>), and part of what looks like an effect of the area may belong to the facility. This analysis revisits the paper’s question with a revised approach; it does not settle the controversy.</p>
 </section>
 <section id="the-measures" class="level2">
 <h2 class="anchored" data-anchor-id="the-measures">The measures</h2>
@@ -634,7 +634,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="race-and-egfr" class="level2">
 <h2 class="anchored" data-anchor-id="race-and-egfr">Race and eGFR</h2>
-<p>The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper’s Table 1 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race <span class="citation" data-cites="inker2021ckdepi delgado2022unifying">(<a href="#ref-inker2021ckdepi" role="doc-biblioref"><span class="nocase">Inker et al.</span> 2021</a>; <a href="#ref-delgado2022unifying" role="doc-biblioref"><span class="nocase">Delgado et al.</span> 2022</a>)</span>; the replication keeps the paper’s measure, because the question is how physicians acted on the eGFR they saw.</p>
+<p>The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine <span class="citation" data-cites="levey2009ckdepi">(<a href="#ref-levey2009ckdepi" role="doc-biblioref"><span class="nocase">Levey et al.</span> 2009</a>)</span>. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper’s Table 1 <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race <span class="citation" data-cites="inker2021ckdepi delgado2022unifying">(<a href="#ref-inker2021ckdepi" role="doc-biblioref"><span class="nocase">Inker et al.</span> 2021</a>; <a href="#ref-delgado2022unifying" role="doc-biblioref"><span class="nocase">Delgado et al.</span> 2022</a>)</span>; this analysis keeps the paper’s measure, because the question is how physicians acted on the eGFR they saw.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -1181,11 +1181,11 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Whether the place a patient lives, and the dialysis care around it, affects when dialysis starts is a matter of controversy. The evidence points in more than one direction.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics <span class="co">[</span><span class="ot">@li2017trends</span><span class="co">]</span>. The paper replicated here found that patients in HSAs with the most facilities per resident started at a higher eGFR <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation <span class="co">[</span><span class="ot">@scialla2014iv</span><span class="co">]</span>; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics <span class="co">[</span><span class="ot">@li2017trends</span><span class="co">]</span>. The paper revisited here found that patients in HSAs with the most facilities per resident started at a higher eGFR <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Others find little or no association at a larger scale. In Canada, after adjustment for patients and facilities, none of the explained variation in eGFR at initiation lay between 14 geographic regions, and 3.1% lay between dialysis facilities <span class="co">[</span><span class="ot">@sood2014variation</span><span class="co">]</span>. Across US states, the number of nephrologists per resident was not associated with mean eGFR at initiation, although it was associated with how many people started dialysis <span class="co">[</span><span class="ot">@ku2015workforce</span><span class="co">]</span>.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see <span class="co">[</span><span class="ot">Area-level exposures</span><span class="co">](statistical_methods.qmd#area-level-exposures)</span>), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper's analysis reproduces; it does not settle the controversy.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see <span class="co">[</span><span class="ot">Area-level exposures</span><span class="co">](statistical_methods.qmd#area-level-exposures)</span>), and part of what looks like an effect of the area may belong to the facility. This analysis revisits the paper's question with a revised approach; it does not settle the controversy.</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## The measures</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
@@ -1203,7 +1203,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Race and eGFR</span></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper's Table 1 <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race <span class="co">[</span><span class="ot">@inker2021ckdepi; @delgado2022unifying</span><span class="co">]</span>; the replication keeps the paper's measure, because the question is how physicians acted on the eGFR they saw.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>The race coefficient of the 2009 CKD-EPI equation raises the eGFR of a patient recorded as Black by about 16% for the same creatinine <span class="co">[</span><span class="ot">@levey2009ckdepi</span><span class="co">]</span>. A Black patient is therefore more likely than another patient with the same creatinine to be counted as starting at an eGFR of 10 or above. Black patients make up a larger share of the patients in denser HSAs (11.3% in HSAs with no facility and 40.6% in the densest, in the paper's Table 1 <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>). The models adjust for race, and the paper also fits them separately for Black and White patients (eTable 1). Current practice uses the 2021 equation without race <span class="co">[</span><span class="ot">@inker2021ckdepi; @delgado2022unifying</span><span class="co">]</span>; this analysis keeps the paper's measure, because the question is how physicians acted on the eGFR they saw.</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>AGENTS.md – Dialysis facility density: a replication</title>
+<title>AGENTS.md – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -114,17 +114,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -134,6 +123,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -178,7 +178,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -625,11 +625,11 @@ edit that file, not this page. Its first heading is the page title.
 <p>Read the three files before making changes. Each covers its own topic and does not repeat the others.</p>
 <section id="the-project" class="level2">
 <h2 class="anchored" data-anchor-id="the-project">The project</h2>
-<p>This repository replicates a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient’s Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in <code>original/</code>). This version rebuilds it with <code>usRds</code> and <code>flowchart</code>, corrects errors found along the way, and documents each difference. Code and methods are published as a Quarto website.</p>
+<p>This repository revises the analysis of a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient’s Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in <code>original/</code>). This version rebuilds it with <code>usRds</code> and <code>flowchart</code>, corrects errors found along the way, and documents each difference. It is a revised analysis, not a replication of the published numbers: it is revised as <code>usRds</code> develops, and its results are compared with the published ones rather than expected to match them. Code and methods are published as a Quarto website.</p>
 <ul>
 <li><strong><code>analysis-plan.md</code> is the source of truth for design.</strong> Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.</li>
 <li><strong>Deciders.</strong> Scientific decisions are made by Vagish Hemmige and Ladan Golestaneh, in any area. Anyone may open or contribute to a decision issue; only a decider settles it (see “Working with agents”).</li>
-<li><strong>Replication rule.</strong> The original code is evidence of what was done, not the specification. When it disagrees with the paper or contains an error, do not silently copy it or silently fix it: the plan’s section 12 and the site’s “Differences from the original code” page record every difference, and choices between the paper and the code go to a decision issue.</li>
+<li><strong>Departures from the original analysis.</strong> The original code is evidence of what was done, not the specification. When it disagrees with the paper or contains an error, do not silently copy it or silently fix it: the plan’s section 12 and the site’s “Differences from the original code” page record every difference, and choices between the paper and the code go to a decision issue.</li>
 <li><strong>This is an analysis project, not an R package.</strong> Do not add DESCRIPTION, NAMESPACE, roxygen, or pkgdown infrastructure, or apply CRAN conventions.</li>
 <li><strong>Default branch:</strong> <code>main</code>, protected. Changes reach it only through pull requests.</li>
 </ul>
@@ -882,7 +882,7 @@ edit that file, not this page. Its first heading is the page title.
 </ul>
 <p>Project-specific checks:</p>
 <ul>
-<li><strong>Replication:</strong> does every difference from the original code appear in the plan’s section 12 and on the differences page, and is each one either a correction of an error or linked to a decision issue?</li>
+<li><strong>Departures:</strong> does every difference from the original code appear in the plan’s section 12 and on the differences page, and is each one either a correction of an error or linked to a decision issue?</li>
 <li><strong>Geography and dates:</strong> are ACS, crosswalk and population matched to the year the plan specifies, and facility counts to the date of dialysis start? Are ZIP codes 5-character strings with leading zeros kept?</li>
 <li><strong>Denominators:</strong> is HSA population summed over the ZCTAs of the ZIP codes the crosswalk assigns to the HSA for that year, each ZCTA once, and are HSAs with no facilities kept as zero, not missing?</li>
 <li><strong>Area codes:</strong> are Dartmouth -88888 and -99999 codes missing, and are ACS variable labels checked for every year used?</li>

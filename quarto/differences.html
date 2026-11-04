@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>Differences from the original code – Dialysis facility density: a replication</title>
+<title>Differences from the original code – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
-}
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
-}
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -164,6 +153,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -197,7 +197,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -606,13 +606,13 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>This page lists every way this replication differs from the <a href="../quarto/original.html">original R Markdown file</a> of October 2023, which produced the cohort and Table 1 of the published paper <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>, and every place where the paper’s text differs from that code. Each entry is one of five kinds:</p>
+<p>This page lists every way this analysis differs from the <a href="../quarto/original.html">original R Markdown file</a> of October 2023, which produced the cohort and Table 1 of the published paper <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>, and every place where the paper’s text differs from that code. Each entry is one of five kinds:</p>
 <ul>
-<li><strong>Corrected error</strong>: the original code did not do what it intended. The replication does, and the effect on the published numbers will be measured on the first full run.</li>
-<li><strong>Open decision</strong>: the original code and the paper disagree, or neither says. The replication reproduces the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.</li>
+<li><strong>Corrected error</strong>: the original code did not do what it intended. This analysis does, and the effect on the published numbers is to be measured when the analysis is run on the USRDS data.</li>
+<li><strong>Open decision</strong>: the original code and the paper disagree, or neither says. This analysis follows the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.</li>
 <li><strong>Rebuilt</strong>: the original material is not available, so the step is rebuilt from public sources.</li>
-<li><strong>Coding changed</strong>: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. The replication codes for the current version and keeps the original intent.</li>
-<li><strong>Paper differs from code</strong>: the paper’s text describes a rule slightly differently from the code that produced its numbers. The replication follows the code, as the deciders chose, and the entry records the paper’s wording.</li>
+<li><strong>Coding changed</strong>: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. This analysis codes for the current version and keeps the original intent.</li>
+<li><strong>Paper differs from code</strong>: the paper’s text describes a rule slightly differently from the code that produced its numbers. This analysis follows the code, as the deciders chose, and the entry records the paper’s wording.</li>
 </ul>
 <p>USRDS variables are named as in the data (for example <code>DIALSET</code>); the <a href="#glossary">glossary</a> at the end says what each one is.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -625,7 +625,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The replication has not yet been run on the USRDS data. The column “Effect on published results” says what each difference can change; the size of each effect will be added after the first run, once the outputs have been checked and cleared for release.</p>
+<p>This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through <code>usRds</code>, which is still being developed, and public files are re-downloaded. The column “Effect on published results” says what each difference can change.</p>
 </div>
 </div>
 <section id="cohort-construction" class="level2">
@@ -641,7 +641,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="header">
 <th>Original code</th>
 <th>Kind</th>
-<th>Replication</th>
+<th>This analysis</th>
 <th>Effect on published results</th>
 </tr>
 </thead>
@@ -728,7 +728,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="header">
 <th>Original code</th>
 <th>Kind</th>
-<th>Replication</th>
+<th>This analysis</th>
 <th>Effect on published results</th>
 </tr>
 </thead>
@@ -773,7 +773,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="header">
 <th>Original code</th>
 <th>Kind</th>
-<th>Replication</th>
+<th>This analysis</th>
 <th>Effect on published results</th>
 </tr>
 </thead>
@@ -818,7 +818,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </table>
 <section id="in-code-the-dartmouth-codes" class="level3">
 <h3 class="anchored" data-anchor-id="in-code-the-dartmouth-codes">In code: the Dartmouth codes</h3>
-<p>The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original’s names for comparison, and the replication does the same thing with <code>clean_dartmouth_codes()</code> (see <a href="../quarto/functions.html#dartmouth-codes">Functions</a>).</p>
+<p>The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original’s names for comparison, and this analysis does the same thing with <code>clean_dartmouth_codes()</code> (see <a href="../quarto/functions.html#dartmouth-codes">Functions</a>).</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="sbs-wrap"><table class="sbs" data-quarto-disable-processing="true"><colgroup><col class="sbs-n"><col><col class="sbs-n"><col></colgroup><thead><tr><th colspan="2">Original: negative values made positive</th><th colspan="2">Corrected: Dartmouth's codes become missing</th></tr></thead><tbody><tr><td class="sbs-no">1</td><td class="sbs-code ">HSA_short_data_map&lt;-HSA_short_data_map%&gt;%left_join(hsa_hospitalcapacity)%&gt;%</td><td class="sbs-no">1</td><td class="sbs-code ">HSA_short_data_map&lt;-HSA_short_data_map%&gt;%left_join(hsa_hospitalcapacity)%&gt;%</td></tr><tr><td class="sbs-no">2</td><td class="sbs-code ">  left_join(hsahittingbenchmark)%&gt;%</td><td class="sbs-no">2</td><td class="sbs-code ">  left_join(hsahittingbenchmark)%&gt;%</td></tr><tr><td class="sbs-no">3</td><td class="sbs-code sbs-del">  mutate(Legamputationsper1000Medica=ifelse(Legamputationsper1000Medica&lt;0, -Legamputationsper1000Medica, Legamputationsper1000Medica))%&gt;%</td><td class="sbs-no">3</td><td class="sbs-code sbs-add">  mutate(across(</td></tr><tr><td class="sbs-no">4</td><td class="sbs-code sbs-del">  mutate(annualpercenteyeexam2015=ifelse(annualpercenteyeexam2015&lt;0, -annualpercenteyeexam2015, annualpercenteyeexam2015))%&gt;%</td><td class="sbs-no">4</td><td class="sbs-code sbs-add">    c(Legamputationsper1000Medica, annualpercenteyeexam2015,</td></tr><tr><td class="sbs-no">5</td><td class="sbs-code sbs-del">  mutate(femaleswithonemammointwoyears=ifelse(femaleswithonemammointwoyears&lt;0, -femaleswithonemammointwoyears,</td><td class="sbs-no">5</td><td class="sbs-code sbs-add">      femaleswithonemammointwoyears, percentwithhgba1c2015),</td></tr><tr><td class="sbs-no">6</td><td class="sbs-code sbs-del">                                              femaleswithonemammointwoyears))%&gt;%</td><td class="sbs-no">6</td><td class="sbs-code sbs-add">    \(x) if_else(x %in% c(-88888, -99999), NA_real_, x)</td></tr><tr><td class="sbs-no">7</td><td class="sbs-code sbs-del">  mutate(percentwithhgba1c2015=ifelse(percentwithhgba1c2015&lt;0, -percentwithhgba1c2015, percentwithhgba1c2015))</td><td class="sbs-no">7</td><td class="sbs-code sbs-add">  ))</td></tr></tbody></table></div>
@@ -833,7 +833,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="header">
 <th>Original code</th>
 <th>Kind</th>
-<th>Replication</th>
+<th>This analysis</th>
 <th>Effect on published results</th>
 </tr>
 </thead>
@@ -908,7 +908,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="header">
 <th>Original code</th>
 <th>Kind</th>
-<th>Replication</th>
+<th>This analysis</th>
 <th>Effect on published results</th>
 </tr>
 </thead>
@@ -922,7 +922,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<code>centers3</code>, <code>lag3</code>) or repeat the outcome in the formula (<code>GFR_DICH~GFR_DICH~</code>).</td>
 <td>Rebuilt</td>
-<td>Rebuilt from the paper’s text and Table 2 footnotes. The estimation method differs: Stata’s default is adaptive quadrature with 7 points; the replication uses <code>glmmTMB</code> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <code>lme4::glmer</code> (decided 27 October 2026). See <a href="../quarto/models.html">Models</a> for the comparison.</td>
+<td>Rebuilt from the paper’s text and Table 2 footnotes. The estimation method differs: Stata’s default is adaptive quadrature with 7 points; this analysis uses <code>glmmTMB</code> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <code>lme4::glmer</code> (decided 27 October 2026). See <a href="../quarto/models.html">Models</a> for the comparison.</td>
 <td>Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds</td>
 </tr>
 <tr class="odd">
@@ -971,7 +971,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="header">
 <th>Original code</th>
 <th>Kind</th>
-<th>Replication</th>
+<th>This analysis</th>
 <th>Effect on published results</th>
 </tr>
 </thead>
@@ -1009,7 +1009,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="open-decisions" class="level2">
 <h2 class="anchored" data-anchor-id="open-decisions">Open decisions</h2>
-<p>No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for the replication as drafted (decided by Vagish Hemmige, 30 October 2026). See <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>.</p>
+<p>No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for this analysis as drafted (decided by Vagish Hemmige, 30 October 2026). See <a href="../quarto/classify_esrd_causes.html">Classifying codes</a>.</p>
 </section>
 <section id="glossary" class="level2">
 <h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
@@ -1592,24 +1592,24 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This page lists every way this replication differs from the <span class="co">[</span><span class="ot">original R Markdown file</span><span class="co">](original.qmd)</span> of October 2023, which produced the cohort and Table 1 of the published paper <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>, and every place where the paper's text differs from that code. Each entry is one of five kinds:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This page lists every way this analysis differs from the <span class="co">[</span><span class="ot">original R Markdown file</span><span class="co">](original.qmd)</span> of October 2023, which produced the cohort and Table 1 of the published paper <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>, and every place where the paper's text differs from that code. Each entry is one of five kinds:</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Corrected error**: the original code did not do what it intended. The replication does, and the effect on the published numbers will be measured on the first full run.</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Open decision**: the original code and the paper disagree, or neither says. The replication reproduces the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Corrected error**: the original code did not do what it intended. This analysis does, and the effect on the published numbers is to be measured when the analysis is run on the USRDS data.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Open decision**: the original code and the paper disagree, or neither says. This analysis follows the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Rebuilt**: the original material is not available, so the step is rebuilt from public sources.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Coding changed**: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. The replication codes for the current version and keeps the original intent.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Paper differs from code**: the paper's text describes a rule slightly differently from the code that produced its numbers. The replication follows the code, as the deciders chose, and the entry records the paper's wording.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Coding changed**: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. This analysis codes for the current version and keeps the original intent.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Paper differs from code**: the paper's text describes a rule slightly differently from the code that produced its numbers. This analysis follows the code, as the deciders chose, and the entry records the paper's wording.</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>USRDS variables are named as in the data (for example <span class="in">`DIALSET`</span>); the <span class="co">[</span><span class="ot">glossary</span><span class="co">](#glossary)</span> at the end says what each one is.</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>The replication has not yet been run on the USRDS data. The column "Effect on published results" says what each difference can change; the size of each effect will be added after the first run, once the outputs have been checked and cleared for release.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through <span class="in">`usRds`</span>, which is still being developed, and public files are re-downloaded. The column "Effect on published results" says what each difference can change.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cohort construction</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> Replication <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The CONSORT table was kept by hand, separately from the filters. The RUCA exclusion compared a labelled factor with the number <span class="in">`11`</span>, so the table recorded 0 patients removed while the next line removed patients. <span class="pp">|</span> Corrected error <span class="pp">|</span> Every exclusion is a <span class="in">`flowchart::fc_filter()`</span> step, so the diagram is the cohort. <span class="pp">|</span> Figure 1 counts; the cohort itself is unchanged <span class="pp">|</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> At least eight filters were applied outside the CONSORT table: the facility linkage, a second sex check, missing ZIP population, % White, % Black, % Asian and % Hispanic, and missing region. The income and poverty rows were labelled "ZIPPercentageFemale". <span class="pp">|</span> Corrected error <span class="pp">|</span> As above. <span class="pp">|</span> Figure 1 counts <span class="pp">|</span></span>
@@ -1625,7 +1625,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Facility counts</span></span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> Replication <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Every CMS facility file was expanded to one row per ZIP code per day, from 2005 to 2020, to look up counts by date. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`usRds::add_dialysis_facility_counts()`</span> uses an interval join on each CMS release's validity period. <span class="pp">|</span> None intended; much faster <span class="pp">|</span></span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The October 2017 and January 2018 CMS files code ownership as <span class="in">`1`</span> and <span class="in">`2`</span> instead of "Profit" and "Non-Profit". The reader compared with the text "Profit", so for-profit and non-profit counts were 0 for patients starting dialysis from October 2017 to March 2018. Code 1 is profit, confirmed by matching provider numbers with the July 2017 release. <span class="pp">|</span> Corrected error <span class="pp">|</span> Ownership is harmonized in <span class="in">`usRds`</span>. <span class="pp">|</span> Table 1 row "HSA level total of for-profit dialysis facilities"; not the exposure, which counts all facilities <span class="pp">|</span></span>
@@ -1634,7 +1634,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Area data</span></span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> Replication <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Dartmouth Atlas negative values were made positive (<span class="in">`ifelse(x &lt; 0, -x, x)`</span>). Dartmouth codes small values as -88888 and suppressed values as -99999 <span class="co">[</span><span class="ot">@dartmouth_primarycare</span><span class="co">]</span>, so suppressed HSAs would enter as 88,888 or 99,999. <span class="pp">|</span> Corrected error <span class="pp">|</span> Set to missing (decided 27 October 2026). <span class="pp">|</span> Table 1 benchmark rows and Model 3, if the original files held these codes <span class="pp">|</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS subject-table variable codes (for example <span class="in">`S0601_C01_047`</span>) were assumed to mean the same thing every year. <span class="pp">|</span> Corrected error <span class="pp">|</span> Each year's labels are checked; a mismatch stops the run. <span class="pp">|</span> None if the codes were stable; otherwise ZIP code income and poverty <span class="pp">|</span></span>
@@ -1645,7 +1645,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### In code: the Dartmouth codes</span></span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original's names for comparison, and the replication does the same thing with <span class="in">`clean_dartmouth_codes()`</span> (see <span class="co">[</span><span class="ot">Functions</span><span class="co">](functions.qmd#dartmouth-codes)</span>).</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original's names for comparison, and this analysis does the same thing with <span class="in">`clean_dartmouth_codes()`</span> (see <span class="co">[</span><span class="ot">Functions</span><span class="co">](functions.qmd#dartmouth-codes)</span>).</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
@@ -1678,7 +1678,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Patient variables</span></span>
 <span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> Replication <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`usRds::load_usrds_file()`</span> applies the USRDS value labels. <span class="pp">|</span> None intended <span class="pp">|</span></span>
 <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Nephrology care was coded twice: access (<span class="in">`NEPHCARE`</span>, coded yes, no or unknown: no, some or unknown nephrology care) and duration (<span class="in">`NEPHCARERANGE`</span>), with unknown duration left missing. The exploratory R models used the duration; the paper's Discussion mentions duration, while its Methods, Table 1 and the Model 3 footnote say access. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Access, with unknown as its own level, so Model 3 keeps every patient, as the published n = 844,466 implies (decided 27 October 2026). <span class="pp">|</span> Model 3, if Stata used another coding <span class="pp">|</span></span>
@@ -1693,10 +1693,10 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models</span></span>
 <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> Replication <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Several published models were fit only in Stata and never in R: the race-stratified Model 2, eTable 2's continuous-density models with albumin and hemoglobin, imputed and by race, and eTable 3's models with albumin and hemoglobin and without 0-facility HSAs. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Every model in Table 2 and eTables 1 to 3 is fit, as presented, from one list of published models (decided 27 October 2026). <span class="pp">|</span> eTables 1 to 3 <span class="pp">|</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<span class="in">`centers3`</span>, <span class="in">`lag3`</span>) or repeat the outcome in the formula (<span class="in">`GFR_DICH~GFR_DICH~`</span>). <span class="pp">|</span> Rebuilt <span class="pp">|</span> Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; the replication uses <span class="in">`glmmTMB`</span> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <span class="in">`lme4::glmer`</span> (decided 27 October 2026). See <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> for the comparison. <span class="pp">|</span> Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds <span class="pp">|</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<span class="in">`centers3`</span>, <span class="in">`lag3`</span>) or repeat the outcome in the formula (<span class="in">`GFR_DICH~GFR_DICH~`</span>). <span class="pp">|</span> Rebuilt <span class="pp">|</span> Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; this analysis uses <span class="in">`glmmTMB`</span> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <span class="in">`lme4::glmer`</span> (decided 27 October 2026). See <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> for the comparison. <span class="pp">|</span> Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds <span class="pp">|</span></span>
 <span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as "a multiple imputation technique with chained predictive analytics (10 imputations)", read here as chained equations. <span class="pp">|</span> Rebuilt (D7, decided 28 October 2026) <span class="pp">|</span> Albumin and hemoglobin imputed with <span class="in">`mice`</span> (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. <span class="pp">|</span> The imputation rows of eTable 2 <span class="pp">|</span></span>
 <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model 3 adjusts for "HSA-level success in achieving primary care benchmarks, such as" HbA1c testing, eye examinations among patients with diabetes and ambulatory-sensitive discharges. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Those three benchmarks; the paper's "such as" may mean that Stata used more (Table 1 also reports mammography). <span class="pp">|</span> Model 3, if Stata used more benchmarks <span class="pp">|</span></span>
 <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The original R code also fit Model 3 among patients with eGFR between 5 and 25. Not in the paper. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Kept as an extra table, labelled as not in the paper. Since the cohort already has eGFR of 20 or below, it excludes eGFR of 5 or below. <span class="pp">|</span> None on the published tables <span class="pp">|</span></span>
@@ -1705,7 +1705,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Outputs</span></span>
 <span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> Replication <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Two interactive maps saved the center-density map under the station-density file names. <span class="pp">|</span> Corrected error <span class="pp">|</span> One function draws and saves each map. <span class="pp">|</span> None on the paper (its Figure 2 is a static map) <span class="pp">|</span></span>
 <span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table 1 was built in Stata; the paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`gtsummary`</span> with its default layout, classical one-way ANOVA for continuous and chi-squared for categorical characteristics. <span class="pp">|</span> Table 1 layout; P values, slightly, for any variable Stata tested by Kruskal-Wallis <span class="pp">|</span></span>
@@ -1718,7 +1718,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Open decisions</span></span>
 <span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for the replication as drafted (decided by Vagish Hemmige, 30 October 2026). See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>.</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for this analysis as drafted (decided by Vagish Hemmige, 30 October 2026). See <span class="co">[</span><span class="ot">Classifying codes</span><span class="co">](classify_esrd_causes.qmd)</span>.</span>
 <span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Glossary</span></span>
 <span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>

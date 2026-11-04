@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>Mapping cause codes with ellmer – Dialysis facility density: a replication</title>
+<title>Mapping cause codes with ellmer – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -164,6 +153,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -197,7 +197,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -602,8 +602,8 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 
 
 <p>This page is part of the study’s design and methods. The <strong>Specified in</strong> and <strong>Current code</strong> notes are explained on the <a href="../quarto/study_methods.html">Overview</a>, and the general background is on <a href="../quarto/data_sources.html">Data sources</a> and <a href="../quarto/statistical_methods.html">Statistical methods</a>. The code that carries this out is on <a href="../quarto/classify_esrd_causes.html">2. Cause code mapping</a>.</p>
-<p>The paper’s Table 1 groups each patient’s primary cause of kidney failure into six categories. The original analysis took the grouping from a spreadsheet that no longer exists. The replication rebuilds it by asking three cloud large language models, from three companies, to classify every USRDS cause code, and accepting a code’s category when at least two of the three agree. Two smaller models that run on the analyst’s own computer were asked the same question and are reported for comparison, but do not vote. Only the public list of codes and their descriptions is sent to any model, never patient data. How language models can classify codes, and how <code>ellmer</code> calls them from R, is explained in <a href="../quarto/statistical_methods.html#classifying-text-with-language-models">Statistical methods</a>; this page describes how this study applies it.</p>
-<p>The mapping from the first full run, on 30 October 2026, is accepted for the replication as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none.</p>
+<p>The paper’s Table 1 groups each patient’s primary cause of kidney failure into six categories. The original analysis took the grouping from a spreadsheet that no longer exists. This analysis rebuilds it by asking three cloud large language models, from three companies, to classify every USRDS cause code, and accepting a code’s category when at least two of the three agree. Two smaller models that run on the analyst’s own computer were asked the same question and are reported for comparison, but do not vote. Only the public list of codes and their descriptions is sent to any model, never patient data. How language models can classify codes, and how <code>ellmer</code> calls them from R, is explained in <a href="../quarto/statistical_methods.html#classifying-text-with-language-models">Statistical methods</a>; this page describes how this study applies it.</p>
+<p>The mapping from the first full run, on 30 October 2026, is accepted for this analysis as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#6-covariates">§6 Covariates</a> (“Cause of kidney failure mapping”).</p>
 <section id="the-code-list" class="level2">
 <h2 class="anchored" data-anchor-id="the-code-list">The code list</h2>
@@ -1251,9 +1251,9 @@ Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerk
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the <span class="co">[</span><span class="ot">Overview</span><span class="co">](study_methods.qmd)</span>, and the general background is on <span class="co">[</span><span class="ot">Data sources</span><span class="co">](data_sources.qmd)</span> and <span class="co">[</span><span class="ot">Statistical methods</span><span class="co">](statistical_methods.qmd)</span>. The code that carries this out is on <span class="co">[</span><span class="ot">2. Cause code mapping</span><span class="co">](classify_esrd_causes.qmd)</span>.</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>The paper's Table 1 groups each patient's primary cause of kidney failure into six categories. The original analysis took the grouping from a spreadsheet that no longer exists. The replication rebuilds it by asking three cloud large language models, from three companies, to classify every USRDS cause code, and accepting a code's category when at least two of the three agree. Two smaller models that run on the analyst's own computer were asked the same question and are reported for comparison, but do not vote. Only the public list of codes and their descriptions is sent to any model, never patient data. How language models can classify codes, and how <span class="in">`ellmer`</span> calls them from R, is explained in <span class="co">[</span><span class="ot">Statistical methods</span><span class="co">](statistical_methods.qmd#classifying-text-with-language-models)</span>; this page describes how this study applies it.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>The paper's Table 1 groups each patient's primary cause of kidney failure into six categories. The original analysis took the grouping from a spreadsheet that no longer exists. This analysis rebuilds it by asking three cloud large language models, from three companies, to classify every USRDS cause code, and accepting a code's category when at least two of the three agree. Two smaller models that run on the analyst's own computer were asked the same question and are reported for comparison, but do not vote. Only the public list of codes and their descriptions is sent to any model, never patient data. How language models can classify codes, and how <span class="in">`ellmer`</span> calls them from R, is explained in <span class="co">[</span><span class="ot">Statistical methods</span><span class="co">](statistical_methods.qmd#classifying-text-with-language-models)</span>; this page describes how this study applies it.</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>The mapping from the first full run, on 30 October 2026, is accepted for the replication as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none.</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>The mapping from the first full run, on 30 October 2026, is accepted for this analysis as the models drafted it (decided by Vagish Hemmige, 30 October 2026; decision D4): 423 of the 445 codes were unanimous and 22 accepted by two of three, none were left for review, and the deciders changed none.</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§6 Covariates</span><span class="co">](analysis-plan.qmd#6-covariates)</span> ("Cause of kidney failure mapping").</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>3. USRDS patient data – Dialysis facility density: a replication</title>
+<title>3. USRDS patient data – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -197,7 +197,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -623,7 +623,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </div>
 <section id="loading-the-medical-evidence-file" class="level2">
 <h2 class="anchored" data-anchor-id="loading-the-medical-evidence-file">Loading the Medical Evidence file</h2>
-<p><code>usRds</code> finds the file in the folder set by <code>set_USRDS_wd()</code> and applies the USRDS value labels from Appendix C of the Researcher’s Guide <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, so codes become their documented meanings. That is how the replication found that the coding of <code>DIALSET</code> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<code>PDIS</code>) is kept as the raw code because several codes share a description.</p>
+<p><code>usRds</code> finds the file in the folder set by <code>set_USRDS_wd()</code> and applies the USRDS value labels from Appendix C of the Researcher’s Guide <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, so codes become their documented meanings. That is how this analysis found that the coding of <code>DIALSET</code> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<code>PDIS</code>) is kept as the raw code because several codes share a description.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1339,7 +1339,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading the Medical Evidence file</span></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">`usRds`</span> finds the file in the folder set by <span class="in">`set_USRDS_wd()`</span> and applies the USRDS value labels from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, so codes become their documented meanings. That is how the replication found that the coding of <span class="in">`DIALSET`</span> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<span class="in">`PDIS`</span>) is kept as the raw code because several codes share a description.</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">`usRds`</span> finds the file in the folder set by <span class="in">`set_USRDS_wd()`</span> and applies the USRDS value labels from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, so codes become their documented meanings. That is how this analysis found that the coding of <span class="in">`DIALSET`</span> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<span class="in">`PDIS`</span>) is kept as the raw code because several codes share a description.</span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-medevid</span></span>

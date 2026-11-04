@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>Analysis and reporting – Dialysis facility density: a replication</title>
+<title>Analysis and reporting – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -197,7 +197,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -615,7 +615,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <li><strong>Model 3:</strong> adds insurance, nephrology care, rural-urban type, ZIP code poverty and share of Black residents, and the three HSA benchmarks the paper’s Methods name (HbA1c testing and eye examinations in diabetes, and ambulatory-sensitive discharges).</li>
 </ul>
 <p>Models 2 and 3 are fit with and without albumin and hemoglobin; with them, only patients with both values are used (533,375 in the paper <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>). Census region is not adjusted for, because the footnotes do not list it.</p>
-<p>The paper’s Methods list these benchmarks with “such as”, so the three it names are taken to be the ones used. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on <a href="../quarto/models.html#every-published-model">Every published model</a>.</p>
+<p>The paper’s Methods list these benchmarks with “such as”, so the three it names are taken to be the ones used. This analysis fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on <a href="../quarto/models.html#every-published-model">Every published model</a>.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#8-statistical-analysis">§8 Statistical analysis</a>.</p>
 <p><strong>Current code:</strong> the original R code had exploratory models only, so the published models are rebuilt; see <a href="../quarto/differences.html#models">Differences: models</a>.</p>
 </section>
@@ -694,7 +694,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <li>excluding eGFR of 5 or below, from the original R code and not in the paper.</li>
 </ul>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#9-sensitivity-analyses">§9 Sensitivity analyses</a>, <a href="../quarto/analysis-plan.html#8-statistical-analysis">§8 Statistical analysis</a> (missing data).</p>
-<p><strong>Current code:</strong> the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. <a href="../quarto/models.html">Models</a> does not yet include this; the effects are to be added to <a href="../quarto/differences.html">Differences from the original code</a> after the first run (<a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52">issue #52</a>).</p>
+<p><strong>Current code:</strong> the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. <a href="../quarto/models.html">Models</a> does not yet include this (<a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52">issue #52</a>).</p>
 </section>
 <section id="disclosure" class="level2">
 <h2 class="anchored" data-anchor-id="disclosure">Disclosure</h2>
@@ -1226,7 +1226,7 @@ StataCorp. n.d. <em>Melogit: Multilevel Mixed-Effects Logistic Regression</em>. 
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Models 2 and 3 are fit with and without albumin and hemoglobin; with them, only patients with both values are used (533,375 in the paper <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>). Census region is not adjusted for, because the footnotes do not list it.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The paper's Methods list these benchmarks with "such as", so the three it names are taken to be the ones used. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on <span class="co">[</span><span class="ot">Every published model</span><span class="co">](models.qmd#every-published-model)</span>.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The paper's Methods list these benchmarks with "such as", so the three it names are taken to be the ones used. This analysis fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on <span class="co">[</span><span class="ot">Every published model</span><span class="co">](models.qmd#every-published-model)</span>.</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span>.</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
@@ -1281,7 +1281,7 @@ StataCorp. n.d. <em>Melogit: Multilevel Mixed-Effects Logistic Regression</em>. 
 <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§9 Sensitivity analyses</span><span class="co">](analysis-plan.qmd#9-sensitivity-analyses)</span>, <span class="co">[</span><span class="ot">§8 Statistical analysis</span><span class="co">](analysis-plan.qmd#8-statistical-analysis)</span> (missing data).</span>
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> does not yet include this; the effects are to be added to <span class="co">[</span><span class="ot">Differences from the original code</span><span class="co">](differences.qmd)</span> after the first run (<span class="co">[</span><span class="ot">issue #52</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)</span>).</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. <span class="co">[</span><span class="ot">Models</span><span class="co">](models.qmd)</span> does not yet include this (<span class="co">[</span><span class="ot">issue #52</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)</span>).</span>
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disclosure</span></span>
 <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>

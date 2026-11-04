@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vagish Hemmige">
 
-<title>Study design and methods: overview – Dialysis facility density: a replication</title>
+<title>Study design and methods: overview – Dialysis facility density: a revised analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -155,15 +155,15 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -197,7 +197,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Dialysis facility density: a replication</a> 
+      <a href="../">Dialysis facility density: a revised analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -601,18 +601,18 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <li><strong>Specified in:</strong> the section of the analysis plan that defines the method.</li>
 <li><strong>Current code:</strong> where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.</li>
 </ul>
-<p>The study is a replication: every choice the paper states is kept, and where the paper is silent the original R code’s choice is used <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Every departure from the original code is listed once, on <a href="../quarto/differences.html">Differences from the original code</a>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked “chosen for this demonstration”. No choice in the plan is open.</p>
+<p>The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code’s choice is used <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The data are processed through <code>usRds</code>, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on <a href="../quarto/differences.html">Differences from the original code</a>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked “chosen for this demonstration”. No choice in the plan is open.</p>
 <section id="the-question-and-the-design-in-brief" class="level2">
 <h2 class="anchored" data-anchor-id="the-question-and-the-design-in-brief">The question and the design in brief</h2>
 <p><strong>Question.</strong> Among adults starting in-center hemodialysis in the United States, do those living in Hospital Service Areas (HSAs) with more dialysis facilities per resident start dialysis at a higher eGFR?</p>
 <p><strong>Approach.</strong> A cross-sectional study of patients starting hemodialysis from 2011 to 2019, each linked to the facilities and population of their HSA on the day they started. The question is about association, not causation: whether early starts are more common in denser areas after allowing for differences between patients and areas, not whether adding facilities would cause earlier starts.</p>
-<p><strong>What is reported.</strong> Odds ratios for starting at an eGFR of 10 or above in each category of facility density, compared with HSAs with no facility, from progressively adjusted models. The paper reported an odds ratio of 1.06 (95% CI 1.02 to 1.10) for the densest category <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The replication aims to reproduce its Figure 1, Table 1, Table 2 and eTables 1 to 3.</p>
+<p><strong>What is reported.</strong> Odds ratios for starting at an eGFR of 10 or above in each category of facility density, compared with HSAs with no facility, from progressively adjusted models. The paper reported an odds ratio of 1.06 (95% CI 1.02 to 1.10) for the densest category <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The code produces its Figure 1, Table 1, Table 2 and eTables 1 to 3 in the published layout, so each can be compared with the published version and the differences explained.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#1-objective">§1 Objective</a>, <a href="../quarto/analysis-plan.html#2-design">§2 Design</a>.</p>
 </section>
 <section id="data-used" class="level2">
 <h2 class="anchored" data-anchor-id="data-used">Data used</h2>
 <p>Patients come from the USRDS Medical Evidence file, and their ZIP code on the day dialysis started from the Residence file. Facilities come from the CMS release current on that day. Each ZIP code is placed in an HSA with the Dartmouth crosswalk and in a ZCTA with the UDS Mapper crosswalk; ZIP code characteristics come from the American Community Survey 5-year subject table for that ZCTA. HSA quality measures (2015) and hospital resources (2012) come from the Dartmouth Atlas, and rural-urban type from the 2010 RUCA ZIP code file.</p>
-<p>All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient’s facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. How each source is linked to the patient is on <a href="../quarto/study_facilities.html">Dialysis facilities</a> and <a href="../quarto/study_linkage.html">Census and area data</a>.</p>
+<p>All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient’s facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a re-analysis of data whose published results are known, not a new test of the hypothesis. How each source is linked to the patient is on <a href="../quarto/study_facilities.html">Dialysis facilities</a> and <a href="../quarto/study_linkage.html">Census and area data</a>.</p>
 <p><strong>Specified in:</strong> <a href="../quarto/analysis-plan.html#3-data-source">§3 Data source</a>, <a href="../quarto/analysis-plan.html#4-study-population">§4 Study population</a> (“Year of linkage”).</p>
 </section>
 <section id="references" class="level2">
@@ -1102,7 +1102,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Specified in:** the section of the analysis plan that defines the method.</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Current code:** where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>The study is a replication: every choice the paper states is kept, and where the paper is silent the original R code's choice is used <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. Every departure from the original code is listed once, on <span class="co">[</span><span class="ot">Differences from the original code</span><span class="co">](differences.qmd)</span>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked "chosen for this demonstration". No choice in the plan is open.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code's choice is used <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The data are processed through <span class="in">`usRds`</span>, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on <span class="co">[</span><span class="ot">Differences from the original code</span><span class="co">](differences.qmd)</span>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked "chosen for this demonstration". No choice in the plan is open.</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## The question and the design in brief</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
@@ -1110,7 +1110,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>**Approach.** A cross-sectional study of patients starting hemodialysis from 2011 to 2019, each linked to the facilities and population of their HSA on the day they started. The question is about association, not causation: whether early starts are more common in denser areas after allowing for differences between patients and areas, not whether adding facilities would cause earlier starts.</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>**What is reported.** Odds ratios for starting at an eGFR of 10 or above in each category of facility density, compared with HSAs with no facility, from progressively adjusted models. The paper reported an odds ratio of 1.06 (95% CI 1.02 to 1.10) for the densest category <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The replication aims to reproduce its Figure 1, Table 1, Table 2 and eTables 1 to 3.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>**What is reported.** Odds ratios for starting at an eGFR of 10 or above in each category of facility density, compared with HSAs with no facility, from progressively adjusted models. The paper reported an odds ratio of 1.06 (95% CI 1.02 to 1.10) for the densest category <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The code produces its Figure 1, Table 1, Table 2 and eTables 1 to 3 in the published layout, so each can be compared with the published version and the differences explained.</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§1 Objective</span><span class="co">](analysis-plan.qmd#1-objective)</span>, <span class="co">[</span><span class="ot">§2 Design</span><span class="co">](analysis-plan.qmd#2-design)</span>.</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
@@ -1118,7 +1118,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>Patients come from the USRDS Medical Evidence file, and their ZIP code on the day dialysis started from the Residence file. Facilities come from the CMS release current on that day. Each ZIP code is placed in an HSA with the Dartmouth crosswalk and in a ZCTA with the UDS Mapper crosswalk; ZIP code characteristics come from the American Community Survey 5-year subject table for that ZCTA. HSA quality measures (2015) and hospital resources (2012) come from the Dartmouth Atlas, and rural-urban type from the 2010 RUCA ZIP code file.</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. How each source is linked to the patient is on <span class="co">[</span><span class="ot">Dialysis facilities</span><span class="co">](study_facilities.qmd)</span> and <span class="co">[</span><span class="ot">Census and area data</span><span class="co">](study_linkage.qmd)</span>.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a re-analysis of data whose published results are known, not a new test of the hypothesis. How each source is linked to the patient is on <span class="co">[</span><span class="ot">Dialysis facilities</span><span class="co">](study_facilities.qmd)</span> and <span class="co">[</span><span class="ot">Census and area data</span><span class="co">](study_linkage.qmd)</span>.</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>**Specified in:** <span class="co">[</span><span class="ot">§3 Data source</span><span class="co">](analysis-plan.qmd#3-data-source)</span>, <span class="co">[</span><span class="ot">§4 Study population</span><span class="co">](analysis-plan.qmd#4-study-population)</span> ("Year of linkage").</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>

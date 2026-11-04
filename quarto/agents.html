@@ -114,17 +114,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -134,6 +123,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -546,6 +546,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   <li><a href="#variable-labels" id="toc-variable-labels" class="nav-link" data-scroll-target="#variable-labels">Variable labels</a></li>
   <li><a href="#quarto-website" id="toc-quarto-website" class="nav-link" data-scroll-target="#quarto-website">Quarto website</a></li>
   <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#python-generated-public-figures-trial-convention" id="toc-python-generated-public-figures-trial-convention" class="nav-link" data-scroll-target="#python-generated-public-figures-trial-convention">Python-generated public figures (trial convention)</a></li>
   <li><a href="#restricted-data-applies-to-everyone" id="toc-restricted-data-applies-to-everyone" class="nav-link" data-scroll-target="#restricted-data-applies-to-everyone">Restricted data (applies to everyone)</a></li>
   <li><a href="#coding-conventions" id="toc-coding-conventions" class="nav-link" data-scroll-target="#coding-conventions">Coding conventions</a></li>
   <li><a href="#checks-for-any-change" id="toc-checks-for-any-change" class="nav-link" data-scroll-target="#checks-for-any-change">Checks for any change</a></li>
@@ -843,6 +844,16 @@ edit that file, not this page. Its first heading is the page title.
 <li>Tables and figures are exported by <code>R/tables.R</code> and <code>R/figures.R</code> to <code>tables/</code> and <code>figures/</code>. They are gitignored until they have been checked for errors against the published paper and cleared for release under the USRDS data use agreement.</li>
 <li>Published figures need alt text.</li>
 <li><code>README.Rmd</code> is the source of <code>README.md</code>; edit the <code>.Rmd</code> and re-knit.</li>
+</ul>
+</section>
+<section id="python-generated-public-figures-trial-convention" class="level2">
+<h2 class="anchored" data-anchor-id="python-generated-public-figures-trial-convention">Python-generated public figures (trial convention)</h2>
+<ul>
+<li>Commit the generating Python script alongside each new or revised Python-generated public figure, together with any local assets it needs. Keep source and generated outputs in the same change.</li>
+<li>Put public website illustrations in <code>images/</code>, with a descriptive source subdirectory containing <code>draw.py</code>, <code>assets/</code> when needed, and a <code>README.md</code>. Keep the existing <code>figures/</code> restrictions for analysis outputs.</li>
+<li>The README records the output paths, exact regeneration commands, dependencies, asset provenance, and whether displayed values are illustrative or derived from public data. Resolve paths relative to the script; regeneration must not depend on a developer’s working directory or credentials.</li>
+<li>Commit a generated SVG and any PNG used by the site. Regenerate and inspect the output before committing; website builds consume these files without running figure-generation scripts.</li>
+<li>When recovering source for an existing image, document what was recovered and how fidelity was checked. Do not describe a reconstruction as the original source without evidence.</li>
 </ul>
 </section>
 <section id="restricted-data-applies-to-everyone" class="level2">

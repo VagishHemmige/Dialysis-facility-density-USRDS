@@ -26,13 +26,32 @@ The script was reconstructed from the compact diagram in the design conversation
 Its PNG render was verified pixel-for-pixel against the existing repository PNG
 when the source was added. The original PNG is retained unchanged.
 This is a public-methods illustration, not an analysis output: it reads no patient
-data and makes no model calls. Example categories correspond to the public
-`references/esrd-cause-categories.csv` mapping.
+data and makes no model calls. Every value it shows is read from public files (below).
 
-The diagram remains a placeholder. It summarizes replies in one dataset and uses
-shared cloud routing lines. Showing five separate returned datasets, highlighting
-a real classification disagreement, and revising arrow routing remain future
-visual revisions; this source-preservation change does not implement them.
+The first version of this script reproduced the compact placeholder exactly (one
+returned dataset, shared cloud routing lines). The current version redraws it:
+each model has its own send and return arrows, each returns its own dataset, the
+2-of-3 vote and the local-model comparison are shown as steps in R, and one code
+on which the cloud models split (`HIGHLIGHT` in the script) is highlighted.
+
+Values are read, not typed: the cloud rows and the vote counts come from
+`references/esrd-cause-categories.csv` and `references/esrd-cause-agreement.csv`;
+the local rows from `references/esrd-cause-local-answers.csv`, each local model's
+answers exactly as returned; the local-model summaries from
+`references/esrd-cause-local-models.csv`; and the batch sizes from
+`esrd_classifier_batch_sizes` in `R/setup.R`. A local answer is shown when the
+code was answered exactly once; otherwise the card says it was not answered,
+answered more than once, or returned in a form that does not match the code (for
+example in quotation marks), as the local-model report counts it. The script stops
+if an example code is missing from the mapping, or if the highlighted code is
+unanimous. Regenerate after any of those files changes.
+
+`references/esrd-cause-local-answers.csv` was added from the two saved Ollama
+answer files for prompt version `02ff2fbb` (Qwen `qwen3.5:9b`, Llama
+`llama3.1:8b`), row for row and unchanged; its counts reproduce
+`references/esrd-cause-local-models.csv` exactly (Qwen 295 answered, 150 missing,
+26 not a code; Llama 412 answered once, 5 repeated, 28 missing, 20 not a code).
+`R/classify_esrd_causes.R` does not yet write this file itself.
 
 ## Logo assets
 

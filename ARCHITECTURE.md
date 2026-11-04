@@ -74,8 +74,11 @@ has its generator at `images/esrd-cause-classification/draw.py`, local logos in
 `assets/` beside it, and regeneration/provenance notes in that directory's README.
 Python generates `images/esrd-cause-classification-placeholder.svg`; Inkscape exports
 the PNG at the same stem that the website already uses. Neither step is part of
-`main.R` or the site build. The source reproduces the existing compact placeholder;
-future visual changes should update the script and rendered files together.
+`main.R` or the site build. The script reads the values it shows from the
+`references/esrd-cause-*.csv` files, including `esrd-cause-local-answers.csv` (each
+local model's answers as returned, added by hand from the saved answer files; the
+classification script does not write it), and the batch sizes from `R/setup.R`, so
+it is rerun when they change; the script and rendered files are updated together.
 
 ## Tests
 

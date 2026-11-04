@@ -1,0 +1,764 @@
+provider,model,prompt_version,code,category,reason
+ollama_qwen,qwen3.5:9b,02ff2fbb,,Other,No medical evidence form present.
+ollama_qwen,qwen3.5:9b,02ff2fbb,00000Z,Other,Missing on medical evidence form.
+ollama_qwen,qwen3.5:9b,02ff2fbb,00U,Other,Code not defined in renal provider instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0160,Other,Includes infections like interstitial nephritis and pyelonephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0160Z,Other,Includes infections like interstitial nephritis and pyelonephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,042,Glomerulonephritis,HIV-associated nephropathy is listed under HIV disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0429,Glomerulonephritis,AIDS nephropathy falls under infection-related glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0429A,Glomerulonephritis,AIDS nephropathy falls under infection-related glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0429Z,Other,"Describes HIV with neoplasms, not primary kidney failure."
+ollama_qwen,qwen3.5:9b,02ff2fbb,0439,Other,HIV infection manifestations lack specific glomerular classification.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0439Z,Other,HIV infection manifestations lack specific glomerular classification.
+ollama_qwen,qwen3.5:9b,02ff2fbb,0449Z,Other,Unspecified HIV infection without defined kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,135Z,Other,Systemic disease (sarcoidosis) not listed as GN or tubulointerstitial.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1890,Other,Renal tumor classified as obstructive or neoplasm.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1890B,Other,Malignant renal tumor excluded from hereditary or transplants.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1890Z,Other,Cancer of kidney classified as obstructive or neoplasm.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1891Z,Other,Cancer of renal pelvis excluded from hereditary diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1899,Other,Urinary tract tumor classified as obstructive disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1899A,Other,Malignant urinary tract tumor not in hereditary category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,1899Z,Other,Explicitly labeled as an unreconcilable code.
+ollama_qwen,qwen3.5:9b,02ff2fbb,189Z,Other,Unspecified cancer classified as other or neoplasm.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20280,Other,Lymphoma of kidneys excluded from hereditary kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20280A,Other,Lymphoma of kidneys excluded from hereditary kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20283,Other,Intra-abdominal lymphoma affects kidney but not hereditary.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20283Z,Other,Lymphoma in abdomen causes kidney failure as Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20285Z,Other,"Lymphoma is a neoplasm, not a glomerulonephritis or inherited kidney disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,20286Z,Other,Intrapelvic lymphoma is a neoplasm falling under Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2028Z,Other,"Lymphomas are neoplasms, classified as systemic disease not glomerulonephritis."
+ollama_qwen,qwen3.5:9b,02ff2fbb,2030,Other,Multiple myeloma is a neoplasm categorized under Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20300,Other,Multiple myeloma is a neoplasm classified under Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,20308,Other,Neoplasms including light chain nephropathy are classified under Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2030A,Other,Multiple myeloma is a neoplasm classified under Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2030B,Other,"Light chain nephropathy is a neoplasm, not glomerulonephritis or diabetes."
+ollama_qwen,qwen3.5:9b,02ff2fbb,2030Z,Other,Multiple myeloma is a neoplasm categorized under Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,203Z,Other,Immunoproliferative neoplasms are neoplasms classified under Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2230,Other,"Benign renal tumor is obstructive or urologic disease, not glomerulonephritis."
+ollama_qwen,qwen3.5:9b,02ff2fbb,2230A,Other,Benign renal tumor is obstructive disease classified under Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2239,Other,"Benign urinary tract tumor is urologic disease, not glomerulonephritis."
+ollama_qwen,qwen3.5:9b,02ff2fbb,2239A,Other,Benign urinary tract tumor is urologic disease classified under Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,23951,Other,"Unspecified renal tumor is neoplasm, coded as Other kidney disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,23952,Other,Unspecified urinary tract tumor is neoplasm classified under Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2395A,Other,Unspecified renal tumor is neoplasm coded as Other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2395B,Other,Unspecified urinary tract tumor is neoplasm classified under Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,25000,Diabetes,Type 2 diabetes causes kidney failure attributed to diabetes category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,25000A,Diabetes,Type 2 diabetes causes kidney failure attributed to diabetes category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,25000Z,Diabetes,Adult-onset diabetes is the primary cause of diabetic nephropathy.
+ollama_qwen,qwen3.5:9b,02ff2fbb,25001,Diabetes,Type 1 juvenile diabetes causes kidney failure attributed to diabetes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,25001A,Diabetes,Juvenile type 1 diabetes is primary cause of diabetic nephropathy.
+ollama_qwen,qwen3.5:9b,02ff2fbb,25001Z,Diabetes,Juvenile onset diabetes mellitus causes kidney failure attributed to diabetes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2500Z,Diabetes,Diabetes is the primary cause of kidney failure in this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2773Z,Other,
+ollama_qwen,qwen3.5:9b,02ff2fbb,28260,Other,Sickle-cell disease is a systemic vasculopathy or non-glomerular condition.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28260A,Other,Sickle-cell disease is a systemic vasculopathy or non-glomerular condition.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28260Z,Other,Sickle-cell anemia is a hematologic disorder not classified in glomerulonephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28261Z,Other,HB-S disease is a systemic condition without primary glomerular origin.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28262Z,Other,HB-S disease with crisis is not classified as glomerulonephritis or nephropathy.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28263Z,Other,Sickle-cell/Hb-C disease is a systemic hematologic disorder category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28269,Other,Sickle-cell trait and other sickle cell are not inherited kidney diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28269A,Other,"Sickle-cell trait is a hematologic condition, not glomerular or inherited renal disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,28269Z,Other,Other sickle cell diseases are systemic hematologic disorders.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2826Z,Other,Sickle-cell disease is generally a systemic condition or non-glomerular cause.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28283Z,Other,
+ollama_qwen,qwen3.5:9b,02ff2fbb,28286Z,Other,
+ollama_qwen,qwen3.5:9b,02ff2fbb,2831,Glomerulonephritis,Thrombotic microangiopathy is included in the glomerulonephritis category description.
+ollama_qwen,qwen3.5:9b,02ff2fbb,28311,Glomerulonephritis,Hemolytic uremic syndrome falls under thrombotic microangiopathies in glomerulonephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2831A,Glomerulonephritis,Hemolytic uremic syndrome is part of the glomerulonephritis classification.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2831Z,Glomerulonephritis,
+ollama_qwen,qwen3.5:9b,02ff2fbb,2870,Glomerulonephritis,Henoch-Schönlein purpura is explicitly listed as a secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2870A,Glomerulonephritis,Henoch-Schönlein syndrome represents secondary glomerulonephritis per instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2870Z,Glomerulonephritis,Hypenoch-Schonlein syndrome is a form of secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2873Z,Other,
+ollama_qwen,qwen3.5:9b,02ff2fbb,4010,Hypertension and cardiac disease,Malignant hypertension is the primary cause attributed to hypertensive kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4010Z,Hypertension and cardiac disease,Malignant hypertension falls under hypertensive kidney disease classification.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4011,Hypertension and cardiac disease,Benign hypertension is the primary cause attributed to hypertensive kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4011Z,Hypertension and cardiac disease,Benign hypertension is categorized under hypertensive kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4019,Hypertension and cardiac disease,Essential hypertension is the primary cause of kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4019Z,Hypertension and cardiac disease,Essential hypertension is the primary cause of kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,401Z,Hypertension and cardiac disease,Essential hypertension leads to hypertensive nephrosclerosis causing kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4030Z,Hypertension and cardiac disease,Malignant hypertension causes hypertensive renal disease and kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4031Z,Hypertension and cardiac disease,Benign malignant hypertension causes nephrosclerosis leading to kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4039,Hypertension and cardiac disease,Other hypertensive renal disorders cause kidney disease failure directly.
+ollama_qwen,qwen3.5:9b,02ff2fbb,40391,Hypertension and cardiac disease,Unspecified with hypertension indicates kidney failure from high blood pressure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4039D,Hypertension and cardiac disease,Renal disease due to hypertension is the primary cause of failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4039Z,Hypertension and cardiac disease,Other hypertensive renal disorders lead to nephrosclerosis and kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,403Z,Hypertension and cardiac disease,Hypertensive renal disease is the primary cause of kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4040Z,Hypertension and cardiac disease,Cardio-renal syndrome and hypertensive heart disease cause kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4041Z,Hypertension and cardiac disease,Benign hypertensive heart and renal diseases cause kidney failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4049,Hypertension and cardiac disease,Unspecified cardio-renal syndrome indicates hypertensive heart and kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4049Z,Hypertension and cardiac disease,Unspecified cardio-renal syndrome indicates hypertensive heart and kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,404Z,Hypertension and cardiac disease,Hypertensive heart and renal diseases are the cause of failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,429,Diabetes,"AIDS nephropathy is incorrectly listed here but falls under viral/glomerular causes per guidelines, not diabetes."
+ollama_qwen,qwen3.5:9b,02ff2fbb,44621,Glomerulonephritis,Goodpasture's syndrome is an anti-GBM glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,44629Z,Other,Code in error; cause unknown or unreconcilable.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4462A,Glomerulonephritis,Vasculitis is listed as secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4462Z,Glomerulonephritis,Anti-GBM glomerulonephritis and Goodpasture's are glomerular diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4464,Glomerulonephritis,Wegener's granulomatosis is an ANCA-associated vasculitis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4464B,Glomerulonephritis,Wegener's granulomatosis is an ANCA-associated vasculitis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4464Z,Glomerulonephritis,Wegener's syndrome is an ANCA-associated vasculitis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4466Z,Other,"TTP is thrombotic microangiopathy, categorized as other."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5724,Other,Hepatorenal syndrome is non-glomerular systemic disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5724A,Other,Hepatorenal syndrome is non-glomerular systemic disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5724Z,Other,Hepatorenal syndrome is non-glomerular systemic disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5800,Glomerulonephritis,Post-infectious GN and SBE are infection-related glomerular diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5800C,Glomerulonephritis,Post-infectious GN and SBE are infection-related glomerular diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5800Z,Glomerulonephritis,Acute glomerulonephritis is primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5804B,Glomerulonephritis,Rapidly progressive GN is a form of glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5804Z,Glomerulonephritis,"This code describes acute, rapidly progressive GN."
+ollama_qwen,qwen3.5:9b,02ff2fbb,58089,Other,"Acute interstitial nephritis is tubulointerstitial disease, not glomerular."
+ollama_qwen,qwen3.5:9b,02ff2fbb,58089A,Other,"Acute interstitial nephritis is tubulointerstitial disease, not glomerular."
+ollama_qwen,qwen3.5:9b,02ff2fbb,58089Z,Other,"Acute interstitial nephritis is tubulointerstitial disease, not glomerular."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5809Z,Glomerulonephritis,Acute GN with unspecified lesion is primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5811,Glomerulonephritis,Focal segmental glomerulosclerosis and focal GN are primary glomerular diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5811Z,Glomerulonephritis,Focal GN and FSGS are primary glomerular diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5818Z,Glomerulonephritis,Focal segmental glomerulosclerosis is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5819,Other,"Nephrotic syndrome is a clinical presentation, not a specific etiology."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5820,Glomerulonephritis,Proliferative glomerulonephritis is a primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5820A,Glomerulonephritis,Focal proliferative glomerulonephritis is a primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5820Z,Glomerulonephritis,Other proliferative GN represents primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5821,Glomerulonephritis,Focal segmental glomerulosclerosis is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5821A,Glomerulonephritis,Focal segmental glomerulosclerosis is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5821Z,Glomerulonephritis,Focal segmental glomerulosclerosis is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58289,Other,"Interstitial nephritis is not glomerular, hereditary or diabetic, but other kidney disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,58289Z,Other,Chronic interstitial nephritis is classified as other kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5829,Glomerulonephritis,Unexamined glomerulonephritis falls under primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5829A,Glomerulonephritis,Glomerulonephritis is a primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5829Z,Glomerulonephritis,Chronic glomerulonephritis is a primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5830,Other,Radiation nephritis affects renal tissue and is not specific glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5830B,Other,Radiation nephritis affects renal tissue and is not specific glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5830Z,Glomerulonephritis,Proliferative GN is a primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5831,Glomerulonephritis,Membranous nephropathy is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5831A,Glomerulonephritis,Membranous nephropathy is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5832,Glomerulonephritis,Membranoproliferative GN type 1 is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58321,Glomerulonephritis,Membranoproliferative GN type 1 is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58322,Glomerulonephritis,Dense deposit disease MPGN type 2 is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5832A,Glomerulonephritis,Membranoproliferative GN type 1 is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5832C,Glomerulonephritis,Dense deposit disease MPGN type 2 is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5832Z,Glomerulonephritis,Membranoproliferative GN is a primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5834,Glomerulonephritis,Rapidly progressive GN is classified as acute or chronic nephritic syndrome.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5834C,Glomerulonephritis,"Goodpasture's syndrome is anti-GBM glomerulonephritis, a secondary disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5834Z,Glomerulonephritis,"Anti-GBN GN is classified as anti-GBM glomerulonephritis, a secondary disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,59389,Other,Other renal disorders fit the general category of unspecified kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,59389A,Other,Other renal disorders fit the general category of unspecified kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,59389Z,Other,Obstructive nephropathy is listed under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5939Z,Other,Renal insufficiency without specified cause falls into the other category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,599,Other,Obstructive uropathy is listed under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5990,Other,Unspecified UTI is an infection-related condition falling under other causes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5990Z,Other,Unspecified UTI is an infection-related condition falling under other causes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5996,Other,Acquired obstructive uropathy is listed under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5996A,Other,Acquired obstructive uropathy is listed under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5996Z,Other,Unspecified obstructive uropathy is listed under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,599Z,Other,Acquired obstructive uropathy is listed under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,600Z,Other,Prostate hyperplasia fits under other kidney and urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,6393Z,Other,Non-specific uremia description falls into the other category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,64620,Other,Renal failure in pregnancy is considered acute kidney injury (other).
+ollama_qwen,qwen3.5:9b,02ff2fbb,64620A,Other,Renal failure in pregnancy is considered acute kidney injury (other).
+ollama_qwen,qwen3.5:9b,02ff2fbb,64620Z,Other,Renal failure in pregnancy is considered acute kidney injury (other).
+ollama_qwen,qwen3.5:9b,02ff2fbb,6462Z,Other,Renal failure in pregnancy is considered acute kidney injury (other).
+ollama_qwen,qwen3.5:9b,02ff2fbb,6954Z,Other,Lupus erythematosus without nephritis specification does not fit Glomerulonephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7100,Glomerulonephritis,SLE Nephritis is a secondary glomerular disease caused by systemic lupus.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7100E,Glomerulonephritis,SLE Nephritis is a secondary glomerular disease caused by systemic lupus.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7100Z,Glomerulonephritis,Lupus nephritis is listed explicitly as part of secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7101,Other,Scleroderma fits the systemic disease not defined as glomerulonephritis category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7101B,Other,Scleroderma fits the systemic disease not defined as glomerulonephritis category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7101Z,Other,Scleroderma fits the systemic disease not defined as glomerulonephritis category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7140Z,Other,Rheumatoid arthritis without specified nephritis falls under other systemic diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7567A,Other,Prune belly syndrome is a congenital anomaly not described as inherited.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7567Z,Other,Code marked as unreconcilable and fits definition of Other category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7595,Hereditary or polycystic kidney disease,Tuberous sclerosis is an inherited kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7595A,Hereditary or polycystic kidney disease,Tuberous sclerosis is an inherited kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7595Z,Hereditary or polycystic kidney disease,Tuberous sclerosis is an inherited kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7598,Hereditary or polycystic kidney disease,"Alport syndrome is an inherited glomerular disease, not secondary GN."
+ollama_qwen,qwen3.5:9b,02ff2fbb,75989,Other,Congenital malformation syndromes are not described as inherited diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7598A,Hereditary or polycystic kidney disease,"Alport syndrome is an inherited glomerular disease, not secondary GN."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7598B,Hereditary or polycystic kidney disease,Familial nephropathy indicates hereditary nature of the kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7598Z,Hereditary or polycystic kidney disease,"Alport syndrome is an inherited glomerular disease, not secondary GN."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7999,Other,Etiology uncertain means cause is missing or unknown.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7999A,Other,Etiology uncertain means cause is missing or unknown.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7999Z,Other,Cause unknown fits definition of Other category for missing causes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,8660,Hereditary or polycystic kidney disease,"Traumatic loss is excluded from categories, but not other/inheritable cause; however,"
+ollama_qwen,qwen3.5:9b,02ff2fbb,8660A,Other,Traumatic or surgical loss of kidneys lacks a specific category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,8660Z,Other,Traumatic or surgical loss of kidneys lacks a specific category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,88888Z,Other,Diagnosis not on coding list means cause is unknown or missing.
+ollama_qwen,qwen3.5:9b,02ff2fbb,8999Z,Other,Cause unknown code in error fits definition of Other category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,9654Z,Other,Analgesic use causing kidney failure is a systemic toxic cause.
+ollama_qwen,qwen3.5:9b,02ff2fbb,9659,Other,"Analgesic abuse causes interstitial nephritis, a non-glomerular systemic disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,9659A,Other,"Analgesic abuse causes interstitial nephritis, a non-glomerular systemic disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,9659Z,Hereditary or polycystic kidney disease,"Misclassified; toxic/metabolic causes fall under Other, not hereditary."
+ollama_qwen,qwen3.5:9b,02ff2fbb,9778Z,Other,Rhabdomyolysis involves muscle-derived toxins causing acute kidney injury.
+ollama_qwen,qwen3.5:9b,02ff2fbb,9828Z,Other,"Ethylene glycol ingestion causes toxic acute kidney injury, not hereditary."
+ollama_qwen,qwen3.5:9b,02ff2fbb,9849,Other,"Lead nephropathy is systemic disease/metabolic, fitting the Other category."
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""D571""",Other,Sickle-cell disease is not listed in the provided instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""D573""",Other,Sickle-cell trait is not listed in the provided instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""D593""",Glomerulonephritis,"Thrombotic microangiopathy, specifically hemolytic-uremic syndrome."
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""D609""",Other,Acquired pure red cell aplasia is not listed in the instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E1022""",Diabetes,Type 1 diabetes with diabetic chronic kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E1029""",Diabetes,Type 1 diabetes with other diabetic kidney complications.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E1121""",Diabetes,Type 2 diabetes with diabetic nephropathy.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E1122""",Diabetes,Type 2 diabetes with diabetic chronic kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E1129""",Diabetes,Type 2 diabetes with other diabetic kidney complications.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E7204""",Hereditary or polycystic kidney disease,Cystinosis is listed under inherited kidney diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E7253""",Other,Hyperoxaluria (primary oxalosis) is not specified as hereditary.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E7521""",Hereditary or polycystic kidney disease,Fabry disease is listed under inherited kidney diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E8352""",Other,Hypercalcemia is not listed in the provided instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""E859""",Other,"Amyloidosis is listed under systemic disease, not glomerular disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I10""",Hypertension and cardiac disease,Essential hypertension causes hypertensive/nephrosclerotic kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I12""",Hypertension and cardiac disease,Hypertensive chronic kidney disease with stage 5 Ckd.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I120""",Hypertension and cardiac disease,Hypertensive chronic kidney disease with stage 5 CKD or ESRD.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I129""",Hypertension and cardiac disease,Hypertensive chronic kidney disease with stages 1-4 or unspecified.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I1310""",Hypertension and cardiac disease,Hypertension with chronic kidney disease without heart failure.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I150""",Hypertension and cardiac disease,Renovascular hypertension is listed under large-vessel disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I158""",Hypertension and cardiac disease,Other secondary hypertension affects kidney function.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I4317""",Other,Unknown cause means the etiology is unreconcilable.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I509""",Hypertension and cardiac disease,Heart failure causes kidney failure via cardiorenal syndrome.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I7581""",Hypertension and cardiac disease,Renal artery atberoembolism is listed under large-vessel disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,"""I7589""",Other,Atheroembolism to other sites affects non-inherited kidneys.
+ollama_qwen,qwen3.5:9b,02ff2fbb,K767,Other,Hepatorenal syndrome is excluded from categories; causes are other/systemic.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M1030,Other,"Gout is a systemic disease, not glomerulonephritis; causes acute kidney injury."
+ollama_qwen,qwen3.5:9b,02ff2fbb,M310,Glomerulonephritis,Hypersensitivity angitis is infection-related glomerular disease category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M311,Other,"Thrombotic microangiopathy is systemic disease, not glomerulonephritis per guidelines."
+ollama_qwen,qwen3.5:9b,02ff2fbb,M3131,Glomerulonephritis, Wegener's granulomatosis with renal involvement is ANCA-associated vasculitis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M317,Glomerulonephritis,"Microscopic polyangiitis is ANCA-associated vasculitis, infection-related glomerular disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,M320,Glomerulonephritis,Drug-induced SLE with renal involvement is secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M3210,Glomerulonephritis,SLE organ involvement implies glomerular disease per systemic disease rules.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M3214,Glomerulonephritis,Explicitly states glomerular disease in SLE is secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M3215,Other,Tubulointerstitial lupus disease is explicitly excluded from glomerulonephritis category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,M3489,Other,"Systemic sclerosis is explicitly listed as a systemic, not glomerular, cause."
+ollama_qwen,qwen3.5:9b,02ff2fbb,N008,Glomerulonephritis,Acute nephritic syndrome describes primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N019,Glomerulonephritis,"Rapidly progressive nephritic syndrome is acute, rapidly progressive nephritis."
+ollama_qwen,qwen3.5:9b,02ff2fbb,N0208,Other,Unknown cause codes belong to the other category by definition.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N028,Glomerulonephritis,Persistent hematuria with glomerular changes indicates glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N030,Glomerulonephritis,Chronic nephritic syndrome describes chronic primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N031,Glomerulonephritis,Focal and segment glomerular lesions indicate focal segmental glomerulosclerosis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N032,Glomerulonephritis,Chronic nephritic syndrome with membranous changes is membrane nephropathy.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N033,Glomerulonephritis,Diffuse mesangial proliferative glomerulonephritis is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N034,Glomerulonephritis,Diffuse endocapillary proliferative glomerulonephritis is a primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N035,Glomerulonephritis,Diffuse mesangiocapillary glomerulonephritis is hypertensive or mixed glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N036,Glomerulonephritis,Dense deposit disease is classified under chronic nephritic syndrome.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N037,Glomerulonephritis,Diffuse crescentic glomerulonephritis is rapidly progressive or chronic nephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N038,Glomerulonephritis,Chronic nephritic syndrome with other morphologic changes is glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N039,Glomerulonephritis,Chronic nephritic syndrome unspecified type remains categorizable as glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N179,Other,Unspecified acute kidney failure not attributed to diabetes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,N186,Diabetes,End stage renal disease is a diabetic nephropathy condition.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q871,Hereditary or polycystic kidney disease,Congenital malformations of kidney are not inherited per instructions.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q8781,Hereditary or polycystic kidney disease,Alport syndrome is an inherited kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,R69,Other,Illness unspecified does not fit any specific cause category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,S3700,Other,Unspecified kidney injury falls under acute kidney injury.
+ollama_qwen,qwen3.5:9b,02ff2fbb,S37009,Other,Unspecified kidney injury is not an inherited condition.
+ollama_qwen,qwen3.5:9b,02ff2fbb,S37009A,Other,Unspecified injury with unknown cause does not fit categories.
+ollama_qwen,qwen3.5:9b,02ff2fbb,S9389,Other,Unknown cause is listed under other missing or unknown codes.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8600,Transplant failure or complications,Complication of bone marrow transplant fits this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8610,Transplant failure or complications,Complication of kidney transplant fits this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8620,Transplant failure or complications,Complication of heart transplant fits this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8640,Other,Liver transplant complication is not in the provided categories.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8681,Transplant failure or complications,Complication of lung transplant (listed as such) fits this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T86819,Transplant failure or complications,Unspecified complication of lung transplant fits this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8685,Other,Intestine transplant complication is not in the provided categories.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T86859,Other,Unspecified complication of intestine transplant is not in categories.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T8689,Transplant failure or complications,Complication of other transplanted tissue fits this category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,T86899,Other,Unspecified complication is not listed in the provided categories.
+ollama_qwen,qwen3.5:9b,02ff2fbb,U,Other,"Cause unknown explicitly fits the 'missing, unknown' definition."
+ollama_qwen,qwen3.5:9b,02ff2fbb,UUUUU,Other,"Cause unknown explicitly fits the 'missing, unknown' definition."
+ollama_qwen,qwen3.5:9b,02ff2fbb,Z905,Other,Acquired absence of kidney indicates non-inherited anomaly or removal.
+ollama_qwen,qwen3.5:9b,02ff2fbb,2773A,Other,"Amyloidosis is a systemic neoplastic disease, not glomerulonephritis."
+ollama_qwen,qwen3.5:9b,02ff2fbb,4401,Hypertension and cardiac disease,Renal artery stenosis is classified as renovascular large vessel disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4401A,Hypertension and cardiac disease,Renal artery stenosis is classified as renovascular large vessel disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4401Z,Hypertension and cardiac disease,Renal artery stenosis is classified as renovascular large vessel disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4431Z,Other,"Buerger's disease is an atherosclerotic peripheral arterial disorder, not kidney specific."
+ollama_qwen,qwen3.5:9b,02ff2fbb,4460,Glomerulonephritis,Polyarteritis vasculitis causes secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4460C,Glomerulonephritis,Polyarteritis vasculitis causes secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4460Z,Glomerulonephritis,Polyarteritis renal involvement causes secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,4462,Glomerulonephritis,Other vasculitis causes secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,44620,Glomerulonephritis,Other vasculitis causes secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5819Z,Glomerulonephritis,Nephrotic syndrome represents primary or secondary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,5836,Other,"Tubular necrosis is acute kidney injury, not a chronic primary cause."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5836A,Other,"Tubular necrosis is acute kidney injury, not a chronic primary cause."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5836Z,Other,"Code indicates missing, unknown or unreconcilable cause."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5837Z,Other,Renal medullary lesion typically represents interstitial nephritis.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58381,Glomerulonephritis,IgA nephropathy is primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58381B,Glomerulonephritis,IgA nephropathy is primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58381C,Other,IgM nephropathy falls under other kidney or urinary tract disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58382,Glomerulonephritis,IgM glomerulonephritis is primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58389,Other,Chronic interstitial nephritis is not listed in the Glomerulonephritis category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58389B,Other,Chronic interstitial nephritis is not listed in the Glomerulonephritis category.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58389Z,Other,"Interstitial kidney disease is classified under other causes, not GN."
+ollama_qwen,qwen3.5:9b,02ff2fbb,5839,Hereditary or polycystic kidney disease,Drash syndrome and mesangial sclerosis are inherited kidney diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58391,Glomerulonephritis,Glomerulonephritis is primary glomerular disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,58392,Other,"Heroin-induced nephropathy is tubular/interstitial damage, not GN or hereditary."
+ollama_qwen,qwen3.5:9b,02ff2fbb,75322,Other,"Congenital obstruction is a congenital anomaly, not inherited."
+ollama_qwen,qwen3.5:9b,02ff2fbb,75329,Other,"Congenital obstruction is a congenital anomaly, not inherited."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7532A,Other,"Congenital obstruction is a congenital anomaly, not inherited."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7532Z,Other,"Congenital defects are anomalies, not inherited diseases."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7533,Hereditary or polycystic kidney disease,Congenital nephrotic syndrome is an inherited kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7533A,Hereditary or polycystic kidney disease,Congenital nephrotic syndrome is an inherited kidney disease.
+ollama_qwen,qwen3.5:9b,02ff2fbb,7533Z,Other,"Calculi and congenital obstructions are acquired, not inherited."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7539,Other,"Dysplasia is a congenital anomaly, not an inherited disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,7539Z,Other,"Dysplasia is a congenital anomaly, not an inherited disease."
+ollama_qwen,qwen3.5:9b,02ff2fbb,753Z,Other,Congenital anomalies are distinct from inherited kidney diseases.
+ollama_qwen,qwen3.5:9b,02ff2fbb,75671,Other,Prune belly syndrome involves congenital urinary tract obstruction.
+ollama_qwen,qwen3.5:9b,02ff2fbb,9849A,Other,"Lead nephropathy is heavy metal toxicity, not hereditary/diabetes/GN."
+ollama_qwen,qwen3.5:9b,02ff2fbb,99680,Transplant failure or complications,Unspecified complications of a transplanted organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99680A,Transplant failure or complications,Complications or rejection following bone marrow transplant.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99681,Transplant failure or complications,Specific complication of a transplanted kidney.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99681Z,Transplant failure or complications,Rejection is a specific type of transplant complication.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99682,Transplant failure or complications,Complication arising from a transplanted liver organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99683,Transplant failure or complications,Complication arising from a transplanted heart organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99684,Transplant failure or complications,Complication arising from a transplanted lung organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99685,Transplant failure or complications,Complication arising from a transplanted bone marrow organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99686,Transplant failure or complications,Complication arising from a transplanted pancreas organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99687,Transplant failure or complications,Complication arising from a transplanted intestine organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99689,Transplant failure or complications,Complication of any other specified transplanted organ.
+ollama_qwen,qwen3.5:9b,02ff2fbb,9968Z,Transplant failure or complications,General code for transplant rejection complications.
+ollama_qwen,qwen3.5:9b,02ff2fbb,99999Z,Other,Cause is explicitly listed as unknown.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q615,Hereditary or polycystic kidney disease,Medullary cystic kidney disease is an inherited disorder classified here.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q618,Hereditary or polycystic kidney disease,Other cystic kidney diseases include hereditary conditions like Alport syndrome.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q6211,Other,Congenital ureteropelvic junction occlusion is a non-inherited anomaly classified as Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q6212,Other,Congenital vesicoureteral orifice occlusion is a non-inherited anomaly classified as Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q638,Other,Other specified congenital kidney malformations are not inherited diseases and are Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q642,Other,Congenital posterior urethral valves cause obstruction and are classified as Other.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q794,Other,"Prune belly syndrome is a congenital anomaly with urinary tract defects, classified as Other."
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q851,Hereditary or polycystic kidney disease,Tuberous sclerosis causes renal cysts and malignancies and is inherited.
+ollama_qwen,qwen3.5:9b,02ff2fbb,Q868,Other,Congenital malformations due to known exogenous causes are not inherited and are Other.
+ollama_llama,llama3.1:8b,02ff2fbb,00U,Other,Code not defined in renal provider instructions.
+ollama_llama,llama3.1:8b,02ff2fbb,0160,Other,Code indicates renal tuberculosis.
+ollama_llama,llama3.1:8b,02ff2fbb,0160Z,Other,Code indicates renal tuberculosis.
+ollama_llama,llama3.1:8b,02ff2fbb,00000Z,Other,Code indicates cause is missing on medical evidence form.
+ollama_llama,llama3.1:8b,02ff2fbb,*****,Other,Code indicates no medical evidence form provided.
+ollama_llama,llama3.1:8b,02ff2fbb,0439Z,Other,"HIV infection, no glomerulonephritis or inherited disease mentioned"
+ollama_llama,llama3.1:8b,02ff2fbb,0449Z,Other,"Other HIV infection, no glomerulonephritis or inherited disease mentioned"
+ollama_llama,llama3.1:8b,02ff2fbb,135Z,Other,"Sarcoidosis, not glomerulonephritis or inherited disease"
+ollama_llama,llama3.1:8b,02ff2fbb,1890,Other,"Malignant renal tumor, not glomerulonephritis or inherited disease"
+ollama_llama,llama3.1:8b,02ff2fbb,1890B,Other,"Malignant renal tumor, not glomerulonephritis or inherited disease"
+ollama_llama,llama3.1:8b,02ff2fbb,1890Z,Other,Cancer of kidney excluding urinary tract tumor
+ollama_llama,llama3.1:8b,02ff2fbb,1891Z,Other,"Cancer of renal pelvis, calyx or hilus"
+ollama_llama,llama3.1:8b,02ff2fbb,1899,Other,Urinary tract tumor (malignant)
+ollama_llama,llama3.1:8b,02ff2fbb,1899A,Other,Urinary tract tumor (malignant)
+ollama_llama,llama3.1:8b,02ff2fbb,1899Z,Other,Code is unreconcilable
+ollama_llama,llama3.1:8b,02ff2fbb,189Z,Other,Kidney cancer unrelated to other urinary tract disease
+ollama_llama,llama3.1:8b,02ff2fbb,20280,Other,Kidney lymphoma unrelated to glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,20280A,Other,Kidney lymphoma unrelated to glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,20283,Other,Intra-abdominal lymphoma unrelated to glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,20283Z,Other,Intra-abdominal lymphoma unrelated to glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,2030,Other,Multiple myeloma and light chain disease.
+ollama_llama,llama3.1:8b,02ff2fbb,20285Z,Other,"Lymphoma, inguinal region."
+ollama_llama,llama3.1:8b,02ff2fbb,2028Z,Other,"Lymphomas, unspecified."
+ollama_llama,llama3.1:8b,02ff2fbb,20286Z,Other,"Lymphoma, intra-pelvic."
+ollama_llama,llama3.1:8b,02ff2fbb,20300,Other,multiple myeloma.
+ollama_llama,llama3.1:8b,02ff2fbb,20308,Other,Immunoproliferative neoplasms including light chain nephropathy.
+ollama_llama,llama3.1:8b,02ff2fbb,2030A,Other,Multiple myeloma.
+ollama_llama,llama3.1:8b,02ff2fbb,2030B,Other,Light chain nephropathy.
+ollama_llama,llama3.1:8b,02ff2fbb,2030Z,Other,Multiple myeloma with light chain disease.
+ollama_llama,llama3.1:8b,02ff2fbb,203Z,Other,Multiple myeloma and immunoproliferative neoplasms.
+ollama_llama,llama3.1:8b,02ff2fbb,></code> 2230,Other,Benign renal tumor: a type of kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,</code> 2230A,Other,Benign renal tumor unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,</code> 2239,Other,Benign tumor of urinary tract
+ollama_llama,llama3.1:8b,02ff2fbb,</code> 2239A,Other,Benign urinary tract tumor unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,</code> 23951,Other,Unspecified renal tumor
+ollama_llama,llama3.1:8b,02ff2fbb,25000,Diabetes,Type 2 diabetes mellitus
+ollama_llama,llama3.1:8b,02ff2fbb,2504Z,Diabetes,Diabetes with renal manifestations
+ollama_llama,llama3.1:8b,02ff2fbb,2700A,Hereditary or polycystic kidney disease,Cystinosis
+ollama_llama,llama3.1:8b,02ff2fbb,2700,Hereditary or polycystic kidney disease,Cystinosis
+ollama_llama,llama3.1:8b,02ff2fbb,2700Z,Hereditary or polycystic kidney disease,Malignant cystinosis
+ollama_llama,llama3.1:8b,02ff2fbb,2718,Hereditary or polycystic kidney disease,Primary oxalosis
+ollama_llama,llama3.1:8b,02ff2fbb,2727A,Hereditary or polycystic kidney disease,FABRY'S DISEASE
+ollama_llama,llama3.1:8b,02ff2fbb,2747,Hereditary or polycystic kidney disease,POLYCYSTIC KIDNEY DISEASE
+ollama_llama,llama3.1:8b,02ff2fbb,2718B,Hereditary or polycystic kidney disease,PRIMARY OXALOSIS
+ollama_llama,llama3.1:8b,02ff2fbb,2727Z,Hereditary or polycystic kidney disease,FABRY'S DISEASE
+ollama_llama,llama3.1:8b,02ff2fbb,2727,Hereditary or polycystic kidney disease,FABRY'S DISEASE
+ollama_llama,llama3.1:8b,02ff2fbb,2718Z,Hereditary or polycystic kidney disease,OXALATE NEPHROPATHY / OXALOSIS
+ollama_llama,llama3.1:8b,02ff2fbb,27410,Other,cause is unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,27410A,Other,cause is unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,27410Z,Other,cause is unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,2733Z,Other,cause is an immunological disorder
+ollama_llama,llama3.1:8b,02ff2fbb,27411Z,Other,cause is related to uric acid or urine formation
+ollama_llama,llama3.1:8b,02ff2fbb,2741Z,Other, GOUTY NEPHROPATHY / URATE NEPHROPATHY not listed elsew
+ollama_llama,llama3.1:8b,02ff2fbb,27549,Other,OTHER DISORDERS OF CALCIUM METABOLISM not listed elsewhere
+ollama_llama,llama3.1:8b,02ff2fbb,2754A,Other,NEPHROCALCINOSIS not listed elsewhere
+ollama_llama,llama3.1:8b,02ff2fbb,2773,Other,AMYLOIDOSIS not listed elsewhere
+ollama_llama,llama3.1:8b,02ff2fbb,2773A,Other,AMYLOIDOSIS same as 2773
+ollama_llama,llama3.1:8b,02ff2fbb,28260A,Other,Amyloidosis of sickle-cell disease/anemia
+ollama_llama,llama3.1:8b,02ff2fbb,2773Z,Other,Amyloidosis
+ollama_llama,llama3.1:8b,02ff2fbb,28261Z,Other,HB-S disease without mention of crisis
+ollama_llama,llama3.1:8b,02ff2fbb,28260Z,Other,Sickle-cell anemia specified but without mention of disease
+ollama_llama,llama3.1:8b,02ff2fbb,28260,Other,Sickle-cell disease/anemia
+ollama_llama,llama3.1:8b,02ff2fbb,2831,Diabetes,Thrombotic microangiopathy
+ollama_llama,llama3.1:8b,02ff2fbb,2826Z,Hereditary or polycystic kidney disease,Kidney disease attributed to sickle cell disease
+ollama_llama,llama3.1:8b,02ff2fbb,28311,Glomerulonephritis,"Thrombotic microangiopathy, HUS"
+ollama_llama,llama3.1:8b,02ff2fbb,28286Z,Glomerulonephritis,Glomerulonephritis due to lymphoma of intrapelvic region
+ollama_llama,llama3.1:8b,02ff2fbb,28283Z,Other,Glomerulonephritis due to intra-abdominal lymphoma unspecified as to primary/secondary location
+ollama_llama,llama3.1:8b,02ff2fbb,2831A,Glomerulonephritis,Thrombotic microangiopathy: Hemolytic uremic syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,2831Z,Glomerulonephritis,Thrombotic microangiopathy: Hemolytic uremic syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,2870,Glomerulonephritis,"Henoch-Schonlein purpura, a type of systemic vasculitis"
+ollama_llama,llama3.1:8b,02ff2fbb,2870A,Glomerulonephritis,"Henoch-Schonlein purpura, a type of systemic vasculitis"
+ollama_llama,llama3.1:8b,02ff2fbb,2870Z,Glomerulonephritis,"Henoch-Schonlein purpura, a type of systemic vasculitis"
+ollama_llama,llama3.1:8b,02ff2fbb,4010,Diabetes,No indication of diabetes
+ollama_llama,llama3.1:8b,02ff2fbb,4010Z,Hypertension and cardiac disease,Malignant hypertension
+ollama_llama,llama3.1:8b,02ff2fbb,4011,Hypertension and cardiac disease,Benign hypertension
+ollama_llama,llama3.1:8b,02ff2fbb,4011Z,Hypertension and cardiac disease,Benign hypertension
+ollama_llama,llama3.1:8b,02ff2fbb,2873Z,Other,Amyloidosis not a type 2 diabetes complication
+ollama_llama,llama3.1:8b,02ff2fbb,{code},Hypertension and cardiac disease,Hypertensive kidney disease and nephrosclerosis
+ollama_llama,llama3.1:8b,02ff2fbb,4039,Hypertension and cardiac disease,Nephrosclerosis and hypertensive renal disease specified
+ollama_llama,llama3.1:8b,02ff2fbb,40391,Other,Cause of renal failure unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,4039D,Hypertension and cardiac disease,Renal disease due to hypertension with no primary renal disease
+ollama_llama,llama3.1:8b,02ff2fbb,4039Z,Other,Duplicate description of nephrosclerosis/hypertensive renal disease
+ollama_llama,llama3.1:8b,02ff2fbb,403Z,Hypertension and cardiac disease,Hypertensive renal disease identified
+ollama_llama,llama3.1:8b,02ff2fbb,4040Z,Hypertension and cardiac disease,Hypertensive heart and renal disease with malignancy
+ollama_llama,llama3.1:8b,02ff2fbb,4041Z,Hypertension and cardiac disease,Hypertensive heart and renal disease benign
+ollama_llama,llama3.1:8b,02ff2fbb,4049,Hypertension and cardiac disease,Cardiorenal syndrome/hypertensive heart and renal disease unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,4049Z,Hypertension and cardiac disease,Cardiorenal syndrome/hypertensive heart and renal disease unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,404Z,Hypertension and cardiac disease,Hypertensive heart and renal disease
+ollama_llama,llama3.1:8b,02ff2fbb,429,Diabetes,HIV-associated kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,4401,Hypertension and cardiac disease,Renal artery stenosis
+ollama_llama,llama3.1:8b,02ff2fbb,4401A,Hypertension and cardiac disease,Renal artery stenosis
+ollama_llama,llama3.1:8b,02ff2fbb,4401Z,Hypertension and cardiac disease,Renal artery stenosis
+ollama_llama,llama3.1:8b,02ff2fbb,4431Z,Other,Other kidney and urinary tract disease
+ollama_llama,llama3.1:8b,02ff2fbb,4460,Glomerulonephritis,ANCAs-associated vasculitis: granulomatosis with polyangiitis or Wegener's granulomatosis
+ollama_llama,llama3.1:8b,02ff2fbb,4460C,Glomerulonephritis,ANCAs-associated vasculitis: granulomatosis with polyangiitis or Wegener's granulomatosis
+ollama_llama,llama3.1:8b,02ff2fbb,4460Z,Glomerulonephritis,"Other vasculitis: ANCAs-uncertain or unclassified, with renal manifestations"
+ollama_llama,llama3.1:8b,02ff2fbb,4462,Other,Other vasculitis with unspecified renal manifestation
+ollama_llama,llama3.1:8b,02ff2fbb,44620,Other,Other vasculitis with unspecified renal manifestations
+ollama_llama,llama3.1:8b,02ff2fbb,44629Z,Glomerulonephritis,"Code listed as incorrect, defaulting to ANCA-associated vasculitis category"
+ollama_llama,llama3.1:8b,02ff2fbb,4462A,Glomerulonephritis,"Description includes vasculitis, fitting category"
+ollama_llama,llama3.1:8b,02ff2fbb,4464,Hypertension and cardiac disease,Renovascular disease is associated with hypertension or cardiac disease
+ollama_llama,llama3.1:8b,02ff2fbb,What is the code? ,Diabetes,This code is not given.
+ollama_llama,llama3.1:8b,02ff2fbb,4464B,Glomerulonephritis,WEGENERS GRANULOMATOSIS is a type of glomerulonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,4464Z,Glomerulonephritis,"Similarly to 4464B, GRANULOMATOSIS / WEGENERS GRANULOMATOSIS / WEGENERS SYNDROME indicates glomerulonephritis."
+ollama_llama,llama3.1:8b,02ff2fbb,4466Z,Glomerulonephritis,THROMBOTIC THROMBOCYTOPENIC PURPURA is a type of thrombotic microangiopathy associated with glomerulonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,5724,Other,HEPATORENAL SYNDROME is described as a systemic condition not described as glomerulonephritis nor other diseases covered by the above classification.
+ollama_llama,llama3.1:8b,02ff2fbb,5724A,Other,"The description is the same as in 5724, therefore it belongs to the same category."
+ollama_llama,llama3.1:8b,02ff2fbb,5724Z,Other,Hepatorenal syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,5800,Glomerulonephritis,"Post infectious glomerulonephritis, subacute bacterial endocarditis"
+ollama_llama,llama3.1:8b,02ff2fbb,5800C,Glomerulonephritis,"Post infectious glomerulonephritis, subacute bacterial endocarditis"
+ollama_llama,llama3.1:8b,02ff2fbb,5800Z,Glomerulonephritis,Acute glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5804B,Glomerulonephritis,Rapidly progressive glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5811,Glomerulonephritis,Focal segmental glomerulosclerosis with nephrotic syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,5811Z,Glomerulonephritis,Focal segmental glomerulosclerosis with nephrotic syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,5818Z,Glomerulonephritis,Focal glomerulosclerosis with nephrotic syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,5819,Other,Nephrotic syndrome (no indication of glomerulonephritis)
+ollama_llama,llama3.1:8b,02ff2fbb,5819Z,Other,Nephrotic syndrome with no indication of glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5820,Glomerulonephritis,Other proliferative glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5820A,Glomerulonephritis,Other proliferative glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5820Z,Glomerulonephritis,Other proliferative glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5821,Glomerulonephritis,Focal glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5821A,Glomerulonephritis,Focal glomerulosclerosis
+ollama_llama,llama3.1:8b,02ff2fbb,5821Z,Glomerulonephritis,Pathology report: focal glomerulosclerosis
+ollama_llama,llama3.1:8b,02ff2fbb,58289,Other,"Pathology report: chronic interstitial nephritis, hereditary"
+ollama_llama,llama3.1:8b,02ff2fbb,58289Z,Other,"Pathology report: chronic interstitial nephritis, hereditary"
+ollama_llama,llama3.1:8b,02ff2fbb,5829,Glomerulonephritis,"Pathology report: glomerulonephritis, not examined"
+ollama_llama,llama3.1:8b,02ff2fbb,5829A,Glomerulonephritis,Pathology report: glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5829Z,Glomerulonephritis,Chronic glomerulonephritis with unspecified pathologic lesion
+ollama_llama,llama3.1:8b,02ff2fbb,5830,Other,Kidney disease caused by radiation exposure
+ollama_llama,llama3.1:8b,02ff2fbb,5830B,Other,Kidney disease caused by radiation exposure
+ollama_llama,llama3.1:8b,02ff2fbb,5830Z,Other,Kidney disease caused by radiation exposure or surgical shunt
+ollama_llama,llama3.1:8b,02ff2fbb,5831,Diabetes,Primary nephrotic syndrome with membranous lesion
+ollama_llama,llama3.1:8b,02ff2fbb,5836,Other,"Tubular necrosis, no specified cause or outcome"
+ollama_llama,llama3.1:8b,02ff2fbb,5836A,Other,"Tubular necrosis, no specified cause or outcome"
+ollama_llama,llama3.1:8b,02ff2fbb,5836Z,Other,"Unreconcilable code, no specified reason or outcome"
+ollama_llama,llama3.1:8b,02ff2fbb,5837Z,Other,Nephritis or nephropathy with unspecified renal medullary lesion
+ollama_llama,llama3.1:8b,02ff2fbb,58381,Glomerulonephritis,IgA nephropathy (proof by immunofluorescence)
+ollama_llama,llama3.1:8b,02ff2fbb,58381B,Glomerulonephritis,"Berger's disease, a form of IgA nephropathy"
+ollama_llama,llama3.1:8b,02ff2fbb,58381C,Glomerulonephritis,IMGM nephropathy
+ollama_llama,llama3.1:8b,02ff2fbb,58382,Glomerulonephritis,IGM nephropathy proven by immunofluorescence
+ollama_llama,llama3.1:8b,02ff2fbb,58389,Other,"Chronic interstitial nephritis, a non-glomerular kidney disease"
+ollama_llama,llama3.1:8b,02ff2fbb,58389B,Other,"Chronic interstitial nephritis, a non-glomerular kidney disease"
+ollama_llama,llama3.1:8b,02ff2fbb,5839C,Other,Caused by drug abuse
+ollama_llama,llama3.1:8b,02ff2fbb,5839D,Hereditary or polycystic kidney disease,Specific code for family syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,5839Z,Other,Broad category with undeterminable cause
+ollama_llama,llama3.1:8b,02ff2fbb,5845,Other,Poisoning or toxic insult to kidney
+ollama_llama,llama3.1:8b,02ff2fbb,5845Z,Other,Poisoning or toxic insult to kidney
+ollama_llama,llama3.1:8b,02ff2fbb,5841,Glomerulonephritis,Causes include IgA nephropathy
+ollama_llama,llama3.1:8b,02ff2fbb,585Z,Other,Heroin abuse nephropathy
+ollama_llama,llama3.1:8b,02ff2fbb,586Z,Other,Unspecified or unreconcilable renal failure
+ollama_llama,llama3.1:8b,02ff2fbb,587Z,Glomerulonephritis,Glomerulonephritis due to glomerulosclerosis
+ollama_llama,llama3.1:8b,02ff2fbb,5890Z,Hereditary or polycystic kidney disease,Unilateral small kidney
+ollama_llama,llama3.1:8b,02ff2fbb,5891Z,Hereditary or polycystic kidney disease,Bilateral small kidney
+ollama_llama,llama3.1:8b,02ff2fbb,59001,Other,Chronic pyelonephritis with lesion of renal medullary necrosis.
+ollama_llama,llama3.1:8b,02ff2fbb,59001Z,Other,Chronic pyelonephritis with lesion of renal medullary necrosis.
+ollama_llama,llama3.1:8b,02ff2fbb,5900A,Other,Chronic pyelonephritis with reflux nephropathy.
+ollama_llama,llama3.1:8b,02ff2fbb,5900Z,Other,Chronic pyelonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,59080Z,Other,Unspecified pyelonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,5899,Other,Unreconcilable
+ollama_llama,llama3.1:8b,02ff2fbb,5909,Other,Neuropathic caused by other agents
+ollama_llama,llama3.1:8b,02ff2fbb,5909A,Other,Neuropathic caused by other agents
+ollama_llama,llama3.1:8b,02ff2fbb,591Z,Other,Fluid retention and kidney inflammation not specified
+ollama_llama,llama3.1:8b,02ff2fbb,5920,Other,Kidney stones are included in other non-diabetic glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,Z88.0,Diabetes,"Diabetes mellitus, not specified as type 1 or 2"
+ollama_llama,llama3.1:8b,02ff2fbb,5920C,Other,Nephrolithiasis is kidney and urinary tract disease.
+ollama_llama,llama3.1:8b,02ff2fbb,5920Z,Other,Specify nephrolithiasis or staghorn calculus for more detail.
+ollama_llama,llama3.1:8b,02ff2fbb,5929,Other,Urolithiasis is kidney and urinary tract disease.
+ollama_llama,llama3.1:8b,02ff2fbb,5929B,Other,Urolithiasis is kidney and urinary tract disease.
+ollama_llama,llama3.1:8b,02ff2fbb,5929Z,Other,Unspecified urinary calculus is kidney and urinary tract disease.
+ollama_llama,llama3.1:8b,02ff2fbb,59381,Hypertension and cardiac disease,"Renal artery occlusion, not specified whether hypertension-related"
+ollama_llama,llama3.1:8b,02ff2fbb,59381B,Hypertension and cardiac disease,"Renal artery occlusion, likely related to hypertension or atherosclerosis"
+ollama_llama,llama3.1:8b,02ff2fbb,59381E,Other,Cholesterol or renal emboli not clearly specified as hypertension-related
+ollama_llama,llama3.1:8b,02ff2fbb,59381Z,Hypertension and cardiac disease,Thrombosis or occlusion likely related to hypertension or cardiac disease
+ollama_llama,llama3.1:8b,02ff2fbb,59383,Other,Cholesterol emboli or renal emboli not specified as hypertension-related
+ollama_llama,llama3.1:8b,02ff2fbb,59389Z,Other,"Obstructive kidney/nephropathy, not due to inherited polycystic kidney disease."
+ollama_llama,llama3.1:8b,02ff2fbb,599,Other,Obstructive uropathy/urinary obstruction not due to inherited polycystic kidney disease.
+ollama_llama,llama3.1:8b,02ff2fbb,59389,Other,"Other renal disorders not specified as diabetes, glomerulonephritis, hypertensive, or inherited."
+ollama_llama,llama3.1:8b,02ff2fbb,59389A,Other,"Other renal disorder not specified as diabetes, glomerulonephritis, hypertensive, or inherited."
+ollama_llama,llama3.1:8b,02ff2fbb,5939Z,Other,"Kidney insufficiency unspecified cause, not due to diabetes, glomerulonephritis, or hypertensive disease."
+ollama_llama,llama3.1:8b,02ff2fbb,599Z,Other,"Obstructive uropathy, acquired, due to urinary obstruction"
+ollama_llama,llama3.1:8b,02ff2fbb,600Z,Other,Hyperplasia of prostate causing obstructive uropathy
+ollama_llama,llama3.1:8b,02ff2fbb,6393Z,Other,Chronic uremia due to PMMIS documentation error
+ollama_llama,llama3.1:8b,02ff2fbb,64620,Other,Post partum renal failure due to childbirth complications
+ollama_llama,llama3.1:8b,02ff2fbb,64620A,Other,Post partum renal failure due to childbirth complications
+ollama_llama,llama3.1:8b,02ff2fbb,64620Z,Other,"Kidney failure in pregnancy, childbirth, or puerperium."
+ollama_llama,llama3.1:8b,02ff2fbb,6462Z,Other,"Kidney failure in pregnancy, childbirth, or puerperium."
+ollama_llama,llama3.1:8b,02ff2fbb,6954Z,Diabetes,Associated with lupus erythematosus.
+ollama_llama,llama3.1:8b,02ff2fbb,7100,Diabetes,SLE nephritis associated with diabetes.
+ollama_llama,llama3.1:8b,02ff2fbb,7100E,Diabetes,SLE nephritis associated with diabetes.
+ollama_llama,llama3.1:8b,02ff2fbb,75313,Hereditary or polycystic kidney disease,Adult type polycystic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,75313A,Hereditary or polycystic kidney disease,Adult type polycystic kidney disease (duplicate)
+ollama_llama,llama3.1:8b,02ff2fbb,75313Z,Other,Unreconcilable code
+ollama_llama,llama3.1:8b,02ff2fbb,75314,Hereditary or polycystic kidney disease,Infantile (recessive) polycystic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,75314A,Hereditary or polycystic kidney disease,Infantile (recessive) polycystic kidney disease (duplicate)
+ollama_llama,llama3.1:8b,02ff2fbb,75316,Hereditary or polycystic kidney disease,"Medullary cystic disease, including nephronophthisis"
+ollama_llama,llama3.1:8b,02ff2fbb,75316A,Hereditary or polycystic kidney disease,"Medullary cystic disease, including nephronophthisis"
+ollama_llama,llama3.1:8b,02ff2fbb,7531Z,Hereditary or polycystic kidney disease,"Cystic kidney disease including medullary, multicystic, and polycystic"
+ollama_llama,llama3.1:8b,02ff2fbb,75321,Other,Congenital obstruction of ureteropelvic junction
+ollama_llama,llama3.1:8b,02ff2fbb,75322,Other,Congenital obstruction of uretrovesical junction
+ollama_llama,llama3.1:8b,02ff2fbb,7532A,Hereditary or polycystic kidney disease,Congenital glomerular disease. Secondary classification.
+ollama_llama,llama3.1:8b,02ff2fbb,7532A,Other,Renal pelvis and ureter issues.
+ollama_llama,llama3.1:8b,02ff2fbb,7532Z,Other,Obstructive issues without specific congenital mention.
+ollama_llama,llama3.1:8b,02ff2fbb,7533,Hereditary or polycystic kidney disease,Congenital glomerular disease. Secondary classification.
+ollama_llama,llama3.1:8b,02ff2fbb,7533,Other,Congenital nephrotic syndrome.
+ollama_llama,llama3.1:8b,02ff2fbb,75329,Other,Other types of congenital obstructive uropathy.
+ollama_llama,llama3.1:8b,02ff2fbb,75671,Hereditary or polycystic kidney disease,"Prune belly syndrome, congenital anomaly"
+ollama_llama,llama3.1:8b,02ff2fbb,7533Z,Other,Congenital/obstructive uropathy
+ollama_llama,llama3.1:8b,02ff2fbb,7539,Other,Dysplasia (anomaly) of kidney
+ollama_llama,llama3.1:8b,02ff2fbb,7539Z,Other,Dysplasia (anomaly) of kidney
+ollama_llama,llama3.1:8b,02ff2fbb,753Z,Hereditary or polycystic kidney disease,Congenital anomalies of urinary system
+ollama_llama,llama3.1:8b,02ff2fbb,7567A,Hereditary or polycystic kidney disease,Congenital anomaly due to inherited condition.
+ollama_llama,llama3.1:8b,02ff2fbb,7567Z,Other,Cause listed as unreconcilable.
+ollama_llama,llama3.1:8b,02ff2fbb,7595,Hereditary or polycystic kidney disease,"Kidney disease caused by inherited condition, tuberous sclerosis."
+ollama_llama,llama3.1:8b,02ff2fbb,7999,Other,"Uncertain etiology, cannot assign to another category."
+ollama_llama,llama3.1:8b,02ff2fbb,7999A,Other,"Uncertain etiology, cannot assign to another category."
+ollama_llama,llama3.1:8b,02ff2fbb,7999Z,Other,Unknown cause.
+ollama_llama,llama3.1:8b,02ff2fbb,8660,Transplant failure or complications,Traumatic or surgical loss of kidneys.
+ollama_llama,llama3.1:8b,02ff2fbb,8660A,Transplant failure or complications,Traumatic or surgical loss of kidneys.
+ollama_llama,llama3.1:8b,02ff2fbb,9659A,Other,Substance abuse leading to kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,9659Z,Other,Substance abuse leading to kidney failure unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,9778Z,Other,Muscle breakdown (rhabdomyolysis) leading to kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,9828Z,Other,Ethylene glycol ingestion leading to kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,9849,Other,Exposure to lead causing kidney damage
+ollama_llama,llama3.1:8b,02ff2fbb,http://www.cms.gov/AcuteKidneyInjuryUSRDS,Other,Other cause of AKI not specifically defined
+ollama_llama,llama3.1:8b,02ff2fbb,https://data.medicare.gov/medical-condition/Transplant-Failure-or-Complications/8x6u-q2r3,Transplant failure or complications,Complications of kidney transplant
+ollama_llama,llama3.1:8b,02ff2fbb,https://data.medicare.gov/medical-condition/Complication-Post-Solid-Organ-Transplant/4r2t-k2xg,Transplant failure or complications,Complications post bone marrow or other transplant
+ollama_llama,llama3.1:8b,02ff2fbb,https://data.medicare.gov/medical-condition/Other-Causes/A9n6-rf53,Other,Unspecified complications of transplanted organ
+ollama_llama,llama3.1:8b,02ff2fbb,99685,Transplant failure or complications,Complications of bone marrow transplantation
+ollama_llama,llama3.1:8b,02ff2fbb,99682,Transplant failure or complications,Complications of liver transplantation
+ollama_llama,llama3.1:8b,02ff2fbb,99683,Transplant failure or complications,Complications of heart transplantation
+ollama_llama,llama3.1:8b,02ff2fbb,99686,Transplant failure or complications,Complications of pancrreatic transplantation
+ollama_llama,llama3.1:8b,02ff2fbb,99684,Transplant failure or complications,Complications of lung transplantation
+ollama_llama,llama3.1:8b,02ff2fbb,99687,Transplant failure or complications,Complications of transplanted intestine
+ollama_llama,llama3.1:8b,02ff2fbb,99689,Transplant failure or complications,Complications of other specified transplanted organ
+ollama_llama,llama3.1:8b,02ff2fbb,9968Z,Transplant failure or complications,Organ transplant rejection
+ollama_llama,llama3.1:8b,02ff2fbb,99999Z,Other,"Cause unknown, coding incomplete or unreconcilable"
+ollama_llama,llama3.1:8b,02ff2fbb,9999Z,Other,"Cause unknown, coding incomplete or unreconcilable"
+ollama_llama,llama3.1:8b,02ff2fbb,A1810,Other,Tuberculosis of the genitourinary system
+ollama_llama,llama3.1:8b,02ff2fbb,B20,Other,Human Immunodeficiency Virus [HIV] disease
+ollama_llama,llama3.1:8b,02ff2fbb,C649,Other,Malignant neoplasm of unspecified kidney
+ollama_llama,llama3.1:8b,02ff2fbb,C801,Other,"Malignant (primary) neoplasm, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,C8593,Other,"Non-Hodgkin lymphoma, unspecified, in intra-abdominal lymph nodes"
+ollama_llama,llama3.1:8b,02ff2fbb,C882,Other,Heavy chain disease
+ollama_llama,llama3.1:8b,02ff2fbb,C9000,Other,"Multiple myeloma, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,D309,Other,"Benign neoplasm of urinary organ, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,D4100,Other,Neoplasm of uncertain behavior of unspecified kidney
+ollama_llama,llama3.1:8b,02ff2fbb,D419,Other,Neoplasm of uncertain behavior of unspecified urinary organ
+ollama_llama,llama3.1:8b,02ff2fbb,D1022,Diabetes,Type 1 diabetes mellitus with diabetic chronic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,E1129,Diabetes,Type 2 diabetes with diabetic kidney complication
+ollama_llama,llama3.1:8b,02ff2fbb,E7204,Hereditary or polycystic kidney disease,"Cystinosis, an inherited kidney disease"
+ollama_llama,llama3.1:8b,02ff2fbb,E1029,Diabetes,Type 1 diabetes mellitus with diabetic kidney complication
+ollama_llama,llama3.1:8b,02ff2fbb,E1121,Diabetes,Type 2 diabetes mellitus with diabetic nephropathy
+ollama_llama,llama3.1:8b,02ff2fbb,E1122,Diabetes,Type 2 diabetes mellitus with diabetic chronic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,E7253,Hereditary or polycystic kidney disease,Inherited kidney disease from excess oxalate levels
+ollama_llama,llama3.1:8b,02ff2fbb,E7521,Hereditary or polycystic kidney disease,Inherited kidney disease caused by alpha-Galactosidase deficiency
+ollama_llama,llama3.1:8b,02ff2fbb,E8352,Other,Hypercalcemia can cause acute kidney injury or failure
+ollama_llama,llama3.1:8b,02ff2fbb,E859,Other,Unspecified amyloidosis can cause kidney damage or failure
+ollama_llama,llama3.1:8b,02ff2fbb,I10,Hypertension and cardiac disease,Primary hypertension can lead to hypertension kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,I12,Diabetes,Hypertensive kidney disease and ESRD stage 5
+ollama_llama,llama3.1:8b,02ff2fbb,I120,Diabetes,Hypertensive kidney disease and ESRD stage 5
+ollama_llama,llama3.1:8b,02ff2fbb,I129,Hypertension and cardiac disease,Hypertensive chronic kidney disease stages 1-4
+ollama_llama,llama3.1:8b,02ff2fbb,I1310,Hypertension and cardiac disease,Hypertensive heart and chronic kidney disease stage 1-4
+ollama_llama,llama3.1:8b,02ff2fbb,I150,Hypertension and cardiac disease,Renovascular hypertension
+ollama_llama,llama3.1:8b,02ff2fbb,I158,Hypertension and cardiac disease,Secondary hypertension
+ollama_llama,llama3.1:8b,02ff2fbb,I4317,Other,Unknown or unreconcilable cause
+ollama_llama,llama3.1:8b,02ff2fbb,I509,Hypertension and cardiac disease,Heart failure of unspecified cause
+ollama_llama,llama3.1:8b,02ff2fbb,I7581,Hypertension and cardiac disease,Renal artery atheroembolism
+ollama_llama,llama3.1:8b,02ff2fbb,I7589,Other,Atheroembolism of other site
+ollama_llama,llama3.1:8b,02ff2fbb,K767,Other,"Kidney failure due to liver disease, a secondary cause"
+ollama_llama,llama3.1:8b,02ff2fbb,M1030,Other,Gout caused by or resulting from renal impairment
+ollama_llama,llama3.1:8b,02ff2fbb,M310,Other,Condition involving vasculitis and renal involvement
+ollama_llama,llama3.1:8b,02ff2fbb,M311,Other,Condition involving microangiopathic hemolytic anemia
+ollama_llama,llama3.1:8b,02ff2fbb,M3131,Hypertension and cardiac disease,Specific type of vasculitis involving kidneys
+ollama_llama,llama3.1:8b,02ff2fbb,M317,Glomerulonephritis,"microscopic polyangiitis, a secondary glomerular disease"
+ollama_llama,llama3.1:8b,02ff2fbb,M320,Other,"drug-induced systemic lupus erythematosus, a systemic disease"
+ollama_llama,llama3.1:8b,02ff2fbb,M3210,Glomerulonephritis,"systemic lupus erythematosus, a secondary glomerular disease"
+ollama_llama,llama3.1:8b,02ff2fbb,M3214,Glomerulonephritis,glomerular disease in systemic lupus erythematosus
+ollama_llama,llama3.1:8b,02ff2fbb,M3215,Other,tubulo-interstitial neuropathy in systemic lupus erythematosus
+ollama_llama,llama3.1:8b,02ff2fbb,N030,Glomerulonephritis,Nephritic syndrome with minor glomerular abnormality.
+ollama_llama,llama3.1:8b,02ff2fbb,N031,Glomerulonephritis,Nephrotic syndrome with focal segmental glomerular lesions.
+ollama_llama,llama3.1:8b,02ff2fbb,N032,Glomerulonephritis,Nephritic syndrome with diffuse membranous glomerulonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,N033,Glomerulonephritis,Nephrotic syndrome with diffuse mesangial proliferative glomerulonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,N034,Glomerulonephritis,Nephrotic syndrome with diffuse endocapillary proliferative glomerulonephritis.
+ollama_llama,llama3.1:8b,02ff2fbb,N040,Glomerulonephritis,"Nephrotic syndrome with minor glomerular abnormality, glomerulonephritis"
+ollama_llama,llama3.1:8b,02ff2fbb,N045,Glomerulonephritis,Diffuse mesangio-capillary glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,N046,Glomerulonephritis,Dense deposit disease
+ollama_llama,llama3.1:8b,02ff2fbb,N047,Glomerulonephritis,Diffuse crescentic glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,N048,Glomerulonephritis,Other morphologic changes
+ollama_llama,llama3.1:8b,02ff2fbb,N049,Glomerulonephritis,Unspecified morphologic changes
+ollama_llama,llama3.1:8b,02ff2fbb,N058,Glomerulonephritis,Nephritic syndrome with other morphologic changes specified.
+ollama_llama,llama3.1:8b,02ff2fbb,N059,Glomerulonephritis,Nephritic syndrome with unspecified morphologic changes.
+ollama_llama,llama3.1:8b,02ff2fbb,N070,Hereditary or polycystic kidney disease,Hereditary nephropathy with minor glomerular abnormality.
+ollama_llama,llama3.1:8b,02ff2fbb,N078,Hereditary or polycystic kidney disease,Hereditary nephropathy with other morphologic lesions.
+ollama_llama,llama3.1:8b,02ff2fbb,N08,Glomerulonephritis,Glomerular disease not specified elsewhere.
+ollama_llama,llama3.1:8b,02ff2fbb,N10,Other,"Acute tubulo-interstitial nephritis, specific cause not mentioned"
+ollama_llama,llama3.1:8b,02ff2fbb,N119,Other,Chronic unspecified tubulo-interstitial nephritis
+ollama_llama,llama3.1:8b,02ff2fbb,N1370,Other,"Vesicoureteral-reflux specified, need further categorization"
+ollama_llama,llama3.1:8b,02ff2fbb,N138,Other,Other obstructive and reflux uropathy
+ollama_llama,llama3.1:8b,02ff2fbb,N139,Other,"Obstructive uropathy/vesicoureteral reflux specified, need further categorization"
+ollama_llama,llama3.1:8b,02ff2fbb,N140,Other,"Analgesic-induced kidney failure, specified by other drugs"
+ollama_llama,llama3.1:8b,02ff2fbb,N141,Other,"Kidney failure due to other drugs, meds, or biological substances"
+ollama_llama,llama3.1:8b,02ff2fbb,N143,Other,Nephropathy caused by exposure to heavy metals
+ollama_llama,llama3.1:8b,02ff2fbb,N170,Other,Kidney failure with tubular necrosis as an acute phenomenon
+ollama_llama,llama3.1:8b,02ff2fbb,N171,Other,Kidney failure with acute cortical necrosis
+ollama_llama,llama3.1:8b,02ff2fbb,N179,Other,Acute kidney failure without clear cause.
+ollama_llama,llama3.1:8b,02ff2fbb,N186,Other,"End stage renal disease, unspecified cause."
+ollama_llama,llama3.1:8b,02ff2fbb,N200,Other,Kidney stone causing kidney failure.
+ollama_llama,llama3.1:8b,02ff2fbb,N2589,Other,Disease causing renal tubular dysfunction.
+ollama_llama,llama3.1:8b,02ff2fbb,N269,Hypertension and cardiac disease,"Unspecified renal sclerosis, likely due to hypertension."
+ollama_llama,llama3.1:8b,02ff2fbb,N280,Diabetes,Kidney ischemia is often secondary to other conditions like diabetes
+ollama_llama,llama3.1:8b,02ff2fbb,N2829,Other,Unknown cause
+ollama_llama,llama3.1:8b,02ff2fbb,N2889,Other,Other specified disorders include chronic kidney disease stage 5
+ollama_llama,llama3.1:8b,02ff2fbb,N289,Other,Unspecified disorder of kidney and ureter may be due to various causes
+ollama_llama,llama3.1:8b,02ff2fbb,N319,Other,Neuromuscular dysfunction of bladder unrelated to kidney function
+ollama_llama,llama3.1:8b,02ff2fbb,O904,Other,"Postpartum acute kidney failure, without inheritance or transplant description."
+ollama_llama,llama3.1:8b,02ff2fbb,Q560,Other,"Hermaphroditism, not classified elsewhere; unlikely to be a primary kidney cause."
+ollama_llama,llama3.1:8b,02ff2fbb,Q602,Other,"Congenital anomaly, not inherited, renal agenesis, unspecified."
+ollama_llama,llama3.1:8b,02ff2fbb,Q6119,Hereditary or polycystic kidney disease,"Other polycystic kidney disease, infantile type, inherited condition."
+ollama_llama,llama3.1:8b,02ff2fbb,Q612,Hereditary or polycystic kidney disease,"Polycystic kidney disease in adults, inherited condition."
+ollama_llama,llama3.1:8b,02ff2fbb,Q614,Hereditary or polycystic kidney disease,Congenital anomaly described as renal dysplasia
+ollama_llama,llama3.1:8b,02ff2fbb,Q615,Hereditary or polycystic kidney disease,Congenital anomaly described as medullary cystic kidney
+ollama_llama,llama3.1:8b,02ff2fbb,Q618,Hereditary or polycystic kidney disease,Congenital anomaly described as other cystic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,Q6211,Other,Congenital obstruction of ureteropelvic junction
+ollama_llama,llama3.1:8b,02ff2fbb,Q6212,Other,Congenital obstruction of ureterovesical orifice
+ollama_llama,llama3.1:8b,02ff2fbb,Q638,Hereditary or polycystic kidney disease,Congenital anomalies not described as inherited
+ollama_llama,llama3.1:8b,02ff2fbb,Q642,Hereditary or polycystic kidney disease,Congenital anomalies not described as inherited
+ollama_llama,llama3.1:8b,02ff2fbb,Q794,Hereditary or polycystic kidney disease,Congenital anomalies not described as inherited
+ollama_llama,llama3.1:8b,02ff2fbb,Q851,Hereditary or polycystic kidney disease,Inherited kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,Q868,Other,Congenital malformations of kidney due to known external causes
+ollama_llama,llama3.1:8b,02ff2fbb,Q8781,Hereditary or polycystic kidney disease,"Alport's Syndrome, an inherited kidney disease"
+ollama_llama,llama3.1:8b,02ff2fbb,Q871,Hereditary or polycystic kidney disease,"Congenital malform syndromes, associated with short stature"
+ollama_llama,llama3.1:8b,02ff2fbb,R69,Other,Illness is unspecified
+ollama_llama,llama3.1:8b,02ff2fbb,S3700,Other,Unspecified kidney injury
+ollama_llama,llama3.1:8b,02ff2fbb,S37009,Other,Unspecified kidney injury
+ollama_llama,llama3.1:8b,02ff2fbb,T8689,Transplant failure or complications,Other tissue transplant complication
+ollama_llama,llama3.1:8b,02ff2fbb,T86899,Transplant failure or complications,Unspecified complication of other transplanted tissue
+ollama_llama,llama3.1:8b,02ff2fbb,U,Other,Cause unknown
+ollama_llama,llama3.1:8b,02ff2fbb,UUUUU,Other,Cause unknown
+ollama_llama,llama3.1:8b,02ff2fbb,Z905,Other,Acquired absence of kidney
+ollama_llama,llama3.1:8b,02ff2fbb,042,Diabetes,"Not applicable, secondary glomerulonephritis: infection-related glomerular disease"
+ollama_llama,llama3.1:8b,02ff2fbb,0429,Glomerulonephritis,"Secondary glomerulonephritis: infection-related glomerular disease, HIV-associated nephropathy"
+ollama_llama,llama3.1:8b,02ff2fbb,2239,Other,Benign tumor of the urinary tract system
+ollama_llama,llama3.1:8b,02ff2fbb,2239A,Other,Benign tumor of the urinary tract system
+ollama_llama,llama3.1:8b,02ff2fbb,2230,Other,"Benign kidney tumor, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,2230A,Other,Benign renal tumor
+ollama_llama,llama3.1:8b,02ff2fbb,23951,Other,Renal tumor of unspecified nature
+ollama_llama,llama3.1:8b,02ff2fbb,23952,Other,unspecified urinary tract tumor
+ollama_llama,llama3.1:8b,02ff2fbb,2395A,Other,unspecified renal tumor
+ollama_llama,llama3.1:8b,02ff2fbb,2395B,Other,unspecified urinary tract tumor
+ollama_llama,llama3.1:8b,02ff2fbb,25000A,Diabetes,adult-onset type 2 diabetes
+ollama_llama,llama3.1:8b,02ff2fbb,25000Z,Diabetes,"type 2 diabetes, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,25000,Other,Category not specified and does not fit other categories
+ollama_llama,llama3.1:8b,02ff2fbb,28263Z,Other,Sickle-cell disease not mentioned as causing kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,28269,Other,"Only sickle-cell trait and other described, not disease causing kidney failure"
+ollama_llama,llama3.1:8b,02ff2fbb,28269A,Other,"Only sickle-cell trait and other described, not disease causing kidney failure"
+ollama_llama,llama3.1:8b,02ff2fbb,28269Z,Other,"Includes unspecified sickle-cell diseases, not specified to cause kidney failure"
+ollama_llama,llama3.1:8b,02ff2fbb,4019,Hypertension and cardiac disease,Unspecified essential hypertension
+ollama_llama,llama3.1:8b,02ff2fbb,4019Z,Hypertension and cardiac disease,Unspecified essential hypertension causing kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,401Z,Hypertension and cardiac disease,Essential hypertension causing kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,4030Z,Hypertension and cardiac disease,Malignant hypertensive renal disease (nephrosclerosis)
+ollama_llama,llama3.1:8b,02ff2fbb,4031Z,Hypertension and cardiac disease,Benign hypertensive renal disease (nephrosclerosis)
+ollama_llama,llama3.1:8b,02ff2fbb,44621,Glomerulonephritis,Anti-GBM disease (Goodpasture's syndrome)
+ollama_llama,llama3.1:8b,02ff2fbb,4462Z,Glomerulonephritis,Anti-GBM disease (Goodpasture's syndrome)
+ollama_llama,llama3.1:8b,02ff2fbb,5804Z,Glomerulonephritis,Primary glomerulonephritis with rapid progression
+ollama_llama,llama3.1:8b,02ff2fbb,58089,Other,Acute interstitial nephritis not otherwise specified
+ollama_llama,llama3.1:8b,02ff2fbb,58089A,Other,Acute interstitial nephritis not otherwise specified
+ollama_llama,llama3.1:8b,02ff2fbb,58089Z,Other,Acute interstitial nephritis not otherwise specified
+ollama_llama,llama3.1:8b,02ff2fbb,5809Z,Glomerulonephritis,acute glomerulonephritis with unspecified pathological lesion
+ollama_llama,llama3.1:8b,02ff2fbb,5831A,Glomerulonephritis,membranous nephropathy
+ollama_llama,llama3.1:8b,02ff2fbb,5832,Glomerulonephritis,membranoproliferative glomerulonephritis type 1
+ollama_llama,llama3.1:8b,02ff2fbb,58321,Glomerulonephritis,membranoproliferative glomerulonephritis type 1
+ollama_llama,llama3.1:8b,02ff2fbb,58322,Glomerulonephritis,"dense deposit disease, membranoproliferative glomerulonephritis type 2"
+ollama_llama,llama3.1:8b,02ff2fbb,5832A,Glomerulonephritis,"Membranoproliferative glomerulonephritis, Type I"
+ollama_llama,llama3.1:8b,02ff2fbb,5832C,Glomerulonephritis,"Dense Deposit Disease, MPGN Type II"
+ollama_llama,llama3.1:8b,02ff2fbb,5832Z,Glomerulonephritis,Membranoproliferative glomerulonephritis/Mesangio-capillary glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,5834,Glomerulonephritis,Rapidly progressive glomerulonephritis with lesion
+ollama_llama,llama3.1:8b,02ff2fbb,5834C,Glomerulonephritis,Goodpasture's Syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,5834C,Hypertension and cardiac disease,Goodpasture's Syndrome fits neither glomerulonephritis n nor either other categories
+ollama_llama,llama3.1:8b,02ff2fbb,5834Z,Diabetes,Associated with antibodies not specific to diabetes
+ollama_llama,llama3.1:8b,02ff2fbb,58389Z,Other,"Description includes other interstitial nephritis, not exclusively an inherited cause"
+ollama_llama,llama3.1:8b,02ff2fbb,5839,Hereditary or polycystic kidney disease,"Described as mesangial sclerosis, a pattern of disease associated with Alport syndrome"
+ollama_llama,llama3.1:8b,02ff2fbb,58391,Glomerulonephritis,Description is ambiguous and could refer to either primary or secondary glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,58392,Other,Description is ambiguous and includes both cause related to a systemic disease and other possible causes
+ollama_llama,llama3.1:8b,02ff2fbb,5839B,Glomerulonephritis,GLOMERULONEPHRITIS (GN)
+ollama_llama,llama3.1:8b,02ff2fbb,5899Z,Other,Causes are missing or unknown
+ollama_llama,llama3.1:8b,02ff2fbb,589Z,Other,Causes are missing or unknown
+ollama_llama,llama3.1:8b,02ff2fbb,5900,Other,CHRONIC PYELONEPHRITIS WITH REFLEX NECRO
+ollama_llama,llama3.1:8b,02ff2fbb,59000,Other,CHRONIC PYELONEPHRITIS WITHOUT RENAL NECROSIS
+ollama_llama,llama3.1:8b,02ff2fbb,59000Z,Other,Chronic pyelonephritis without renal medullary necrosis specified.
+ollama_llama,llama3.1:8b,02ff2fbb,5909Z,Other,Kidney infections (broad category).
+ollama_llama,llama3.1:8b,02ff2fbb,5990,Other,"Urinary tract infection, site unspecified."
+ollama_llama,llama3.1:8b,02ff2fbb,5990Z,Other,"Duplicate specification of urinary tract infection, site not specified."
+ollama_llama,llama3.1:8b,02ff2fbb,5996,Other,"Acquired obstructive uropathy, site unspecified."
+ollama_llama,llama3.1:8b,02ff2fbb,5996Z,Other,Unspecified obstructive uropathy
+ollama_llama,llama3.1:8b,02ff2fbb,7100Z,Glomerulonephritis,Systemic lupus erythematosus with lupus nephritis
+ollama_llama,llama3.1:8b,02ff2fbb,7101,Glomerulonephritis,Scleroderma related to glomerulonephritis
+ollama_llama,llama3.1:8b,02ff2fbb,7101B,Other,Scleroderma with underlying cause not specified
+ollama_llama,llama3.1:8b,02ff2fbb,7101Z,Other,"SCLERODERMA (Not Glomerulonephritis, no kidney disease specified)"
+ollama_llama,llama3.1:8b,02ff2fbb,7140Z,Other,"RHEUMATOID ARTHRITIS (Does not specify kidney disease, systemic disease)"
+ollama_llama,llama3.1:8b,02ff2fbb,72889Z,Other,"RAMBDOMYOLYSIS (Toxic, acute injury, not chronic kidney disease or failure)"
+ollama_llama,llama3.1:8b,02ff2fbb,7530,Hereditary or polycystic kidney disease,"RENAL HYPOPLASIA, DYSPLASIA, OLIGONEPHRONIA (Inherited or Congenital)"
+ollama_llama,llama3.1:8b,02ff2fbb,7531,Hereditary or polycystic kidney disease,Multicystic and polycystic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,7533A,Hereditary or polycystic kidney disease,Congenital nephrotic syndrome likely hereditary
+ollama_llama,llama3.1:8b,02ff2fbb,7595A,Hereditary or polycystic kidney disease,Tuberous sclerosis
+ollama_llama,llama3.1:8b,02ff2fbb,7595Z,Hereditary or polycystic kidney disease,Tuberous sclerosis
+ollama_llama,llama3.1:8b,02ff2fbb,7530Z,Hereditary or polycystic kidney disease,Kidney hypoplasia and solitary kidney likely hereditary
+ollama_llama,llama3.1:8b,02ff2fbb,: 7598,Hereditary or polycystic kidney disease,Alport's syndrome is an inherited kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,75989,Other,Condition is a congenital malformation syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,7598A,Hereditary or polycystic kidney disease,Alport's syndrome is an inherited kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,: 7598B,Hereditary or polycystic kidney disease,Hereditary familial nephropathy is an inherited kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,: 7598Z,Hereditary or polycystic kidney disease,Alport's syndrome is an inherited kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,8660Z,Transplant failure or complications,Traumatic or surgical loss of one or both kidneys.
+ollama_llama,llama3.1:8b,02ff2fbb,88888Z,Other,Diagnosis not on coding list.
+ollama_llama,llama3.1:8b,02ff2fbb,8999Z,Other,"Cause unknown, assumed code for missing or unknown cause."
+ollama_llama,llama3.1:8b,02ff2fbb,9654Z,Other,"Aromatic analgesic, phenacetin usage related kidney disease."
+ollama_llama,llama3.1:8b,02ff2fbb,9659,Other,"Analgesic abuse, including NSAID and phenacetin"
+ollama_llama,llama3.1:8b,02ff2fbb,9849A,Other,Lead nephropathy listed under kidney-urinary tract disease.
+ollama_llama,llama3.1:8b,02ff2fbb,99680,Transplant failure or complications,Complications of a non-specific transplanted organ.
+ollama_llama,llama3.1:8b,02ff2fbb,99680A,Transplant failure or complications,Complications of a bone marrow transplant.
+ollama_llama,llama3.1:8b,02ff2fbb,99681,Transplant failure or complications,Complications of a transplanted kidney.
+ollama_llama,llama3.1:8b,02ff2fbb,99681Z,Transplant failure or complications,Kidney transplant rejection.
+ollama_llama,llama3.1:8b,02ff2fbb,D1022,Diabetes,Diabetic chronic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,D609,Other,Acquired pure red cell aplasia condition
+ollama_llama,llama3.1:8b,02ff2fbb,E1022,Diabetes,Type 1 diabetes with chronic kidney disease
+ollama_llama,llama3.1:8b,02ff2fbb,D593,Glomerulonephritis,Condition of hemolytic uremic syndrome
+ollama_llama,llama3.1:8b,02ff2fbb,D571,Other,Sickle-cell disease without crisis (condition)
+ollama_llama,llama3.1:8b,02ff2fbb,D573,Other,Sickle-cell trait condition
+ollama_llama,llama3.1:8b,02ff2fbb,D609,Other,Acquired pure red cell aplasia condition
+ollama_llama,llama3.1:8b,02ff2fbb,N028,Other,Recurrent and persistent hematuria with other morphologic changes.
+ollama_llama,llama3.1:8b,02ff2fbb,M3489,Other,Other systemic sclerosis.
+ollama_llama,llama3.1:8b,02ff2fbb,N008,Glomerulonephritis,Acute nephritic syndrome with other morphologic changes.
+ollama_llama,llama3.1:8b,02ff2fbb,N019,Glomerulonephritis,Rapidly progressive nephritic syndrome with unspec morphologic changes.
+ollama_llama,llama3.1:8b,02ff2fbb,N0208,Other,Unknown cause.
+ollama_llama,llama3.1:8b,02ff2fbb,S9389,Other,Code indicates unknown cause of kidney failure
+ollama_llama,llama3.1:8b,02ff2fbb,T8600,Transplant failure or complications,"Complication of bone marrow transplant, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,T8610,Transplant failure or complications,"Complication of kidney transplant, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,T8620,Transplant failure or complications,"Complication of heart transplant, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,T8640,Transplant failure or complications,"Complication of liver transplant, unspecified"
+ollama_llama,llama3.1:8b,02ff2fbb,T8681,Transplant failure or complications,Lung transplant complication
+ollama_llama,llama3.1:8b,02ff2fbb,T86819,Transplant failure or complications,Unspecified lung transplant complication
+ollama_llama,llama3.1:8b,02ff2fbb,T8685,Transplant failure or complications,Intestine transplant complication
+ollama_llama,llama3.1:8b,02ff2fbb,T86859,Transplant failure or complications,Unspecified intestine transplant complication

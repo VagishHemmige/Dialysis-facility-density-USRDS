@@ -1,9 +1,9 @@
 ---
-title: "Cause of kidney failure"
+title: "Mapping cause codes with ellmer"
 format: html
 ---
 
-This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code that carries this out is on [2. Cause of kidney failure](classify_esrd_causes.qmd).
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code that carries this out is on [2. Mapping cause codes with ellmer](classify_esrd_causes.qmd).
 
 The paper's Table 1 groups each patient's primary cause of kidney failure into six categories. The original analysis took the grouping from a spreadsheet that no longer exists. The replication rebuilds it by asking three cloud large language models, from three companies, to classify every USRDS cause code, and accepting a code's category when at least two of the three agree. Two smaller models that run on the analyst's own computer were asked the same question and are reported for comparison, but do not vote. Only the public list of codes and their descriptions is sent to any model, never patient data.
 

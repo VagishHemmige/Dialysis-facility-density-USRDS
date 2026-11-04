@@ -55,7 +55,7 @@ website:
             text: Exposure, outcome and covariates
             icon: diagram-3
           - href: quarto/study_esrd_causes.qmd
-            text: Cause of kidney failure
+            text: Mapping cause codes with ellmer
             icon: diagram-3
           - href: quarto/study_analysis.qmd
             text: Analysis and reporting
@@ -81,7 +81,7 @@ website:
                 text: 1. Public area data
                 icon: laptop
               - href: quarto/classify_esrd_causes.qmd
-                text: 2. Cause of kidney failure
+                text: 2. Mapping cause codes with ellmer
                 icon: laptop
               - href: quarto/prepare_patients.qmd
                 text: 3. USRDS patient data

@@ -44,7 +44,7 @@ hsa_map_data <- summarize_dialysis_facilities(
   left_join(hsa_benchmarks, by = "hsanum", relationship = "one-to-one")
 
 contiguous_hsas <- hsa_crosswalk |>
-  filter(year == map_year, !hsa_state %in% c("AK", "HI")) |>
+  filter(year == map_year, !hsa_state %in% noncontiguous_state_codes) |>
   distinct(hsanum)
 
 hsa_map <- hsa_boundaries |>

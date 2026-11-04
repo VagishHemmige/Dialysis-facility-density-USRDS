@@ -47,6 +47,8 @@ sensitivity_egfr_range <- c(5, 25)
 
 # States outside the 48 contiguous states + DC; territories have no region
 noncontiguous_states <- c("ALASKA", "HAWAII")
+# The same states as two-letter codes, as the Dartmouth HSA boundaries give them
+noncontiguous_state_codes <- c("AK", "HI")
 
 ## ---- define-exposure-constants
 # Exposure (section 5): facilities per this many HSA residents

@@ -16,8 +16,10 @@ setting_label <- str_glue(
 ## ---- build-flowchart
 # flowchart turns each condition into text and evaluates it again in its own
 # environment, which reaches the global environment where main.R puts the
-# constants from setup.R. Keep conditions free of string literals (flowchart
-# collapses double spaces in the text) and of objects local to a function.
+# constants from setup.R. flowchart re-evaluates each condition from its text,
+# collapsing double spaces, so a string literal in a condition must be a single
+# word (as "HEMO" is); anything longer belongs in a constant. Conditions must
+# not use objects local to a function.
 cohort_fc <- linked_forms |>
   as_fc(label = "USRDS Medical Evidence forms") |>
   fc_filter(first_form, label = "First form per patient",

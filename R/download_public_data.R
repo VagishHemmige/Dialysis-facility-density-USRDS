@@ -88,8 +88,7 @@ acs_zcta <- study_years |>
       geography = "zcta",
       variables = set_names(acs_variables$variable, acs_variables$name),
       year = y,
-      survey = "acs5",
-      cache_table = TRUE
+      survey = "acs5"
     ) |>
       transmute(zcta = str_sub(GEOID, -5), year = y, variable, estimate)
   }) |>

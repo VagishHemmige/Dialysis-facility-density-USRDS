@@ -153,9 +153,20 @@ fit_published_model <- function(outcome, exposure, patients, imputed, covariates
   # Each completed data set is fitted explicitly and the fits are pooled by
   # Rubin's rules; with(imputed_sets, ...) would not find the variables of a
   # formula built by mixed_formula()
-  imputed_sets |>
+  fits <- imputed_sets |>
     mice::complete(action = "all") |>
-    map(\(completed) glmmTMB(formula, data = completed, family = model_family)) |>
+    map(\(completed) glmmTMB(formula, data = completed, family = model_family))
+
+  # The patients the model used: only albumin and hemoglobin are imputed, so
+  # a patient missing another covariate is dropped from every completed data
+  # set alike, and each fit should use the same number
+  n_used <- unique(map_int(fits, nobs))
+  if (length(n_used) != 1) {
+    stop("The fits to the imputed data sets used different numbers of patients: ",
+         str_flatten_comma(n_used), ".", call. = FALSE)
+  }
+
+  fits |>
     as.mira() |>
     pool() |>
     summary(conf.int = TRUE, exponentiate = logistic) |>
@@ -168,7 +179,7 @@ fit_published_model <- function(outcome, exposure, patients, imputed, covariates
       conf_low = `2.5 %`,
       conf_high = `97.5 %`,
       p_value = p.value,
-      n = nrow(imputation_data)
+      n = n_used
     )
 }
 

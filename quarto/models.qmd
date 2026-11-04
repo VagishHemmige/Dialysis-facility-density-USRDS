@@ -83,7 +83,7 @@ Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (
 
 ## Fitting
 
-Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules [@rubin1987mi], whose intervals combine the variation within and between the imputed data sets.
+Each distinct model is fit once and its density terms extracted: odds ratios for the logistic models, differences in eGFR for eTable 3, each with a 95% Wald confidence interval. Imputed models are fit on each completed data set and pooled by Rubin's rules [@rubin1987mi], whose intervals combine the variation within and between the imputed data sets. Each model reports the number of patients it used. For the imputed models this is the number each completed data set's fit used, which is the same in every one, because only albumin and hemoglobin are imputed and a patient missing another covariate is dropped from all of them; the run stops if the numbers differ.
 
 **Functions used:** [`density_effects()`](functions.qmd#density-effects), [`mixed_formula()`](functions.qmd#model-formulas).
 

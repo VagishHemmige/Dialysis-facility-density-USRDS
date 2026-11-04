@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vagish Hemmige">
+
+<title>Statistical methods – Dialysis facility density: a replication</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../quarto/study_methods.html" rel="next">
+<link href="../quarto/data_sources.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
+<link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
+  background-image: none;
+}
+</style>
+<script>window.ISSUE_COMMENTS = {"contact":"mailto:vagish.hemmige@gmail.com","endpoint":"https://script.google.com/macros/s/AKfycbyE8fNBvy3vfuAnuQqdjpCTR8i2zYI-KSvGzhkGlQRYevI1I6auqq9H-mIk2yrXCaIROA/exec","owner":"Vagish Hemmige","pageButton":false,"passcode":true,"preview":true};</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/background.html">Background</a></li><li class="breadcrumb-item"><a href="../quarto/statistical_methods.html">Statistical methods</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Dialysis facility density: a replication</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><i class="bi bi-house" role="img">
+</i> 
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Clinical background</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/data_sources.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Data sources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/statistical_methods.html" class="sidebar-item-text sidebar-link active"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Statistical methods</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Study design and methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Patients and places</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Who is studied</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_facilities.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Dialysis facilities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_linkage.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Census and area data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">What is measured</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Exposure, outcome and covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Mapping cause codes with ellmer</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/study_analysis.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Analysis and reporting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/differences.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Differences from the original code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data processing and analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/download_public_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">1. Public area data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_esrd_causes.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">2. Cause code mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/prepare_patients.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">3. USRDS patient data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/link_area_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">4. Linking area data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/create_cohort.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">5. Cohort flowchart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/define_exposure.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">6. Density categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/models.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">7. Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tables and figures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Original analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/original.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">The original R Markdown file</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Published results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Published figures and tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/supplement.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Published supplement</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project documents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Repository blueprint</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link"><i class="bi bi-info-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#area-level-exposures" id="toc-area-level-exposures" class="nav-link active" data-scroll-target="#area-level-exposures">Area-level exposures</a></li>
+  <li><a href="#mixed-effects-logistic-regression" id="toc-mixed-effects-logistic-regression" class="nav-link" data-scroll-target="#mixed-effects-logistic-regression">Mixed-effects logistic regression</a></li>
+  <li><a href="#how-much-variation-lies-between-areas" id="toc-how-much-variation-lies-between-areas" class="nav-link" data-scroll-target="#how-much-variation-lies-between-areas">How much variation lies between areas</a></li>
+  <li><a href="#missing-laboratory-values" id="toc-missing-laboratory-values" class="nav-link" data-scroll-target="#missing-laboratory-values">Missing laboratory values</a></li>
+  <li><a href="#classifying-text-with-language-models" id="toc-classifying-text-with-language-models" class="nav-link" data-scroll-target="#classifying-text-with-language-models">Classifying text with language models</a>
+  <ul class="collapse">
+  <li><a href="#local-models-and-privacy" id="toc-local-models-and-privacy" class="nav-link" data-scroll-target="#local-models-and-privacy">Local models and privacy</a></li>
+  </ul></li>
+  <li><a href="#reporting-standards" id="toc-reporting-standards" class="nav-link" data-scroll-target="#reporting-standards">Reporting standards</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/edit/main/quarto/statistical_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/background.html">Background</a></li><li class="breadcrumb-item"><a href="../quarto/statistical_methods.html">Statistical methods</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Statistical methods</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+<div class="quarto-title-meta-author column-body">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Vagish Hemmige </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            MAHV
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta column-body">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This page explains, in general terms and without code, the methods a study like this one rests on: what an area-level exposure can and cannot show, why patients grouped in areas need particular models, how missing values are handled, how language models can classify codes, and the standards for reporting. The data these methods are applied to are on <a href="../quarto/data_sources.html">Data sources</a>; what this study chose is on <a href="../quarto/study_methods.html">Study design and methods</a>.</p>
+<section id="area-level-exposures" class="level2">
+<h2 class="anchored" data-anchor-id="area-level-exposures">Area-level exposures</h2>
+<p>An <em>area-level</em> exposure describes where a person lives, not the person: for example, dialysis facilities per resident of an HSA. Everyone in the same area has the same value. Such exposures suit questions about how care is organized locally, but need care in interpretation:</p>
+<ul>
+<li>An association between an area’s characteristics and its residents’ outcomes describes people living in such areas. It does not show which individual patients were affected, or how; inferring individual relationships from area patterns is known as the <em>ecological fallacy</em> <span class="citation" data-cites="piantadosi1988ecological morgenstern1995ecologic">(<a href="#ref-piantadosi1988ecological" role="doc-biblioref">Piantadosi et al. 1988</a>; <a href="#ref-morgenstern1995ecologic" role="doc-biblioref">Morgenstern 1995</a>)</span>.</li>
+<li>Results can depend on how areas are drawn: a measure computed for HSAs may behave differently for counties. This is known as the <em>modifiable areal unit problem</em> <span class="citation" data-cites="fotheringham1991maup">(<a href="#ref-fotheringham1991maup" role="doc-biblioref">Fotheringham and Wong 1991</a>)</span>.</li>
+<li>A rate per resident needs a population for the same area and time. Where the area is built from smaller units, each unit’s population should be counted once.</li>
+</ul>
+<p>Such studies are observational: they describe associations, adjusted for measured differences, and cannot by themselves show that changing the exposure would change the outcome.</p>
+</section>
+<section id="mixed-effects-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="mixed-effects-logistic-regression">Mixed-effects logistic regression</h2>
+<p>Logistic regression models a yes/no outcome, such as starting dialysis at or above an eGFR threshold. Results are reported as <strong>odds ratios</strong>: how much higher or lower the odds of the outcome are in one group than in a reference group, with the other variables in the model held fixed. Adding groups of variables in stages shows how the estimate changes as each group is added. Because odds ratios are not <em>collapsible</em>, a change between models is not the share of the association that the added variables explain, and the coefficients of the adjustment variables are not estimates of their own effects <span class="citation" data-cites="greenland1999collapsibility westreich2013table2">(<a href="#ref-greenland1999collapsibility" role="doc-biblioref">Greenland et al. 1999</a>; <a href="#ref-westreich2013table2" role="doc-biblioref">Westreich and Greenland 2013</a>)</span>.</p>
+<p>Standard logistic regression assumes each patient’s outcome is independent of every other’s. Patients in the same area share nephrologists, hospitals and local habits of practice. A <strong>mixed-effects</strong> (or <em>multilevel</em>) model allows for this with a <strong>random intercept</strong> for each area, a term that lets the baseline odds differ from area to area. Ignoring the grouping would make confidence intervals too narrow, especially for an exposure measured at the area level <span class="citation" data-cites="moulton1990pitfall austin2017multilevel">(<a href="#ref-moulton1990pitfall" role="doc-biblioref">Moulton 1990</a>; <a href="#ref-austin2017multilevel" role="doc-biblioref">Austin and Merlo 2017</a>)</span>.</p>
+<p>Fitting a mixed model requires averaging over every area’s random intercept, which must be approximated. The Laplace approximation uses one point per area; adaptive Gauss-Hermite quadrature uses several, and is more exact but slower <span class="citation" data-cites="pinheiro1995approx">(<a href="#ref-pinheiro1995approx" role="doc-biblioref">Pinheiro and Bates 1995</a>)</span>. Stata’s mixed-effects logistic command uses adaptive quadrature by default <span class="citation" data-cites="stata_melogit">(<a href="#ref-stata_melogit" role="doc-biblioref">StataCorp, n.d.</a>)</span>; the R packages <code>lme4</code> and <code>glmmTMB</code> fit the same models <span class="citation" data-cites="lme4_pkg glmmtmb">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>; <a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>. For the fixed effects, such as an exposure’s odds ratio, the Laplace approximation’s bias shrinks as the number of patients per area grows, so with large areas the two give practically the same answer <span class="citation" data-cites="joe2008laplace">(<a href="#ref-joe2008laplace" role="doc-biblioref">Joe 2008</a>)</span>; with yes/no outcomes in small areas, or for the size of the variation between areas, they can differ <span class="citation" data-cites="joe2008laplace stata_melogit">(<a href="#ref-joe2008laplace" role="doc-biblioref">Joe 2008</a>; <a href="#ref-stata_melogit" role="doc-biblioref">StataCorp, n.d.</a>)</span>. The same structure with a continuous outcome is a linear mixed model.</p>
+</section>
+<section id="how-much-variation-lies-between-areas" class="level2">
+<h2 class="anchored" data-anchor-id="how-much-variation-lies-between-areas">How much variation lies between areas</h2>
+<p>A <em>null</em> linear mixed model, with no explanatory variables, divides the variation of a continuous outcome such as eGFR into a part between areas and a part between patients within areas; the share between areas is the intraclass correlation <span class="citation" data-cites="merlo2006tutorial austin2017multilevel">(<a href="#ref-merlo2006tutorial" role="doc-biblioref"><span class="nocase">Merlo et al.</span> 2006</a>; <a href="#ref-austin2017multilevel" role="doc-biblioref">Austin and Merlo 2017</a>)</span>. In R it can be fitted with <code>lme4</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span>. Groupings can be nested, such as dialysis facilities within HSAs, to show the share at each level. Shares from different models are comparable only when the models use the same patients.</p>
+</section>
+<section id="missing-laboratory-values" class="level2">
+<h2 class="anchored" data-anchor-id="missing-laboratory-values">Missing laboratory values</h2>
+<p>A <strong>complete-case</strong> analysis uses only patients with every value recorded; it loses patients and can be biased if they differ systematically. <strong>Multiple imputation</strong> fills in each missing value several times from a model of the other variables, analyses each completed data set, and combines the results by Rubin’s rules, so the uncertainty about the missing values is carried into the confidence intervals <span class="citation" data-cites="rubin1987mi vanbuuren2011mice">(<a href="#ref-rubin1987mi" role="doc-biblioref">Rubin 1987</a>; <a href="#ref-vanbuuren2011mice" role="doc-biblioref">Buuren and Groothuis-Oudshoorn 2011</a>)</span>. <em>Chained equations</em> impute each variable in turn; <em>predictive mean matching</em> fills each gap with a value observed in a similar patient <span class="citation" data-cites="vanbuuren2011mice white2011mice">(<a href="#ref-vanbuuren2011mice" role="doc-biblioref">Buuren and Groothuis-Oudshoorn 2011</a>; <a href="#ref-white2011mice" role="doc-biblioref">White et al. 2011</a>)</span>.</p>
+</section>
+<section id="classifying-text-with-language-models" class="level2">
+<h2 class="anchored" data-anchor-id="classifying-text-with-language-models">Classifying text with language models</h2>
+<p>Some variables arrive as codes with text descriptions that have to be grouped into a few categories, such as several hundred cause-of-kidney-failure codes into six groups. Traditionally a person does this by hand. A large language model can be asked to do the same: given a definition of each category and a list of codes with their descriptions, it returns a category for each code, with a short reason. Its answers are a draft. They can be wrong, so how they are checked, and who decides when they disagree, is part of the method.</p>
+<p>In R, the <code>ellmer</code> package <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span> calls these models. One set of functions works with models from different companies over the internet and with models run on the analyst’s own computer, so the same prompt can be sent to several models and their answers compared, all from the same R session.</p>
+<p>Each model can be asked for <em>structured output</em>: a reply in a fixed form, one category and a short reason per code, in which the category can only be one of the given names. A model therefore cannot invent an extra category, and every answer can be checked mechanically: each code answered exactly once, no codes that are not in the list. Codes are sent in batches, each in a new conversation, so one batch’s answers cannot influence the next. Unless a model’s randomness is fixed, a second run can give different answers, so the saved answers are the record of what each model said.</p>
+<p>Asking several models, from different companies, and accepting a category only when enough of them agree, makes one model’s mistake less likely to pass unnoticed. Agreement shows only that the models agree, not that they are right. Fleiss’ kappa <span class="citation" data-cites="fleiss1971kappa">(<a href="#ref-fleiss1971kappa" role="doc-biblioref">Fleiss 1971</a>)</span> describes how far several raters, here the models, agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give.</p>
+<div id="fig-esrd-classification" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Flow diagram, a placeholder. A public list of 445 USRDS cause codes, with no patient data, goes into an R session on the analyst's computer. R groups the codes into batches with a shared prompt of six categories and passes them to ellmer, which sends them to three cloud models (OpenAI GPT, Claude and Gemini) and to two local models through Ollama (Qwen and Llama), which are for comparison only and do not vote. The classifications and reasons return to R as a classified dataset; the example rows show 4464Z, Wegener's granulomatosis, and B20, HIV disease, as glomerulonephritis, and I50.9, heart failure, as hypertension or cardiac. A note says R validates the cloud replies and accepts a category when at least two of the three cloud models agree, sends codes with no majority to a human decision, and keeps the local replies for comparison. Batch sizes are 100 for GPT and Claude, 25 for Gemini and Qwen, and 5 for Llama.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-esrd-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/esrd-cause-classification-placeholder.png" class="img-fluid figure-img" alt="Flow diagram, a placeholder. A public list of 445 USRDS cause codes, with no patient data, goes into an R session on the analyst's computer. R groups the codes into batches with a shared prompt of six categories and passes them to ellmer, which sends them to three cloud models (OpenAI GPT, Claude and Gemini) and to two local models through Ollama (Qwen and Llama), which are for comparison only and do not vote. The classifications and reasons return to R as a classified dataset; the example rows show 4464Z, Wegener's granulomatosis, and B20, HIV disease, as glomerulonephritis, and I50.9, heart failure, as hypertension or cardiac. A note says R validates the cloud replies and accepts a category when at least two of the three cloud models agree, sends codes with no majority to a human decision, and keeps the local replies for comparison. Batch sizes are 100 for GPT and Claude, 25 for Gemini and Qwen, and 5 for Llama.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-esrd-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Placeholder figure, to be replaced. How the cause codes are classified: R sends batches of the public code list, with the same prompt, through ellmer to three cloud models that vote and two local models that are compared only, and accepts a category when at least two of the three cloud models agree. The three rows shown match the accepted categories in <code>references/esrd-cause-categories.csv</code>.
+</figcaption>
+</figure>
+</div>
+<section id="local-models-and-privacy" class="level3">
+<h3 class="anchored" data-anchor-id="local-models-and-privacy">Local models and privacy</h3>
+<p><a href="https://ollama.com">Ollama</a> runs open-weight models on the analyst’s own computer, and ellmer talks to it with <a href="https://ellmer.tidyverse.org/reference/chat_ollama.html"><code>chat_ollama()</code></a>. Its advantage is privacy: in Ollama’s words, “Ollama runs locally. We don’t see your prompts or data when you run locally” (<a href="https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom">Ollama FAQ</a>). A cloud model, by contrast, receives every prompt on the provider’s servers. Text that contains patient information would need a local model; this study sends only a public code list, so it can use cloud models, and runs local ones for comparison (<a href="../quarto/study_esrd_causes.html#which-models-and-how-they-are-asked">Mapping cause codes with ellmer</a>). Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.</p>
+<p>Two cautions about the privacy claim:</p>
+<ul>
+<li><strong>Ollama also offers cloud models</strong>, run on Ollama’s servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable <code>OLLAMA_NO_CLOUD=1</code> and restart Ollama; its log then shows <code>Ollama cloud disabled: true</code> (<a href="https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features">Ollama FAQ: disabling cloud features</a>).</li>
+<li><strong>The models are downloaded from the internet</strong> (<code>ollama pull</code>), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.</li>
+</ul>
+<p>The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.</p>
+<p>How to install Ollama and run the local models, and what to do if they crash, is on the code page: <a href="../quarto/classify_esrd_causes.html#setting-up-ollama">Setting up Ollama</a>.</p>
+</section>
+</section>
+<section id="reporting-standards" class="level2">
+<h2 class="anchored" data-anchor-id="reporting-standards">Reporting standards</h2>
+<p>STROBE is a checklist for reporting observational studies, including a flow diagram of exclusions <span class="citation" data-cites="vonelm2007strobe">(<a href="#ref-vonelm2007strobe" role="doc-biblioref"><span class="nocase">Elm et al.</span> 2007</a>)</span>. RECORD extends it to routinely collected data such as registries, adding the codes and algorithms that define variables, how sources were linked, and access to data and code <span class="citation" data-cites="benchimol2015record">(<a href="#ref-benchimol2015record" role="doc-biblioref"><span class="nocase">Benchimol et al.</span> 2015</a>)</span>.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-austin2017multilevel" class="csl-entry" role="listitem">
+Austin, Peter C, and Juan Merlo. 2017. <span>“Intermediate and Advanced Topics in Multilevel Logistic Regression Analysis.”</span> <em>Statistics in Medicine</em> 36 (20): 3257–77. <a href="https://doi.org/10.1002/sim.7336">https://doi.org/10.1002/sim.7336</a>.
+</div>
+<div id="ref-lme4_pkg" class="csl-entry" role="listitem">
+Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. <span>“Fitting Linear Mixed-Effects Models Using <span class="nocase">lme4</span>.”</span> <em>Journal of Statistical Software</em> 67 (1): 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>.
+</div>
+<div id="ref-benchimol2015record" class="csl-entry" role="listitem">
+<span class="nocase">Benchimol, Eric I, Liam Smeeth, Astrid Guttmann, et al.</span> 2015. <span>“The <span>REporting</span> of Studies <span>Conducted</span> Using <span class="nocase">Observational Routinely-collected</span> Health <span>Data</span> (<span>RECORD</span>) Statement.”</span> <em>PLoS Medicine</em> 12 (10): e1001885. <a href="https://doi.org/10.1371/journal.pmed.1001885">https://doi.org/10.1371/journal.pmed.1001885</a>.
+</div>
+<div id="ref-glmmtmb" class="csl-entry" role="listitem">
+Brooks, Mollie E., Kasper Kristensen, Koen J. van Benthem, et al. 2017. <span>“<span class="nocase">glmmTMB</span> Balances Speed and Flexibility Among Packages for Zero-Inflated Generalized Linear Mixed Modeling.”</span> <em>The R Journal</em> 9 (2): 378–400. <a href="https://doi.org/10.32614/RJ-2017-066">https://doi.org/10.32614/RJ-2017-066</a>.
+</div>
+<div id="ref-vanbuuren2011mice" class="csl-entry" role="listitem">
+Buuren, Stef van, and Karin Groothuis-Oudshoorn. 2011. <span>“<span class="nocase">mice</span>: Multivariate Imputation by Chained Equations in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://doi.org/10.18637/jss.v045.i03">https://doi.org/10.18637/jss.v045.i03</a>.
+</div>
+<div id="ref-vonelm2007strobe" class="csl-entry" role="listitem">
+<span class="nocase">Elm, Erik von, Douglas G Altman, Matthias Egger, et al.</span> 2007. <span>“The <span class="nocase">Strengthening the Reporting of Observational Studies in Epidemiology (STROBE)</span> Statement: Guidelines for Reporting Observational Studies.”</span> <em>Lancet</em> 370 (9596): 1453–57. <a href="https://doi.org/10.1016/S0140-6736(07)61602-X">https://doi.org/10.1016/S0140-6736(07)61602-X</a>.
+</div>
+<div id="ref-fleiss1971kappa" class="csl-entry" role="listitem">
+Fleiss, Joseph L. 1971. <span>“Measuring Nominal Scale Agreement Among Many Raters.”</span> <em>Psychological Bulletin</em> 76 (5): 378–82. <a href="https://doi.org/10.1037/h0031619">https://doi.org/10.1037/h0031619</a>.
+</div>
+<div id="ref-fotheringham1991maup" class="csl-entry" role="listitem">
+Fotheringham, A S, and D W S Wong. 1991. <span>“The Modifiable Areal Unit Problem in Multivariate Statistical Analysis.”</span> <em>Environment and Planning A: Economy and Space</em> 23 (7): 1025–44. <a href="https://doi.org/10.1068/a231025">https://doi.org/10.1068/a231025</a>.
+</div>
+<div id="ref-greenland1999collapsibility" class="csl-entry" role="listitem">
+Greenland, Sander, Judea Pearl, and James M Robins. 1999. <span>“Confounding and Collapsibility in Causal Inference.”</span> <em>Statistical Science</em> 14 (1): 29–46. <a href="https://doi.org/10.1214/ss/1009211805">https://doi.org/10.1214/ss/1009211805</a>.
+</div>
+<div id="ref-joe2008laplace" class="csl-entry" role="listitem">
+Joe, Harry. 2008. <span>“Accuracy of <span>Laplace</span> Approximation for Discrete Response Mixed Models.”</span> <em>Computational Statistics &amp; Data Analysis</em> 52 (12): 5066–74. <a href="https://doi.org/10.1016/j.csda.2008.05.002">https://doi.org/10.1016/j.csda.2008.05.002</a>.
+</div>
+<div id="ref-merlo2006tutorial" class="csl-entry" role="listitem">
+<span class="nocase">Merlo, Juan, Basile Chaix, Henrik Ohlsson, et al.</span> 2006. <span>“A Brief Conceptual Tutorial of Multilevel Analysis in Social Epidemiology: Using Measures of Clustering in Multilevel Logistic Regression to Investigate Contextual Phenomena.”</span> <em>Journal of Epidemiology and Community Health</em> 60 (4): 290–97. <a href="https://doi.org/10.1136/jech.2004.029454">https://doi.org/10.1136/jech.2004.029454</a>.
+</div>
+<div id="ref-morgenstern1995ecologic" class="csl-entry" role="listitem">
+Morgenstern, H. 1995. <span>“Ecologic Studies in Epidemiology: Concepts, Principles, and Methods.”</span> <em>Annual Review of Public Health</em> 16: 61–81. <a href="https://doi.org/10.1146/annurev.pu.16.050195.000425">https://doi.org/10.1146/annurev.pu.16.050195.000425</a>.
+</div>
+<div id="ref-moulton1990pitfall" class="csl-entry" role="listitem">
+Moulton, Brent R. 1990. <span>“An Illustration of a Pitfall in Estimating the Effects of Aggregate Variables on Micro Units.”</span> <em>The Review of Economics and Statistics</em> 72 (2): 334. <a href="https://doi.org/10.2307/2109724">https://doi.org/10.2307/2109724</a>.
+</div>
+<div id="ref-piantadosi1988ecological" class="csl-entry" role="listitem">
+Piantadosi, S, D P Byar, and S B Green. 1988. <span>“The Ecological Fallacy.”</span> <em>American Journal of Epidemiology</em> 127 (5): 893–904. <a href="https://doi.org/10.1093/oxfordjournals.aje.a114892">https://doi.org/10.1093/oxfordjournals.aje.a114892</a>.
+</div>
+<div id="ref-pinheiro1995approx" class="csl-entry" role="listitem">
+Pinheiro, José C, and Douglas M Bates. 1995. <span>“Approximations to the Log-Likelihood Function in the Nonlinear Mixed-Effects Model.”</span> <em>Journal of Computational and Graphical Statistics</em> 4 (1): 12–35. <a href="https://doi.org/10.1080/10618600.1995.10474663">https://doi.org/10.1080/10618600.1995.10474663</a>.
+</div>
+<div id="ref-rubin1987mi" class="csl-entry" role="listitem">
+Rubin, Donald B. 1987. <em>Multiple Imputation for Nonresponse in Surveys</em>. John Wiley &amp; Sons. <a href="https://doi.org/10.1002/9780470316696">https://doi.org/10.1002/9780470316696</a>.
+</div>
+<div id="ref-stata_melogit" class="csl-entry" role="listitem">
+StataCorp. n.d. <em>Melogit: Multilevel Mixed-Effects Logistic Regression</em>. StataCorp LLC. <a href="https://www.stata.com/manuals/memelogit.pdf">https://www.stata.com/manuals/memelogit.pdf</a>.
+</div>
+<div id="ref-westreich2013table2" class="csl-entry" role="listitem">
+Westreich, Daniel, and Sander Greenland. 2013. <span>“The Table 2 Fallacy: Presenting and Interpreting Confounder and Modifier Coefficients.”</span> <em>American Journal of Epidemiology</em> 177 (4): 292–98. <a href="https://doi.org/10.1093/aje/kws412">https://doi.org/10.1093/aje/kws412</a>.
+</div>
+<div id="ref-white2011mice" class="csl-entry" role="listitem">
+White, Ian R, Patrick Royston, and Angela M Wood. 2011. <span>“Multiple Imputation Using Chained Equations: Issues and Guidance for Practice.”</span> <em>Statistics in Medicine</em> 30 (4): 377–99. <a href="https://doi.org/10.1002/sim.4067">https://doi.org/10.1002/sim.4067</a>.
+</div>
+<div id="ref-ellmer_pkg" class="csl-entry" role="listitem">
+Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. 2026. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org/">https://ellmer.tidyverse.org/</a>.
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vagishhemmige\.github\.io\/Dialysis-facility-density-USRDS");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../quarto/data_sources.html" class="pagination-link" aria-label="Data sources">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data sources</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../quarto/study_methods.html" class="pagination-link" aria-label="Overview">
+        <span class="nav-page-text">Overview</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Statistical methods"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This page explains, in general terms and without code, the methods a study like this one rests on: what an area-level exposure can and cannot show, why patients grouped in areas need particular models, how missing values are handled, how language models can classify codes, and the standards for reporting. The data these methods are applied to are on <span class="co">[</span><span class="ot">Data sources</span><span class="co">](data_sources.qmd)</span>; what this study chose is on <span class="co">[</span><span class="ot">Study design and methods</span><span class="co">](study_methods.qmd)</span>.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Area-level exposures</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>An *area-level* exposure describes where a person lives, not the person: for example, dialysis facilities per resident of an HSA. Everyone in the same area has the same value. Such exposures suit questions about how care is organized locally, but need care in interpretation:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>An association between an area's characteristics and its residents' outcomes describes people living in such areas. It does not show which individual patients were affected, or how; inferring individual relationships from area patterns is known as the *ecological fallacy* <span class="co">[</span><span class="ot">@piantadosi1988ecological; @morgenstern1995ecologic</span><span class="co">]</span>.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Results can depend on how areas are drawn: a measure computed for HSAs may behave differently for counties. This is known as the *modifiable areal unit problem* <span class="co">[</span><span class="ot">@fotheringham1991maup</span><span class="co">]</span>.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A rate per resident needs a population for the same area and time. Where the area is built from smaller units, each unit's population should be counted once.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Such studies are observational: they describe associations, adjusted for measured differences, and cannot by themselves show that changing the exposure would change the outcome.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mixed-effects logistic regression</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Logistic regression models a yes/no outcome, such as starting dialysis at or above an eGFR threshold. Results are reported as **odds ratios**: how much higher or lower the odds of the outcome are in one group than in a reference group, with the other variables in the model held fixed. Adding groups of variables in stages shows how the estimate changes as each group is added. Because odds ratios are not *collapsible*, a change between models is not the share of the association that the added variables explain, and the coefficients of the adjustment variables are not estimates of their own effects <span class="co">[</span><span class="ot">@greenland1999collapsibility; @westreich2013table2</span><span class="co">]</span>.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Standard logistic regression assumes each patient's outcome is independent of every other's. Patients in the same area share nephrologists, hospitals and local habits of practice. A **mixed-effects** (or *multilevel*) model allows for this with a **random intercept** for each area, a term that lets the baseline odds differ from area to area. Ignoring the grouping would make confidence intervals too narrow, especially for an exposure measured at the area level <span class="co">[</span><span class="ot">@moulton1990pitfall; @austin2017multilevel</span><span class="co">]</span>.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Fitting a mixed model requires averaging over every area's random intercept, which must be approximated. The Laplace approximation uses one point per area; adaptive Gauss-Hermite quadrature uses several, and is more exact but slower <span class="co">[</span><span class="ot">@pinheiro1995approx</span><span class="co">]</span>. Stata's mixed-effects logistic command uses adaptive quadrature by default <span class="co">[</span><span class="ot">@stata_melogit</span><span class="co">]</span>; the R packages <span class="in">`lme4`</span> and <span class="in">`glmmTMB`</span> fit the same models <span class="co">[</span><span class="ot">@lme4_pkg; @glmmtmb</span><span class="co">]</span>. For the fixed effects, such as an exposure's odds ratio, the Laplace approximation's bias shrinks as the number of patients per area grows, so with large areas the two give practically the same answer <span class="co">[</span><span class="ot">@joe2008laplace</span><span class="co">]</span>; with yes/no outcomes in small areas, or for the size of the variation between areas, they can differ <span class="co">[</span><span class="ot">@joe2008laplace; @stata_melogit</span><span class="co">]</span>. The same structure with a continuous outcome is a linear mixed model.</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## How much variation lies between areas</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>A *null* linear mixed model, with no explanatory variables, divides the variation of a continuous outcome such as eGFR into a part between areas and a part between patients within areas; the share between areas is the intraclass correlation <span class="co">[</span><span class="ot">@merlo2006tutorial; @austin2017multilevel</span><span class="co">]</span>. In R it can be fitted with <span class="in">`lme4`</span> <span class="co">[</span><span class="ot">@lme4_pkg</span><span class="co">]</span>. Groupings can be nested, such as dialysis facilities within HSAs, to show the share at each level. Shares from different models are comparable only when the models use the same patients.</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing laboratory values</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>A **complete-case** analysis uses only patients with every value recorded; it loses patients and can be biased if they differ systematically. **Multiple imputation** fills in each missing value several times from a model of the other variables, analyses each completed data set, and combines the results by Rubin's rules, so the uncertainty about the missing values is carried into the confidence intervals <span class="co">[</span><span class="ot">@rubin1987mi; @vanbuuren2011mice</span><span class="co">]</span>. *Chained equations* impute each variable in turn; *predictive mean matching* fills each gap with a value observed in a similar patient <span class="co">[</span><span class="ot">@vanbuuren2011mice; @white2011mice</span><span class="co">]</span>.</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classifying text with language models {#classifying-text-with-language-models}</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Some variables arrive as codes with text descriptions that have to be grouped into a few categories, such as several hundred cause-of-kidney-failure codes into six groups. Traditionally a person does this by hand. A large language model can be asked to do the same: given a definition of each category and a list of codes with their descriptions, it returns a category for each code, with a short reason. Its answers are a draft. They can be wrong, so how they are checked, and who decides when they disagree, is part of the method.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>In R, the <span class="in">`ellmer`</span> package <span class="co">[</span><span class="ot">@ellmer_pkg</span><span class="co">]</span> calls these models. One set of functions works with models from different companies over the internet and with models run on the analyst's own computer, so the same prompt can be sent to several models and their answers compared, all from the same R session.</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>Each model can be asked for *structured output*: a reply in a fixed form, one category and a short reason per code, in which the category can only be one of the given names. A model therefore cannot invent an extra category, and every answer can be checked mechanically: each code answered exactly once, no codes that are not in the list. Codes are sent in batches, each in a new conversation, so one batch's answers cannot influence the next. Unless a model's randomness is fixed, a second run can give different answers, so the saved answers are the record of what each model said.</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>Asking several models, from different companies, and accepting a category only when enough of them agree, makes one model's mistake less likely to pass unnoticed. Agreement shows only that the models agree, not that they are right. Fleiss' kappa <span class="co">[</span><span class="ot">@fleiss1971kappa</span><span class="co">]</span> describes how far several raters, here the models, agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="al">![Placeholder figure, to be replaced. How the cause codes are classified: R sends batches of the public code list, with the same prompt, through ellmer to three cloud models that vote and two local models that are compared only, and accepts a category when at least two of the three cloud models agree. The three rows shown match the accepted categories in `references/esrd-cause-categories.csv`.](../images/esrd-cause-classification-placeholder.png)</span>{#fig-esrd-classification fig-alt="Flow diagram, a placeholder. A public list of 445 USRDS cause codes, with no patient data, goes into an R session on the analyst's computer. R groups the codes into batches with a shared prompt of six categories and passes them to ellmer, which sends them to three cloud models (OpenAI GPT, Claude and Gemini) and to two local models through Ollama (Qwen and Llama), which are for comparison only and do not vote. The classifications and reasons return to R as a classified dataset; the example rows show 4464Z, Wegener's granulomatosis, and B20, HIV disease, as glomerulonephritis, and I50.9, heart failure, as hypertension or cardiac. A note says R validates the cloud replies and accepts a category when at least two of the three cloud models agree, sends codes with no majority to a human decision, and keeps the local replies for comparison. Batch sizes are 100 for GPT and Claude, 25 for Gemini and Qwen, and 5 for Llama."}</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local models and privacy {#local-models-and-privacy}</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Ollama</span><span class="co">](https://ollama.com)</span> runs open-weight models on the analyst's own computer, and ellmer talks to it with <span class="co">[</span><span class="ot">`chat_ollama()`</span><span class="co">](https://ellmer.tidyverse.org/reference/chat_ollama.html)</span>. Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" (<span class="co">[</span><span class="ot">Ollama FAQ</span><span class="co">](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)</span>). A cloud model, by contrast, receives every prompt on the provider's servers. Text that contains patient information would need a local model; this study sends only a public code list, so it can use cloud models, and runs local ones for comparison (<span class="co">[</span><span class="ot">Mapping cause codes with ellmer</span><span class="co">](study_esrd_causes.qmd#which-models-and-how-they-are-asked)</span>). Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>Two cautions about the privacy claim:</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable <span class="in">`OLLAMA_NO_CLOUD=1`</span> and restart Ollama; its log then shows <span class="in">`Ollama cloud disabled: true`</span> (<span class="co">[</span><span class="ot">Ollama FAQ: disabling cloud features</span><span class="co">](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)</span>).</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**The models are downloaded from the internet** (<span class="in">`ollama pull`</span>), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>How to install Ollama and run the local models, and what to do if they crash, is on the code page: <span class="co">[</span><span class="ot">Setting up Ollama</span><span class="co">](classify_esrd_causes.qmd#setting-up-ollama)</span>.</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting standards</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>STROBE is a checklist for reporting observational studies, including a flow diagram of exclusions <span class="co">[</span><span class="ot">@vonelm2007strobe</span><span class="co">]</span>. RECORD extends it to routinely collected data such as registries, adding the codes and algorithms that define variables, how sources were linked, and access to data and code <span class="co">[</span><span class="ot">@benchimol2015record</span><span class="co">]</span>.</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/edit/main/quarto/statistical_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

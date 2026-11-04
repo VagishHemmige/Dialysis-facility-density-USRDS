@@ -98,6 +98,8 @@ The two local models were meant to vote, and were run on the analyst's laptop (p
 -   **They were slow.** Qwen took 108 minutes for its answers; Llama about 2.5 minutes per batch of 5, close to four hours for the list. The cloud models took minutes.
 -   **A third model did not run at all.** IBM's Granite (`granite4.2:8b`) timed out after 30 minutes on a batch of 25 codes, and returned no answers for 5 codes in 15 minutes; Llama replaced it.
 
+Each local model's answers, exactly as returned, are in [`references/esrd-cause-local-answers.csv`](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/references/esrd-cause-local-answers.csv).
+
 These are observations from one laptop and one prompt, not a general verdict on local models; larger local models, a computer with a capable graphics card, or a prompt asking for fewer codes at a time might do better.
 
 ## How the mapping is checked

@@ -1,0 +1,66 @@
+---
+title: "Statistical methods"
+format: html
+---
+
+This page explains, in general terms and without code, the methods a study like this one rests on: what an area-level exposure can and cannot show, why patients grouped in areas need particular models, how missing values are handled, how language models can classify codes, and the standards for reporting. The data these methods are applied to are on [Data sources](data_sources.qmd); what this study chose is on [Study design and methods](study_methods.qmd).
+
+## Area-level exposures
+
+An *area-level* exposure describes where a person lives, not the person: for example, dialysis facilities per resident of an HSA. Everyone in the same area has the same value. Such exposures suit questions about how care is organized locally, but need care in interpretation:
+
+-   An association between an area's characteristics and its residents' outcomes describes people living in such areas. It does not show which individual patients were affected, or how; inferring individual relationships from area patterns is known as the *ecological fallacy* [@piantadosi1988ecological; @morgenstern1995ecologic].
+-   Results can depend on how areas are drawn: a measure computed for HSAs may behave differently for counties. This is known as the *modifiable areal unit problem* [@fotheringham1991maup].
+-   A rate per resident needs a population for the same area and time. Where the area is built from smaller units, each unit's population should be counted once.
+
+Such studies are observational: they describe associations, adjusted for measured differences, and cannot by themselves show that changing the exposure would change the outcome.
+
+## Mixed-effects logistic regression
+
+Logistic regression models a yes/no outcome, such as starting dialysis at or above an eGFR threshold. Results are reported as **odds ratios**: how much higher or lower the odds of the outcome are in one group than in a reference group, with the other variables in the model held fixed. Adding groups of variables in stages shows how the estimate changes as each group is added. Because odds ratios are not *collapsible*, a change between models is not the share of the association that the added variables explain, and the coefficients of the adjustment variables are not estimates of their own effects [@greenland1999collapsibility; @westreich2013table2].
+
+Standard logistic regression assumes each patient's outcome is independent of every other's. Patients in the same area share nephrologists, hospitals and local habits of practice. A **mixed-effects** (or *multilevel*) model allows for this with a **random intercept** for each area, a term that lets the baseline odds differ from area to area. Ignoring the grouping would make confidence intervals too narrow, especially for an exposure measured at the area level [@moulton1990pitfall; @austin2017multilevel].
+
+Fitting a mixed model requires averaging over every area's random intercept, which must be approximated. The Laplace approximation uses one point per area; adaptive Gauss-Hermite quadrature uses several, and is more exact but slower [@pinheiro1995approx]. Stata's mixed-effects logistic command uses adaptive quadrature by default [@stata_melogit]; the R packages `lme4` and `glmmTMB` fit the same models [@lme4_pkg; @glmmtmb]. For the fixed effects, such as an exposure's odds ratio, the Laplace approximation's bias shrinks as the number of patients per area grows, so with large areas the two give practically the same answer [@joe2008laplace]; with yes/no outcomes in small areas, or for the size of the variation between areas, they can differ [@joe2008laplace; @stata_melogit]. The same structure with a continuous outcome is a linear mixed model.
+
+## How much variation lies between areas
+
+A *null* linear mixed model, with no explanatory variables, divides the variation of a continuous outcome such as eGFR into a part between areas and a part between patients within areas; the share between areas is the intraclass correlation [@merlo2006tutorial; @austin2017multilevel]. In R it can be fitted with `lme4` [@lme4_pkg]. Groupings can be nested, such as dialysis facilities within HSAs, to show the share at each level. Shares from different models are comparable only when the models use the same patients.
+
+## Missing laboratory values
+
+A **complete-case** analysis uses only patients with every value recorded; it loses patients and can be biased if they differ systematically. **Multiple imputation** fills in each missing value several times from a model of the other variables, analyses each completed data set, and combines the results by Rubin's rules, so the uncertainty about the missing values is carried into the confidence intervals [@rubin1987mi; @vanbuuren2011mice]. *Chained equations* impute each variable in turn; *predictive mean matching* fills each gap with a value observed in a similar patient [@vanbuuren2011mice; @white2011mice].
+
+## Classifying text with language models {#classifying-text-with-language-models}
+
+Some variables arrive as codes with text descriptions that have to be grouped into a few categories, such as several hundred cause-of-kidney-failure codes into six groups. Traditionally a person does this by hand. A large language model can be asked to do the same: given a definition of each category and a list of codes with their descriptions, it returns a category for each code, with a short reason. Its answers are a draft. They can be wrong, so how they are checked, and who decides when they disagree, is part of the method.
+
+In R, the `ellmer` package [@ellmer_pkg] calls these models. One set of functions works with models from different companies over the internet and with models run on the analyst's own computer, so the same prompt can be sent to several models and their answers compared, all from the same R session.
+
+Each model can be asked for *structured output*: a reply in a fixed form, one category and a short reason per code, in which the category can only be one of the given names. A model therefore cannot invent an extra category, and every answer can be checked mechanically: each code answered exactly once, no codes that are not in the list. Codes are sent in batches, each in a new conversation, so one batch's answers cannot influence the next. Unless a model's randomness is fixed, a second run can give different answers, so the saved answers are the record of what each model said.
+
+Asking several models, from different companies, and accepting a category only when enough of them agree, makes one model's mistake less likely to pass unnoticed. Agreement shows only that the models agree, not that they are right. Fleiss' kappa [@fleiss1971kappa] describes how far several raters, here the models, agree beyond chance: 1 is perfect agreement and 0 is what chance alone would give.
+
+![Placeholder figure, to be replaced. How the cause codes are classified: R sends batches of the public code list, with the same prompt, through ellmer to three cloud models that vote and two local models that are compared only, and accepts a category when at least two of the three cloud models agree. The three rows shown match the accepted categories in `references/esrd-cause-categories.csv`.](../images/esrd-cause-classification-placeholder.png){#fig-esrd-classification fig-alt="Flow diagram, a placeholder. A public list of 445 USRDS cause codes, with no patient data, goes into an R session on the analyst's computer. R groups the codes into batches with a shared prompt of six categories and passes them to ellmer, which sends them to three cloud models (OpenAI GPT, Claude and Gemini) and to two local models through Ollama (Qwen and Llama), which are for comparison only and do not vote. The classifications and reasons return to R as a classified dataset; the example rows show 4464Z, Wegener's granulomatosis, and B20, HIV disease, as glomerulonephritis, and I50.9, heart failure, as hypertension or cardiac. A note says R validates the cloud replies and accepts a category when at least two of the three cloud models agree, sends codes with no majority to a human decision, and keeps the local replies for comparison. Batch sizes are 100 for GPT and Claude, 25 for Gemini and Qwen, and 5 for Llama."}
+
+### Local models and privacy {#local-models-and-privacy}
+
+[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Its advantage is privacy: in Ollama's words, "Ollama runs locally. We don't see your prompts or data when you run locally" ([Ollama FAQ](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)). A cloud model, by contrast, receives every prompt on the provider's servers. Text that contains patient information would need a local model; this study sends only a public code list, so it can use cloud models, and runs local ones for comparison ([Mapping cause codes with ellmer](study_esrd_causes.qmd#which-models-and-how-they-are-asked)). Whether a particular computer and setup are acceptable for protected health information is for the institution to decide, not something Ollama guarantees.
+
+Two cautions about the privacy claim:
+
+-   **Ollama also offers cloud models**, run on Ollama's servers, and its cloud features are on by default. The models used here are local, but to rule out sending anything by mistake, Ollama can run in local-only mode: set the environment variable `OLLAMA_NO_CLOUD=1` and restart Ollama; its log then shows `Ollama cloud disabled: true` ([Ollama FAQ: disabling cloud features](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)).
+-   **The models are downloaded from the internet** (`ollama pull`), and Ollama checks for its own updates. Only the prompts and answers stay on the computer.
+
+The disadvantage is setup. Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer. On a computer without a capable graphics card the models run on the processor, which is much slower than the cloud models.
+
+How to install Ollama and run the local models, and what to do if they crash, is on the code page: [Setting up Ollama](classify_esrd_causes.qmd#setting-up-ollama).
+
+## Reporting standards
+
+STROBE is a checklist for reporting observational studies, including a flow diagram of exclusions [@vonelm2007strobe]. RECORD extends it to routinely collected data such as registries, adding the codes and algorithms that define variables, how sources were linked, and access to data and code [@benchimol2015record].
+
+## References
+
+::: {#refs}
+:::

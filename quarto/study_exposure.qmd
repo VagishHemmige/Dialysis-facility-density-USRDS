@@ -3,7 +3,7 @@ title: "Exposure, outcome and covariates"
 format: html
 ---
 
-This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code is on [3. USRDS patient data](prepare_patients.qmd), [4. Linking area data](link_area_data.qmd) and [6. Density categories](define_exposure.qmd).
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code is on [3. USRDS patient data](prepare_patients.qmd), [4. Linking area data](link_area_data.qmd) and [6. Density categories](define_exposure.qmd).
 
 ## Exposure: facility density
 

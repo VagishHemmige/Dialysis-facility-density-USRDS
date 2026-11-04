@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 div.callout-Rcode.callout {
@@ -155,15 +155,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -785,60 +785,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <p>The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original’s names for comparison, and the replication does the same thing with <code>clean_dartmouth_codes()</code> (see <a href="../quarto/functions.html#dartmouth-codes">Functions</a>).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="sbs-wrap">
-<table class="sbs caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th colspan="2" data-quarto-table-cell-role="th">Original: negative values made positive</th>
-<th colspan="2" data-quarto-table-cell-role="th">Corrected: Dartmouth's codes become missing</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="sbs-no">1</td>
-<td class="sbs-code">HSA_short_data_map&lt;-HSA_short_data_map%&gt;%left_join(hsa_hospitalcapacity)%&gt;%</td>
-<td class="sbs-no">1</td>
-<td class="sbs-code">HSA_short_data_map&lt;-HSA_short_data_map%&gt;%left_join(hsa_hospitalcapacity)%&gt;%</td>
-</tr>
-<tr class="even">
-<td class="sbs-no">2</td>
-<td class="sbs-code">left_join(hsahittingbenchmark)%&gt;%</td>
-<td class="sbs-no">2</td>
-<td class="sbs-code">left_join(hsahittingbenchmark)%&gt;%</td>
-</tr>
-<tr class="odd">
-<td class="sbs-no">3</td>
-<td class="sbs-code sbs-del">mutate(Legamputationsper1000Medica=ifelse(Legamputationsper1000Medica&lt;0, -Legamputationsper1000Medica, Legamputationsper1000Medica))%&gt;%</td>
-<td class="sbs-no">3</td>
-<td class="sbs-code sbs-add">mutate(across(</td>
-</tr>
-<tr class="even">
-<td class="sbs-no">4</td>
-<td class="sbs-code sbs-del">mutate(annualpercenteyeexam2015=ifelse(annualpercenteyeexam2015&lt;0, -annualpercenteyeexam2015, annualpercenteyeexam2015))%&gt;%</td>
-<td class="sbs-no">4</td>
-<td class="sbs-code sbs-add">c(Legamputationsper1000Medica, annualpercenteyeexam2015,</td>
-</tr>
-<tr class="odd">
-<td class="sbs-no">5</td>
-<td class="sbs-code sbs-del">mutate(femaleswithonemammointwoyears=ifelse(femaleswithonemammointwoyears&lt;0, -femaleswithonemammointwoyears,</td>
-<td class="sbs-no">5</td>
-<td class="sbs-code sbs-add">femaleswithonemammointwoyears, percentwithhgba1c2015),</td>
-</tr>
-<tr class="even">
-<td class="sbs-no">6</td>
-<td class="sbs-code sbs-del">femaleswithonemammointwoyears))%&gt;%</td>
-<td class="sbs-no">6</td>
-<td class="sbs-code sbs-add">\(x) if_else(x %in% c(-88888, -99999), NA_real_, x)</td>
-</tr>
-<tr class="odd">
-<td class="sbs-no">7</td>
-<td class="sbs-code sbs-del">mutate(percentwithhgba1c2015=ifelse(percentwithhgba1c2015&lt;0, -percentwithhgba1c2015, percentwithhgba1c2015))</td>
-<td class="sbs-no">7</td>
-<td class="sbs-code sbs-add">))</td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="sbs-wrap"><table class="sbs" data-quarto-disable-processing="true"><colgroup><col class="sbs-n"><col><col class="sbs-n"><col></colgroup><thead><tr><th colspan="2">Original: negative values made positive</th><th colspan="2">Corrected: Dartmouth's codes become missing</th></tr></thead><tbody><tr><td class="sbs-no">1</td><td class="sbs-code ">HSA_short_data_map&lt;-HSA_short_data_map%&gt;%left_join(hsa_hospitalcapacity)%&gt;%</td><td class="sbs-no">1</td><td class="sbs-code ">HSA_short_data_map&lt;-HSA_short_data_map%&gt;%left_join(hsa_hospitalcapacity)%&gt;%</td></tr><tr><td class="sbs-no">2</td><td class="sbs-code ">  left_join(hsahittingbenchmark)%&gt;%</td><td class="sbs-no">2</td><td class="sbs-code ">  left_join(hsahittingbenchmark)%&gt;%</td></tr><tr><td class="sbs-no">3</td><td class="sbs-code sbs-del">  mutate(Legamputationsper1000Medica=ifelse(Legamputationsper1000Medica&lt;0, -Legamputationsper1000Medica, Legamputationsper1000Medica))%&gt;%</td><td class="sbs-no">3</td><td class="sbs-code sbs-add">  mutate(across(</td></tr><tr><td class="sbs-no">4</td><td class="sbs-code sbs-del">  mutate(annualpercenteyeexam2015=ifelse(annualpercenteyeexam2015&lt;0, -annualpercenteyeexam2015, annualpercenteyeexam2015))%&gt;%</td><td class="sbs-no">4</td><td class="sbs-code sbs-add">    c(Legamputationsper1000Medica, annualpercenteyeexam2015,</td></tr><tr><td class="sbs-no">5</td><td class="sbs-code sbs-del">  mutate(femaleswithonemammointwoyears=ifelse(femaleswithonemammointwoyears&lt;0, -femaleswithonemammointwoyears,</td><td class="sbs-no">5</td><td class="sbs-code sbs-add">      femaleswithonemammointwoyears, percentwithhgba1c2015),</td></tr><tr><td class="sbs-no">6</td><td class="sbs-code sbs-del">                                              femaleswithonemammointwoyears))%&gt;%</td><td class="sbs-no">6</td><td class="sbs-code sbs-add">    \(x) if_else(x %in% c(-88888, -99999), NA_real_, x)</td></tr><tr><td class="sbs-no">7</td><td class="sbs-code sbs-del">  mutate(percentwithhgba1c2015=ifelse(percentwithhgba1c2015&lt;0, -percentwithhgba1c2015, percentwithhgba1c2015))</td><td class="sbs-no">7</td><td class="sbs-code sbs-add">  ))</td></tr></tbody></table></div>
 </div>
 </div>
 </section>

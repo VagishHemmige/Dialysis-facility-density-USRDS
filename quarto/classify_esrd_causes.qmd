@@ -85,7 +85,7 @@ The prompt is kept as a text file, [`prompts/esrd-cause-classification.md`](http
 
 ## Prompt and schema in code
 
-The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file.
+The structured output schema restricts each answer to the six category names. The check in this section confirms that the prompt defines each of them. Each saved answer file carries a short fingerprint of the prompt text, so an edited prompt is sent to every provider again; the fingerprint is also recorded in the mapping file. The fingerprint is `rlang::hash()` of R's internal form of the text, so the same prompt can give a different fingerprint on another computer or after an R or rlang update; the committed prompt file and its Git history are the record of which prompt was used, and before any rerun the fingerprint should be checked against the saved answer files.
 
 ```{r}
 #| label: define-classification-prompt

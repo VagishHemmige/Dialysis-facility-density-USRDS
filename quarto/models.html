@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -153,6 +142,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -1015,7 +1015,8 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="saving" class="level2">
 <h2 class="anchored" data-anchor-id="saving">Saving</h2>
-<p>Estimates are saved in the gitignored <code>models/</code> folder with the <code>usRds</code> version, so tables can be rebuilt without refitting.</p>
+<p>Estimates are saved in the gitignored <code>models/</code> folder, so tables can be rebuilt without refitting. With them are saved the version of each package in <code>provenance_packages</code> (set in <code>setup.R</code>), and for usRds, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while usRds is changing (<a href="https://github.com/VagishHemmige/usRds/issues/18">usRds issue #18</a>).</p>
+<p><strong>Functions used:</strong> <a href="../quarto/functions.html#package-provenance"><code>package_provenance()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1024,9 +1025,14 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">published =</span> published_estimates,</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variance =</span> variance_decomposition,</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">egfr_range =</span> egfr_range_estimates,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">usrds_version =</span> <span class="fu">as.character</span>(<span class="fu">packageVersion</span>(<span class="st">"usRds"</span>))</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(model_estimates, <span class="fu">file.path</span>(<span class="st">"models"</span>, <span class="st">"model_estimates.rds"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">usrds_version =</span> <span class="fu">as.character</span>(<span class="fu">packageVersion</span>(<span class="st">"usRds"</span>)),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># version, and repository and commit when installed from GitHub</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">packages =</span> provenance_packages <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(\(package) <span class="fu">suppressWarnings</span>(utils<span class="sc">::</span><span class="fu">packageDescription</span>(package))) <span class="sc">|&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">package_provenance</span>()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(model_estimates, <span class="fu">file.path</span>(<span class="st">"models"</span>, <span class="st">"model_estimates.rds"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 
@@ -1664,12 +1670,14 @@ Rubin, Donald B. 1987. <em>Multiple Imputation for Nonresponse in Surveys</em>. 
 <span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving</span></span>
 <span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>Estimates are saved in the gitignored <span class="in">`models/`</span> folder with the <span class="in">`usRds`</span> version, so tables can be rebuilt without refitting.</span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>Estimates are saved in the gitignored <span class="in">`models/`</span> folder, so tables can be rebuilt without refitting. With them are saved the version of each package in <span class="in">`provenance_packages`</span> (set in <span class="in">`setup.R`</span>), and for usRds, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while usRds is changing (<span class="co">[</span><span class="ot">usRds issue #18</span><span class="co">](https://github.com/VagishHemmige/usRds/issues/18)</span>).</span>
 <span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: save-models</span></span>
-<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`package_provenance()`</span><span class="co">](functions.qmd#package-provenance)</span>.</span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: save-models</span></span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

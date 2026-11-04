@@ -226,6 +226,14 @@ esrd_votes_dir <- file.path(public_data_dir, "esrd-cause-votes")
 imputation_count <- 10
 imputation_seed <- 20231020
 
+# Packages whose version is saved with the model estimates, because they
+# build the cohort or the estimates: usRds is installed from GitHub while its
+# facility functions are unreleased, so its commit is saved too
+provenance_packages <- c(
+  "usRds", "flowchart", "glmmTMB", "lme4", "mice", "broom.mixed",
+  "tidycensus", "zippeR"
+)
+
 # Covariates added at each step of Table 2 (section 8), from the Table 2
 # footnotes; the HSA benchmarks are the three the Methods name
 # Year of hemodialysis initiation, as the paper's Methods say; the original R

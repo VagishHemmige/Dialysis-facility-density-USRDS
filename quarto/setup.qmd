@@ -76,7 +76,7 @@ The six categories are those of the paper's Table 1. The mapping of every USRDS 
 
 ## Model constants
 
-The covariate sets follow the footnotes of the paper's Table 2, and Model 3's HSA benchmarks are the three the paper's Methods name. The logistic models are fit with `glmmTMB` (Laplace approximation); the models page explains why.
+The covariate sets follow the footnotes of the paper's Table 2, and Model 3's HSA benchmarks are the three the paper's Methods name. The logistic models are fit with `glmmTMB` (Laplace approximation); the models page explains why. `provenance_packages` lists the packages whose version (and, for usRds, commit) is saved with the estimates.
 
 ```{r}
 #| label: define-model-constants

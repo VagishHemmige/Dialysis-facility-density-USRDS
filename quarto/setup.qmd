@@ -3,7 +3,7 @@ title: "Setup"
 format: html
 ---
 
-This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call `library()` or hard-code a number.
+This script attaches every package the analysis uses and defines every constant a reader might want to change. Other scripts never call `library()` or hard-code a number. Reusable helpers are in `R/functions.R`; a few small functions used by one script only are defined in that script (in `download_public_data.R`, `models.R` and `classify_esrd_causes.R`) and are explained on its page.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:

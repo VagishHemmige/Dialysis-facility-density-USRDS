@@ -3,7 +3,7 @@ title: "Linking census and facility data"
 format: html
 ---
 
-This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Methodological background](methodological_background.qmd). The code is on [1. Public area data](download_public_data.qmd) and [4. Linking area data](link_area_data.qmd).
+This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code is on [1. Public area data](download_public_data.qmd) and [4. Linking area data](link_area_data.qmd).
 
 Each patient is placed by the residential ZIP code in effect on the day dialysis started. Everything known about where they lived is attached through that ZIP code: the dialysis facilities around them, the census characteristics of their neighbourhood, their Hospital Service Area (HSA) and its population, the HSA's care measures, and how rural the ZIP code is. Every source except USRDS is public and is downloaded from its publisher.
 

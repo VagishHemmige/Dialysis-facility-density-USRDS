@@ -3,7 +3,7 @@ title: "Study design and methods: overview"
 format: html
 ---
 
-This section explains, in plain language and without code, what this study chose and why. This page gives the question, the design and the data; the pages after it take each part in turn. The general background is on [Methodological background](methodological_background.qmd). The formal specification is the [analysis plan](analysis-plan.qmd); each section of these pages ends by linking the part of the plan that governs it. Two kinds of note mark where the description stands:
+This section explains, in plain language and without code, what this study chose and why. This page gives the question, the design and the data; the pages after it take each part in turn. The general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The formal specification is the [analysis plan](analysis-plan.qmd); each section of these pages ends by linking the part of the plan that governs it. Two kinds of note mark where the description stands:
 
 -   **Specified in:** the section of the analysis plan that defines the method.
 -   **Current code:** where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.

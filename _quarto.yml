@@ -36,8 +36,11 @@ website:
           - href: quarto/background.qmd
             text: Clinical background
             icon: book
-          - href: quarto/methodological_background.qmd
-            text: Methodological background
+          - href: quarto/data_sources.qmd
+            text: Data sources
+            icon: book
+          - href: quarto/statistical_methods.qmd
+            text: Statistical methods
             icon: book
 
       - section: Study design and methods
@@ -45,18 +48,25 @@ website:
           - href: quarto/study_methods.qmd
             text: Overview
             icon: diagram-3
-          - href: quarto/study_cohort.qmd
-            text: Who is studied
-            icon: diagram-3
-          - href: quarto/study_linkage.qmd
-            text: Linking census and facility data
-            icon: diagram-3
-          - href: quarto/study_exposure.qmd
-            text: Exposure, outcome and covariates
-            icon: diagram-3
-          - href: quarto/study_esrd_causes.qmd
-            text: Mapping cause codes with ellmer
-            icon: diagram-3
+
+          - section: Patients and places
+            contents:
+              - href: quarto/study_cohort.qmd
+                text: Who is studied
+                icon: diagram-3
+              - href: quarto/study_linkage.qmd
+                text: Linking census and facility data
+                icon: diagram-3
+
+          - section: What is measured
+            contents:
+              - href: quarto/study_exposure.qmd
+                text: Exposure, outcome and covariates
+                icon: diagram-3
+              - href: quarto/study_esrd_causes.qmd
+                text: Mapping cause codes with ellmer
+                icon: diagram-3
+
           - href: quarto/study_analysis.qmd
             text: Analysis and reporting
             icon: diagram-3
@@ -81,7 +91,7 @@ website:
                 text: 1. Public area data
                 icon: laptop
               - href: quarto/classify_esrd_causes.qmd
-                text: 2. Mapping cause codes with ellmer
+                text: 2. Cause code mapping
                 icon: laptop
               - href: quarto/prepare_patients.qmd
                 text: 3. USRDS patient data

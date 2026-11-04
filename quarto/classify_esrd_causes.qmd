@@ -1,5 +1,5 @@
 ---
-title: "2. Mapping cause codes with ellmer"
+title: "2. Cause code mapping"
 format: html
 ---
 
@@ -103,7 +103,7 @@ Five models, set in `setup.R`, three voting and two reported, all called through
 
 ## Setting up Ollama {#setting-up-ollama}
 
-[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Why local models matter, and the cautions about Ollama's privacy, are on [Local models and privacy](study_esrd_causes.qmd#local-models-and-privacy). Setting it up takes some work: Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer.
+[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Why local models matter, and the cautions about Ollama's privacy, are on [Local models and privacy](statistical_methods.qmd#local-models-and-privacy). Setting it up takes some work: Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer.
 
 ### Steps
 

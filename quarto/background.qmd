@@ -19,7 +19,7 @@ Some studies find that it varies by place more than patients explain. In the Uni
 
 Others find little or no association at a larger scale. In Canada, after adjustment for patients and facilities, none of the explained variation in eGFR at initiation lay between 14 geographic regions, and 3.1% lay between dialysis facilities [@sood2014variation]. Across US states, the number of nephrologists per resident was not associated with mean eGFR at initiation, although it was associated with how many people started dialysis [@ku2015workforce].
 
-The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see [Area-level exposures](methodological_background.qmd#area-level-exposures)), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper's analysis reproduces; it does not settle the controversy.
+The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see [Area-level exposures](statistical_methods.qmd#area-level-exposures)), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper's analysis reproduces; it does not settle the controversy.
 
 ## The measures
 

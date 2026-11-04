@@ -29,7 +29,7 @@ knitr::read_chunk("../R/link_area_data.R")
 
 ## Cause of kidney failure mapping
 
-The reviewed mapping, written by [Classifying codes](classify_esrd_causes.qmd), must exist and give every code one of the six categories; otherwise the run stops with instructions. Only `code` and `final_category` are read.
+The reviewed mapping, written by [2. Cause code mapping](classify_esrd_causes.qmd), must exist and give every code one of the six categories; otherwise the run stops with instructions. Only `code` and `final_category` are read.
 
 **Functions used:** [`assert_unique()`](functions.qmd#unique-keys).
 
@@ -47,7 +47,7 @@ A first form whose cause code is blank, or is not in the mapping, counts as Othe
 
 ## Facility counts on the dialysis date
 
-This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. `usRds::add_dialysis_facility_counts()` instead finds the CMS release current on each patient's date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes two errors in the original counts (see [Differences](differences.qmd)).
+This is the step the original code spent most of its length on: it expanded every CMS file to one row per ZIP code per day, over 15 years, to look up counts by date. `usRds::add_dialysis_facility_counts()` instead finds the CMS release current on each patient's date of dialysis start and counts facilities in the ZIP code and in its HSA, with an interval join that cannot multiply rows. It also fixes three errors in the original counts (see [Differences: facility counts](differences.qmd#facility-counts)).
 
 ```{r}
 #| label: attach-facility-counts

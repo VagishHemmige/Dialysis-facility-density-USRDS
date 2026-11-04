@@ -33,7 +33,9 @@ Steps 1 to 9 define the patients the paper studies; steps 10 to 17 keep patients
 
 Steps 11 and 12 are one step in the plan. Each covariate step removes patients so that every model uses the same cohort, as in the original code; only the albumin and hemoglobin models use fewer patients, and they report their own numbers.
 
-Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring recorded covariates means every model without laboratory values uses the same patients, as in the paper (844,466 [@hemmige2024density]).
+Every exclusion is applied in one place, the flowchart, so the published diagram is the cohort itself. Requiring the recorded patient covariates, and complete census and rural-urban data, keeps the patients the same across Models 1 to 3 without laboratory values, as in the paper (844,466 [@hemmige2024density]).
+
+**Current code:** no flowchart step requires the three HSA quality benchmarks that Model 3 adds, so a patient whose HSA lacks one of them is left out of Model 3 only. Each model reports the number of patients it used, so any such difference is visible in the output.
 
 **Specified in:** [§4 Study population](analysis-plan.qmd#4-study-population).
 

@@ -1,6 +1,9 @@
 ---
 title: "Mapping cause codes with ellmer"
 format: html
+# knitr reads the prompt file into the verbatim block below; without an R
+# chunk on the page Quarto would otherwise pick its Python engine
+engine: knitr
 ---
 
 This page is part of the study's design and methods. The **Specified in** and **Current code** notes are explained on the [Overview](study_methods.qmd), and the general background is on [Data sources](data_sources.qmd) and [Statistical methods](statistical_methods.qmd). The code that carries this out is on [2. Cause code mapping](classify_esrd_causes.qmd).
@@ -14,11 +17,6 @@ The mapping from the first full run, on 30 October 2026, is accepted for this an
 ## The code list
 
 The original mapping spreadsheet is lost. Its replacement starts from a public list: every code of USRDS format `$PD96DET` with its description, from Appendix C of the Researcher's Guide [@usrds2024guide], which `usRds` already holds. There are 445 codes: 128 ICD-10-CM codes from the 2015 form, and 317 older codes, mostly ICD-9-CM codes (many with a letter added by USRDS) plus a few that mean the cause is missing. No patient data are involved, and the list is not filtered by what appears in the data. (The original spreadsheet was built from the codes that appeared in the data.)
-
-```{r}
-#| label: load-cause-codes
-#| eval: false
-```
 
 ## The prompt
 

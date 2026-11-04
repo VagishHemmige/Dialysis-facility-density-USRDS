@@ -9,7 +9,7 @@ output:
 
 <!--
 Archived copy of the original analysis (October 2023), kept for comparison with
-the replication in this repository. The only edits: file locations on the
+the revised analysis in this repository. The only edits: file locations on the
 analyst's computer are replaced by "<data folder>/", and this note is added.
 The code is otherwise unchanged and is not run by this repository.
 -->

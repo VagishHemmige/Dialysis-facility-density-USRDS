@@ -8,7 +8,7 @@ This section explains, in plain language and without code, what this study chose
 -   **Specified in:** the section of the analysis plan that defines the method.
 -   **Current code:** where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.
 
-The study is a replication: every choice the paper states is kept, and where the paper is silent the original R code's choice is used [@hemmige2024density]. Every departure from the original code is listed once, on [Differences from the original code](differences.qmd), and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked "chosen for this demonstration". No choice in the plan is open.
+The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code's choice is used [@hemmige2024density]. The data are processed through `usRds`, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on [Differences from the original code](differences.qmd), and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked "chosen for this demonstration". No choice in the plan is open.
 
 ## The question and the design in brief
 
@@ -16,7 +16,7 @@ The study is a replication: every choice the paper states is kept, and where the
 
 **Approach.** A cross-sectional study of patients starting hemodialysis from 2011 to 2019, each linked to the facilities and population of their HSA on the day they started. The question is about association, not causation: whether early starts are more common in denser areas after allowing for differences between patients and areas, not whether adding facilities would cause earlier starts.
 
-**What is reported.** Odds ratios for starting at an eGFR of 10 or above in each category of facility density, compared with HSAs with no facility, from progressively adjusted models. The paper reported an odds ratio of 1.06 (95% CI 1.02 to 1.10) for the densest category [@hemmige2024density]. The replication aims to reproduce its Figure 1, Table 1, Table 2 and eTables 1 to 3.
+**What is reported.** Odds ratios for starting at an eGFR of 10 or above in each category of facility density, compared with HSAs with no facility, from progressively adjusted models. The paper reported an odds ratio of 1.06 (95% CI 1.02 to 1.10) for the densest category [@hemmige2024density]. The code produces its Figure 1, Table 1, Table 2 and eTables 1 to 3 in the published layout, so each can be compared with the published version and the differences explained.
 
 **Specified in:** [§1 Objective](analysis-plan.qmd#1-objective), [§2 Design](analysis-plan.qmd#2-design).
 
@@ -24,7 +24,7 @@ The study is a replication: every choice the paper states is kept, and where the
 
 Patients come from the USRDS Medical Evidence file, and their ZIP code on the day dialysis started from the Residence file. Facilities come from the CMS release current on that day. Each ZIP code is placed in an HSA with the Dartmouth crosswalk and in a ZCTA with the UDS Mapper crosswalk; ZIP code characteristics come from the American Community Survey 5-year subject table for that ZCTA. HSA quality measures (2015) and hospital resources (2012) come from the Dartmouth Atlas, and rural-urban type from the 2010 RUCA ZIP code file.
 
-All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a reproduction, not a new test of the hypothesis. How each source is linked to the patient is on [Dialysis facilities](study_facilities.qmd) and [Census and area data](study_linkage.qmd).
+All area data are matched to the year dialysis started, the same date that sets the facility count, so a patient's facilities, population and neighbourhood describe the same moment. The investigators analysed this USRDS release for the paper and know its results, so every result here is a re-analysis of data whose published results are known, not a new test of the hypothesis. How each source is linked to the patient is on [Dialysis facilities](study_facilities.qmd) and [Census and area data](study_linkage.qmd).
 
 **Specified in:** [§3 Data source](analysis-plan.qmd#3-data-source), [§4 Study population](analysis-plan.qmd#4-study-population) ("Year of linkage").
 

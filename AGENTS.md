@@ -15,11 +15,11 @@ Read the three files before making changes. Each covers its own topic and does n
 
 ## The project
 
-This repository replicates a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient's Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in `original/`). This version rebuilds it with `usRds` and `flowchart`, corrects errors found along the way, and documents each difference. Code and methods are published as a Quarto website.
+This repository revises the analysis of a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient's Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in `original/`). This version rebuilds it with `usRds` and `flowchart`, corrects errors found along the way, and documents each difference. It is a revised analysis, not a replication of the published numbers: it is revised as `usRds` develops, and its results are compared with the published ones rather than expected to match them. Code and methods are published as a Quarto website.
 
 - **`analysis-plan.md` is the source of truth for design.** Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.
 - **Deciders.** Scientific decisions are made by Vagish Hemmige and Ladan Golestaneh, in any area. Anyone may open or contribute to a decision issue; only a decider settles it (see "Working with agents").
-- **Replication rule.** The original code is evidence of what was done, not the specification. When it disagrees with the paper or contains an error, do not silently copy it or silently fix it: the plan's section 12 and the site's "Differences from the original code" page record every difference, and choices between the paper and the code go to a decision issue.
+- **Departures from the original analysis.** The original code is evidence of what was done, not the specification. When it disagrees with the paper or contains an error, do not silently copy it or silently fix it: the plan's section 12 and the site's "Differences from the original code" page record every difference, and choices between the paper and the code go to a decision issue.
 - **This is an analysis project, not an R package.** Do not add DESCRIPTION, NAMESPACE, roxygen, or pkgdown infrastructure, or apply CRAN conventions.
 - **Default branch:** `main`, protected. Changes reach it only through pull requests.
 
@@ -159,7 +159,7 @@ Check the items that apply before opening a pull request.
 
 Project-specific checks:
 
-- **Replication:** does every difference from the original code appear in the plan's section 12 and on the differences page, and is each one either a correction of an error or linked to a decision issue?
+- **Departures:** does every difference from the original code appear in the plan's section 12 and on the differences page, and is each one either a correction of an error or linked to a decision issue?
 - **Geography and dates:** are ACS, crosswalk and population matched to the year the plan specifies, and facility counts to the date of dialysis start? Are ZIP codes 5-character strings with leading zeros kept?
 - **Denominators:** is HSA population summed over the ZCTAs of the ZIP codes the crosswalk assigns to the HSA for that year, each ZCTA once, and are HSAs with no facilities kept as zero, not missing?
 - **Area codes:** are Dartmouth -88888 and -99999 codes missing, and are ACS variable labels checked for every year used?

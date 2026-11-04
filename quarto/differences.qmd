@@ -3,24 +3,24 @@ title: "Differences from the original code"
 format: html
 ---
 
-This page lists every way this replication differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density], and every place where the paper's text differs from that code. Each entry is one of five kinds:
+This page lists every way this analysis differs from the [original R Markdown file](original.qmd) of October 2023, which produced the cohort and Table 1 of the published paper [@hemmige2024density], and every place where the paper's text differs from that code. Each entry is one of five kinds:
 
--   **Corrected error**: the original code did not do what it intended. The replication does, and the effect on the published numbers will be measured on the first full run.
--   **Open decision**: the original code and the paper disagree, or neither says. The replication reproduces the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.
+-   **Corrected error**: the original code did not do what it intended. This analysis does, and the effect on the published numbers is to be measured when the analysis is run on the USRDS data.
+-   **Open decision**: the original code and the paper disagree, or neither says. This analysis follows the original code by default, and the deciders (Vagish Hemmige and Ladan Golestaneh) settle the choice in the linked issue.
 -   **Rebuilt**: the original material is not available, so the step is rebuilt from public sources.
--   **Coding changed**: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. The replication codes for the current version and keeps the original intent.
--   **Paper differs from code**: the paper's text describes a rule slightly differently from the code that produced its numbers. The replication follows the code, as the deciders chose, and the entry records the paper's wording.
+-   **Coding changed**: the original code was right for the data coding of its time, and USRDS has since changed how the variable is coded. This analysis codes for the current version and keeps the original intent.
+-   **Paper differs from code**: the paper's text describes a rule slightly differently from the code that produced its numbers. This analysis follows the code, as the deciders chose, and the entry records the paper's wording.
 
 USRDS variables are named as in the data (for example `DIALSET`); the [glossary](#glossary) at the end says what each one is.
 
 ::: callout-note
 ## Status
-The replication has not yet been run on the USRDS data. The column "Effect on published results" says what each difference can change; the size of each effect will be added after the first run, once the outputs have been checked and cleared for release.
+This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through `usRds`, which is still being developed, and public files are re-downloaded. The column "Effect on published results" says what each difference can change.
 :::
 
 ## Cohort construction
 
-| Original code | Kind | Replication | Effect on published results |
+| Original code | Kind | This analysis | Effect on published results |
 |---|---|---|---|
 | The CONSORT table was kept by hand, separately from the filters. The RUCA exclusion compared a labelled factor with the number `11`, so the table recorded 0 patients removed while the next line removed patients. | Corrected error | Every exclusion is a `flowchart::fc_filter()` step, so the diagram is the cohort. | Figure 1 counts; the cohort itself is unchanged |
 | At least eight filters were applied outside the CONSORT table: the facility linkage, a second sex check, missing ZIP population, % White, % Black, % Asian and % Hispanic, and missing region. The income and poverty rows were labelled "ZIPPercentageFemale". | Corrected error | As above. | Figure 1 counts |
@@ -36,7 +36,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 
 ## Facility counts
 
-| Original code | Kind | Replication | Effect on published results |
+| Original code | Kind | This analysis | Effect on published results |
 |---|---|---|---|
 | Every CMS facility file was expanded to one row per ZIP code per day, from 2005 to 2020, to look up counts by date. | Rebuilt | `usRds::add_dialysis_facility_counts()` uses an interval join on each CMS release's validity period. | None intended; much faster |
 | The October 2017 and January 2018 CMS files code ownership as `1` and `2` instead of "Profit" and "Non-Profit". The reader compared with the text "Profit", so for-profit and non-profit counts were 0 for patients starting dialysis from October 2017 to March 2018. Code 1 is profit, confirmed by matching provider numbers with the July 2017 release. | Corrected error | Ownership is harmonized in `usRds`. | Table 1 row "HSA level total of for-profit dialysis facilities"; not the exposure, which counts all facilities |
@@ -45,7 +45,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 
 ## Area data
 
-| Original code | Kind | Replication | Effect on published results |
+| Original code | Kind | This analysis | Effect on published results |
 |---|---|---|---|
 | Dartmouth Atlas negative values were made positive (`ifelse(x < 0, -x, x)`). Dartmouth codes small values as -88888 and suppressed values as -99999 [@dartmouth_primarycare], so suppressed HSAs would enter as 88,888 or 99,999. | Corrected error | Set to missing (decided 27 October 2026). | Table 1 benchmark rows and Model 3, if the original files held these codes |
 | ACS subject-table variable codes (for example `S0601_C01_047`) were assumed to mean the same thing every year. | Corrected error | Each year's labels are checked; a mismatch stops the run. | None if the codes were stable; otherwise ZIP code income and poverty |
@@ -56,7 +56,7 @@ The replication has not yet been run on the USRDS data. The column "Effect on pu
 
 ### In code: the Dartmouth codes
 
-The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original's names for comparison, and the replication does the same thing with `clean_dartmouth_codes()` (see [Functions](functions.qmd#dartmouth-codes)).
+The first row above, as code. On the left, the original, which turned every negative value into a positive one, so an HSA with a suppressed value (-99999) would enter the models as 99,999. On the right, the same step corrected and written once for all four measures; it is shown in the original's names for comparison, and this analysis does the same thing with `clean_dartmouth_codes()` (see [Functions](functions.qmd#dartmouth-codes)).
 
 ```{r}
 #| echo: false
@@ -89,7 +89,7 @@ HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
 
 ## Patient variables
 
-| Original code | Kind | Replication | Effect on published results |
+| Original code | Kind | This analysis | Effect on published results |
 |---|---|---|---|
 | Codes and their meanings were typed by hand for race, ethnicity, sex, access type, nephrology care and other fields. | Rebuilt | `usRds::load_usrds_file()` applies the USRDS value labels. | None intended |
 | Nephrology care was coded twice: access (`NEPHCARE`, coded yes, no or unknown: no, some or unknown nephrology care) and duration (`NEPHCARERANGE`), with unknown duration left missing. The exploratory R models used the duration; the paper's Discussion mentions duration, while its Methods, Table 1 and the Model 3 footnote say access. | Rebuilt | Access, with unknown as its own level, so Model 3 keeps every patient, as the published n = 844,466 implies (decided 27 October 2026). | Model 3, if Stata used another coding |
@@ -104,10 +104,10 @@ HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
 
 ## Models
 
-| Original code | Kind | Replication | Effect on published results |
+| Original code | Kind | This analysis | Effect on published results |
 |---|---|---|---|
 | Several published models were fit only in Stata and never in R: the race-stratified Model 2, eTable 2's continuous-density models with albumin and hemoglobin, imputed and by race, and eTable 3's models with albumin and hemoglobin and without 0-facility HSAs. | Rebuilt | Every model in Table 2 and eTables 1 to 3 is fit, as presented, from one list of published models (decided 27 October 2026). | eTables 1 to 3 |
-| The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt | Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; the replication uses `glmmTMB` with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than `lme4::glmer` (decided 27 October 2026). See [Models](models.qmd) for the comparison. | Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds |
+| The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (`centers3`, `lag3`) or repeat the outcome in the formula (`GFR_DICH~GFR_DICH~`). | Rebuilt | Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; this analysis uses `glmmTMB` with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than `lme4::glmer` (decided 27 October 2026). See [Models](models.qmd) for the comparison. | Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds |
 | Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as "a multiple imputation technique with chained predictive analytics (10 imputations)", read here as chained equations. | Rebuilt (D7, decided 28 October 2026) | Albumin and hemoglobin imputed with `mice` (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. | The imputation rows of eTable 2 |
 | Model 3 adjusts for "HSA-level success in achieving primary care benchmarks, such as" HbA1c testing, eye examinations among patients with diabetes and ambulatory-sensitive discharges. | Rebuilt | Those three benchmarks; the paper's "such as" may mean that Stata used more (Table 1 also reports mammography). | Model 3, if Stata used more benchmarks |
 | The original R code also fit Model 3 among patients with eGFR between 5 and 25. Not in the paper. | Rebuilt | Kept as an extra table, labelled as not in the paper. Since the cohort already has eGFR of 20 or below, it excludes eGFR of 5 or below. | None on the published tables |
@@ -116,7 +116,7 @@ HSA_short_data_map<-HSA_short_data_map%>%left_join(hsa_hospitalcapacity)%>%
 
 ## Outputs
 
-| Original code | Kind | Replication | Effect on published results |
+| Original code | Kind | This analysis | Effect on published results |
 |---|---|---|---|
 | Two interactive maps saved the center-density map under the station-density file names. | Corrected error | One function draws and saves each map. | None on the paper (its Figure 2 is a static map) |
 | Table 1 was built in Stata; the paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which. | Rebuilt | `gtsummary` with its default layout, classical one-way ANOVA for continuous and chi-squared for categorical characteristics. | Table 1 layout; P values, slightly, for any variable Stata tested by Kruskal-Wallis |
@@ -129,7 +129,7 @@ The original file's data preparation, up to the analysis file, is 880 lines of c
 
 ## Open decisions
 
-No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for the replication as drafted (decided by Vagish Hemmige, 30 October 2026). See [Classifying codes](classify_esrd_causes.qmd).
+No choice is open. The last, D4, was settled on 30 October 2026: the cause-of-kidney-failure mapping drafted by the three cloud models is accepted for this analysis as drafted (decided by Vagish Hemmige, 30 October 2026). See [Classifying codes](classify_esrd_causes.qmd).
 
 ## Glossary
 

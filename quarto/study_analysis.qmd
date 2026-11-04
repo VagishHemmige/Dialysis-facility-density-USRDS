@@ -19,7 +19,7 @@ Mixed-effects logistic regression of early start on density category, with a ran
 
 Models 2 and 3 are fit with and without albumin and hemoglobin; with them, only patients with both values are used (533,375 in the paper [@hemmige2024density]). Census region is not adjusted for, because the footnotes do not list it.
 
-The paper's Methods list these benchmarks with "such as", so the three it names are taken to be the ones used. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on [Every published model](models.qmd#every-published-model).
+The paper's Methods list these benchmarks with "such as", so the three it names are taken to be the ones used. This analysis fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026); the list is on [Every published model](models.qmd#every-published-model).
 
 **Specified in:** [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis).
 
@@ -74,7 +74,7 @@ Each asks whether the main finding rests on one assumption:
 
 **Specified in:** [§9 Sensitivity analyses](analysis-plan.qmd#9-sensitivity-analyses), [§8 Statistical analysis](analysis-plan.qmd#8-statistical-analysis) (missing data).
 
-**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. [Models](models.qmd) does not yet include this; the effects are to be added to [Differences from the original code](differences.qmd) after the first run ([issue #52](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)).
+**Current code:** the plan also applies each correction to the original code one at a time, to measure its effect on the published estimates. [Models](models.qmd) does not yet include this ([issue #52](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues/52)).
 
 ## Disclosure
 

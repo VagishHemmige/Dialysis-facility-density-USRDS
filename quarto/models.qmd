@@ -39,7 +39,7 @@ Year enters as a factor and the reference category is zero facilities, as in the
 
 ## Every published model
 
-The paper's models were fit in Stata, and several of them were never in the original R code: the R file had exploratory models only. The replication fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026):
+The paper's models were fit in Stata, and several of them were never in the original R code: the R file had exploratory models only. This analysis fits every model the paper and its supplement report, as they are presented (decided by Vagish Hemmige, 27 October 2026):
 
 | Table | Blocks | Outcome and exposure |
 |---|---|---|

@@ -54,8 +54,11 @@ website:
               - href: quarto/study_cohort.qmd
                 text: Who is studied
                 icon: diagram-3
+              - href: quarto/study_facilities.qmd
+                text: Dialysis facilities
+                icon: diagram-3
               - href: quarto/study_linkage.qmd
-                text: Linking census and facility data
+                text: Census and area data
                 icon: diagram-3
 
           - section: What is measured

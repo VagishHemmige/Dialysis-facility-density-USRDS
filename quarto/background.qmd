@@ -11,6 +11,16 @@ There is no formal eGFR threshold below which maintenance hemodialysis should be
 
 If eGFR alone does not dictate when dialysis starts, the surrounding health system may. The hypothesis of the paper is that areas organized around high-intensity treatment of end-stage disease, with many dialysis facilities per resident, start dialysis earlier than areas oriented toward prevention [@hemmige2024density]. The unit is the Dartmouth Atlas Hospital Service Area (HSA): a group of ZIP codes whose residents get most of their hospital care locally, about 3,400 in the US [@dartmouth_faq]. The paper calls these "health service areas"; this site keeps the abbreviation HSA.
 
+## An open question
+
+Whether the place a patient lives, and the dialysis care around it, affects when dialysis starts is a matter of controversy. The evidence points in more than one direction.
+
+Some studies find that it varies by place more than patients explain. In the United States, mean eGFR at initiation varied between HSAs, and patient characteristics explained only 11% of that variation [@scialla2014iv]; in a later national study, most of the variation in eGFR at initiation, between and within physicians, was not explained by recorded patient or physician characteristics [@li2017trends]. The paper replicated here found that patients in HSAs with the most facilities per resident started at a higher eGFR [@hemmige2024density].
+
+Others find little or no association at a larger scale. In Canada, after adjustment for patients and facilities, none of the explained variation in eGFR at initiation lay between 14 geographic regions, and 3.1% lay between dialysis facilities [@sood2014variation]. Across US states, the number of nephrologists per resident was not associated with mean eGFR at initiation, although it was associated with how many people started dialysis [@ku2015workforce].
+
+The studies do not measure the same thing. Regions and states are far larger than HSAs, Canada has a different health system, and nephrologist supply is not dialysis facility density. An association between an area and its residents found at one scale need not appear at another (see [Area-level exposures](methodological_background.qmd#area-level-exposures)), and part of what looks like an effect of the area may belong to the facility. This replication asks whether the paper's analysis reproduces; it does not settle the controversy.
+
 ## The measures
 
 -   **eGFR at initiation** is calculated by the USRDS from the serum creatinine reported on the CMS-2728 Medical Evidence form, using a CKD-EPI equation. The Researcher's Guide describes this variable (`GFR_EPI`) only as calculated with CKD-EPI, and lists a separate variable for the 2021 refit [@usrds2024guide]; `GFR_EPI` is therefore read here as the earlier equation, with the race coefficient [@levey2009ckdepi]. It is kept because it approximates the value physicians saw when deciding. The paper's Methods call it "CKD-EPI equation 2012", the year of the equation that adds cystatin C [@inker2012cystatin]; see the [differences page](differences.qmd#patient-variables).

@@ -26,6 +26,13 @@ lines. This version rebuilds it with
 [tidycensus](https://walker-data.com/tidycensus/), corrects errors found
 along the way, and documents every difference from the original code.
 
+**Status.** The paper and its results are published. The rebuilt code is
+complete and tested on synthetic data, but has not yet been run on the
+USRDS data, so the replication has produced no results; the differences
+page describes what each correction could change, not what it did
+change. The published figures and tables shown on the website are the
+journal’s, not outputs of this code.
+
 The analysis website, which explains the code step by step, is at:
 <https://vagishhemmige.github.io/Dialysis-facility-density-USRDS/>
 

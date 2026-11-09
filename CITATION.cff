@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this material, please cite the published article."
+title: "Dialysis facility density and early dialysis initiation: a revised analysis"
+type: software
+authors:
+  - family-names: Hemmige
+    given-names: Vagish
+    orcid: "https://orcid.org/0009-0006-6346-1826"
+license: MIT
+repository-code: "https://github.com/VagishHemmige/Dialysis-facility-density-USRDS"
+url: "https://vagishhemmige.github.io/Dialysis-facility-density-USRDS/"
+preferred-citation:
+  type: article
+  title: "Geographic Dialysis Facility Density and Early Dialysis Initiation"
+  authors:
+    - family-names: "Hemmige"
+      given-names: "Vagish"
+      orcid: "https://orcid.org/0009-0006-6346-1826"
+    - family-names: "Deshpande"
+      given-names: "Priya"
+    - family-names: "Norris"
+      given-names: "Keith C."
+    - family-names: "Shen"
+      given-names: "Jenny I."
+    - family-names: "Erickson"
+      given-names: "Kevin F."
+    - family-names: "Johansen"
+      given-names: "Kirsten L."
+    - family-names: "Golestaneh"
+      given-names: "Ladan"
+  journal: "JAMA Network Open"
+  year: 2024
+  volume: 7
+  issue: "1"
+  start: "e2350009"
+  doi: "10.1001/jamanetworkopen.2023.50009"

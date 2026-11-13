@@ -3,7 +3,7 @@ title: "3. USRDS patient data"
 format: html
 ---
 
-Loads the Medical Evidence and Residence files through `usRds` and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the [cohort flowchart](create_cohort.qmd). What the variables mean, and why they are defined this way, is on [Exposure, outcome and covariates](study_exposure.qmd) and [Who is studied](study_cohort.qmd).
+Loads the Medical Evidence and Residence files through [{usRds}](https://vagishhemmige.github.io/usRds/) and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the [cohort flowchart](create_cohort.qmd). What the variables mean, and why they are defined this way, is on [Exposure, outcome and covariates](study_exposure.qmd) and [Who is studied](study_cohort.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -27,7 +27,7 @@ knitr::read_chunk("../R/prepare_patients.R")
 
 ## Loading the Medical Evidence file
 
-`usRds` finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how this analysis found that the coding of `DIALSET` has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
+{usRds} finds the file in the folder set by `set_USRDS_wd()` and applies the USRDS value labels from Appendix C of the Researcher's Guide [@usrds2024guide], so codes become their documented meanings. That is how this analysis found that the coding of `DIALSET` has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (`PDIS`) is kept as the raw code because several codes share a description.
 
 ```{r}
 #| label: load-medevid

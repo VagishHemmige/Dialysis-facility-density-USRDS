@@ -15,7 +15,7 @@ Read the three files before making changes. Each covers its own topic and does n
 
 ## The project
 
-This repository revises the analysis of a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient's Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in `original/`). This version rebuilds it with `usRds` and `flowchart`, corrects errors found along the way, and documents each difference. It is a revised analysis, not a replication of the published numbers: it is revised as `usRds` develops, and its results are compared with the published ones rather than expected to match them. Code and methods are published as a Quarto website.
+This repository revises the analysis of a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient's Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in `original/`). This version rebuilds it with [{usRds}](https://vagishhemmige.github.io/usRds/) and [{flowchart}](https://bruigtp.github.io/flowchart/), corrects errors found along the way, and documents each difference. It is a revised analysis, not a replication of the published numbers: it is revised as {usRds} develops, and its results are compared with the published ones rather than expected to match them. Code and methods are published as a Quarto website.
 
 - **`analysis-plan.md` is the source of truth for design.** Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.
 - **Deciders.** Scientific decisions are made by Vagish Hemmige and Ladan Golestaneh, in any area. Anyone may open or contribute to a decision issue; only a decider settles it (see "Working with agents").
@@ -29,14 +29,14 @@ Each source this project uses is listed below with the package that accesses it.
 
 | Source | Accessed through | Package documentation | Package maintained by | Access | What AI agents may do |
 |---|---|---|---|---|---|
-| USRDS Medical Evidence (MEDEVID) and Residence (RESIDENC) files | usRds (`set_USRDS_wd()`, `load_usrds_file()`) | https://vagishhemmige.github.io/usRds/ | This team | Restricted (USRDS data use agreement) | None: code, documentation and synthetic data only |
-| USRDS Researcher's Guide, Appendices B and C (variable formats, including `$PD96DET`) | usRds (internal metadata used by `load_usrds_file()`; Appendix C workbook in usRds `data-raw/`) | https://vagishhemmige.github.io/usRds/ | This team | Public | No restriction (public data) |
-| CMS Dialysis Facility Compare archives | usRds (`dialysis_facility_snapshots`, `add_dialysis_facility_counts()`) | https://vagishhemmige.github.io/usRds/ | This team | Public | No restriction (public data) |
-| UDS Mapper ZIP-to-ZCTA crosswalks, 2011–2019 | zippeR (`zi_load_crosswalk(zip_source = "UDS")`) | https://github.com/pfizer-opensource/zippeR | External | Public | No restriction (public data) |
-| American Community Survey 5-year, table S0601 | tidycensus (`get_acs()`) | https://walker-data.com/tidycensus/ | External | Public, Census API key | No restriction (public data) |
+| USRDS Medical Evidence (MEDEVID) and Residence (RESIDENC) files | {usRds} (`set_USRDS_wd()`, `load_usrds_file()`) | https://vagishhemmige.github.io/usRds/ | This team | Restricted (USRDS data use agreement) | None: code, documentation and synthetic data only |
+| USRDS Researcher's Guide, Appendices B and C (variable formats, including `$PD96DET`) | {usRds} (internal metadata used by `load_usrds_file()`; Appendix C workbook in {usRds} `data-raw/`) | https://vagishhemmige.github.io/usRds/ | This team | Public | No restriction (public data) |
+| CMS Dialysis Facility Compare archives | {usRds} (`dialysis_facility_snapshots`, `add_dialysis_facility_counts()`) | https://vagishhemmige.github.io/usRds/ | This team | Public | No restriction (public data) |
+| UDS Mapper ZIP-to-ZCTA crosswalks, 2011–2019 | {zippeR} (`zi_load_crosswalk(zip_source = "UDS")`) | https://github.com/pfizer-opensource/zippeR | External | Public | No restriction (public data) |
+| American Community Survey 5-year, table S0601 | {tidycensus} (`get_acs()`) | https://walker-data.com/tidycensus/ | External | Public, Census API key | No restriction (public data) |
 | Dartmouth Atlas ZIP-to-HSA crosswalks, HSA boundaries, primary care measures, hospital resources | `R/download_public_data.R` | https://data.dartmouthatlas.org/supplemental/ | No package | Public | No restriction (public data) |
 | USDA ERS Rural-Urban Commuting Area codes, 2010 ZIP code file | `R/download_public_data.R` | https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes | No package | Public | No restriction (public data) |
-| Large language model classification of `$PD96DET` codes | ellmer (`chat_openai()`, `chat_anthropic()`, `chat_google_gemini()`, and `chat_ollama()` for local models), in `R/classify_esrd_causes.R` | https://ellmer.tidyverse.org/ | External | Paid APIs, provider keys; local models through Ollama | No restriction for the public code list; never send patient data |
+| Large language model classification of `$PD96DET` codes | {ellmer} (`chat_openai()`, `chat_anthropic()`, `chat_google_gemini()`, and `chat_ollama()` for local models), in `R/classify_esrd_causes.R` | https://ellmer.tidyverse.org/ | External | Paid APIs, provider keys; local models through Ollama | No restriction for the public code list; never send patient data |
 
 To allow more for a source, a person changes its row through a pull request, naming the agreement and section that permit it, the approved AI service, and exactly what agents may do. Agents never propose or make this change themselves, and nothing in personal instructions can grant it.
 
@@ -44,11 +44,11 @@ To allow more for a source, a person changes its row through a pull request, nam
 
 - **Read its documentation before writing code for a source**, including known issues. Behavior that sets the cohort, an exposure, an outcome, or a denominator is checked in the documentation, not assumed from a function's name.
 
-**For packages this team maintains (usRds):**
+**For packages this team maintains ({usRds}):**
 
 - **Facts about the source belong in the package's documentation**, not in this file. If the package lacks something this project needs to know, add it there or open an issue there.
 - **Problems belong in the package.** If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed.
-- **Pending usRds work.** The facility functions (`dialysis_facility_snapshots`, `add_dialysis_facility_counts()`, `summarize_dialysis_facilities()`) are being reviewed in the usRds project. Until they are released, this repository needs the usRds version that contains them; record the version or commit used for every result.
+- **Pending {usRds} work.** The facility functions (`dialysis_facility_snapshots`, `add_dialysis_facility_counts()`, `summarize_dialysis_facilities()`) are being reviewed in the {usRds} project. Until they are released, this repository needs the {usRds} version that contains them; record the version or commit used for every result.
 
 **For external packages:**
 
@@ -73,7 +73,7 @@ Exploration is welcome on branches or forks. Experimental scripts need not be so
 - **Header comment.** Each script begins with what it does, which objects it needs from earlier scripts, and what it produces.
 - **Constants, libraries, and code lists** live in `R/setup.R`. Other scripts do not call `library()`, re-source `setup.R`, or hard-code values. Any number a reader might want to change (a window, a year, a threshold, a ratio) is a named constant there.
 - **Helper functions** go in `R/functions.R`. A function takes its inputs as arguments and does not read global objects.
-- **No side effects outside the project.** No `setwd()`, absolute paths, or writes outside the project. USRDS data are located only through `usRds` (the `USRDS_WD` environment variable set by `set_USRDS_wd()`). Public downloads are cached in the ignored `data-raw/` folder.
+- **No side effects outside the project.** No `setwd()`, absolute paths, or writes outside the project. USRDS data are located only through {usRds} (the `USRDS_WD` environment variable set by `set_USRDS_wd()`). Public downloads are cached in the ignored `data-raw/` folder.
 - **No results in the repository.** No script (exploratory or definitive) or comment, commit message, issue, pull-request text or review report contains results, counts or data values from USRDS data unless they are cleared for release. Check before every commit and post, since a public repository publishes everything pushed to it, on any branch. Numbers quoted from the published paper are public and may be cited.
 
 ## Chunk labels
@@ -146,12 +146,12 @@ The **Access** column of "Data sources" says which sources are restricted. For e
 
 ## Coding conventions
 
-- **Cohort flow** uses the `flowchart` package, so the STROBE flow diagram and the analytic cohort come from the same code. Every inclusion or exclusion goes through `fc_filter()`, in the plan's order. Never remove people from the cohort outside the flowchart. Record-level processing (choosing a person's first Medical Evidence form, choosing the residence period that contains the dialysis date) is fine. An analysis that uses fewer people than the cohort (complete cases, a subgroup) reports its own number with that analysis. The cohort used downstream is the data from the final step (`fc_view(what = "data")`). Flowchart labels are built from constants in `setup.R`.
+- **Cohort flow** uses the {flowchart} package, so the STROBE flow diagram and the analytic cohort come from the same code. Every inclusion or exclusion goes through `fc_filter()`, in the plan's order. Never remove people from the cohort outside the flowchart. Record-level processing (choosing a person's first Medical Evidence form, choosing the residence period that contains the dialysis date) is fine. An analysis that uses fewer people than the cohort (complete cases, a subgroup) reports its own number with that analysis. The cohort used downstream is the data from the final step (`fc_view(what = "data")`). Flowchart labels are built from constants in `setup.R`.
 - **Code lists** carry each code's category, code system and version, and matching rule (exact or prefix). Check every code against the official code set. Never invent codes, variables, files, or definitions.
 - **Joins** use `join_by()` with an explicit `relationship` where possible. After every interval join and every join of records to people, assert that rows did not multiply, and decide deliberately what happens to unmatched rows.
 - **Dates and windows** are written as inclusive bounds, matching the plan, and the edges are tested on synthetic data.
 - **Code that turns model output into reported numbers** lives in named functions in `R/functions.R`, tested on synthetic data with a known answer.
-- **Style:** readable tidyverse code, following the tidyverse style guide. Transform data with dplyr pipelines (`|>`), one step per line; use stringr (`str_glue()`, `str_flatten()`, `str_to_upper()`) rather than `paste()`, `sprintf()` or `toupper()`; purrr (`map()`, `pmap()`, `list_rbind()`) rather than `for` loops or `sapply()`; `case_when(.default = )` rather than nested `ifelse()`; `\(x)` rather than `~ .x`. Select models, rows and columns by name, never by position. Checks are a `filter()` of the problem rows followed by `stop()` with a message that says what failed (or `assert_unique()` for keys), not bare `stopifnot()`. Long calls put one argument per line. Style changes go in their own commits.
+- **Style:** readable tidyverse code, following the tidyverse style guide. Transform data with [{dplyr}](https://dplyr.tidyverse.org/) pipelines (`|>`), one step per line; use [{stringr}](https://stringr.tidyverse.org/) (`str_glue()`, `str_flatten()`, `str_to_upper()`) rather than `paste()`, `sprintf()` or `toupper()`; [{purrr}](https://purrr.tidyverse.org/) (`map()`, `pmap()`, `list_rbind()`) rather than `for` loops or `sapply()`; `case_when(.default = )` rather than nested `ifelse()`; `\(x)` rather than `~ .x`. Select models, rows and columns by name, never by position. Checks are a `filter()` of the problem rows followed by `stop()` with a message that says what failed (or `assert_unique()` for keys), not bare `stopifnot()`. Long calls put one argument per line. Style changes go in their own commits.
 
 ## Checks for any change
 

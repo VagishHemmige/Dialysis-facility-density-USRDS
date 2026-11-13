@@ -23,9 +23,9 @@ in the densest category; about 0.1 mL/min/1.73 m² higher on average):
 
 The original analysis was a single R Markdown file of more than 3,000
 lines. This version rebuilds it with
-[usRds](https://vagishhemmige.github.io/usRds/),
-[flowchart](https://bruigtp.github.io/flowchart/) and
-[tidycensus](https://walker-data.com/tidycensus/), corrects errors found
+[{usRds}](https://vagishhemmige.github.io/usRds/),
+[{flowchart}](https://bruigtp.github.io/flowchart/) and
+[{tidycensus}](https://walker-data.com/tidycensus/), corrects errors found
 along the way, and documents every difference from the original code.
 
 **Status.** The paper and its results are published. The rebuilt code is
@@ -50,10 +50,10 @@ The analysis website, which explains the code step by step, is at:
 ## Running the analysis
 
 Requires authorized access to the USRDS Medical Evidence and Residence
-files, located through the usRds package, and a usRds version that
+files, located through the {usRds} package, and a {usRds} version that
 includes `add_dialysis_facility_counts()`.
 
-1.  Point usRds at the USRDS files once:
+1.  Point {usRds} at the USRDS files once:
     `usRds::set_USRDS_wd("<folder>", permanent = TRUE)`.
 2.  Install a Census API key once:
     `tidycensus::census_api_key("<key>", install = TRUE)`.

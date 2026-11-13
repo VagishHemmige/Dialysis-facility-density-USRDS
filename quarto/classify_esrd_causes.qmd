@@ -3,7 +3,7 @@ title: "2. Cause code mapping"
 format: html
 ---
 
-Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, by asking three cloud large language models through `ellmer` and two local models for comparison. Why language models are used, the categories and their definitions, the agreement rule and what the models showed are explained on [Mapping cause codes with ellmer](study_esrd_causes.qmd), in Study design and methods; this page explains the code. The step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
+Drafts the mapping of every USRDS primary-cause code to the six categories of the paper's Table 1, by asking three cloud large language models through [{ellmer}](https://ellmer.tidyverse.org/) and two local models for comparison. Why language models are used, the categories and their definitions, the agreement rule and what the models showed are explained on [Mapping cause codes with {ellmer}](study_esrd_causes.qmd), in Study design and methods; this page explains the code. The step comes after the public area data and before any USRDS data are loaded, and it uses none. Its line in `R/main.R` is commented out: the script is run once, by hand, because it calls paid APIs and needs the local models, and the file it writes to `references/` is what the analysis reads once the deciders have reviewed it.
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -33,7 +33,7 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 
 **It needs**
 
--   ellmer 0.5.0 or later [@ellmer_pkg], and the irr package for Fleiss' kappa.
+-   {ellmer} 0.5.0 or later [@ellmer_pkg], and the [{irr}](https://CRAN.R-project.org/package=irr) package for Fleiss' kappa.
 -   An API key for each cloud provider in `.Renviron`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`.
 -   [Ollama](https://ollama.com) running on the same computer, with the two local models pulled (`ollama pull qwen3.5:9b` and `ollama pull llama3.1:8b` in a terminal). The script checks both before asking any model, and says what to do if either is missing. Ollama can take some work to set up; see [Setting up Ollama](#setting-up-ollama) before the first run.
 -   The models, batch sizes and agreement rule set in `setup.R` (see [Setup](setup.qmd#cause-of-kidney-failure)): `gpt-6.1-terra` (OpenAI), `claude-sonnet-5-5` (Anthropic) and `gemini-3.8-flash` (Google) in the cloud, and locally, reported without voting, `qwen3.5:9b` (Alibaba's Qwen) and `llama3.1:8b` (Meta's Llama).
@@ -43,7 +43,7 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 **It produces**
 
 -   One file of checked answers per model, in the gitignored `data-raw/` folder.
--   `references/esrd-cause-categories.csv`: one row per code, with each model's category and reason, how the models agreed (`agreement`), the accepted category (`final_category`), the decider's initials (`reviewer`), and the prompt version, ellmer version, models and date.
+-   `references/esrd-cause-categories.csv`: one row per code, with each model's category and reason, how the models agreed (`agreement`), the accepted category (`final_category`), the decider's initials (`reviewer`), and the prompt version, {ellmer} version, models and date.
 -   `references/esrd-cause-agreement.csv`: one row with the number of codes accepted unanimously, by majority only and not at all, and Fleiss' kappa.
 -   `references/esrd-cause-local-models.csv`: one row per local model, with how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category.
 
@@ -54,7 +54,7 @@ knitr::read_chunk("../R/classify_esrd_causes.R")
 
 ## ellmer version
 
-ellmer asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as `claude-sonnet-5-5` from version 0.5.0 (the function `has_claude_structured_output()` in ellmer's source). Older versions force a tool call instead, which current Claude models reject with the error "tool_choice ... not supported for this model".
+{ellmer} asks Claude for its native structured output only for model names it recognizes, and it recognizes Claude 5 names such as `claude-sonnet-5-5` from version 0.5.0 (the function `has_claude_structured_output()` in {ellmer}'s source). Older versions force a tool call instead, which current Claude models reject with the error "tool_choice ... not supported for this model".
 
 ```{r}
 #| label: check-ellmer-version
@@ -72,7 +72,7 @@ Rerunning the script rewrites the mapping file. If the deciders have already rev
 
 ## The code list
 
-The script reads the public list of 445 codes of USRDS format `$PD96DET` with their descriptions, which `usRds` holds (where the list comes from is on [The code list](study_esrd_causes.qmd#the-code-list)), and stops if a code is listed twice.
+The script reads the public list of 445 codes of USRDS format `$PD96DET` with their descriptions, which [{usRds}](https://vagishhemmige.github.io/usRds/) holds (where the list comes from is on [The code list](study_esrd_causes.qmd#the-code-list)), and stops if a code is listed twice.
 
 ```{r}
 #| label: load-cause-codes
@@ -94,7 +94,7 @@ The structured output schema restricts each answer to the six category names. Th
 
 ## One function per model
 
-Five models, set in `setup.R`, three voting and two reported, all called through `ellmer` [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in ellmer, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`). Qwen answers with its "thinking" turned off (`reasoning_effort = "none"`): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Which models were chosen, and why, is on [Which models, and how they are asked](study_esrd_causes.qmd#which-models-and-how-they-are-asked).
+Five models, set in `setup.R`, three voting and two reported, all called through {ellmer} [@ellmer_pkg] with the same structured output. Each model has its own function, so each can be run, checked and saved on its own. Claude's answers are capped at 4,096 tokens by default in {ellmer}, too few for 100 codes with reasons, so its limit is raised (`esrd_classifier_claude_max_tokens`). Qwen answers with its "thinking" turned off (`reasoning_effort = "none"`): with it on, its reasoning filled Ollama's working space before it wrote the answer, and the answer was cut off. Which models were chosen, and why, is on [Which models, and how they are asked](study_esrd_causes.qmd#which-models-and-how-they-are-asked).
 
 ```{r}
 #| label: define-providers
@@ -103,7 +103,7 @@ Five models, set in `setup.R`, three voting and two reported, all called through
 
 ## Setting up Ollama {#setting-up-ollama}
 
-[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and ellmer talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Why local models matter, and the cautions about Ollama's privacy, are on [Local models and privacy](statistical_methods.qmd#local-models-and-privacy). Setting it up takes some work: Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer.
+[Ollama](https://ollama.com) runs open-weight models on the analyst's own computer, and {ellmer} talks to it with [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html). Why local models matter, and the cautions about Ollama's privacy, are on [Local models and privacy](statistical_methods.qmd#local-models-and-privacy). Setting it up takes some work: Ollama has to be installed, the models downloaded (5–8 GB each), and Ollama has to find a way to run them that works on that computer.
 
 ### Steps
 
@@ -141,7 +141,7 @@ In a terminal, `powershell -command "Get-Content $env:LOCALAPPDATA\Ollama\server
 
 ## Running, checking and saving each model
 
-Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models' answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). The local models' answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (`esrd_classifier_timeout_s`); ellmer's default of 5 minutes was too short on a laptop processor. Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a `usRds` update, stops the script; deleting that file asks the provider again.
+Before asking any model, the script checks that Ollama is running and has the local models that still need to be asked. While it runs, it reports each model, whether its answers are read from a saved file or asked for, each batch as it is sent, and how long the provider took. The voting models' answers are checked on every run, whether they are new or read back from a saved file: every code answered exactly once, no invented codes, and only the six categories (`check_votes()`, on the [functions page](functions.qmd)). The local models' answers are kept as they came back, and are counted rather than checked (below). Local models get up to 30 minutes per answer (`esrd_classifier_timeout_s`); {ellmer}'s default of 5 minutes was too short on a laptop processor. Each batch's answers are saved as soon as the batch finishes, in a partial file beside the provider's answer file, so a rerun after a failure (a timeout, a daily quota, a computer going to sleep) asks only the codes that provider has not yet answered. When a provider finishes, its answers are saved under the provider, model and prompt version, and the partial file is deleted; a rerun then asks only the providers that have not finished. A saved file that no longer matches the code list, for example after a {usRds} update, stops the script; deleting that file asks the provider again.
 
 **Functions used:** [`classify_codes()`](functions.qmd#classifying-codes), [`check_votes()`](functions.qmd#checking-a-providers-answers), [`cached_votes()`](functions.qmd#saving-each-providers-answers).
 
@@ -154,7 +154,7 @@ Before asking any model, the script checks that Ollama is running and has the lo
 
 The script applies the two-of-three rule explained on [Agreement](study_esrd_causes.qmd#agreement). `agreement` says, for each code, whether the models were unanimous, how many agreed (for example "2 of 3 models"), or that no category had a majority. For codes with no majority, the deciders fill `final_category` and their initials in `reviewer`.
 
-Fleiss' kappa is computed with the irr package and written to the agreement summary.
+Fleiss' kappa is computed with the {irr} package and written to the agreement summary.
 
 **Functions used:** [`ensemble_agreement()`](functions.qmd#combining-the-models).
 

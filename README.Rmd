@@ -24,7 +24,7 @@ This repository revises the analysis of a published cross-sectional study of 844
 
 > Hemmige V, Deshpande P, Norris KC, Shen JI, Erickson KF, Johansen KL, Golestaneh L. Geographic dialysis facility density and early dialysis initiation. *JAMA Network Open*. 2024;7(1):e2350009. [doi:10.1001/jamanetworkopen.2023.50009](https://doi.org/10.1001/jamanetworkopen.2023.50009)
 
-The original analysis was a single R Markdown file of more than 3,000 lines. This version rebuilds it with [usRds](https://vagishhemmige.github.io/usRds/), [flowchart](https://bruigtp.github.io/flowchart/) and [tidycensus](https://walker-data.com/tidycensus/), corrects errors found along the way, and documents every difference from the original code.
+The original analysis was a single R Markdown file of more than 3,000 lines. This version rebuilds it with [{usRds}](https://vagishhemmige.github.io/usRds/), [{flowchart}](https://bruigtp.github.io/flowchart/) and [{tidycensus}](https://walker-data.com/tidycensus/), corrects errors found along the way, and documents every difference from the original code.
 
 **Status.** The paper and its results are published. The rebuilt code is complete and tested on synthetic data, but has not yet been run on the USRDS data, so this analysis has produced no results; the differences page describes what each correction could change, not what it did change. The published figures and tables shown on the website are the journal's, not outputs of this code.
 
@@ -40,9 +40,9 @@ https://vagishhemmige.github.io/Dialysis-facility-density-USRDS/
 
 ## Running the analysis
 
-Requires authorized access to the USRDS Medical Evidence and Residence files, located through the usRds package, and a usRds version that includes `add_dialysis_facility_counts()`.
+Requires authorized access to the USRDS Medical Evidence and Residence files, located through the {usRds} package, and a {usRds} version that includes `add_dialysis_facility_counts()`.
 
-1. Point usRds at the USRDS files once: `usRds::set_USRDS_wd("<folder>", permanent = TRUE)`.
+1. Point {usRds} at the USRDS files once: `usRds::set_USRDS_wd("<folder>", permanent = TRUE)`.
 2. Install a Census API key once: `tidycensus::census_api_key("<key>", install = TRUE)`.
 3. Create and review `references/esrd-cause-categories.csv` by running `R/classify_esrd_causes.R` once (needs OpenAI, Anthropic and Google API keys, and Ollama with the two local models).
 4. Run `R/main.R` from the project root.

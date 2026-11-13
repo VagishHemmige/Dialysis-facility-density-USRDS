@@ -71,7 +71,7 @@ Whether the patient saw a nephrologist before kidney failure: none, some or unkn
 
 `assign_region()`
 
-Regions by state name, because usRds labels the residence state with its name (format `$STATFIP`). This replaces the original code's state-label spreadsheet.
+Regions by state name, because [{usRds}](https://vagishhemmige.github.io/usRds/) labels the residence state with its name (format `$STATFIP`). This replaces the original code's state-label spreadsheet.
 
 **Used in the analysis:** 3. USRDS patient data: [Residence on the dialysis date](prepare_patients.qmd#residence-on-the-dialysis-date).
 
@@ -275,7 +275,7 @@ The share of the variance of eGFR at each level of a null mixed model.
 
 `package_provenance()`
 
-Where each package that builds the cohort or the estimates came from: its version, its source (CRAN or GitHub), and for a package installed from GitHub, such as usRds while its facility functions are unreleased, the repository and commit. A result can then be traced to the exact code that produced it. It takes the packages' descriptions as `utils::packageDescription()` returns them, so it reads nothing itself, and marks a package that is not installed.
+Where each package that builds the cohort or the estimates came from: its version, its source (CRAN or GitHub), and for a package installed from GitHub, such as {usRds} while its facility functions are unreleased, the repository and commit. A result can then be traced to the exact code that produced it. It takes the packages' descriptions as `utils::packageDescription()` returns them, so it reads nothing itself, and marks a package that is not installed.
 
 **Used in the analysis:** 7. Models: [Saving](models.qmd#saving).
 

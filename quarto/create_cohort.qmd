@@ -3,7 +3,7 @@ title: "5. Cohort flowchart"
 format: html
 ---
 
-Builds the analytic cohort with `flowchart` [@flowchart_pkg]. Every exclusion is one `fc_filter()` step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on [Who is studied](study_cohort.qmd).
+Builds the analytic cohort with [{flowchart}](https://bruigtp.github.io/flowchart/) [@flowchart_pkg]. Every exclusion is one `fc_filter()` step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on [Who is studied](study_cohort.qmd).
 
 ::: {.Rcode title="Source code"}
 The full R script is available at:
@@ -47,7 +47,7 @@ In the original code the cohort was filtered in about 27 separate places, and a 
 
 ## Notes on the code
 
-`flowchart` turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that `main.R` has put in the global environment from `setup.R`, never objects local to a function.
+{flowchart} turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that `main.R` has put in the global environment from `setup.R`, never objects local to a function.
 
 ## The cohort
 

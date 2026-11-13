@@ -11,7 +11,7 @@ Each patient is placed by the residential ZIP code in effect on the day dialysis
 
 ## Facilities on the dialysis date
 
-CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time [@cms2025dfc]. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. The `usRds` package holds the releases from December 2005 to April 2025 and does the counting (the code is on [4. Linking area data](link_area_data.qmd)); facilities whose ZIP code has no HSA are not counted.
+CMS publishes its list of dialysis facilities in releases, each describing the facilities at that time [@cms2025dfc]. For each patient, the release current on the day dialysis started is used, and its facilities are counted in the patient's ZIP code and in their HSA, each facility placed in an HSA by its own ZIP code. The [{usRds}](https://vagishhemmige.github.io/usRds/) package holds the releases from December 2005 to April 2025 and does the counting (the code is on [4. Linking area data](link_area_data.qmd)); facilities whose ZIP code has no HSA are not counted.
 
 **Specified in:** [§5 Exposure](analysis-plan.qmd#5-exposure).
 

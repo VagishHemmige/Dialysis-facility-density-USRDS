@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -114,15 +114,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 div.callout-Rcode.callout {
@@ -136,15 +136,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   content: '💻';
   background-image: none;
 }
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -626,7 +626,7 @@ edit that file, not this page. Its first heading is the page title.
 <p>Read the three files before making changes. Each covers its own topic and does not repeat the others.</p>
 <section id="the-project" class="level2">
 <h2 class="anchored" data-anchor-id="the-project">The project</h2>
-<p>This repository revises the analysis of a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient’s Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in <code>original/</code>). This version rebuilds it with <code>usRds</code> and <code>flowchart</code>, corrects errors found along the way, and documents each difference. It is a revised analysis, not a replication of the published numbers: it is revised as <code>usRds</code> develops, and its results are compared with the published ones rather than expected to match them. Code and methods are published as a Quarto website.</p>
+<p>This repository revises the analysis of a published cross-sectional study of USRDS incident hemodialysis patients, which found that higher dialysis facility density in a patient’s Hospital Service Area (HSA; the paper calls it a health service area) was associated with starting hemodialysis at a higher eGFR (Hemmige et al., JAMA Netw Open 2024, doi:10.1001/jamanetworkopen.2023.50009). The original analysis was one R Markdown file of more than 3,000 lines (kept, with local paths removed, in <code>original/</code>). This version rebuilds it with <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a> and <a href="https://bruigtp.github.io/flowchart/">{flowchart}</a>, corrects errors found along the way, and documents each difference. It is a revised analysis, not a replication of the published numbers: it is revised as {usRds} develops, and its results are compared with the published ones rather than expected to match them. Code and methods are published as a Quarto website.</p>
 <ul>
 <li><strong><code>analysis-plan.md</code> is the source of truth for design.</strong> Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.</li>
 <li><strong>Deciders.</strong> Scientific decisions are made by Vagish Hemmige and Ladan Golestaneh, in any area. Anyone may open or contribute to a decision issue; only a decider settles it (see “Working with agents”).</li>
@@ -660,7 +660,7 @@ edit that file, not this page. Its first heading is the page title.
 <tbody>
 <tr class="odd">
 <td>USRDS Medical Evidence (MEDEVID) and Residence (RESIDENC) files</td>
-<td>usRds (<code>set_USRDS_wd()</code>, <code>load_usrds_file()</code>)</td>
+<td>{usRds} (<code>set_USRDS_wd()</code>, <code>load_usrds_file()</code>)</td>
 <td>https://vagishhemmige.github.io/usRds/</td>
 <td>This team</td>
 <td>Restricted (USRDS data use agreement)</td>
@@ -668,7 +668,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="even">
 <td>USRDS Researcher’s Guide, Appendices B and C (variable formats, including <code>$PD96DET</code>)</td>
-<td>usRds (internal metadata used by <code>load_usrds_file()</code>; Appendix C workbook in usRds <code>data-raw/</code>)</td>
+<td>{usRds} (internal metadata used by <code>load_usrds_file()</code>; Appendix C workbook in {usRds} <code>data-raw/</code>)</td>
 <td>https://vagishhemmige.github.io/usRds/</td>
 <td>This team</td>
 <td>Public</td>
@@ -676,7 +676,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>CMS Dialysis Facility Compare archives</td>
-<td>usRds (<code>dialysis_facility_snapshots</code>, <code>add_dialysis_facility_counts()</code>)</td>
+<td>{usRds} (<code>dialysis_facility_snapshots</code>, <code>add_dialysis_facility_counts()</code>)</td>
 <td>https://vagishhemmige.github.io/usRds/</td>
 <td>This team</td>
 <td>Public</td>
@@ -684,7 +684,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="even">
 <td>UDS Mapper ZIP-to-ZCTA crosswalks, 2011–2019</td>
-<td>zippeR (<code>zi_load_crosswalk(zip_source = "UDS")</code>)</td>
+<td>{zippeR} (<code>zi_load_crosswalk(zip_source = "UDS")</code>)</td>
 <td>https://github.com/pfizer-opensource/zippeR</td>
 <td>External</td>
 <td>Public</td>
@@ -692,7 +692,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>American Community Survey 5-year, table S0601</td>
-<td>tidycensus (<code>get_acs()</code>)</td>
+<td>{tidycensus} (<code>get_acs()</code>)</td>
 <td>https://walker-data.com/tidycensus/</td>
 <td>External</td>
 <td>Public, Census API key</td>
@@ -716,7 +716,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="even">
 <td>Large language model classification of <code>$PD96DET</code> codes</td>
-<td>ellmer (<code>chat_openai()</code>, <code>chat_anthropic()</code>, <code>chat_google_gemini()</code>, and <code>chat_ollama()</code> for local models), in <code>R/classify_esrd_causes.R</code></td>
+<td>{ellmer} (<code>chat_openai()</code>, <code>chat_anthropic()</code>, <code>chat_google_gemini()</code>, and <code>chat_ollama()</code> for local models), in <code>R/classify_esrd_causes.R</code></td>
 <td>https://ellmer.tidyverse.org/</td>
 <td>External</td>
 <td>Paid APIs, provider keys; local models through Ollama</td>
@@ -729,11 +729,11 @@ edit that file, not this page. Its first heading is the page title.
 <ul>
 <li><strong>Read its documentation before writing code for a source</strong>, including known issues. Behavior that sets the cohort, an exposure, an outcome, or a denominator is checked in the documentation, not assumed from a function’s name.</li>
 </ul>
-<p><strong>For packages this team maintains (usRds):</strong></p>
+<p><strong>For packages this team maintains ({usRds}):</strong></p>
 <ul>
 <li><strong>Facts about the source belong in the package’s documentation</strong>, not in this file. If the package lacks something this project needs to know, add it there or open an issue there.</li>
 <li><strong>Problems belong in the package.</strong> If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed.</li>
-<li><strong>Pending usRds work.</strong> The facility functions (<code>dialysis_facility_snapshots</code>, <code>add_dialysis_facility_counts()</code>, <code>summarize_dialysis_facilities()</code>) are being reviewed in the usRds project. Until they are released, this repository needs the usRds version that contains them; record the version or commit used for every result.</li>
+<li><strong>Pending {usRds} work.</strong> The facility functions (<code>dialysis_facility_snapshots</code>, <code>add_dialysis_facility_counts()</code>, <code>summarize_dialysis_facilities()</code>) are being reviewed in the {usRds} project. Until they are released, this repository needs the {usRds} version that contains them; record the version or commit used for every result.</li>
 </ul>
 <p><strong>For external packages:</strong></p>
 <ul>
@@ -759,7 +759,7 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong>Header comment.</strong> Each script begins with what it does, which objects it needs from earlier scripts, and what it produces.</li>
 <li><strong>Constants, libraries, and code lists</strong> live in <code>R/setup.R</code>. Other scripts do not call <code>library()</code>, re-source <code>setup.R</code>, or hard-code values. Any number a reader might want to change (a window, a year, a threshold, a ratio) is a named constant there.</li>
 <li><strong>Helper functions</strong> go in <code>R/functions.R</code>. A function takes its inputs as arguments and does not read global objects.</li>
-<li><strong>No side effects outside the project.</strong> No <code>setwd()</code>, absolute paths, or writes outside the project. USRDS data are located only through <code>usRds</code> (the <code>USRDS_WD</code> environment variable set by <code>set_USRDS_wd()</code>). Public downloads are cached in the ignored <code>data-raw/</code> folder.</li>
+<li><strong>No side effects outside the project.</strong> No <code>setwd()</code>, absolute paths, or writes outside the project. USRDS data are located only through {usRds} (the <code>USRDS_WD</code> environment variable set by <code>set_USRDS_wd()</code>). Public downloads are cached in the ignored <code>data-raw/</code> folder.</li>
 <li><strong>No results in the repository.</strong> No script (exploratory or definitive) or comment, commit message, issue, pull-request text or review report contains results, counts or data values from USRDS data unless they are cleared for release. Check before every commit and post, since a public repository publishes everything pushed to it, on any branch. Numbers quoted from the published paper are public and may be cited.</li>
 </ul>
 </section>
@@ -871,12 +871,12 @@ edit that file, not this page. Its first heading is the page title.
 <section id="coding-conventions" class="level2">
 <h2 class="anchored" data-anchor-id="coding-conventions">Coding conventions</h2>
 <ul>
-<li><strong>Cohort flow</strong> uses the <code>flowchart</code> package, so the STROBE flow diagram and the analytic cohort come from the same code. Every inclusion or exclusion goes through <code>fc_filter()</code>, in the plan’s order. Never remove people from the cohort outside the flowchart. Record-level processing (choosing a person’s first Medical Evidence form, choosing the residence period that contains the dialysis date) is fine. An analysis that uses fewer people than the cohort (complete cases, a subgroup) reports its own number with that analysis. The cohort used downstream is the data from the final step (<code>fc_view(what = "data")</code>). Flowchart labels are built from constants in <code>setup.R</code>.</li>
+<li><strong>Cohort flow</strong> uses the {flowchart} package, so the STROBE flow diagram and the analytic cohort come from the same code. Every inclusion or exclusion goes through <code>fc_filter()</code>, in the plan’s order. Never remove people from the cohort outside the flowchart. Record-level processing (choosing a person’s first Medical Evidence form, choosing the residence period that contains the dialysis date) is fine. An analysis that uses fewer people than the cohort (complete cases, a subgroup) reports its own number with that analysis. The cohort used downstream is the data from the final step (<code>fc_view(what = "data")</code>). Flowchart labels are built from constants in <code>setup.R</code>.</li>
 <li><strong>Code lists</strong> carry each code’s category, code system and version, and matching rule (exact or prefix). Check every code against the official code set. Never invent codes, variables, files, or definitions.</li>
 <li><strong>Joins</strong> use <code>join_by()</code> with an explicit <code>relationship</code> where possible. After every interval join and every join of records to people, assert that rows did not multiply, and decide deliberately what happens to unmatched rows.</li>
 <li><strong>Dates and windows</strong> are written as inclusive bounds, matching the plan, and the edges are tested on synthetic data.</li>
 <li><strong>Code that turns model output into reported numbers</strong> lives in named functions in <code>R/functions.R</code>, tested on synthetic data with a known answer.</li>
-<li><strong>Style:</strong> readable tidyverse code, following the tidyverse style guide. Transform data with dplyr pipelines (<code>|&gt;</code>), one step per line; use stringr (<code>str_glue()</code>, <code>str_flatten()</code>, <code>str_to_upper()</code>) rather than <code>paste()</code>, <code>sprintf()</code> or <code>toupper()</code>; purrr (<code>map()</code>, <code>pmap()</code>, <code>list_rbind()</code>) rather than <code>for</code> loops or <code>sapply()</code>; <code>case_when(.default = )</code> rather than nested <code>ifelse()</code>; <code>\(x)</code> rather than <code>~ .x</code>. Select models, rows and columns by name, never by position. Checks are a <code>filter()</code> of the problem rows followed by <code>stop()</code> with a message that says what failed (or <code>assert_unique()</code> for keys), not bare <code>stopifnot()</code>. Long calls put one argument per line. Style changes go in their own commits.</li>
+<li><strong>Style:</strong> readable tidyverse code, following the tidyverse style guide. Transform data with <a href="https://dplyr.tidyverse.org/">{dplyr}</a> pipelines (<code>|&gt;</code>), one step per line; use <a href="https://stringr.tidyverse.org/">{stringr}</a> (<code>str_glue()</code>, <code>str_flatten()</code>, <code>str_to_upper()</code>) rather than <code>paste()</code>, <code>sprintf()</code> or <code>toupper()</code>; <a href="https://purrr.tidyverse.org/">{purrr}</a> (<code>map()</code>, <code>pmap()</code>, <code>list_rbind()</code>) rather than <code>for</code> loops or <code>sapply()</code>; <code>case_when(.default = )</code> rather than nested <code>ifelse()</code>; <code>\(x)</code> rather than <code>~ .x</code>. Select models, rows and columns by name, never by position. Checks are a <code>filter()</code> of the problem rows followed by <code>stop()</code> with a message that says what failed (or <code>assert_unique()</code> for keys), not bare <code>stopifnot()</code>. Long calls put one argument per line. Style changes go in their own commits.</li>
 </ul>
 </section>
 <section id="checks-for-any-change" class="level2">

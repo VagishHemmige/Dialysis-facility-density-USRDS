@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -144,17 +144,6 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   content: '📊';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -164,6 +153,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -625,18 +625,12 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through <code>usRds</code>, which is still being developed, and public files are re-downloaded. The column “Effect on published results” says what each difference can change.</p>
+<p>This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a>, which is still being developed, and public files are re-downloaded. The column “Effect on published results” says what each difference can change.</p>
 </div>
 </div>
 <section id="cohort-construction" class="level2">
 <h2 class="anchored" data-anchor-id="cohort-construction">Cohort construction</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Original code</th>
@@ -667,7 +661,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>A ZIP-to-ZCTA crosswalk was intended, and counted in the CONSORT table (224 patients in the published Figure 1), but never applied: ZIP codes were matched to ACS ZCTAs as if they were the same. Residents of the roughly one in five ZIP codes whose ZCTA has a different number (mostly PO box ZIP codes) found no ACS data and were excluded at the “ACS ZCTA code data missing” step.</td>
 <td>Corrected error</td>
-<td>The intended crosswalk is applied: each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year (<code>zippeR</code>), with its own flowchart step. HSA population counts each ZCTA once.</td>
+<td>The intended crosswalk is applied: each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year (<a href="https://github.com/pfizer-opensource/zippeR">{zippeR}</a>), with its own flowchart step. HSA population counts each ZCTA once.</td>
 <td>Cohort size (likely larger), ACS variables, HSA population and density</td>
 </tr>
 <tr class="odd">
@@ -742,7 +736,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>The October 2017 and January 2018 CMS files code ownership as <code>1</code> and <code>2</code> instead of “Profit” and “Non-Profit”. The reader compared with the text “Profit”, so for-profit and non-profit counts were 0 for patients starting dialysis from October 2017 to March 2018. Code 1 is profit, confirmed by matching provider numbers with the July 2017 release.</td>
 <td>Corrected error</td>
-<td>Ownership is harmonized in <code>usRds</code>.</td>
+<td>Ownership is harmonized in {usRds}.</td>
 <td>Table 1 row “HSA level total of for-profit dialysis facilities”; not the exposure, which counts all facilities</td>
 </tr>
 <tr class="odd">
@@ -754,7 +748,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>A one-year lagged station count was missing, not 0, where a ZIP code had no facility a year earlier.</td>
 <td>Corrected error</td>
-<td><code>usRds</code> returns 0. Not used in the published models.</td>
+<td>{usRds} returns 0. Not used in the published models.</td>
 <td>None</td>
 </tr>
 </tbody>
@@ -763,12 +757,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="area-data" class="level2">
 <h2 class="anchored" data-anchor-id="area-data">Area data</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Original code</th>
@@ -793,7 +781,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="odd">
 <td>ACS data were downloaded once and cached in a local file.</td>
 <td>Rebuilt</td>
-<td>Downloaded by <code>tidycensus</code> on each fresh run; tidycensus 2.0.0 keeps no local copy of ACS tables <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>.</td>
+<td>Downloaded by <a href="https://walker-data.com/tidycensus/">{tidycensus}</a> on each fresh run; {tidycensus} 2.0.0 keeps no local copy of ACS tables <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>.</td>
 <td>None, unless the Census Bureau has revised the estimates</td>
 </tr>
 <tr class="even">
@@ -811,7 +799,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>State FIPS codes were labelled from a spreadsheet.</td>
 <td>Rebuilt</td>
-<td><code>usRds</code> labels the state from the USRDS format <code>$STATFIP</code>.</td>
+<td>{usRds} labels the state from the USRDS format <code>$STATFIP</code>.</td>
 <td>None</td>
 </tr>
 </tbody>
@@ -922,13 +910,13 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<code>centers3</code>, <code>lag3</code>) or repeat the outcome in the formula (<code>GFR_DICH~GFR_DICH~</code>).</td>
 <td>Rebuilt</td>
-<td>Rebuilt from the paper’s text and Table 2 footnotes. The estimation method differs: Stata’s default is adaptive quadrature with 7 points; this analysis uses <code>glmmTMB</code> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <code>lme4::glmer</code> (decided 27 October 2026). See <a href="../quarto/models.html#choosing-the-model-fitting-package">Choosing the model-fitting package</a> for the comparison.</td>
+<td>Rebuilt from the paper’s text and Table 2 footnotes. The estimation method differs: Stata’s default is adaptive quadrature with 7 points; this analysis uses <a href="https://glmmtmb.github.io/glmmTMB/">{glmmTMB}</a> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <code>lme4::glmer</code> (decided 27 October 2026). See <a href="../quarto/models.html#choosing-the-model-fitting-package">Choosing the model-fitting package</a> for the comparison.</td>
 <td>Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds</td>
 </tr>
 <tr class="odd">
 <td>Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as “a multiple imputation technique with chained predictive analytics (10 imputations)”, read here as chained equations.</td>
 <td>Rebuilt (D7, decided 28 October 2026)</td>
-<td>Albumin and hemoglobin imputed with <code>mice</code> (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly.</td>
+<td>Albumin and hemoglobin imputed with <a href="https://CRAN.R-project.org/package=mice">{mice}</a> (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly.</td>
 <td>The imputation rows of eTable 2</td>
 </tr>
 <tr class="even">
@@ -961,12 +949,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="outputs" class="level2">
 <h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Original code</th>
@@ -985,7 +967,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <tr class="even">
 <td>Table 1 was built in Stata; the paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which.</td>
 <td>Rebuilt</td>
-<td><code>gtsummary</code> with its default layout, classical one-way ANOVA for continuous and chi-squared for categorical characteristics.</td>
+<td><a href="https://www.danieldsjoberg.com/gtsummary/">{gtsummary}</a> with its default layout, classical one-way ANOVA for continuous and chi-squared for categorical characteristics.</td>
 <td>Table 1 layout; P values, slightly, for any variable Stata tested by Kruskal-Wallis</td>
 </tr>
 <tr class="odd">
@@ -1005,7 +987,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="how-much-simpler" class="level2">
 <h2 class="anchored" data-anchor-id="how-much-simpler">How much simpler</h2>
-<p>The original file’s data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 423 lines across five scripts (counted the same way: <code>download_public_data.R</code>, <code>prepare_patients.R</code>, <code>link_area_data.R</code>, <code>create_cohort.R</code> and <code>define_exposure.R</code>), because the access packages do the work: <code>usRds</code> loads and labels the USRDS files and counts facilities by date, <code>tidycensus</code> loads the ACS, and <code>flowchart</code> builds and counts the cohort at once. The facility logic moved into <code>usRds</code>, where it is tested and can be reused by other projects.</p>
+<p>The original file’s data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 423 lines across five scripts (counted the same way: <code>download_public_data.R</code>, <code>prepare_patients.R</code>, <code>link_area_data.R</code>, <code>create_cohort.R</code> and <code>define_exposure.R</code>), because the access packages do the work: {usRds} loads and labels the USRDS files and counts facilities by date, {tidycensus} loads the ACS, and <a href="https://bruigtp.github.io/flowchart/">{flowchart}</a> builds and counts the cohort at once. The facility logic moved into {usRds}, where it is tested and can be reused by other projects.</p>
 </section>
 <section id="open-decisions" class="level2">
 <h2 class="anchored" data-anchor-id="open-decisions">Open decisions</h2>
@@ -1607,7 +1589,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through <span class="in">`usRds`</span>, which is still being developed, and public files are re-downloaded. The column "Effect on published results" says what each difference can change.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>This analysis has not yet been run on the USRDS data. Its numbers are not expected to match the published ones exactly even beyond the entries here, because USRDS and facility data are now processed through <span class="co">[</span><span class="ot">{usRds}</span><span class="co">](https://vagishhemmige.github.io/usRds/)</span>, which is still being developed, and public files are re-downloaded. The column "Effect on published results" says what each difference can change.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cohort construction</span></span>
@@ -1617,7 +1599,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The CONSORT table was kept by hand, separately from the filters. The RUCA exclusion compared a labelled factor with the number <span class="in">`11`</span>, so the table recorded 0 patients removed while the next line removed patients. <span class="pp">|</span> Corrected error <span class="pp">|</span> Every exclusion is a <span class="in">`flowchart::fc_filter()`</span> step, so the diagram is the cohort. <span class="pp">|</span> Figure 1 counts; the cohort itself is unchanged <span class="pp">|</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> At least eight filters were applied outside the CONSORT table: the facility linkage, a second sex check, missing ZIP population, % White, % Black, % Asian and % Hispanic, and missing region. The income and poverty rows were labelled "ZIPPercentageFemale". <span class="pp">|</span> Corrected error <span class="pp">|</span> As above. <span class="pp">|</span> Figure 1 counts <span class="pp">|</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The residence period containing the date of dialysis start was found with a join that would duplicate a patient with two overlapping periods; the code printed a check that patient IDs stayed unique but did not act on it. Whether any patients have overlapping periods is not known. <span class="pp">|</span> Corrected error <span class="pp">|</span> A patient with no matching period, or more than one, gets no residence and is excluded at the "Residential ZIP code" flowchart step. <span class="pp">|</span> Figure 1 counts, only if overlapping periods exist <span class="pp">|</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A ZIP-to-ZCTA crosswalk was intended, and counted in the CONSORT table (224 patients in the published Figure 1), but never applied: ZIP codes were matched to ACS ZCTAs as if they were the same. Residents of the roughly one in five ZIP codes whose ZCTA has a different number (mostly PO box ZIP codes) found no ACS data and were excluded at the "ACS ZCTA code data missing" step. <span class="pp">|</span> Corrected error <span class="pp">|</span> The intended crosswalk is applied: each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year (<span class="in">`zippeR`</span>), with its own flowchart step. HSA population counts each ZCTA once. <span class="pp">|</span> Cohort size (likely larger), ACS variables, HSA population and density <span class="pp">|</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A ZIP-to-ZCTA crosswalk was intended, and counted in the CONSORT table (224 patients in the published Figure 1), but never applied: ZIP codes were matched to ACS ZCTAs as if they were the same. Residents of the roughly one in five ZIP codes whose ZCTA has a different number (mostly PO box ZIP codes) found no ACS data and were excluded at the "ACS ZCTA code data missing" step. <span class="pp">|</span> Corrected error <span class="pp">|</span> The intended crosswalk is applied: each ZIP code is mapped to its ZCTA with the UDS Mapper crosswalk for the year (<span class="co">[</span><span class="ot">{zippeR}</span><span class="co">](https://github.com/pfizer-opensource/zippeR)</span>), with its own flowchart step. HSA population counts each ZCTA once. <span class="pp">|</span> Cohort size (likely larger), ACS variables, HSA population and density <span class="pp">|</span></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`DIALSET`</span> codes 1 and 2 were kept, labelled "Remove patients receiving home HD" (14,380 patients in the published Figure 1). That was correct for the coding of <span class="in">`DIALSET`</span> at the time, which Appendix C still lists as format <span class="in">`$MESET_CUR`</span> (1 hospital inpatient, 2 dialysis facility/center, 3 home), so the original kept inpatient and facility starts. The coding has since changed: in the current format <span class="in">`$MESET`</span> (2024 Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>), code 1 is home, 2 dialysis facility/center, 3 skilled nursing facility and 4 missing, so the same codes would now keep home dialysis. <span class="pp">|</span> Coding changed <span class="pp">|</span> In-center dialysis only ("DIALYSIS FACILITY/CENTER", code 2 in the current coding), which excludes home dialysis as the paper and the original code intended (decided 27 October 2026). <span class="pp">|</span> Figure 1 counts, possibly: the current coding has no inpatient code, and where patients who started dialysis in hospital or in a skilled nursing facility now fall is not yet checked <span class="pp">|</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> eGFR was restricted to 20 or below, and patients with missing eGFR were removed in the same step without being counted separately. The paper says "less than 20"; the published Figure 1 labels the 38,708 excluded patients "eGFR &lt;20", which reads as a label slip for "&gt; 20". <span class="pp">|</span> Paper differs from code <span class="pp">|</span> The code's rule: 20 or below, missing eGFR in the same step (decided 27 October 2026). <span class="pp">|</span> None; the paper's wording differs only for eGFR of exactly 20 <span class="pp">|</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS data and the HSA were matched to the year of the form (<span class="in">`MEFDATE`</span>) and facility counts to the dialysis date (<span class="in">`DIALDAT`</span>). The facility join silently required the two years to be equal, dropping patients whose form was dated in a later year than their dialysis start. <span class="pp">|</span> Corrected error <span class="pp">|</span> All area data are matched to the year dialysis started, the same year as the facility counts, and no one is dropped for a year mismatch (decided 27 October 2026). <span class="pp">|</span> Figure 1 counts; area variables for patients whose form and start years differ <span class="pp">|</span></span>
@@ -1631,9 +1613,9 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Every CMS facility file was expanded to one row per ZIP code per day, from 2005 to 2020, to look up counts by date. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`usRds::add_dialysis_facility_counts()`</span> uses an interval join on each CMS release's validity period. <span class="pp">|</span> None intended; much faster <span class="pp">|</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The October 2017 and January 2018 CMS files code ownership as <span class="in">`1`</span> and <span class="in">`2`</span> instead of "Profit" and "Non-Profit". The reader compared with the text "Profit", so for-profit and non-profit counts were 0 for patients starting dialysis from October 2017 to March 2018. Code 1 is profit, confirmed by matching provider numbers with the July 2017 release. <span class="pp">|</span> Corrected error <span class="pp">|</span> Ownership is harmonized in <span class="in">`usRds`</span>. <span class="pp">|</span> Table 1 row "HSA level total of for-profit dialysis facilities"; not the exposure, which counts all facilities <span class="pp">|</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The October 2017 and January 2018 CMS files code ownership as <span class="in">`1`</span> and <span class="in">`2`</span> instead of "Profit" and "Non-Profit". The reader compared with the text "Profit", so for-profit and non-profit counts were 0 for patients starting dialysis from October 2017 to March 2018. Code 1 is profit, confirmed by matching provider numbers with the July 2017 release. <span class="pp">|</span> Corrected error <span class="pp">|</span> Ownership is harmonized in {usRds}. <span class="pp">|</span> Table 1 row "HSA level total of for-profit dialysis facilities"; not the exposure, which counts all facilities <span class="pp">|</span></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A ZIP code with any facility of unknown ownership or station count had its whole for-profit, non-profit or station count set to 0 (a sum with a missing value is missing, and missing was then set to 0). <span class="pp">|</span> Corrected error <span class="pp">|</span> Only the record with the missing value is left out. <span class="pp">|</span> Station counts and ownership counts, slightly <span class="pp">|</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A one-year lagged station count was missing, not 0, where a ZIP code had no facility a year earlier. <span class="pp">|</span> Corrected error <span class="pp">|</span> <span class="in">`usRds`</span> returns 0. Not used in the published models. <span class="pp">|</span> None <span class="pp">|</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A one-year lagged station count was missing, not 0, where a ZIP code had no facility a year earlier. <span class="pp">|</span> Corrected error <span class="pp">|</span> {usRds} returns 0. Not used in the published models. <span class="pp">|</span> None <span class="pp">|</span></span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Area data</span></span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
@@ -1641,10 +1623,10 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Dartmouth Atlas negative values were made positive (<span class="in">`ifelse(x &lt; 0, -x, x)`</span>). Dartmouth codes small values as -88888 and suppressed values as -99999 <span class="co">[</span><span class="ot">@dartmouth_primarycare</span><span class="co">]</span>, so suppressed HSAs would enter as 88,888 or 99,999. <span class="pp">|</span> Corrected error <span class="pp">|</span> Set to missing (decided 27 October 2026). <span class="pp">|</span> Table 1 benchmark rows and Model 3, if the original files held these codes <span class="pp">|</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS subject-table variable codes (for example <span class="in">`S0601_C01_047`</span>) were assumed to mean the same thing every year. <span class="pp">|</span> Corrected error <span class="pp">|</span> Each year's labels are checked; a mismatch stops the run. <span class="pp">|</span> None if the codes were stable; otherwise ZIP code income and poverty <span class="pp">|</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS data were downloaded once and cached in a local file. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Downloaded by <span class="in">`tidycensus`</span> on each fresh run; tidycensus 2.0.0 keeps no local copy of ACS tables <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>. <span class="pp">|</span> None, unless the Census Bureau has revised the estimates <span class="pp">|</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ACS data were downloaded once and cached in a local file. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Downloaded by <span class="co">[</span><span class="ot">{tidycensus}</span><span class="co">](https://walker-data.com/tidycensus/)</span> on each fresh run; {tidycensus} 2.0.0 keeps no local copy of ACS tables <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>. <span class="pp">|</span> None, unless the Census Bureau has revised the estimates <span class="pp">|</span></span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> RUCA codes, Dartmouth crosswalks, benchmarks and boundaries were read from files on the analyst's computer; the benchmarks were Stata files made by hand. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Downloaded from the publishers' URLs. The benchmark spreadsheets are very likely the sources of the original Stata files; the code checks each column by name. <span class="pp">|</span> None, if the spreadsheets match <span class="pp">|</span></span>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The 2018 and 2019 Dartmouth crosswalks are published as zipped CSV; the original reader only read Excel files. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Both formats are read. <span class="pp">|</span> None <span class="pp">|</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> State FIPS codes were labelled from a spreadsheet. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`usRds`</span> labels the state from the USRDS format <span class="in">`$STATFIP`</span>. <span class="pp">|</span> None <span class="pp">|</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> State FIPS codes were labelled from a spreadsheet. <span class="pp">|</span> Rebuilt <span class="pp">|</span> {usRds} labels the state from the USRDS format <span class="in">`$STATFIP`</span>. <span class="pp">|</span> None <span class="pp">|</span></span>
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### In code: the Dartmouth codes</span></span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
@@ -1699,8 +1681,8 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Several published models were fit only in Stata and never in R: the race-stratified Model 2, eTable 2's continuous-density models with albumin and hemoglobin, imputed and by race, and eTable 3's models with albumin and hemoglobin and without 0-facility HSAs. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Every model in Table 2 and eTables 1 to 3 is fit, as presented, from one list of published models (decided 27 October 2026). <span class="pp">|</span> eTables 1 to 3 <span class="pp">|</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<span class="in">`centers3`</span>, <span class="in">`lag3`</span>) or repeat the outcome in the formula (<span class="in">`GFR_DICH~GFR_DICH~`</span>). <span class="pp">|</span> Rebuilt <span class="pp">|</span> Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; this analysis uses <span class="in">`glmmTMB`</span> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <span class="in">`lme4::glmer`</span> (decided 27 October 2026). See <span class="co">[</span><span class="ot">Choosing the model-fitting package</span><span class="co">](models.qmd#choosing-the-model-fitting-package)</span> for the comparison. <span class="pp">|</span> Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds <span class="pp">|</span></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as "a multiple imputation technique with chained predictive analytics (10 imputations)", read here as chained equations. <span class="pp">|</span> Rebuilt (D7, decided 28 October 2026) <span class="pp">|</span> Albumin and hemoglobin imputed with <span class="in">`mice`</span> (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. <span class="pp">|</span> The imputation rows of eTable 2 <span class="pp">|</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Table 2 models were fit in Stata; the R file has only exploratory models, and several of them call variables that do not exist (<span class="in">`centers3`</span>, <span class="in">`lag3`</span>) or repeat the outcome in the formula (<span class="in">`GFR_DICH~GFR_DICH~`</span>). <span class="pp">|</span> Rebuilt <span class="pp">|</span> Rebuilt from the paper's text and Table 2 footnotes. The estimation method differs: Stata's default is adaptive quadrature with 7 points; this analysis uses <span class="co">[</span><span class="ot">{glmmTMB}</span><span class="co">](https://glmmtmb.github.io/glmmTMB/)</span> with the Laplace approximation, because on synthetic data it gave the same odds ratios to two decimals, converged reliably, and ran about 30 times faster than <span class="in">`lme4::glmer`</span> (decided 27 October 2026). See <span class="co">[</span><span class="ot">Choosing the model-fitting package</span><span class="co">](models.qmd#choosing-the-model-fitting-package)</span> for the comparison. <span class="pp">|</span> Table 2, at most in the third decimal of the odds ratios, if the synthetic comparison holds <span class="pp">|</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Not in the original R code. The paper reports a multiple imputation sensitivity analysis, done in Stata and described only as "a multiple imputation technique with chained predictive analytics (10 imputations)", read here as chained equations. <span class="pp">|</span> Rebuilt (D7, decided 28 October 2026) <span class="pp">|</span> Albumin and hemoglobin imputed with <span class="co">[</span><span class="ot">{mice}</span><span class="co">](https://CRAN.R-project.org/package=mice)</span> (predictive mean matching, 10 imputations), applied to the eTable 2 models as the paper presents them; not expected to match exactly. <span class="pp">|</span> The imputation rows of eTable 2 <span class="pp">|</span></span>
 <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model 3 adjusts for "HSA-level success in achieving primary care benchmarks, such as" HbA1c testing, eye examinations among patients with diabetes and ambulatory-sensitive discharges. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Those three benchmarks; the paper's "such as" may mean that Stata used more (Table 1 also reports mammography). <span class="pp">|</span> Model 3, if Stata used more benchmarks <span class="pp">|</span></span>
 <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The original R code also fit Model 3 among patients with eGFR between 5 and 25. Not in the paper. <span class="pp">|</span> Rebuilt <span class="pp">|</span> Kept as an extra table, labelled as not in the paper. Since the cohort already has eGFR of 20 or below, it excludes eGFR of 5 or below. <span class="pp">|</span> None on the published tables <span class="pp">|</span></span>
 <span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The exploratory R models adjusted for Census region, and one nested HSAs within regions as a random effect. The Table 2 footnotes do not list region. <span class="pp">|</span> Rebuilt <span class="pp">|</span> No region in the models, following the footnotes (decided 28 October 2026). <span class="pp">|</span> Model 3, if Stata adjusted for region <span class="pp">|</span></span>
@@ -1711,13 +1693,13 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Original code <span class="pp">|</span> Kind <span class="pp">|</span> This analysis <span class="pp">|</span> Effect on published results <span class="pp">|</span></span>
 <span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Two interactive maps saved the center-density map under the station-density file names. <span class="pp">|</span> Corrected error <span class="pp">|</span> One function draws and saves each map. <span class="pp">|</span> None on the paper (its Figure 2 is a static map) <span class="pp">|</span></span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table 1 was built in Stata; the paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="in">`gtsummary`</span> with its default layout, classical one-way ANOVA for continuous and chi-squared for categorical characteristics. <span class="pp">|</span> Table 1 layout; P values, slightly, for any variable Stata tested by Kruskal-Wallis <span class="pp">|</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Table 1 was built in Stata; the paper lists one-way ANOVA, Kruskal-Wallis and chi-squared tests without saying which variable used which. <span class="pp">|</span> Rebuilt <span class="pp">|</span> <span class="co">[</span><span class="ot">{gtsummary}</span><span class="co">](https://www.danieldsjoberg.com/gtsummary/)</span> with its default layout, classical one-way ANOVA for continuous and chi-squared for categorical characteristics. <span class="pp">|</span> Table 1 layout; P values, slightly, for any variable Stata tested by Kruskal-Wallis <span class="pp">|</span></span>
 <span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The published Figure 2 shows density in classes. <span class="pp">|</span> Rebuilt <span class="pp">|</span> A continuous colour scale. <span class="pp">|</span> Figure 2 appearance only <span class="pp">|</span></span>
 <span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> The patient-level analysis file was written to Stata and RDS files next to the code. <span class="pp">|</span> Corrected error <span class="pp">|</span> Nothing patient-level is written to the project; only tables and figures, which stay out of Git until cleared. <span class="pp">|</span> None <span class="pp">|</span></span>
 <span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## How much simpler</span></span>
 <span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>The original file's data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 423 lines across five scripts (counted the same way: <span class="in">`download_public_data.R`</span>, <span class="in">`prepare_patients.R`</span>, <span class="in">`link_area_data.R`</span>, <span class="in">`create_cohort.R`</span> and <span class="in">`define_exposure.R`</span>), because the access packages do the work: <span class="in">`usRds`</span> loads and labels the USRDS files and counts facilities by date, <span class="in">`tidycensus`</span> loads the ACS, and <span class="in">`flowchart`</span> builds and counts the cohort at once. The facility logic moved into <span class="in">`usRds`</span>, where it is tested and can be reused by other projects.</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>The original file's data preparation, up to the analysis file, is 880 lines of code (comments and blank lines excluded). The same steps here are 423 lines across five scripts (counted the same way: <span class="in">`download_public_data.R`</span>, <span class="in">`prepare_patients.R`</span>, <span class="in">`link_area_data.R`</span>, <span class="in">`create_cohort.R`</span> and <span class="in">`define_exposure.R`</span>), because the access packages do the work: {usRds} loads and labels the USRDS files and counts facilities by date, {tidycensus} loads the ACS, and <span class="co">[</span><span class="ot">{flowchart}</span><span class="co">](https://bruigtp.github.io/flowchart/)</span> builds and counts the cohort at once. The facility logic moved into {usRds}, where it is tested and can be reused by other projects.</span>
 <span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Open decisions</span></span>
 <span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>

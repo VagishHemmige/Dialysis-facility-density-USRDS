@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -597,7 +597,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </header>
 
 
-<p>Builds the analytic cohort with <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>. Every exclusion is one <code>fc_filter()</code> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on <a href="../quarto/study_cohort.html">Who is studied</a>.</p>
+<p>Builds the analytic cohort with <a href="https://bruigtp.github.io/flowchart/">{flowchart}</a> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>. Every exclusion is one <code>fc_filter()</code> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on <a href="../quarto/study_cohort.html">Who is studied</a>.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -682,7 +682,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 <section id="notes-on-the-code" class="level2">
 <h2 class="anchored" data-anchor-id="notes-on-the-code">Notes on the code</h2>
-<p><code>flowchart</code> turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that <code>main.R</code> has put in the global environment from <code>setup.R</code>, never objects local to a function.</p>
+<p>{flowchart} turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that <code>main.R</code> has put in the global environment from <code>setup.R</code>, never objects local to a function.</p>
 </section>
 <section id="the-cohort" class="level2">
 <h2 class="anchored" data-anchor-id="the-cohort">The cohort</h2>
@@ -1184,7 +1184,7 @@ Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristia
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Builds the analytic cohort with <span class="in">`flowchart`</span> <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span>. Every exclusion is one <span class="in">`fc_filter()`</span> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd)</span>.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Builds the analytic cohort with <span class="co">[</span><span class="ot">{flowchart}</span><span class="co">](https://bruigtp.github.io/flowchart/)</span> <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span>. Every exclusion is one <span class="in">`fc_filter()`</span> step in the order of section 4 of the analysis plan, so the flow diagram (Figure 1) is the cohort. Who is studied, and why each exclusion is made, is on <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd)</span>.</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
@@ -1228,7 +1228,7 @@ Satorra, Pau, João Carmezim, Natàlia Pallarès, Kenneth A. Taylor, and Cristia
 <span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes on the code</span></span>
 <span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="in">`flowchart`</span> turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that <span class="in">`main.R`</span> has put in the global environment from <span class="in">`setup.R`</span>, never objects local to a function.</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>{flowchart} turns each condition into text and evaluates it again in its own environment, so a condition can use only columns of the data and constants that <span class="in">`main.R`</span> has put in the global environment from <span class="in">`setup.R`</span>, never objects local to a function.</span>
 <span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## The cohort</span></span>
 <span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>

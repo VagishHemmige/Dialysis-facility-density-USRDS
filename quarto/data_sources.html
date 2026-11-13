@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -133,15 +133,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -155,15 +155,15 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   content: '📊';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -634,11 +634,11 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <section id="zip-codes-and-zctas" class="level2">
 <h2 class="anchored" data-anchor-id="zip-codes-and-zctas">ZIP codes and ZCTAs</h2>
 <p>ZIP codes are mail delivery routes, not areas with fixed boundaries, and they are added, changed and retired <span class="citation" data-cites="grubesic2006zcta">(<a href="#ref-grubesic2006zcta" role="doc-biblioref">Grubesic and Matisziw 2006</a>)</span>. The Census Bureau publishes its statistics for ZIP Code Tabulation Areas (ZCTAs), areas built to approximate the territory of ZIP codes <span class="citation" data-cites="census_zcta">(<a href="#ref-census_zcta" role="doc-biblioref">U.S. Census Bureau, n.d.-b</a>)</span>. Most ZIP codes have a ZCTA with the same number, but not every ZIP code has one <span class="citation" data-cites="census_zcta">(<a href="#ref-census_zcta" role="doc-biblioref">U.S. Census Bureau, n.d.-b</a>)</span>; a ZIP code with no territory of its own, such as one used only for post office boxes, is counted within a surrounding ZCTA <span class="citation" data-cites="grubesic2006zcta">(<a href="#ref-grubesic2006zcta" role="doc-biblioref">Grubesic and Matisziw 2006</a>)</span>.</p>
-<p>Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the <code>zippeR</code> R package makes them available <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>)</span>. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.</p>
+<p>Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the <a href="https://github.com/pfizer-opensource/zippeR">{zippeR}</a> R package makes them available <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>)</span>. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.</p>
 </section>
 <section id="american-community-survey-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="american-community-survey-estimates">American Community Survey estimates</h2>
-<p>The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes <em>5-year estimates</em>, which pool 60 months of responses; an estimate labelled with a year describes the five years ending in that year, not that year alone <span class="citation" data-cites="census2020acshandbook">(<a href="#ref-census2020acshandbook" role="doc-biblioref">U.S. Census Bureau 2020</a>)</span>. A <em>subject table</em> gathers many characteristics of an area (population, race, income, poverty) in one place <span class="citation" data-cites="census2020acshandbook">(<a href="#ref-census2020acshandbook" role="doc-biblioref">U.S. Census Bureau 2020</a>)</span>. The <code>tidycensus</code> R package downloads ACS tables <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>. The Census Bureau changes tables between releases <span class="citation" data-cites="census_acs_tablechanges">(<a href="#ref-census_acs_tablechanges" role="doc-biblioref">U.S. Census Bureau, n.d.-a</a>)</span>, so the codes that identify variables can change, and each year’s labels need checking.</p>
+<p>The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes <em>5-year estimates</em>, which pool 60 months of responses; an estimate labelled with a year describes the five years ending in that year, not that year alone <span class="citation" data-cites="census2020acshandbook">(<a href="#ref-census2020acshandbook" role="doc-biblioref">U.S. Census Bureau 2020</a>)</span>. A <em>subject table</em> gathers many characteristics of an area (population, race, income, poverty) in one place <span class="citation" data-cites="census2020acshandbook">(<a href="#ref-census2020acshandbook" role="doc-biblioref">U.S. Census Bureau 2020</a>)</span>. The <a href="https://walker-data.com/tidycensus/">{tidycensus}</a> R package downloads ACS tables <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>. The Census Bureau changes tables between releases <span class="citation" data-cites="census_acs_tablechanges">(<a href="#ref-census_acs_tablechanges" role="doc-biblioref">U.S. Census Bureau, n.d.-a</a>)</span>, so the codes that identify variables can change, and each year’s labels need checking.</p>
 </section>
 <section id="rural-urban-commuting-area-codes" class="level2">
 <h2 class="anchored" data-anchor-id="rural-urban-commuting-area-codes">Rural-urban commuting area codes</h2>
@@ -1252,11 +1252,11 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>ZIP codes are mail delivery routes, not areas with fixed boundaries, and they are added, changed and retired <span class="co">[</span><span class="ot">@grubesic2006zcta</span><span class="co">]</span>. The Census Bureau publishes its statistics for ZIP Code Tabulation Areas (ZCTAs), areas built to approximate the territory of ZIP codes <span class="co">[</span><span class="ot">@census_zcta</span><span class="co">]</span>. Most ZIP codes have a ZCTA with the same number, but not every ZIP code has one <span class="co">[</span><span class="ot">@census_zcta</span><span class="co">]</span>; a ZIP code with no territory of its own, such as one used only for post office boxes, is counted within a surrounding ZCTA <span class="co">[</span><span class="ot">@grubesic2006zcta</span><span class="co">]</span>.</span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the <span class="in">`zippeR`</span> R package makes them available <span class="co">[</span><span class="ot">@uds_crosswalk; @zipper_pkg</span><span class="co">]</span>. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the <span class="co">[</span><span class="ot">{zippeR}</span><span class="co">](https://github.com/pfizer-opensource/zippeR)</span> R package makes them available <span class="co">[</span><span class="ot">@uds_crosswalk; @zipper_pkg</span><span class="co">]</span>. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## American Community Survey estimates</span></span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes *5-year estimates*, which pool 60 months of responses; an estimate labelled with a year describes the five years ending in that year, not that year alone [@census2020acshandbook]. A *subject table* gathers many characteristics of an area (population, race, income, poverty) in one place <span class="co">[</span><span class="ot">@census2020acshandbook</span><span class="co">]</span>. The <span class="in">`tidycensus`</span> R package downloads ACS tables <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>. The Census Bureau changes tables between releases <span class="co">[</span><span class="ot">@census_acs_tablechanges</span><span class="co">]</span>, so the codes that identify variables can change, and each year's labels need checking.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes *5-year estimates*, which pool 60 months of responses; an estimate labelled with a year describes the five years ending in that year, not that year alone [@census2020acshandbook]. A *subject table* gathers many characteristics of an area (population, race, income, poverty) in one place <span class="co">[</span><span class="ot">@census2020acshandbook</span><span class="co">]</span>. The <span class="co">[</span><span class="ot">{tidycensus}</span><span class="co">](https://walker-data.com/tidycensus/)</span> R package downloads ACS tables <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span>. The Census Bureau changes tables between releases <span class="co">[</span><span class="ot">@census_acs_tablechanges</span><span class="co">]</span>, so the codes that identify variables can change, and each year's labels need checking.</span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rural-urban commuting area codes</span></span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>

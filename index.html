@@ -101,7 +101,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -132,15 +132,15 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -154,15 +154,15 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   content: '📊';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
 }
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
 }
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -605,9 +605,9 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <h2 class="anchored" data-anchor-id="what-this-site-does">What this site does</h2>
 <p>This repository rebuilds the paper’s analysis from public code, as a revised analysis rather than a replication of its numbers. The original analysis was a single R Markdown file of more than 3,000 lines (shown <a href="./quarto/original.html">here</a>, with local file locations removed). It is rebuilt with packages that do the repetitive work:</p>
 <ul>
-<li><strong>usRds</strong> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span> loads and labels the USRDS files, and attaches CMS dialysis facility counts to each patient by the date dialysis started.</li>
-<li><strong>flowchart</strong> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</li>
-<li><strong>tidycensus</strong> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</li>
+<li><strong><a href="https://vagishhemmige.github.io/usRds/">{usRds}</a></strong> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span> loads and labels the USRDS files, and attaches CMS dialysis facility counts to each patient by the date dialysis started.</li>
+<li><strong><a href="https://bruigtp.github.io/flowchart/">{flowchart}</a></strong> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</li>
+<li><strong><a href="https://walker-data.com/tidycensus/">{tidycensus}</a></strong> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</li>
 </ul>
 <p>Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the <a href="./quarto/differences.html">differences page</a>. Where the original code and the paper disagree, the choice is left to the investigators.</p>
 </section>
@@ -617,7 +617,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 <section id="status" class="level2">
 <h2 class="anchored" data-anchor-id="status">Status</h2>
-<p>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Its results are not expected to match the published ones exactly: the processing now runs through <code>usRds</code>, which is still being developed, public files are re-downloaded, and errors in the original code are corrected. The site will be revised as the package develops. Open decisions are listed on the <a href="./quarto/differences.html#open-decisions">differences page</a> and tracked as <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues">GitHub issues</a>.</p>
+<p>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Its results are not expected to match the published ones exactly: the processing now runs through {usRds}, which is still being developed, public files are re-downloaded, and errors in the original code are corrected. The site will be revised as the package develops. Open decisions are listed on the <a href="./quarto/differences.html#open-decisions">differences page</a> and tracked as <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues">GitHub issues</a>.</p>
 <p>The analysis also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when two of three language models agree, and the grouping of race into the paper’s five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked “chosen for this demonstration” where it is described.</p>
 </section>
 <section id="references" class="level2">
@@ -1122,9 +1122,9 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>This repository rebuilds the paper's analysis from public code, as a revised analysis rather than a replication of its numbers. The original analysis was a single R Markdown file of more than 3,000 lines (shown <span class="co">[</span><span class="ot">here</span><span class="co">](quarto/original.qmd)</span>, with local file locations removed). It is rebuilt with packages that do the repetitive work:</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**usRds** <span class="co">[</span><span class="ot">@usrds_pkg</span><span class="co">]</span> loads and labels the USRDS files, and attaches CMS dialysis facility counts to each patient by the date dialysis started.</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**flowchart** <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**tidycensus** <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**[{usRds}](https://vagishhemmige.github.io/usRds/)** <span class="co">[</span><span class="ot">@usrds_pkg</span><span class="co">]</span> loads and labels the USRDS files, and attaches CMS dialysis facility counts to each patient by the date dialysis started.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**[{flowchart}](https://bruigtp.github.io/flowchart/)** <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**[{tidycensus}](https://walker-data.com/tidycensus/)** <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd)</span>. Where the original code and the paper disagree, the choice is left to the investigators.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -1134,7 +1134,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Its results are not expected to match the published ones exactly: the processing now runs through <span class="in">`usRds`</span>, which is still being developed, public files are re-downloaded, and errors in the original code are corrected. The site will be revised as the package develops. Open decisions are listed on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd#open-decisions)</span> and tracked as <span class="co">[</span><span class="ot">GitHub issues</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues)</span>.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Its results are not expected to match the published ones exactly: the processing now runs through {usRds}, which is still being developed, public files are re-downloaded, and errors in the original code are corrected. The site will be revised as the package develops. Open decisions are listed on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd#open-decisions)</span> and tracked as <span class="co">[</span><span class="ot">GitHub issues</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues)</span>.</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>The analysis also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when two of three language models agree, and the grouping of race into the paper's five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked "chosen for this demonstration" where it is described.</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>

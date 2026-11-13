@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -133,6 +133,17 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -153,17 +164,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
   background-image: none;
 }
 </style>
@@ -602,7 +602,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <li><strong>Specified in:</strong> the section of the analysis plan that defines the method.</li>
 <li><strong>Current code:</strong> where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.</li>
 </ul>
-<p>The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code’s choice is used <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The data are processed through <code>usRds</code>, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on <a href="../quarto/differences.html">Differences from the original code</a>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked “chosen for this demonstration”. No choice in the plan is open.</p>
+<p>The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code’s choice is used <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. The data are processed through <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a>, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on <a href="../quarto/differences.html">Differences from the original code</a>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked “chosen for this demonstration”. No choice in the plan is open.</p>
 <section id="the-question-and-the-design-in-brief" class="level2">
 <h2 class="anchored" data-anchor-id="the-question-and-the-design-in-brief">The question and the design in brief</h2>
 <p><strong>Question.</strong> Among adults starting in-center hemodialysis in the United States, do those living in Hospital Service Areas (HSAs) with more dialysis facilities per resident start dialysis at a higher eGFR?</p>
@@ -1105,7 +1105,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Specified in:** the section of the analysis plan that defines the method.</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Current code:** where the code does something the plan does not say, or not yet, or differs from the original analysis code, with a link to the page that explains it.</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code's choice is used <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The data are processed through <span class="in">`usRds`</span>, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on <span class="co">[</span><span class="ot">Differences from the original code</span><span class="co">](differences.qmd)</span>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked "chosen for this demonstration". No choice in the plan is open.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>The study is a revised analysis of the published one, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026): every choice the paper states is kept, and where the paper is silent the original R code's choice is used <span class="co">[</span><span class="ot">@hemmige2024density</span><span class="co">]</span>. The data are processed through <span class="co">[</span><span class="ot">{usRds}</span><span class="co">](https://vagishhemmige.github.io/usRds/)</span>, which is still being developed, so results are compared with the published ones rather than expected to match them. Every departure from the original code is listed once, on <span class="co">[</span><span class="ot">Differences from the original code</span><span class="co">](differences.qmd)</span>, and not repeated here. A few choices that neither source settles were made for this demonstration rather than by a full scientific review, and are marked "chosen for this demonstration". No choice in the plan is open.</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## The question and the design in brief</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>

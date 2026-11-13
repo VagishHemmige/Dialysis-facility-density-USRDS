@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -114,17 +114,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -134,6 +123,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -602,7 +602,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </div>
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
-<p>Each data source has an access package: <code>usRds</code> for the USRDS files and the CMS facility snapshots, <code>tidycensus</code> for the American Community Survey. <code>flowchart</code> builds the cohort, so the STROBE diagram and the analytic data come from the same code. <code>glmmTMB</code> fits the mixed-effects logistic models and <code>lme4</code> the linear ones, <code>gtsummary</code> and <code>gt</code> build the tables, and <code>mice</code> imputes albumin and hemoglobin.</p>
+<p>Each data source has an access package: <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a> for the USRDS files and the CMS facility snapshots, <a href="https://walker-data.com/tidycensus/">{tidycensus}</a> for the American Community Survey. <a href="https://bruigtp.github.io/flowchart/">{flowchart}</a> builds the cohort, so the STROBE diagram and the analytic data come from the same code. <a href="https://glmmtmb.github.io/glmmTMB/">{glmmTMB}</a> fits the mixed-effects logistic models and <a href="https://CRAN.R-project.org/package=lme4">{lme4}</a> the linear ones, <a href="https://www.danieldsjoberg.com/gtsummary/">{gtsummary}</a> and <a href="https://gt.rstudio.com/">{gt}</a> build the tables, and <a href="https://CRAN.R-project.org/package=mice">{mice}</a> imputes albumin and hemoglobin.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -777,7 +777,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="cause-of-kidney-failure" class="level2">
 <h2 class="anchored" data-anchor-id="cause-of-kidney-failure">Cause of kidney failure</h2>
-<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">2. Cause code mapping</a>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</p>
+<p>The six categories are those of the paper’s Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider’s current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba’s Qwen and Meta’s Llama) answer too and are reported for comparison, without voting (<code>esrd_classifier_voting</code> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <a href="../quarto/classify_esrd_causes.html">2. Cause code mapping</a>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the <a href="https://ellmer.tidyverse.org/">{ellmer}</a> version are recorded in the output file.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -859,7 +859,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="model-constants" class="level2">
 <h2 class="anchored" data-anchor-id="model-constants">Model constants</h2>
-<p>The covariate sets follow the footnotes of the paper’s Table 2, and Model 3’s HSA benchmarks are the three the paper’s Methods name. The logistic models are fit with <code>glmmTMB</code> (Laplace approximation); the models page explains why. <code>provenance_packages</code> lists the packages whose version (and, for usRds, commit) is saved with the estimates.</p>
+<p>The covariate sets follow the footnotes of the paper’s Table 2, and Model 3’s HSA benchmarks are the three the paper’s Methods name. The logistic models are fit with {glmmTMB} (Laplace approximation); the models page explains why. <code>provenance_packages</code> lists the packages whose version (and, for {usRds}, commit) is saved with the estimates.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1402,7 +1402,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Packages</span></span>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>Each data source has an access package: <span class="in">`usRds`</span> for the USRDS files and the CMS facility snapshots, <span class="in">`tidycensus`</span> for the American Community Survey. <span class="in">`flowchart`</span> builds the cohort, so the STROBE diagram and the analytic data come from the same code. <span class="in">`glmmTMB`</span> fits the mixed-effects logistic models and <span class="in">`lme4`</span> the linear ones, <span class="in">`gtsummary`</span> and <span class="in">`gt`</span> build the tables, and <span class="in">`mice`</span> imputes albumin and hemoglobin.</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>Each data source has an access package: <span class="co">[</span><span class="ot">{usRds}</span><span class="co">](https://vagishhemmige.github.io/usRds/)</span> for the USRDS files and the CMS facility snapshots, <span class="co">[</span><span class="ot">{tidycensus}</span><span class="co">](https://walker-data.com/tidycensus/)</span> for the American Community Survey. <span class="co">[</span><span class="ot">{flowchart}</span><span class="co">](https://bruigtp.github.io/flowchart/)</span> builds the cohort, so the STROBE diagram and the analytic data come from the same code. <span class="co">[</span><span class="ot">{glmmTMB}</span><span class="co">](https://glmmtmb.github.io/glmmTMB/)</span> fits the mixed-effects logistic models and <span class="co">[</span><span class="ot">{lme4}</span><span class="co">](https://CRAN.R-project.org/package=lme4)</span> the linear ones, <span class="co">[</span><span class="ot">{gtsummary}</span><span class="co">](https://www.danieldsjoberg.com/gtsummary/)</span> and <span class="co">[</span><span class="ot">{gt}</span><span class="co">](https://gt.rstudio.com/)</span> build the tables, and <span class="co">[</span><span class="ot">{mice}</span><span class="co">](https://CRAN.R-project.org/package=mice)</span> imputes albumin and hemoglobin.</span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-packages</span></span>
@@ -1447,7 +1447,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cause of kidney failure</span></span>
 <span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">2. Cause code mapping</span><span class="co">](classify_esrd_causes.qmd)</span>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the ellmer version are recorded in the output file.</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>The six categories are those of the paper's Table 1. The mapping of every USRDS code to a category is drafted by three cloud models, one each from OpenAI, Anthropic and Google, each provider's current general-purpose model as of October 2026. Codes on which at least two agree are accepted, and the deciders review the rest. Two models run locally through Ollama (Alibaba's Qwen and Meta's Llama) answer too and are reported for comparison, without voting (<span class="in">`esrd_classifier_voting`</span> lists the voting models). Gemini and Qwen get batches of 25 codes rather than 100, and Llama batches of 5 (see <span class="co">[</span><span class="ot">2. Cause code mapping</span><span class="co">](classify_esrd_causes.qmd)</span>; the mapping was accepted as drafted, decided by Vagish Hemmige, 30 October 2026). The models used, the prompt version and the <span class="co">[</span><span class="ot">{ellmer}</span><span class="co">](https://ellmer.tidyverse.org/)</span> version are recorded in the output file.</span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-cause-constants</span></span>
@@ -1456,7 +1456,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model constants</span></span>
 <span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>The covariate sets follow the footnotes of the paper's Table 2, and Model 3's HSA benchmarks are the three the paper's Methods name. The logistic models are fit with <span class="in">`glmmTMB`</span> (Laplace approximation); the models page explains why. <span class="in">`provenance_packages`</span> lists the packages whose version (and, for usRds, commit) is saved with the estimates.</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>The covariate sets follow the footnotes of the paper's Table 2, and Model 3's HSA benchmarks are the three the paper's Methods name. The logistic models are fit with {glmmTMB} (Laplace approximation); the models page explains why. <span class="in">`provenance_packages`</span> lists the packages whose version (and, for {usRds}, commit) is saved with the estimates.</span>
 <span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-model-constants</span></span>

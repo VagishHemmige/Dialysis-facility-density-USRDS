@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -133,6 +133,17 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
 div.callout-Rcode.callout {
   border-left-color: #d63384;
 }
@@ -153,17 +164,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
   background-image: none;
 }
 </style>
@@ -687,7 +687,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 <section id="zip-code-to-zcta" class="level2">
 <h2 class="anchored" data-anchor-id="zip-code-to-zcta">ZIP code to ZCTA</h2>
-<p>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Not every ZIP code has a ZCTA of its own <span class="citation" data-cites="census_zcta">(<a href="#ref-census_zcta" role="doc-biblioref">U.S. Census Bureau, n.d.</a>)</span>; those that do not, mostly PO box and large-volume ZIP codes, belong to a surrounding ZCTA with a different number <span class="citation" data-cites="grubesic2006zcta">(<a href="#ref-grubesic2006zcta" role="doc-biblioref">Grubesic and Matisziw 2006</a>)</span>. The UDS Mapper crosswalk for each year, bundled in <code>zippeR</code> <span class="citation" data-cites="zipper_pkg uds_crosswalk">(<a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>; <a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>)</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</p>
+<p>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Not every ZIP code has a ZCTA of its own <span class="citation" data-cites="census_zcta">(<a href="#ref-census_zcta" role="doc-biblioref">U.S. Census Bureau, n.d.</a>)</span>; those that do not, mostly PO box and large-volume ZIP codes, belong to a surrounding ZCTA with a different number <span class="citation" data-cites="grubesic2006zcta">(<a href="#ref-grubesic2006zcta" role="doc-biblioref">Grubesic and Matisziw 2006</a>)</span>. The UDS Mapper crosswalk for each year, bundled in <a href="https://github.com/pfizer-opensource/zippeR">{zippeR}</a> <span class="citation" data-cites="zipper_pkg uds_crosswalk">(<a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>; <a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>)</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</p>
 <p><strong>Functions used:</strong> <a href="../quarto/functions.html#zip-codes"><code>standardize_zip()</code></a>, <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -710,7 +710,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 </section>
 <section id="american-community-survey" class="level2">
 <h2 class="anchored" data-anchor-id="american-community-survey">American Community Survey</h2>
-<p>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year’s variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<code>GEOID</code>), because in some years the identifier <code>tidycensus</code> returns <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span> can carry a two-digit state prefix, and the last five characters are the ZCTA either way; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</p>
+<p>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year’s variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<code>GEOID</code>), because in some years the identifier <a href="https://walker-data.com/tidycensus/">{tidycensus}</a> returns <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span> can carry a two-digit state prefix, and the last five characters are the ZCTA either way; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</p>
 <p><strong>Functions used:</strong> <a href="../quarto/functions.html#unique-keys"><code>assert_unique()</code></a>, <a href="../quarto/functions.html#checking-acs-variables"><code>check_acs_labels()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1399,7 +1399,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## ZIP code to ZCTA</span></span>
 <span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Not every ZIP code has a ZCTA of its own <span class="co">[</span><span class="ot">@census_zcta</span><span class="co">]</span>; those that do not, mostly PO box and large-volume ZIP codes, belong to a surrounding ZCTA with a different number <span class="co">[</span><span class="ot">@grubesic2006zcta</span><span class="co">]</span>. The UDS Mapper crosswalk for each year, bundled in <span class="in">`zippeR`</span> <span class="co">[</span><span class="ot">@zipper_pkg; @uds_crosswalk</span><span class="co">]</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>ACS data are published by ZIP Code Tabulation Area (ZCTA), not by ZIP code. Not every ZIP code has a ZCTA of its own <span class="co">[</span><span class="ot">@census_zcta</span><span class="co">]</span>; those that do not, mostly PO box and large-volume ZIP codes, belong to a surrounding ZCTA with a different number <span class="co">[</span><span class="ot">@grubesic2006zcta</span><span class="co">]</span>. The UDS Mapper crosswalk for each year, bundled in <span class="co">[</span><span class="ot">{zippeR}</span><span class="co">](https://github.com/pfizer-opensource/zippeR)</span> <span class="co">[</span><span class="ot">@zipper_pkg; @uds_crosswalk</span><span class="co">]</span>, maps every ZIP code to its ZCTA. The original analysis intended this step but never applied it; it matched ZIP codes to ZCTAs directly, so residents of those ZIP codes found no ACS data.</span>
 <span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`standardize_zip()`</span><span class="co">](functions.qmd#zip-codes)</span>, <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>.</span>
 <span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
@@ -1410,7 +1410,7 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## American Community Survey</span></span>
 <span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<span class="in">`GEOID`</span>), because in some years the identifier <span class="in">`tidycensus`</span> returns <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span> can carry a two-digit state prefix, and the last five characters are the ZCTA either way; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>ZCTA estimates from the 5-year subject table S0601 for each study year. Every year's variable labels are checked first. The ZCTA code is taken as the last five characters of the Census identifier (<span class="in">`GEOID`</span>), because in some years the identifier <span class="co">[</span><span class="ot">{tidycensus}</span><span class="co">](https://walker-data.com/tidycensus/)</span> returns <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span> can carry a two-digit state prefix, and the last five characters are the ZCTA either way; the key is then checked to be unique by ZCTA and year. The estimates are keyed by ZCTA and joined to patients through the crosswalk above.</span>
 <span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`assert_unique()`</span><span class="co">](functions.qmd#unique-keys)</span>, <span class="co">[</span><span class="ot">`check_acs_labels()`</span><span class="co">](functions.qmd#checking-acs-variables)</span>.</span>
 <span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>

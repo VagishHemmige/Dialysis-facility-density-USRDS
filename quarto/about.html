@@ -101,7 +101,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -132,6 +132,17 @@ div.csl-indent {
   }
 }</script>
 <style>
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -152,17 +163,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
   background-image: none;
 }
 </style>
@@ -608,7 +608,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="this-repository" class="level2">
 <h2 class="anchored" data-anchor-id="this-repository">This repository</h2>
-<p>This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by <code>R/main.R</code>, using <code>usRds</code>, <code>flowchart</code> and <code>tidycensus</code>. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through <code>usRds</code> on the computer of an authorized analyst.</p>
+<p>This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by <code>R/main.R</code>, using <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a>, <a href="https://bruigtp.github.io/flowchart/">{flowchart}</a> and <a href="https://walker-data.com/tidycensus/">{tidycensus}</a>. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through {usRds} on the computer of an authorized analyst.</p>
 <p>Contributions follow the rules in <a href="../quarto/agents.html"><code>AGENTS.md</code></a>; open decisions and known issues are tracked in <a href="https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues">Issues</a>.</p>
 </section>
 <section id="how-this-website-was-created" class="level2">
@@ -634,16 +634,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <li><a href="../quarto/study_facilities.html"><strong>Dialysis facilities</strong></a>: how the facilities around each patient are counted on the day dialysis started.</li>
 <li><a href="../quarto/study_linkage.html"><strong>Census and area data</strong></a>: how census data, the HSA and its population, care measures and rural-urban type are attached to each patient, all matched to that date.</li>
 <li><a href="../quarto/study_exposure.html"><strong>Exposure, outcome and covariates</strong></a>: facility density and its categories, the early-start outcome, and the patient and area characteristics.</li>
-<li><a href="../quarto/study_esrd_causes.html"><strong>Mapping cause codes with ellmer</strong></a>: rebuilding the cause categories with three language models, and what two local models showed.</li>
+<li><a href="../quarto/study_esrd_causes.html"><strong>Mapping cause codes with {ellmer}</strong></a>: rebuilding the cause categories with three language models, and what two local models showed.</li>
 <li><a href="../quarto/study_analysis.html"><strong>Analysis and reporting</strong></a>: the models, how they are fitted, missing values, sensitivity analyses and disclosure.</li>
 <li><a href="../quarto/differences.html"><strong>Differences from the original code</strong></a>: every correction and open decision, with a glossary of USRDS terms.</li>
 <li><a href="../quarto/setup.html"><strong>Setup</strong></a>: packages and every constant.</li>
 <li><a href="../quarto/functions.html"><strong>Functions</strong></a>: tested helper functions.</li>
 <li><a href="../quarto/download_public_data.html"><strong>1. Public area data</strong></a>: ACS, Dartmouth Atlas and RUCA downloads.</li>
 <li><a href="../quarto/classify_esrd_causes.html"><strong>2. Cause code mapping</strong></a>: the code that asks the language models, checks and saves their answers, and writes the mapping.</li>
-<li><a href="../quarto/prepare_patients.html"><strong>3. USRDS patient data</strong></a>: Medical Evidence and Residence files through <code>usRds</code>.</li>
+<li><a href="../quarto/prepare_patients.html"><strong>3. USRDS patient data</strong></a>: Medical Evidence and Residence files through {usRds}.</li>
 <li><a href="../quarto/link_area_data.html"><strong>4. Linking area data</strong></a>: facility counts by date, area data and the exposure.</li>
-<li><a href="../quarto/create_cohort.html"><strong>5. Cohort flowchart</strong></a>: every exclusion as one <code>flowchart</code> step.</li>
+<li><a href="../quarto/create_cohort.html"><strong>5. Cohort flowchart</strong></a>: every exclusion as one {flowchart} step.</li>
 <li><a href="../quarto/define_exposure.html"><strong>6. Density categories</strong></a>: the five exposure categories.</li>
 <li><a href="../quarto/models.html"><strong>7. Models</strong></a>: Table 2 and sensitivity analyses.</li>
 <li><a href="../quarto/tables.html"><strong>Tables</strong></a> and <a href="../quarto/figures.html"><strong>Figures</strong></a>: building and exporting the outputs.</li>
@@ -1142,7 +1142,7 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## This repository</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by <span class="in">`R/main.R`</span>, using <span class="in">`usRds`</span>, <span class="in">`flowchart`</span> and <span class="in">`tidycensus`</span>. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through <span class="in">`usRds`</span> on the computer of an authorized analyst.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by <span class="in">`R/main.R`</span>, using <span class="co">[</span><span class="ot">{usRds}</span><span class="co">](https://vagishhemmige.github.io/usRds/)</span>, <span class="co">[</span><span class="ot">{flowchart}</span><span class="co">](https://bruigtp.github.io/flowchart/)</span> and <span class="co">[</span><span class="ot">{tidycensus}</span><span class="co">](https://walker-data.com/tidycensus/)</span>. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through {usRds} on the computer of an authorized analyst.</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Contributions follow the rules in <span class="co">[</span><span class="ot">`AGENTS.md`</span><span class="co">](agents.qmd)</span>; open decisions and known issues are tracked in <span class="co">[</span><span class="ot">Issues</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues)</span>.</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
@@ -1169,16 +1169,16 @@ Hemmige, Vagish, Priya Deshpande, Keith C Norris, et al. 2024. <span>“Geograph
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Dialysis facilities**</span><span class="co">](study_facilities.qmd)</span>: how the facilities around each patient are counted on the day dialysis started.</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Census and area data**</span><span class="co">](study_linkage.qmd)</span>: how census data, the HSA and its population, care measures and rural-urban type are attached to each patient, all matched to that date.</span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Exposure, outcome and covariates**</span><span class="co">](study_exposure.qmd)</span>: facility density and its categories, the early-start outcome, and the patient and area characteristics.</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Mapping cause codes with ellmer**</span><span class="co">](study_esrd_causes.qmd)</span>: rebuilding the cause categories with three language models, and what two local models showed.</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Mapping cause codes with {ellmer}**</span><span class="co">](study_esrd_causes.qmd)</span>: rebuilding the cause categories with three language models, and what two local models showed.</span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Analysis and reporting**</span><span class="co">](study_analysis.qmd)</span>: the models, how they are fitted, missing values, sensitivity analyses and disclosure.</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Differences from the original code**</span><span class="co">](differences.qmd)</span>: every correction and open decision, with a glossary of USRDS terms.</span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Setup**</span><span class="co">](setup.qmd)</span>: packages and every constant.</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Functions**</span><span class="co">](functions.qmd)</span>: tested helper functions.</span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**1. Public area data**</span><span class="co">](download_public_data.qmd)</span>: ACS, Dartmouth Atlas and RUCA downloads.</span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**2. Cause code mapping**</span><span class="co">](classify_esrd_causes.qmd)</span>: the code that asks the language models, checks and saves their answers, and writes the mapping.</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**3. USRDS patient data**</span><span class="co">](prepare_patients.qmd)</span>: Medical Evidence and Residence files through <span class="in">`usRds`</span>.</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**3. USRDS patient data**</span><span class="co">](prepare_patients.qmd)</span>: Medical Evidence and Residence files through {usRds}.</span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**4. Linking area data**</span><span class="co">](link_area_data.qmd)</span>: facility counts by date, area data and the exposure.</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**5. Cohort flowchart**</span><span class="co">](create_cohort.qmd)</span>: every exclusion as one <span class="in">`flowchart`</span> step.</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**5. Cohort flowchart**</span><span class="co">](create_cohort.qmd)</span>: every exclusion as one {flowchart} step.</span>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**6. Density categories**</span><span class="co">](define_exposure.qmd)</span>: the five exposure categories.</span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**7. Models**</span><span class="co">](models.qmd)</span>: Table 2 and sensitivity analyses.</span>
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Tables**</span><span class="co">](tables.qmd)</span> and <span class="co">[</span><span class="ot">**Figures**</span><span class="co">](figures.qmd)</span>: building and exporting the outputs.</span>

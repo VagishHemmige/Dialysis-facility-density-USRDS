@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
-}
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
-}
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -164,6 +153,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -781,10 +781,10 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="models" class="level2">
 <h2 class="anchored" data-anchor-id="models">Models</h2>
-<p>Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper’s complete-case models. The covariates follow the paper’s Table 2 footnotes; the “HSA quality benchmarks” in Model 3 are taken to be the three the paper’s Methods give as examples (“such as”: HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).</p>
+<p>Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with <a href="https://glmmtmb.github.io/glmmTMB/">{glmmTMB}</a> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper’s complete-case models. The covariates follow the paper’s Table 2 footnotes; the “HSA quality benchmarks” in Model 3 are taken to be the three the paper’s Methods give as examples (“such as”: HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).</p>
 <section id="choosing-the-model-fitting-package" class="level3">
 <h3 class="anchored" data-anchor-id="choosing-the-model-fitting-package">Choosing the model-fitting package</h3>
-<p>The analysis uses <code>glmmTMB</code> rather than <code>lme4</code> or Stata itself (decided by Vagish Hemmige, 27 October 2026); why is on <a href="../quarto/study_analysis.html#how-the-models-are-fitted">How the models are fitted</a>. The comparison was run on synthetic test data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</p>
+<p>The analysis uses {glmmTMB} rather than <a href="https://CRAN.R-project.org/package=lme4">{lme4}</a> or Stata itself (decided by Vagish Hemmige, 27 October 2026); why is on <a href="../quarto/study_analysis.html#how-the-models-are-fitted">How the models are fitted</a>. The comparison was run on synthetic test data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -820,19 +820,19 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <td>10.63</td>
 </tr>
 <tr class="even">
-<td><code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span></td>
+<td>{glmmTMB} <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span></td>
 <td>4 s</td>
 <td>0</td>
 <td>10.63</td>
 </tr>
 </tbody>
 </table>
-<p>The figures are from synthetic test data, not from USRDS data, and say nothing about the study’s results; only the comparison between rows matters. <code>glmmTMB</code> gave the same estimates as a fully converged <code>glmer</code> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67).</p>
+<p>The figures are from synthetic test data, not from USRDS data, and say nothing about the study’s results; only the comparison between rows matters. {glmmTMB} gave the same estimates as a fully converged <code>glmer</code> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67).</p>
 </section>
 </section>
 <section id="multiple-imputation" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-imputation">Multiple imputation</h2>
-<p>Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the <code>mice</code> default for numeric variables <span class="citation" data-cites="vanbuuren2011mice">(<a href="#ref-vanbuuren2011mice" role="doc-biblioref">Buuren and Groothuis-Oudshoorn 2011</a>)</span>), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper’s description is on <a href="../quarto/study_analysis.html#missing-laboratory-values">Missing laboratory values</a>.</p>
+<p>Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the <a href="https://CRAN.R-project.org/package=mice">{mice}</a> default for numeric variables <span class="citation" data-cites="vanbuuren2011mice">(<a href="#ref-vanbuuren2011mice" role="doc-biblioref">Buuren and Groothuis-Oudshoorn 2011</a>)</span>), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper’s description is on <a href="../quarto/study_analysis.html#missing-laboratory-values">Missing laboratory values</a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1026,7 +1026,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="saving" class="level2">
 <h2 class="anchored" data-anchor-id="saving">Saving</h2>
-<p>Estimates are saved in the gitignored <code>models/</code> folder, so tables can be rebuilt without refitting. With them are saved the version of each package in <code>provenance_packages</code> (set in <code>setup.R</code>), and for usRds, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while usRds is changing (<a href="https://github.com/VagishHemmige/usRds/issues/18">usRds issue #18</a>).</p>
+<p>Estimates are saved in the gitignored <code>models/</code> folder, so tables can be rebuilt without refitting. With them are saved the version of each package in <code>provenance_packages</code> (set in <code>setup.R</code>), and for <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a>, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while {usRds} is changing (<a href="https://github.com/VagishHemmige/usRds/issues/18">{usRds} issue #18</a>).</p>
 <p><strong>Functions used:</strong> <a href="../quarto/functions.html#package-provenance"><code>package_provenance()</code></a>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1589,24 +1589,24 @@ Rubin, Donald B. 1987. <em>Multiple Imputation for Nonresponse in Surveys</em>. 
 <span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models</span></span>
 <span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span>: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with <span class="co">[</span><span class="ot">{glmmTMB}</span><span class="co">](https://glmmtmb.github.io/glmmTMB/)</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span>: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).</span>
 <span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Choosing the model-fitting package</span></span>
 <span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>The analysis uses <span class="in">`glmmTMB`</span> rather than <span class="in">`lme4`</span> or Stata itself (decided by Vagish Hemmige, 27 October 2026); why is on <span class="co">[</span><span class="ot">How the models are fitted</span><span class="co">](study_analysis.qmd#how-the-models-are-fitted)</span>. The comparison was run on synthetic test data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>The analysis uses {glmmTMB} rather than <span class="co">[</span><span class="ot">{lme4}</span><span class="co">](https://CRAN.R-project.org/package=lme4)</span> or Stata itself (decided by Vagish Hemmige, 27 October 2026); why is on <span class="co">[</span><span class="ot">How the models are fitted</span><span class="co">](study_analysis.qmd#how-the-models-are-fitted)</span>. The comparison was run on synthetic test data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:</span>
 <span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fit (synthetic test data) <span class="pp">|</span> Time <span class="pp">|</span> Convergence warnings <span class="pp">|</span> Odds ratio, highest vs zero density (synthetic) <span class="pp">|</span></span>
 <span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
 <span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span> <span class="co">[</span><span class="ot">@lme4_pkg</span><span class="co">]</span>, default settings <span class="pp">|</span> 117 s <span class="pp">|</span> 4 <span class="pp">|</span> 10.08 (not converged) <span class="pp">|</span></span>
 <span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, rescaled covariates, higher iteration limit <span class="pp">|</span> 111 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.62 <span class="pp">|</span></span>
 <span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lme4::glmer`</span>, 7-point quadrature (Stata's default) <span class="pp">|</span> 119 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glmmTMB`</span> <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span> <span class="pp">|</span> 4 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> {glmmTMB} <span class="co">[</span><span class="ot">@glmmtmb</span><span class="co">]</span> <span class="pp">|</span> 4 s <span class="pp">|</span> 0 <span class="pp">|</span> 10.63 <span class="pp">|</span></span>
 <span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>The figures are from synthetic test data, not from USRDS data, and say nothing about the study's results; only the comparison between rows matters. <span class="in">`glmmTMB`</span> gave the same estimates as a fully converged <span class="in">`glmer`</span> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67).</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>The figures are from synthetic test data, not from USRDS data, and say nothing about the study's results; only the comparison between rows matters. {glmmTMB} gave the same estimates as a fully converged <span class="in">`glmer`</span> in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67).</span>
 <span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiple imputation</span></span>
 <span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the <span class="in">`mice`</span> default for numeric variables <span class="co">[</span><span class="ot">@vanbuuren2011mice</span><span class="co">]</span>), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper's description is on <span class="co">[</span><span class="ot">Missing laboratory values</span><span class="co">](study_analysis.qmd#missing-laboratory-values)</span>.</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the <span class="co">[</span><span class="ot">{mice}</span><span class="co">](https://CRAN.R-project.org/package=mice)</span> default for numeric variables <span class="co">[</span><span class="ot">@vanbuuren2011mice</span><span class="co">]</span>), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper's description is on <span class="co">[</span><span class="ot">Missing laboratory values</span><span class="co">](study_analysis.qmd#missing-laboratory-values)</span>.</span>
 <span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: impute-albumin-hemoglobin</span></span>
@@ -1681,7 +1681,7 @@ Rubin, Donald B. 1987. <em>Multiple Imputation for Nonresponse in Surveys</em>. 
 <span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving</span></span>
 <span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>Estimates are saved in the gitignored <span class="in">`models/`</span> folder, so tables can be rebuilt without refitting. With them are saved the version of each package in <span class="in">`provenance_packages`</span> (set in <span class="in">`setup.R`</span>), and for usRds, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while usRds is changing (<span class="co">[</span><span class="ot">usRds issue #18</span><span class="co">](https://github.com/VagishHemmige/usRds/issues/18)</span>).</span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>Estimates are saved in the gitignored <span class="in">`models/`</span> folder, so tables can be rebuilt without refitting. With them are saved the version of each package in <span class="in">`provenance_packages`</span> (set in <span class="in">`setup.R`</span>), and for <span class="co">[</span><span class="ot">{usRds}</span><span class="co">](https://vagishhemmige.github.io/usRds/)</span>, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while {usRds} is changing (<span class="co">[</span><span class="ot">{usRds} issue #18</span><span class="co">](https://github.com/VagishHemmige/usRds/issues/18)</span>).</span>
 <span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>**Functions used:** <span class="co">[</span><span class="ot">`package_provenance()`</span><span class="co">](functions.qmd#package-provenance)</span>.</span>
 <span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>

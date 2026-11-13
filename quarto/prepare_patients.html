@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -598,7 +598,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </header>
 
 
-<p>Loads the Medical Evidence and Residence files through <code>usRds</code> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <a href="../quarto/create_cohort.html">cohort flowchart</a>. What the variables mean, and why they are defined this way, is on <a href="../quarto/study_exposure.html">Exposure, outcome and covariates</a> and <a href="../quarto/study_cohort.html">Who is studied</a>.</p>
+<p>Loads the Medical Evidence and Residence files through <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <a href="../quarto/create_cohort.html">cohort flowchart</a>. What the variables mean, and why they are defined this way, is on <a href="../quarto/study_exposure.html">Exposure, outcome and covariates</a> and <a href="../quarto/study_cohort.html">Who is studied</a>.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -623,7 +623,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </div>
 <section id="loading-the-medical-evidence-file" class="level2">
 <h2 class="anchored" data-anchor-id="loading-the-medical-evidence-file">Loading the Medical Evidence file</h2>
-<p><code>usRds</code> finds the file in the folder set by <code>set_USRDS_wd()</code> and applies the USRDS value labels from Appendix C of the Researcher’s Guide <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, so codes become their documented meanings. That is how this analysis found that the coding of <code>DIALSET</code> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<code>PDIS</code>) is kept as the raw code because several codes share a description.</p>
+<p>{usRds} finds the file in the folder set by <code>set_USRDS_wd()</code> and applies the USRDS value labels from Appendix C of the Researcher’s Guide <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, so codes become their documented meanings. That is how this analysis found that the coding of <code>DIALSET</code> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<code>PDIS</code>) is kept as the raw code because several codes share a description.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1315,7 +1315,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Loads the Medical Evidence and Residence files through <span class="in">`usRds`</span> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>. What the variables mean, and why they are defined this way, is on <span class="co">[</span><span class="ot">Exposure, outcome and covariates</span><span class="co">](study_exposure.qmd)</span> and <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd)</span>.</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Loads the Medical Evidence and Residence files through <span class="co">[</span><span class="ot">{usRds}</span><span class="co">](https://vagishhemmige.github.io/usRds/)</span> and derives the patient-level variables. No patients are removed at this step; every exclusion is a step in the <span class="co">[</span><span class="ot">cohort flowchart</span><span class="co">](create_cohort.qmd)</span>. What the variables mean, and why they are defined this way, is on <span class="co">[</span><span class="ot">Exposure, outcome and covariates</span><span class="co">](study_exposure.qmd)</span> and <span class="co">[</span><span class="ot">Who is studied</span><span class="co">](study_cohort.qmd)</span>.</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>The full R script is available at:</span>
@@ -1339,7 +1339,7 @@ United States Renal Data System. 2024. <em>Researcher’s Guide to the <span>USR
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading the Medical Evidence file</span></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">`usRds`</span> finds the file in the folder set by <span class="in">`set_USRDS_wd()`</span> and applies the USRDS value labels from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, so codes become their documented meanings. That is how this analysis found that the coding of <span class="in">`DIALSET`</span> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<span class="in">`PDIS`</span>) is kept as the raw code because several codes share a description.</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>{usRds} finds the file in the folder set by <span class="in">`set_USRDS_wd()`</span> and applies the USRDS value labels from Appendix C of the Researcher's Guide <span class="co">[</span><span class="ot">@usrds2024guide</span><span class="co">]</span>, so codes become their documented meanings. That is how this analysis found that the coding of <span class="in">`DIALSET`</span> has changed: code 1 now means home dialysis, where in the coding the original code was written for it meant hospital inpatient. The original code typed the codes and their meanings by hand. The primary cause of kidney failure (<span class="in">`PDIS`</span>) is kept as the raw code because several codes share a description.</span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-medevid</span></span>

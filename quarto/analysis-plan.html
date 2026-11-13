@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.js"></script>
 <link href="../site_libs/quarto-contrib/issue-comments-0.3.0/issue-comments.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -133,17 +133,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: #d63384;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgba(214, 51, 132, 0.13);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -164,6 +153,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: #d63384;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgba(214, 51, 132, 0.13);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -621,7 +621,7 @@ edit that file, not this page. Its first heading is the page title.
 <section id="scope-and-reporting-framework" class="level2">
 <h2 class="anchored" data-anchor-id="scope-and-reporting-framework">Scope and reporting framework</h2>
 <p>This document is the authoritative specification of the study’s scientific objectives, population, definitions, estimands and statistical methods. <code>ARCHITECTURE.md</code> documents the implementation, <code>AGENTS.md</code> the working conventions, and GitHub Issues the open decisions and implementation status. Neither file supersedes this plan.</p>
-<p>This is a revised analysis of a published study, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026). The question and design are the ones published in JAMA Network Open <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>, and every choice the paper states is treated as decided and cited to it. The analysis is rebuilt on the <code>usRds</code> package, which is still being developed, and is revised as the package changes; its results are compared with the published ones, but are not expected to match them exactly. The original analysis code (an R Markdown file from October 2023, kept in <code>original/</code>) is the second source: where it makes a choice the paper does not state, the plan adopts the code’s choice and says so. Where the code and the paper disagree, or the code contains an error, the point is marked <strong>Open</strong> and linked to a decision issue for the deciders. Each such point is also listed on the website’s “Differences from the original code” page.</p>
+<p>This is a revised analysis of a published study, not a replication of its numbers (decided by Vagish Hemmige, 4 November 2026). The question and design are the ones published in JAMA Network Open <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>, and every choice the paper states is treated as decided and cited to it. The analysis is rebuilt on the <a href="https://vagishhemmige.github.io/usRds/">{usRds}</a> package, which is still being developed, and is revised as the package changes; its results are compared with the published ones, but are not expected to match them exactly. The original analysis code (an R Markdown file from October 2023, kept in <code>original/</code>) is the second source: where it makes a choice the paper does not state, the plan adopts the code’s choice and says so. Where the code and the paper disagree, or the code contains an error, the point is marked <strong>Open</strong> and linked to a decision issue for the deciders. Each such point is also listed on the website’s “Differences from the original code” page.</p>
 <p>Reporting will follow STROBE <span class="citation" data-cites="vonelm2007strobe">(<a href="#ref-vonelm2007strobe" role="doc-biblioref"><span class="nocase">Elm et al.</span> 2007</a>)</span> and RECORD <span class="citation" data-cites="benchimol2015record">(<a href="#ref-benchimol2015record" role="doc-biblioref"><span class="nocase">Benchimol et al.</span> 2015</a>)</span>. The reporting map below links each checklist item to a section of this plan.</p>
 </section>
 <section id="1-objective" class="level2">
@@ -631,7 +631,7 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong>Primary hypothesis (stated in advance by the paper):</strong> patients in HSAs with higher facility density have higher odds of initiating hemodialysis at eGFR &gt; 10 mL/min/1.73 m².</li>
 <li><strong>Secondary:</strong> the same association with eGFR as a continuous outcome; with density as a continuous exposure; within strata of race (White, Black).</li>
 <li><strong>Exploratory:</strong> the share of variation in eGFR at initiation explained by HSA and by dialysis facility.</li>
-<li><strong>Comparison with the published results:</strong> to produce the paper’s Figure 1 (cohort flow), Table 1, Table 2 and eTables 1 to 3 from public code, using <code>usRds</code> and <code>flowchart</code>, in the published layout so they can be compared with the published ones; to explain where they differ; and to quantify the effect of each correction to the original code. Exact agreement is not expected (see “Scope and reporting framework”).</li>
+<li><strong>Comparison with the published results:</strong> to produce the paper’s Figure 1 (cohort flow), Table 1, Table 2 and eTables 1 to 3 from public code, using {usRds} and <a href="https://bruigtp.github.io/flowchart/">{flowchart}</a>, in the published layout so they can be compared with the published ones; to explain where they differ; and to quantify the effect of each correction to the original code. Exact agreement is not expected (see “Scope and reporting framework”).</li>
 </ul>
 </section>
 <section id="2-design" class="level2">
@@ -641,12 +641,6 @@ edit that file, not this page. Its first heading is the page title.
 <section id="3-data-source" class="level2">
 <h2 class="anchored" data-anchor-id="3-data-source">3. Data source</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Source</th>
@@ -677,7 +671,7 @@ edit that file, not this page. Its first heading is the page title.
 <tr class="even">
 <td>UDS Mapper ZIP-to-ZCTA crosswalk</td>
 <td>ZCTA of each ZIP code</td>
-<td>2011 to 2019, matched to the year dialysis started, via <code>zippeR</code> <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>)</span></td>
+<td>2011 to 2019, matched to the year dialysis started, via <a href="https://github.com/pfizer-opensource/zippeR">{zippeR}</a> <span class="citation" data-cites="uds_crosswalk zipper_pkg">(<a href="#ref-uds_crosswalk" role="doc-biblioref">UDS Mapper, n.d.</a>; <a href="#ref-zipper_pkg" role="doc-biblioref">Prener et al. 2026</a>)</span></td>
 <td>ZIP code and year</td>
 </tr>
 <tr class="odd">
@@ -829,7 +823,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 </tbody>
 </table>
-<p><strong>Cause of kidney failure mapping.</strong> The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format <code>$PD96DET</code> <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three cloud large language models, called through <code>ellmer</code> (0.5.0 or later, the first version that sends current Claude models a native structured-output request) <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span> with the same prompt and a structured output schema, each classify every code, and every model’s answers pass the same check: one each from OpenAI, Anthropic and Google. Two models run locally through Ollama, Alibaba’s Qwen and Meta’s Llama, receive the same prompt and are reported for comparison, but do not vote (decided by Vagish Hemmige, 29 October 2026): on the analyst’s laptop neither produced a complete, valid set of answers, and IBM’s Granite, tried first, returned none. A code is accepted when at least two of the three cloud models agree (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted, and was chosen because the classification demonstrates the method rather than being the main analysis); codes so accepted are not read by a person, and every other code is reviewed by the deciders, who record the category and their initials (<code>reviewer</code>). Agreement among the models is reported with Fleiss’ kappa <span class="citation" data-cites="fleiss1971kappa">(<a href="#ref-fleiss1971kappa" role="doc-biblioref">Fleiss 1971</a>)</span> in a one-row public summary (<code>references/esrd-cause-agreement.csv</code>), together with the number of codes accepted unanimously, by majority only and not at all; kappa is descriptive and plays no part in accepting codes. A second public file (<code>references/esrd-cause-local-models.csv</code>) reports, for each local model, how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category. The reviewed mapping is committed to <code>references/</code> and is the only version the analysis reads. No patient data are given to any model; the local models send nothing over the internet. Patient-level cross-checks against USRDS’s own disease group (<code>DISGRPC</code>, PATIENTS file) and against the published Table 1 counts are run by an authorized person. The prompt defines each category in words, starting from the 12 groups of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and the original spreadsheet’s sheet names: glomerulonephritis includes secondary glomerulonephritis (lupus nephritis, ANCA vasculitis, anti-GBM disease, Henoch-Schönlein purpura) and infection-related glomerular disease (post-infectious glomerulonephritis, HIV-associated nephropathy, hepatitis-associated and cryoglobulinemic glomerulonephritis), while other infections are in Other (decided by Vagish Hemmige, 27 October 2026). HIV-associated nephropathy is thereby counted as glomerulonephritis, unlike in the CMS-2728 grouping, where HIV disease is a miscellaneous condition. The definitions are shown on the website. The mapping written on 30 October 2026 (prompt version <code>02ff2fbb</code>; 423 codes unanimous, 22 accepted by two of three, none without a majority) is accepted for this analysis as drafted, with no changes after review (decided by Vagish Hemmige, 30 October 2026; D4).</p>
+<p><strong>Cause of kidney failure mapping.</strong> The original mapping spreadsheet is no longer available. The replacement maps every code of USRDS format <code>$PD96DET</code> <span class="citation" data-cites="usrds2024guide">(<a href="#ref-usrds2024guide" role="doc-biblioref">United States Renal Data System 2024</a>)</span>, a public list of about 445 ICD-9 and ICD-10 codes with descriptions, to the six categories above. Three cloud large language models, called through <a href="https://ellmer.tidyverse.org/">{ellmer}</a> (0.5.0 or later, the first version that sends current Claude models a native structured-output request) <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span> with the same prompt and a structured output schema, each classify every code, and every model’s answers pass the same check: one each from OpenAI, Anthropic and Google. Two models run locally through Ollama, Alibaba’s Qwen and Meta’s Llama, receive the same prompt and are reported for comparison, but do not vote (decided by Vagish Hemmige, 29 October 2026): on the analyst’s laptop neither produced a complete, valid set of answers, and IBM’s Granite, tried first, returned none. A code is accepted when at least two of the three cloud models agree (decided by Vagish Hemmige, 29 October 2026; the rule was three of five while the local models voted, and was chosen because the classification demonstrates the method rather than being the main analysis); codes so accepted are not read by a person, and every other code is reviewed by the deciders, who record the category and their initials (<code>reviewer</code>). Agreement among the models is reported with Fleiss’ kappa <span class="citation" data-cites="fleiss1971kappa">(<a href="#ref-fleiss1971kappa" role="doc-biblioref">Fleiss 1971</a>)</span> in a one-row public summary (<code>references/esrd-cause-agreement.csv</code>), together with the number of codes accepted unanimously, by majority only and not at all; kappa is descriptive and plays no part in accepting codes. A second public file (<code>references/esrd-cause-local-models.csv</code>) reports, for each local model, how many codes it answered, left unanswered or answered with text that is not a code, and how often it agreed with the accepted category. The reviewed mapping is committed to <code>references/</code> and is the only version the analysis reads. No patient data are given to any model; the local models send nothing over the internet. Patient-level cross-checks against USRDS’s own disease group (<code>DISGRPC</code>, PATIENTS file) and against the published Table 1 counts are run by an authorized person. The prompt defines each category in words, starting from the 12 groups of the 2015 CMS-2728 list of primary causes <span class="citation" data-cites="cms2728_causes">(<a href="#ref-cms2728_causes" role="doc-biblioref">Centers for Medicare &amp; Medicaid Services 2015</a>)</span> and the original spreadsheet’s sheet names: glomerulonephritis includes secondary glomerulonephritis (lupus nephritis, ANCA vasculitis, anti-GBM disease, Henoch-Schönlein purpura) and infection-related glomerular disease (post-infectious glomerulonephritis, HIV-associated nephropathy, hepatitis-associated and cryoglobulinemic glomerulonephritis), while other infections are in Other (decided by Vagish Hemmige, 27 October 2026). HIV-associated nephropathy is thereby counted as glomerulonephritis, unlike in the CMS-2728 grouping, where HIV disease is a miscellaneous condition. The definitions are shown on the website. The mapping written on 30 October 2026 (prompt version <code>02ff2fbb</code>; 423 codes unanimous, 22 accepted by two of three, none without a majority) is accepted for this analysis as drafted, with no changes after review (decided by Vagish Hemmige, 30 October 2026; D4).</p>
 </section>
 <section id="7-outcome" class="level2">
 <h2 class="anchored" data-anchor-id="7-outcome">7. Outcome</h2>
@@ -846,12 +840,12 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong>Model 2:</strong> Model 1 plus heart failure, coronary disease, diabetes, cerebrovascular disease, alcohol or drug dependence, immobility, institutionalized, access type, primary cause of kidney failure, and (in the first version) serum albumin and hemoglobin.</li>
 <li><strong>Model 3:</strong> Model 2 plus insurance, access to nephrology care (none, some, unknown), rural-urban type, ZIP code poverty, ZIP code % Black, and HSA quality benchmarks.</li>
 </ul>
-<p>Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them, the analysis uses complete cases (the paper reports 533,375 patients). The paper used Stata; its exact covariate coding and estimation options are not available, so these models are rebuilt from the paper’s text and Table 2 footnotes. Census region is not a covariate: the original code’s exploratory models adjusted for it, but the footnotes do not list it (decided by Vagish Hemmige, 28 October 2026, to follow the footnotes). The “HSA quality benchmarks” in Model 3 are taken to be the three the Methods give as examples (“such as”): HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges. Estimation uses <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span> with the Laplace approximation; on synthetic data it matched a fully converged <code>lme4::glmer</code> about thirty times faster, and 7-point quadrature (Stata’s default) changed estimates only in the third decimal (decided by Vagish Hemmige, 27 October 2026). The linear models of eTable 3 also use <code>glmmTMB</code>; the variance decomposition uses <code>lme4::lmer</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span>.</p>
+<p>Models 2 and 3 are fit twice, with and without albumin and hemoglobin; with them, the analysis uses complete cases (the paper reports 533,375 patients). The paper used Stata; its exact covariate coding and estimation options are not available, so these models are rebuilt from the paper’s text and Table 2 footnotes. Census region is not a covariate: the original code’s exploratory models adjusted for it, but the footnotes do not list it (decided by Vagish Hemmige, 28 October 2026, to follow the footnotes). The “HSA quality benchmarks” in Model 3 are taken to be the three the Methods give as examples (“such as”): HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges. Estimation uses <a href="https://glmmtmb.github.io/glmmTMB/">{glmmTMB}</a> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span> with the Laplace approximation; on synthetic data it matched a fully converged <code>lme4::glmer</code> about thirty times faster, and 7-point quadrature (Stata’s default) changed estimates only in the third decimal (decided by Vagish Hemmige, 27 October 2026). The linear models of eTable 3 also use {glmmTMB}; the variance decomposition uses <code>lme4::lmer</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span>.</p>
 <p><strong>Variance decomposition.</strong> Null mixed linear models of continuous eGFR with a random intercept for HSA, and with HSA and dialysis facility (<code>PROVUSRD</code>) nested, report the share of variance at each level. Both models are fit on the same patients, those with a facility ID, so the shares are comparable (decided by Vagish Hemmige, 28 October 2026).</p>
 <p><strong>Effect modification.</strong> Models stratified by race (White, Black) <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>.</p>
 <p><strong>Multiplicity.</strong> None; a single primary comparison is reported, as in the paper.</p>
 <p><strong>Missing data.</strong> Complete-case analysis for each model, plus multiple imputation of albumin and hemoglobin, which the paper describes as “a multiple imputation technique with chained predictive analytics (10 imputations)” (eTable 2), read here as chained equations. Only albumin and hemoglobin are imputed, by predictive mean matching, from the outcome, the density category and the Model 3 covariates, without HSA; estimates are pooled by Rubin’s rules <span class="citation" data-cites="rubin1987mi">(<a href="#ref-rubin1987mi" role="doc-biblioref">Rubin 1987</a>)</span>. This imputation model was confirmed by Vagish Hemmige, 28 October 2026 (D7).</p>
-<p><strong>Software.</strong> R, with <code>usRds</code> <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span>, <code>flowchart</code> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>, <code>tidycensus</code> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>, <code>glmmTMB</code> <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>, <code>lme4</code> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> and <code>ellmer</code> <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span>. The <code>usRds</code> version or commit is recorded with every result.</p>
+<p><strong>Software.</strong> R, with {usRds} <span class="citation" data-cites="usrds_pkg">(<a href="#ref-usrds_pkg" role="doc-biblioref">Hemmige 2026</a>)</span>, {flowchart} <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span>, <a href="https://walker-data.com/tidycensus/">{tidycensus}</a> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span>, {glmmTMB} <span class="citation" data-cites="glmmtmb">(<a href="#ref-glmmtmb" role="doc-biblioref">Brooks et al. 2017</a>)</span>, <a href="https://CRAN.R-project.org/package=lme4">{lme4}</a> <span class="citation" data-cites="lme4_pkg">(<a href="#ref-lme4_pkg" role="doc-biblioref">Bates et al. 2015</a>)</span> and {ellmer} <span class="citation" data-cites="ellmer_pkg">(<a href="#ref-ellmer_pkg" role="doc-biblioref">Wickham et al. 2026</a>)</span>. The {usRds} version or commit is recorded with every result.</p>
 </section>
 <section id="9-sensitivity-analyses" class="level2">
 <h2 class="anchored" data-anchor-id="9-sensitivity-analyses">9. Sensitivity analyses</h2>
@@ -904,7 +898,7 @@ edit that file, not this page. Its first heading is the page title.
 </section>
 <section id="11-limitations-to-address-in-reporting" class="level2">
 <h2 class="anchored" data-anchor-id="11-limitations-to-address-in-reporting">11. Limitations to address in reporting</h2>
-<p>The limitations in the paper apply <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Specific to this revised analysis: the cause-of-kidney-failure mapping is rebuilt rather than recovered; Stata models are re-estimated in R; public source files (CMS, Dartmouth, ERS, ACS) are re-downloaded and may have been revised since the original analysis; and USRDS and facility data are processed through <code>usRds</code>, whose functions are still being developed, so results can change between package versions. The <code>usRds</code> version used is recorded with every result.</p>
+<p>The limitations in the paper apply <span class="citation" data-cites="hemmige2024density">(<a href="#ref-hemmige2024density" role="doc-biblioref">Hemmige et al. 2024</a>)</span>. Specific to this revised analysis: the cause-of-kidney-failure mapping is rebuilt rather than recovered; Stata models are re-estimated in R; public source files (CMS, Dartmouth, ERS, ACS) are re-downloaded and may have been revised since the original analysis; and USRDS and facility data are processed through {usRds}, whose functions are still being developed, so results can change between package versions. The {usRds} version used is recorded with every result.</p>
 </section>
 <section id="12-corrections-to-the-original-code" class="level2">
 <h2 class="anchored" data-anchor-id="12-corrections-to-the-original-code">12. Corrections to the original code</h2>
@@ -939,7 +933,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>Oct 2017 and Jan 2018 CMS files code ownership as 1/2; for-profit counts were 0 for dialysis starts from October 2017 to March 2018</td>
-<td>Ownership harmonized in <code>usRds</code></td>
+<td>Ownership harmonized in {usRds}</td>
 </tr>
 <tr class="even">
 <td>A ZIP code with any facility of unknown ownership or stations had all its for-profit, non-profit or station counts set to 0</td>
@@ -971,7 +965,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>A one-year lagged station count was missing, not 0, where a ZIP code had no facility a year earlier (not used in the published models)</td>
-<td><code>usRds</code> returns 0</td>
+<td>{usRds} returns 0</td>
 </tr>
 <tr class="even">
 <td>Two interactive maps saved the center-density map under the station-density file names</td>

@@ -14,7 +14,7 @@ Scientific decisions for this analysis are made by Vagish Hemmige and Ladan Gole
 
 ## This repository
 
-This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by `R/main.R`, using `usRds`, `flowchart` and `tidycensus`. It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through `usRds` on the computer of an authorized analyst.
+This repository rebuilds the published analysis from a single R Markdown file into scripts run in order by `R/main.R`, using [{usRds}](https://vagishhemmige.github.io/usRds/), [{flowchart}](https://bruigtp.github.io/flowchart/) and [{tidycensus}](https://walker-data.com/tidycensus/). It accompanies a 2026 abstract on the reproducibility of USRDS research. The USRDS data are restricted and are not in the repository; the code finds them through {usRds} on the computer of an authorized analyst.
 
 Contributions follow the rules in [`AGENTS.md`](agents.qmd); open decisions and known issues are tracked in [Issues](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues).
 
@@ -41,16 +41,16 @@ Four documents describe the project. In short: the plan is the scientific intent
 -   [**Dialysis facilities**](study_facilities.qmd): how the facilities around each patient are counted on the day dialysis started.
 -   [**Census and area data**](study_linkage.qmd): how census data, the HSA and its population, care measures and rural-urban type are attached to each patient, all matched to that date.
 -   [**Exposure, outcome and covariates**](study_exposure.qmd): facility density and its categories, the early-start outcome, and the patient and area characteristics.
--   [**Mapping cause codes with ellmer**](study_esrd_causes.qmd): rebuilding the cause categories with three language models, and what two local models showed.
+-   [**Mapping cause codes with {ellmer}**](study_esrd_causes.qmd): rebuilding the cause categories with three language models, and what two local models showed.
 -   [**Analysis and reporting**](study_analysis.qmd): the models, how they are fitted, missing values, sensitivity analyses and disclosure.
 -   [**Differences from the original code**](differences.qmd): every correction and open decision, with a glossary of USRDS terms.
 -   [**Setup**](setup.qmd): packages and every constant.
 -   [**Functions**](functions.qmd): tested helper functions.
 -   [**1. Public area data**](download_public_data.qmd): ACS, Dartmouth Atlas and RUCA downloads.
 -   [**2. Cause code mapping**](classify_esrd_causes.qmd): the code that asks the language models, checks and saves their answers, and writes the mapping.
--   [**3. USRDS patient data**](prepare_patients.qmd): Medical Evidence and Residence files through `usRds`.
+-   [**3. USRDS patient data**](prepare_patients.qmd): Medical Evidence and Residence files through {usRds}.
 -   [**4. Linking area data**](link_area_data.qmd): facility counts by date, area data and the exposure.
--   [**5. Cohort flowchart**](create_cohort.qmd): every exclusion as one `flowchart` step.
+-   [**5. Cohort flowchart**](create_cohort.qmd): every exclusion as one {flowchart} step.
 -   [**6. Density categories**](define_exposure.qmd): the five exposure categories.
 -   [**7. Models**](models.qmd): Table 2 and sensitivity analyses.
 -   [**Tables**](tables.qmd) and [**Figures**](figures.qmd): building and exporting the outputs.

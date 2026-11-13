@@ -57,24 +57,24 @@ Each block has Models 1 to 3. The models are listed in one table, one row per pu
 
 ## Models
 
-Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with `glmmTMB` [@glmmtmb]: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
+Mixed-effects models with a random intercept for HSA, progressively adjusted, fit with [{glmmTMB}](https://glmmtmb.github.io/glmmTMB/) [@glmmtmb]: logistic for early start, linear for eGFR. With albumin and hemoglobin, patients missing either value drop out of Models 2 and 3, as in the paper's complete-case models. The covariates follow the paper's Table 2 footnotes; the "HSA quality benchmarks" in Model 3 are taken to be the three the paper's Methods give as examples ("such as": HbA1c testing and eye examinations among enrollees with diabetes, and ambulatory-sensitive discharges).
 
 ### Choosing the model-fitting package
 
-The analysis uses `glmmTMB` rather than `lme4` or Stata itself (decided by Vagish Hemmige, 27 October 2026); why is on [How the models are fitted](study_analysis.qmd#how-the-models-are-fitted). The comparison was run on synthetic test data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
+The analysis uses {glmmTMB} rather than [{lme4}](https://CRAN.R-project.org/package=lme4) or Stata itself (decided by Vagish Hemmige, 27 October 2026); why is on [How the models are fitted](study_analysis.qmd#how-the-models-are-fitted). The comparison was run on synthetic test data shaped like Model 3 (4,000 patients, 60 HSAs, about 40 covariate terms), they compared as follows:
 
 | Fit (synthetic test data) | Time | Convergence warnings | Odds ratio, highest vs zero density (synthetic) |
 |---|---|---|---|
 | `lme4::glmer` [@lme4_pkg], default settings | 117 s | 4 | 10.08 (not converged) |
 | `lme4::glmer`, rescaled covariates, higher iteration limit | 111 s | 0 | 10.62 |
 | `lme4::glmer`, 7-point quadrature (Stata's default) | 119 s | 0 | 10.63 |
-| `glmmTMB` [@glmmtmb] | 4 s | 0 | 10.63 |
+| {glmmTMB} [@glmmtmb] | 4 s | 0 | 10.63 |
 
-The figures are from synthetic test data, not from USRDS data, and say nothing about the study's results; only the comparison between rows matters. `glmmTMB` gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67).
+The figures are from synthetic test data, not from USRDS data, and say nothing about the study's results; only the comparison between rows matters. {glmmTMB} gave the same estimates as a fully converged `glmer` in about a thirtieth of the time, without rescaling, and quadrature with 7 points rather than the Laplace approximation changed the odds ratios only in the third decimal, because each synthetic HSA has many patients (about 67).
 
 ## Multiple imputation
 
-Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the `mice` default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper's description is on [Missing laboratory values](study_analysis.qmd#missing-laboratory-values).
+Only albumin and hemoglobin are imputed, 10 times, by predictive mean matching (the [{mice}](https://CRAN.R-project.org/package=mice) default for numeric variables [@vanbuuren2011mice]), from the outcome, the density category and the Model 3 covariates, without HSA or continuous density as predictors (decision D7). How this reads the paper's description is on [Missing laboratory values](study_analysis.qmd#missing-laboratory-values).
 
 ```{r}
 #| label: impute-albumin-hemoglobin
@@ -149,7 +149,7 @@ A sensitivity analysis from the original R code that is not in the paper: Model 
 
 ## Saving
 
-Estimates are saved in the gitignored `models/` folder, so tables can be rebuilt without refitting. With them are saved the version of each package in `provenance_packages` (set in `setup.R`), and for usRds, which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while usRds is changing ([usRds issue #18](https://github.com/VagishHemmige/usRds/issues/18)).
+Estimates are saved in the gitignored `models/` folder, so tables can be rebuilt without refitting. With them are saved the version of each package in `provenance_packages` (set in `setup.R`), and for [{usRds}](https://vagishhemmige.github.io/usRds/), which is installed from GitHub while its facility functions are unreleased, the repository and commit. A result can then be traced to the code that produced it, which matters while {usRds} is changing ([{usRds} issue #18](https://github.com/VagishHemmige/usRds/issues/18)).
 
 **Functions used:** [`package_provenance()`](functions.qmd#package-provenance).
 

@@ -42,11 +42,11 @@ The Atlas also publishes measures for each HSA, such as the share of Medicare en
 
 ZIP codes are mail delivery routes, not areas with fixed boundaries, and they are added, changed and retired [@grubesic2006zcta]. The Census Bureau publishes its statistics for ZIP Code Tabulation Areas (ZCTAs), areas built to approximate the territory of ZIP codes [@census_zcta]. Most ZIP codes have a ZCTA with the same number, but not every ZIP code has one [@census_zcta]; a ZIP code with no territory of its own, such as one used only for post office boxes, is counted within a surrounding ZCTA [@grubesic2006zcta].
 
-Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the `zippeR` R package makes them available [@uds_crosswalk; @zipper_pkg]. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.
+Linking a ZIP code to Census data therefore needs a crosswalk from ZIP code to ZCTA. The UDS Mapper published one for each year, and the [{zippeR}](https://github.com/pfizer-opensource/zippeR) R package makes them available [@uds_crosswalk; @zipper_pkg]. Matching by number alone loses the people living in ZIP codes whose ZCTA has a different number.
 
 ## American Community Survey estimates
 
-The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes *5-year estimates*, which pool 60 months of responses; an estimate labelled with a year describes the five years ending in that year, not that year alone [@census2020acshandbook]. A *subject table* gathers many characteristics of an area (population, race, income, poverty) in one place [@census2020acshandbook]. The `tidycensus` R package downloads ACS tables [@tidycensus]. The Census Bureau changes tables between releases [@census_acs_tablechanges], so the codes that identify variables can change, and each year's labels need checking.
+The American Community Survey (ACS) is a continuous survey run by the Census Bureau. For small areas such as ZCTAs it publishes *5-year estimates*, which pool 60 months of responses; an estimate labelled with a year describes the five years ending in that year, not that year alone [@census2020acshandbook]. A *subject table* gathers many characteristics of an area (population, race, income, poverty) in one place [@census2020acshandbook]. The [{tidycensus}](https://walker-data.com/tidycensus/) R package downloads ACS tables [@tidycensus]. The Census Bureau changes tables between releases [@census_acs_tablechanges], so the codes that identify variables can change, and each year's labels need checking.
 
 ## Rural-urban commuting area codes
 

@@ -15,6 +15,8 @@ This repository rebuilds the paper's analysis from public code, as a revised ana
 -   **[{flowchart}](https://bruigtp.github.io/flowchart/)** [@flowchart_pkg] applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.
 -   **[{tidycensus}](https://walker-data.com/tidycensus/)** [@tidycensus] downloads the American Community Survey, and every other area-level file is downloaded from its publisher.
 
+[Braces](https://forum.posit.co/t/curly-braces-around-package-name-convention/122547) identify R packages throughout this site.
+
 Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the [differences page](quarto/differences.qmd). Where the original code and the paper disagree, the choice is left to the investigators.
 
 ## Methods

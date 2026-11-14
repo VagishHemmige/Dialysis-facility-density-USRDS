@@ -132,17 +132,6 @@ div.csl-indent {
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -152,6 +141,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 div.callout-Rcode.callout {
@@ -609,6 +609,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <li><strong><a href="https://bruigtp.github.io/flowchart/">{flowchart}</a></strong> <span class="citation" data-cites="flowchart_pkg">(<a href="#ref-flowchart_pkg" role="doc-biblioref">Satorra et al. 2026</a>)</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</li>
 <li><strong><a href="https://walker-data.com/tidycensus/">{tidycensus}</a></strong> <span class="citation" data-cites="tidycensus">(<a href="#ref-tidycensus" role="doc-biblioref">Walker and Herman 2026</a>)</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</li>
 </ul>
+<p><a href="https://forum.posit.co/t/curly-braces-around-package-name-convention/122547">Braces</a> identify R packages throughout this site.</p>
 <p>Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the <a href="./quarto/differences.html">differences page</a>. Where the original code and the paper disagree, the choice is left to the investigators.</p>
 </section>
 <section id="methods" class="level2">
@@ -1126,22 +1127,24 @@ Walker, Kyle, and Matt Herman. 2026. <em>Tidycensus: Load <span>US</span> Census
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**[{flowchart}](https://bruigtp.github.io/flowchart/)** <span class="co">[</span><span class="ot">@flowchart_pkg</span><span class="co">]</span> applies every exclusion and counts it at the same time, so the cohort diagram is the cohort.</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**[{tidycensus}](https://walker-data.com/tidycensus/)** <span class="co">[</span><span class="ot">@tidycensus</span><span class="co">]</span> downloads the American Community Survey, and every other area-level file is downloaded from its publisher.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd)</span>. Where the original code and the paper disagree, the choice is left to the investigators.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Braces</span><span class="co">](https://forum.posit.co/t/curly-braces-around-package-name-convention/122547)</span> identify R packages throughout this site.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methods</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Rebuilding the analysis this way turned up several errors in the original code. They are corrected here, and each one is listed, with what it can change, on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd)</span>. Where the original code and the paper disagree, the choice is left to the investigators.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>The authoritative specification is <span class="co">[</span><span class="ot">`analysis-plan.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md)</span>. In brief: incident adults on in-center hemodialysis with an eGFR of 20 or below; exposure, HSA dialysis facilities per 100,000 residents in five categories; outcome, eGFR of 10 or above at initiation; mixed-effects logistic models with a random intercept for HSA, progressively adjusted for patient, clinical, area and HSA characteristics. Reporting follows STROBE <span class="co">[</span><span class="ot">@vonelm2007strobe</span><span class="co">]</span>, as in the paper, and RECORD <span class="co">[</span><span class="ot">@benchimol2015record</span><span class="co">]</span>, added for this analysis.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methods</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>The authoritative specification is <span class="co">[</span><span class="ot">`analysis-plan.md`</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/blob/main/analysis-plan.md)</span>. In brief: incident adults on in-center hemodialysis with an eGFR of 20 or below; exposure, HSA dialysis facilities per 100,000 residents in five categories; outcome, eGFR of 10 or above at initiation; mixed-effects logistic models with a random intercept for HSA, progressively adjusted for patient, clinical, area and HSA characteristics. Reporting follows STROBE <span class="co">[</span><span class="ot">@vonelm2007strobe</span><span class="co">]</span>, as in the paper, and RECORD <span class="co">[</span><span class="ot">@benchimol2015record</span><span class="co">]</span>, added for this analysis.</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Its results are not expected to match the published ones exactly: the processing now runs through {usRds}, which is still being developed, public files are re-downloaded, and errors in the original code are corrected. The site will be revised as the package develops. Open decisions are listed on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd#open-decisions)</span> and tracked as <span class="co">[</span><span class="ot">GitHub issues</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues)</span>.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Status</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>The analysis also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when two of three language models agree, and the grouping of race into the paper's five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked "chosen for this demonstration" where it is described.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>The code is complete and tested on synthetic data. It has not yet been run on the USRDS data, so this site shows code and methods only; no results from USRDS data are published here. Its results are not expected to match the published ones exactly: the processing now runs through {usRds}, which is still being developed, public files are re-downloaded, and errors in the original code are corrected. The site will be revised as the package develops. Open decisions are listed on the <span class="co">[</span><span class="ot">differences page</span><span class="co">](quarto/differences.qmd#open-decisions)</span> and tracked as <span class="co">[</span><span class="ot">GitHub issues</span><span class="co">](https://github.com/VagishHemmige/Dialysis-facility-density-USRDS/issues)</span>.</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>The analysis also serves as a demonstration of how an analysis like this can be rebuilt with current tools. Where neither the paper nor the original code settles a choice, a few were made for the demonstration rather than by a full scientific review: the rule accepting a cause-of-kidney-failure code when two of three language models agree, and the grouping of race into the paper's five groups. They affect the Table 1 cause and race rows, the covariates of Models 1 to 3, and the race-stratified eTables. Each is marked "chosen for this demonstration" where it is described.</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
